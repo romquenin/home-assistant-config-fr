@@ -1,0 +1,2005 @@
+title: Home
+resources:
+
+  - url: /local/custom-lovelace/card-modder.js
+    type: module 
+  - url: /local/custom-lovelace/upcoming-media-card/upcoming-media-card.js?v=0.1.2
+    type: js
+  - url: /local/custom-lovelace/fold-entity-row.js
+    type: js
+  - url: /local/custom-lovelace/circle-sensor-card.js?v=0
+    type: module
+  - url: /local/custom-lovelace/mini-graph-card-bundle.js?v=0.0.9
+    type: module
+  - url: /local/custom-lovelace/alarm_control_panel-card.js
+    type: js   
+  - url: /local/custom-lovelace/bignumber-card.js
+    type: module
+  - url: /local/custom-lovelace/canvas-gauge-card.js
+    type: module
+  - url: /local/custom-lovelace/gauge-min.js
+    type: module    
+  - url: /local/custom-lovelace/card-tools.js
+    type: js
+  - url: /local/custom-lovelace/layout-card.js
+    type: js    
+  - url: /local/custom_ui/dark-sky-weather-card.js?v=5
+    type: js    
+  - url: /local/custom-lovelace/simple-thermostat.js?v=1
+    type: module
+  - url: /local/custom-lovelace/mini-media-player-bundle.js?v=0.9.7
+    type: module
+  - url: /local/custom-lovelace/surveillance-card.js?v=0
+    type: module
+  - url: /local/custom-lovelace/slider-entity-row.js
+    type: js
+  - url: /local/custom-lovelace/button-entity-row.js
+    type: js
+  - url: /local/custom-lovelace/vertical-stack-in-card.js?v=0.0.9
+    type: js
+  - url: /local/custom-lovelace/button-card.js
+    type: module
+  - url: /local/custom-lovelace/tracker-card.js?v=0
+    type: js
+  - url: /local/custom-lovelace/tiles-card.js?v=0.1
+    type: js    
+  - url: /local/custom-lovelace/useful-markdown-card.js
+    type: js  
+
+views:
+
+
+######################################################################################################################  
+######################################################################################################################    
+#  HOME
+###################################################################################################################### 
+######################################################################################################################
+
+  - title: home_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+    icon: mdi:home
+    badges:
+      - sensor.activity_badge
+      - sensor.status_badge
+      - sensor.inuse_badge
+      - alarm_control_panel.maison
+      - sensor.home_badge
+      - device_tracker.my_device
+      - device_tracker.gabrielas_iphone    
+    cards:  
+      - type: vertical-stack
+        cards:    
+          - type: horizontal-stack
+            cards:
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:            
+                  type: "custom:button-card"
+                  icon: mdi:television
+                  entity: input_boolean.tv_power_switch
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:apple
+                  entity: switch.sonoff1
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:windows
+                  entity: switch.wake_on_lan
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:amplifier
+                  entity: input_boolean.amp_power_switch
+                  color: rgb(28, 128, 199)
+          - type: horizontal-stack
+            cards:
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                
+                  type: "custom:button-card"
+                  icon: mdi:playstation
+                  entity: switch.sonoff4
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:xbox
+                  entity: input_boolean.one_power_switch
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:nintendo-switch
+                  entity: switch.sonoff3
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:gamepad
+                  entity: light.multi
+                  color: rgb(28, 128, 199)
+          - type: horizontal-stack
+            cards:
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                
+                  type: "custom:button-card"
+                  icon: mdi:movie
+                  entity: input_boolean.zappiti_power_switch
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:google-chrome
+                  entity: switch.sonoff2
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:headset
+                  entity: light.astro
+                  color: rgb(28, 128, 199)
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:                      
+                  type: "custom:button-card"
+                  icon: mdi:fan
+                  entity: fan.salon
+                  color: rgb(28, 128, 199)   
+                
+              
+                
+          - type: conditional
+            conditions:
+              - entity: media_player.salon_2
+                state_not: "unavailable"
+              - entity: media_player.salon_2
+                state_not: "off"         
+            card:
+              type: custom:mini-media-player
+              icon: mdi:google-home
+              entity: media_player.salon_2
+              name: Salon
+              artwork: cover
+              power_color: true
+              hide_volume: false
+              show_progress: true   
+              group: true                 
+          - type: conditional
+            conditions:
+              - entity: media_player.chambre
+                state_not: "unavailable"
+              - entity: media_player.chambre
+                state_not: "off"         
+            card:
+              type: custom:mini-media-player
+              icon: mdi:google-home
+              entity: media_player.chambre
+              name: Chambre
+              artwork: cover
+              power_color: true
+              hide_volume: false
+              show_progress: true   
+              group: true                 
+                          
+          - type: conditional
+            conditions:
+              - entity: media_player.home_cinema_main
+                state_not: "unavailable"
+              - entity: media_player.home_cinema_main
+                state_not: "off"         
+            card:
+              type: custom:mini-media-player
+              icon: mdi:speaker
+              entity: media_player.home_cinema_main
+              name: Yamaha
+              artwork: cover
+              power_color: true
+              hide_volume: false
+              hide_controls: false                
+              show_progress: true 
+              toggle_power: toggle              
+              group: true                         
+ 
+          - type: vertical-stack
+            cards:   
+            
+              - type: horizontal-stack
+                cards:    
+                  
+                  - type: gauge
+                    name: Actuel
+                    unit: 'W'
+                    min: 0
+                    max: 500
+                    entity: sensor.current_power_usage
+                    severity:
+                      green: 0
+                      yellow: 200
+                      red: 350 
+               
+                     
+                  - type: gauge                     
+                    name: Jour
+                    unit: 'kW'
+                    entity: sensor.today_power_usage
+                    min: 0
+                    max: 5    
+                    severity:                        
+                      green: 0
+                      yellow: 3
+                      red: 4    
+            
+                    
+                  - type: gauge              
+                    name: Air
+                    entity:  sensor.netatmo_indoor_co2
+                    min: 0
+                    max: 2200
+                    severity:
+                      green: 0
+                      yellow: 700
+                      red: 1400   
+                      
+                    
+              - type: horizontal-stack
+                cards:
+                  - type: custom:card-modder
+                    #report_size: 3
+                    style:
+                      border-radius: 10px
+                    card:   
+                      type: "custom:mini-graph-card"
+                      entity: sensor.processor_use
+                      name: CPU Load
+                      line_width: 8
+                      line_color: '#e74c3c'                    
+                      hours_to_show: 24
+                      graph: line 
+                      detail: 2
+                  - type: custom:card-modder
+                    #report_size: 3                
+                    style:
+                      border-radius: 10px
+                    card:                
+                      type: "custom:mini-graph-card"
+                      entity: sensor.dark_sky_temperature
+                      name: Temperature
+                      line_color: '#3498db'
+                      line_width: 8
+                      hours_to_show: 24              
+                      graph: line      
+                      detail: 2
+                  - type: custom:card-modder
+                    #report_size: 3                 
+                    style:
+                      border-radius: 10px
+                    card:               
+                      type: "custom:mini-graph-card"
+                      entity: sensor.dark_sky_humidity
+                      name: Humidité
+                      line_color: '#e74c3c'
+                      line_width: 8   
+                      graph: line   
+                      hours_to_show: 24   
+                      detail: 2
+
+                        
+                         
+      - type: vertical-stack
+        cards:    
+          - type: custom:card-modder
+            style:
+              border-radius: 10px
+            card:            
+              type: custom:useful-markdown-card
+              content: >
+                 [[ sensor.summary.attributes.text ]]
+
+      - type: custom:card-modder
+        style:
+          border-radius: 10px
+        card:                        
+          type: custom:vertical-stack-in-card       
+          cards:  
+            - type: custom:card-modder
+              style:
+                border-radius: 10px
+              card:               
+                type: vertical-stack
+                cards:               
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: entities
+                      show_header_toggle: false   
+                      entities:            
+                        - type: custom:fold-entity-row
+                          head: group.salon
+
+                        - type: custom:fold-entity-row
+                          head: group.entree
+       
+                        - type: custom:fold-entity-row
+                          head: group.cuisine
+ 
+                        - type: custom:fold-entity-row
+                          head: group.chambre
+
+
+            - type: custom:card-modder
+              style:
+                border-radius: 10px
+              card:                             
+                type: horizontal-stack
+                cards:  
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/tropical.png
+                      tap_action:
+                        action: call-service
+                        service: scene.turn_on
+                        service_data:
+                          entity_id: scene.tropical
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/detente.png
+                      tap_action:
+                        action: call-service                
+                        service: script.toggle
+                        service_data:
+                          entity_id: script.detente       
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/savane.png
+                      tap_action:
+                        action: call-service                
+                        service: script.toggle
+                        service_data:
+                          entity_id: script.savane
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/dim.png
+                      tap_action:
+                        action: call-service                
+                        service: script.toggle
+                        service_data:
+                          entity_id: script.dim               
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/boreale.png
+                      tap_action:
+                        action: call-service                
+                        service: script.toggle
+                        service_data:
+                          entity_id: script.boreale  
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 10px
+                    card:                   
+                      type: picture
+                      image: /local/hue/spring.png
+                      tap_action:
+                        action: call-service               
+                        service: script.toggle
+                        service_data:
+                          entity_id: script.printemps   
+
+
+######################################################################################################################
+######################################################################################################################    
+#  SALON
+######################################################################################################################    
+######################################################################################################################
+
+  - title: salon_view
+    panel: true   
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+
+    icon: mdi:sofa
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:   
+          - type: custom:card-modder
+            style:
+              border-radius: 10px
+            card:              
+              type: entities
+              title: Salon
+              show_header_toggle: true
+              entities:
+            
+                - type: custom:slider-entity-row
+                  entity: light.lamp_1
+                  toggle: true   
+                - type: custom:slider-entity-row
+                  entity: light.lamp_2
+                  toggle: true    
+                - type: custom:slider-entity-row
+                  entity: light.play_1
+                  toggle: true    
+                - type: custom:slider-entity-row
+                  entity: light.play_2
+                  toggle: true      
+                - type: custom:slider-entity-row
+                  entity: light.strip_2
+                  toggle: true   
+                - type: custom:slider-entity-row
+                  entity: light.strip_3
+                  toggle: true    
+                - type: custom:slider-entity-row
+                  entity: light.signe_1
+                  toggle: true    
+                - type: custom:slider-entity-row
+                  entity: light.bloom_1
+                  toggle: true     
+                - type: custom:slider-entity-row
+                  entity: light.living
+                  toggle: true  
+          - break
+          - type: custom:card-modder
+            style:
+              border-radius: 10px
+            card:             
+              type: glance
+              show_name: false
+              entities:
+                - sensor.netatmo_indoor_temperature
+                - sensor.netatmo_indoor_humidity
+                - sensor.netatmo_indoor_noise
+                - sensor.netatmo_indoor_co2
+                - sensor.netatmo_indoor_pressure     
+          - type: custom:card-modder
+            style:
+              border-radius: 10px
+            card:                   
+              type: media-control
+              entity: media_player.salon_2  
+          - type: custom:card-modder
+            style:
+              border-radius: 10px
+            card:                 
+              type: custom:upcoming-media-card
+              entity: sensor.sonarr_upcoming_media     
+              image_style: fanart   
+     
+          - break  
+                
+
+          - type: vertical-stack
+            cards:
+              - type: custom:card-modder
+                style:
+                  border-radius: 50px
+                card:               
+                  type: "custom:button-card"
+                  entity: input_boolean.tv_power_switch                  
+                  color: rgb(66, 134, 244)
+                  color_off: rgb(75, 75, 77)   
+                  size: 20px                    
+                  icon: mdi:television                 
+              - type: horizontal-stack
+                cards:
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 50px
+                    card:                   
+                      type: "custom:button-card"
+                      entity: script.tvvolumedown
+                      size: 20px
+                      color: rgb(66, 134, 244)
+                      color_off: rgb(75, 75, 77)  
+                      icon: mdi:volume-minus
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 50px
+                    card:                   
+                      type: "custom:button-card"
+                      entity: script.tvvolumeup
+                      size: 20px                    
+                      color: rgb(66, 134, 244)
+                      color_off: rgb(75, 75, 77)  
+                      icon: mdi:volume-plus
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 50px
+                    card:                   
+                      type: "custom:button-card"
+                      entity: script.tvmute
+                      size: 20px                    
+                      color: rgb(66, 134, 244)
+                      color_off: rgb(75, 75, 77)  
+                      icon: mdi:volume-off  
+
+                      
+                      
+              - type: custom:card-modder
+                style:
+                  border-radius: 10px
+                card:                   
+
+                      
+                  type: entities
+                  entities:                  
+                    - input_select.tv_input_select
+                    - type: divider
+                      style:
+                        height: 20px
+                        margin: 4px 0
+                        background: center / cover no-repeat url("/local/divider2.png") fixed         
+                    - input_select.harmony_hub     
+                    - type: divider
+                      style:
+                        height: 20px
+                        margin: 4px 0
+                        background: center / cover no-repeat url("/local/divider2.png") fixed                    
+            
+                    - input_select.amp_input_select    
+                    - type: divider
+                      style:
+                        height: 20px
+                        margin: 4px 0
+                        background: center / cover no-repeat url("/local/divider2.png") fixed                       
+              - type: vertical-stack
+                cards:
+                    
+                  - type: horizontal-stack
+                    cards:
+                      - type: custom:card-modder
+                        style:
+                          border-radius: 50px
+                        card:               
+                          type: "custom:button-card"
+                          entity: script.amp_volumedown
+                          size: 20px
+
+                          color: rgb(66, 134, 244)
+                          color_off: rgb(75, 75, 77)  
+                          icon: mdi:volume-minus
+                      - type: custom:card-modder
+                        style:
+                          border-radius: 50px
+                        card:               
+                          type: "custom:button-card"
+                          entity: script.amp_volumeup
+
+                          size: 20px                    
+                          color: rgb(66, 134, 244)
+                          color_off: rgb(75, 75, 77)  
+                          icon: mdi:volume-plus
+                      - type: custom:card-modder
+                        style:
+                          border-radius: 50px
+                        card:               
+                          type: "custom:button-card"
+                          entity: script.amp_mute
+
+                          size: 20px                    
+                          color: rgb(66, 134, 244)
+                          color_off: rgb(75, 75, 77)   
+                          icon: mdi:volume-off   
+                  - type: custom:card-modder
+                    style:
+                      border-radius: 50px
+                    card:               
+                      type: "custom:button-card"
+                      entity: input_boolean.amp_power_switch                  
+
+                      color: rgb(66, 134, 244)
+                      color_off: rgb(75, 75, 77)   
+                      size: 20px                    
+                      icon: mdi:amplifier                      
+
+
+######################################################################################################################
+######################################################################################################################    
+#  CHAMBRE
+######################################################################################################################
+######################################################################################################################   
+
+  - title: chambre_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+
+    icon: mdi:hotel
+    cards: 
+      - type: glance
+        show_name: false
+        entities:   
+          - sensor.netatmo_chambre_temperature
+          - sensor.netatmo_chambre_humidity         
+      - type: entities
+        title: Chambre
+        show_header_toggle: true
+        entities:      
+          - type: custom:slider-entity-row
+            entity: light.strip_1
+            toggle: true   
+          - type: custom:slider-entity-row
+            entity: light.lamp_6     
+            toggle: true         
+      - type: media-control
+        entity: media_player.chambre  
+
+
+######################################################################################################################
+######################################################################################################################    
+#  CLIMAT         
+######################################################################################################################  
+######################################################################################################################
+
+  - title: climat_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+    panel: true   
+    icon: mdi:thermometer-lines
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:       
+          - type: vertical-stack
+            cards:          
+              - type: custom:simple-thermostat
+                entity: climate.salon
+                icon: mdi:radiator
+                step_size: 1
+                sensors:
+                  - entity: sensor.salon_humidity_2
+                    name: Humidité
+                hide:
+                  mode: false    
+          
+              - type: custom:simple-thermostat
+                entity: climate.chambre
+                icon: mdi:radiator
+                step_size: 1
+                sensors:
+                  - entity: sensor.cuisine_humidity
+                    name: Humidité
+                hide:
+                  mode: false  
+          - break        
+
+          - type: custom:simple-thermostat
+            entity: climate.chauffage
+            icon: mdi:radiator
+            step_size: 1
+            sensors:
+              - entity: sensor.chauffage_humidity
+                name: Humidité
+            hide:
+              mode: false              
+ 
+
+
+          - type: custom:vertical-stack-in-card
+            cards:      
+
+  
+              - type: entities
+                entities:
+                  - input_number.dyson_fan_speed
+
+              - type: custom:vertical-stack-in-card
+                cards:
+                  - type: vertical-stack
+                    cards:               
+        
+                      - type: horizontal-stack
+                        cards:
+                          - type: "custom:button-card"
+                            entity: fan.salon
+                            size: 20px
+                            color_type: card
+                            color: rgb(66, 134, 244)
+                            color_off: rgb(75, 75, 77)                            
+                            icon: mdi:power
+                          - type: "custom:button-card"
+                            entity: input_boolean.fan
+                            color_type: card
+                            size: 20px                    
+                            color: rgb(66, 134, 244)
+                            color_off: rgb(75, 75, 77)     
+                            icon: mdi:rotate-3d      
+                  
+              - type: glance
+                show_name: true
+                entities:
+
+                  - sensor.salon_aqi
+                  - sensor.salon_dust
+                  - sensor.salon_filter_life
+          - break         
+          - type: custom:simple-thermostat
+            entity: climate.cuisine
+            icon: mdi:radiator
+            step_size: 1
+            sensors:
+              - entity: sensor.salle_de_bain_humidity
+                name: Humidité
+            hide:
+              mode: false    
+          - type: custom:simple-thermostat
+            entity: climate.salle_de_bain
+            icon: mdi:radiator
+            step_size: 1
+            sensors:
+              - entity: sensor.cuisine_humidity
+                name: Humidité
+            hide:
+              mode: false       
+
+
+######################################################################################################################                       
+######################################################################################################################    
+#  METEO
+######################################################################################################################    
+######################################################################################################################
+
+  - title: weather_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+    panel: true   
+    icon: mdi:weather-partlycloudy
+    cards:             
+
+      - type: custom:layout-card
+        layout: vertical
+        cards:       
+          - type: vertical-stack
+            cards:          
+
+ 
+
+              - type: custom:dark-sky-weather-card
+                entity_sun: sun.sun
+                entity_daily_summary: sensor.dark_sky_daily_summary
+                entity_current_conditions: sensor.dark_sky_icon  
+                entity_humidity: sensor.dark_sky_humidity
+                entity_pressure: sensor.dark_sky_pressure
+                entity_temperature: sensor.dark_sky_temperature
+                entity_visibility: sensor.dark_sky_visibility
+                entity_wind_bearing: sensor.dark_sky_wind_bearing
+                entity_wind_speed: sensor.dark_sky_wind_speed
+                entity_forecast_high_temp_1: sensor.dark_sky_daytime_high_temperature_1
+                entity_forecast_high_temp_2: sensor.dark_sky_daytime_high_temperature_2
+                entity_forecast_high_temp_3: sensor.dark_sky_daytime_high_temperature_3
+                entity_forecast_high_temp_4: sensor.dark_sky_daytime_high_temperature_4
+                entity_forecast_high_temp_5: sensor.dark_sky_daytime_high_temperature_5
+                entity_forecast_low_temp_1: sensor.dark_sky_overnight_low_temperature_1
+                entity_forecast_low_temp_2: sensor.dark_sky_overnight_low_temperature_2
+                entity_forecast_low_temp_3: sensor.dark_sky_overnight_low_temperature_3
+                entity_forecast_low_temp_4: sensor.dark_sky_overnight_low_temperature_4
+                entity_forecast_low_temp_5: sensor.dark_sky_overnight_low_temperature_5
+                entity_forecast_icon_1: sensor.dark_sky_icon_1
+                entity_forecast_icon_2: sensor.dark_sky_icon_2
+                entity_forecast_icon_3: sensor.dark_sky_icon_3
+                entity_forecast_icon_4: sensor.dark_sky_icon_4
+                entity_forecast_icon_5: sensor.dark_sky_icon_5
+
+              - type: history-graph
+                title: 'Température'
+                entities: [sensor.salon_temperature_2, sensor.chambre_temperature, sensor.cuisine_temperature, sensor.salle_de_bain_temperature,]
+              - type: entities
+                show_header_toggle: false
+                entities:
+                  - sensor.waqi_pha10vrsovice_prague_czech_republic
+          - break
+          - type: custom:vertical-stack-in-card
+            cards:  
+              - type: entities
+                show_header_toggle: false
+                entities:
+            
+
+                  - type: custom:fold-entity-row
+                    head: sensor.uv_friendly
+                    items:
+                      - sensor.uv  
+                  - type: custom:fold-entity-row
+                    head: sensor.aqi_friendly
+                    items:
+                      - sensor.aqi                       
+                  - type: custom:fold-entity-row
+                    head: sensor.aqi_particles_friendly
+                    items:
+                      - sensor.aqi_particles  
+                  - type: custom:fold-entity-row
+                    head: sensor.aqi_ozone_friendly
+                    items:
+                      - sensor.aqi_ozone                             
+                  - type: custom:fold-entity-row
+                    head: sensor.aqi_nitrogen_dioxide_friendly
+                    items:
+                      - sensor.aqi_nitrogen_dioxide  
+                  - type: custom:fold-entity-row
+                    head: sensor.aqi_sulphur_dioxide_friendly
+                    items:
+                      - sensor.aqi_sulphur_dioxide                       
+
+          - type: history-graph
+            title: 'Humidité'
+            entities: [sensor.salon_humidity_2, sensor.chambre_humidity, sensor.cuisine_humidity, sensor.salle_de_bain_humidity,]                
+                  
+          - type: iframe
+            url: http://labelrouge.ddns.net:3000/d-solo/HuMNp1zRk/maison-climat?orgId=1&panelId=20" width="450" height="200" frameborder
+            aspect_ratio: 30%  
+        
+
+
+
+######################################################################################################################
+######################################################################################################################    
+#  REMOTE 
+###################################################################################################################### 
+######################################################################################################################
+
+  - title: remote_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal1.png") fixed    
+    panel: true  
+    icon: mdi:remote
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:   
+          - type: entities
+            show_header_toggle: false
+            entities:        
+              - input_select.tv_input_select
+
+          - type: vertical-stack
+
+            cards:             
+
+              - type: vertical-stack
+                cards:
+                  - type: "custom:button-card"
+                    entity: input_boolean.tv_power_switch                  
+                    color_type: card
+                    color: rgb(44, 109, 214)
+                    color_off: rgb(125, 125, 125)  
+                    size: 20px                    
+                    icon: mdi:power-standby                  
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tvmute
+                        color_type: card
+                        size: 20px           
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-off                          
+                      - type: "custom:button-card"
+                        entity: script.tvvolumedown
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-minus                        
+         
+                      - type: "custom:button-card"
+                        entity: script.tvvolumeup
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-plus
+ 
+                         
+                             
+              - type: vertical-stack
+                cards:
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.1515352997947
+                        size: 15px
+                        color_type: card
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: HDMI 1
+                      - type: "custom:button-card"
+                        entity: script.1515352957625
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: HDMI 2
+                      - type: "custom:button-card"
+                        entity: script.1515337890501
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: HDMI 3    
+                      - type: "custom:button-card"
+                        entity: script.tvhdmi4
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: HDMI 4   
+                      - type: "custom:button-card"
+                        entity: script.tvinputtv
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: TV                                                               
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tvhome
+                        size: 20px
+                        color_type: card
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:menu
+                      - type: "custom:button-card"
+                        entity: script.tvup
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-up-bold
+                      - type: "custom:button-card"
+                        entity: script.tvplay
+                        size: 20px
+                        color_type: card
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)                        
+                        icon: mdi:play                  
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tvleft
+                        size: 20px
+                        color_type: card
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-left-bold
+                      - type: "custom:button-card"
+                        entity: script.tvok
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        name: OK
+                      - type: "custom:button-card"
+                        entity: script.tvright
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-right-bold     
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tvback
+                        size: 20px
+                        color_type: card
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:keyboard-return
+                      - type: "custom:button-card"
+                        entity: script.tvdown
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-down-bold
+                      - type: "custom:button-card"
+                        entity: script.tvstop
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:stop   
+
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tv01
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-1-box-outline
+                      - type: "custom:button-card"
+                        entity: script.tv02
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-2-box-outline
+                      - type: "custom:button-card"
+                        entity: script.tv03
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-3-box-outline                 
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tv04
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-4-box-outline
+                      - type: "custom:button-card"
+                        entity: script.tv05
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-5-box-outline
+
+                      - type: "custom:button-card"
+                        entity: script.tv06
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-6-box-outline    
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.tv07
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-7-box-outline
+                      - type: "custom:button-card"
+                        entity: script.tv08
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-8-box-outline
+                      - type: "custom:button-card"
+                        entity: script.tv09
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-9-box-outline 
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        color_type: blank-card
+                      - type: "custom:button-card"
+                        entity: script.tv00
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:numeric-0-box-outline
+                      - type: "custom:button-card"
+                        color_type: blank-card                      
+                                                    
+
+                        
+
+          - break
+          - type: entities
+            show_header_toggle: false
+            entities:
+      
+              - input_select.harmony_hub      
+        
+          - break
+          - type: vertical-stack
+
+            cards: 
+              - type: entities
+                show_header_toggle: false
+                entities:                 
+                  - input_select.amp_input_select                        
+
+              - type: vertical-stack
+                cards:
+                  - type: "custom:button-card"
+                    entity: input_boolean.amp_power_switch                  
+                    color_type: card
+                    color: rgb(44, 109, 214)
+                    color_off: rgb(125, 125, 125)
+                    
+                    size: 20px                    
+                    icon: mdi:power-standby                  
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_mute
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-off                       
+                      - type: "custom:button-card"
+                        entity: script.amp_volumedown
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-minus
+                      - type: "custom:button-card"
+                        entity: script.amp_volumeup
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:volume-plus
+
+        
+     
+
+
+              - type: vertical-stack
+                cards:
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_pc
+                        size: 15px
+                        color_type: card
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 1
+                      - type: "custom:button-card"
+                        entity: script.amp_apple_tv
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 2
+                      - type: "custom:button-card"
+                        entity: script.amp_ps4
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 3     
+                      - type: "custom:button-card"
+                        entity: script.amp_retro
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 4    
+                      - type: "custom:button-card"
+                        entity: script.amp_360
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 5    
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_zappiti
+                        size: 15px
+                        color_type: card
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 6
+                      - type: "custom:button-card"
+                        entity: script.amp_switch
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(66, 134, 244)
+                        color_off: rgb(75, 75, 77)
+                        name: INPUT 7
+                      - type: "custom:button-card"
+                        entity: script.amp_tv
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: TV    
+                      - type: "custom:button-card"
+                        entity: script.amp_chromecast
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: AUDIO    
+                      - type: "custom:button-card"
+                        entity: script.amp_musicast
+                        color_type: card
+                        size: 15px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        name: SERVER                                                                                         
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_menu
+                        size: 20px
+                        color_type: card
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:menu
+                      - type: "custom:button-card"
+                        entity: script.amp_up
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-up-bold
+                      - type: "custom:button-card"
+                        entity: script.amp_play
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:play                  
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_left
+                        size: 20px
+                        color_type: card
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-left-bold
+                      - type: "custom:button-card"
+                        entity: script.amp_ok
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        name: OK
+                      - type: "custom:button-card"
+                        entity: script.amp_right
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-right-bold     
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_back
+                        size: 20px
+                        color_type: card
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:keyboard-return
+                      - type: "custom:button-card"
+                        entity: script.amp_down
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(44, 109, 214)
+                        color_off: rgb(44, 109, 214)
+                        icon: mdi:arrow-down-bold
+                      - type: "custom:button-card"
+                        entity: script.amp_stop
+                        color_type: card
+                        size: 20px                    
+                        color: rgb(75, 75, 77)
+                        color_off: rgb(75, 75, 77)
+                        icon: mdi:stop 
+                        
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_option
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        name: Options
+                      - type: "custom:button-card"
+                        entity: script.amp_info
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:information-outline                        
+
+                      - type: "custom:button-card"
+                        entity: script.amp_display
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        name: Display
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        entity: script.amp_enhancer
+                        size: 20px
+                        color_type: card
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        name: Enhancer
+                      - type: "custom:button-card"
+                        entity: script.amp_dolby
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:dolby
+                      - type: "custom:button-card"
+                        entity: script.amp_straight
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        name: Straight    
+                  - type: horizontal-stack
+                    cards:
+                      - type: "custom:button-card"
+                        color_type: blank-card
+                      - type: "custom:button-card"
+                        entity: script.amp_sleep
+                        color_type: card
+                        size: 20px                    
+                        color_off: rgb(125, 125, 125)
+                        color: rgb(125, 125, 125)
+                        icon: mdi:sleep
+                      - type: "custom:button-card"
+                        color_type: blank-card                      
+                                                                          
+  
+
+######################################################################################################################         
+######################################################################################################################    
+#  CAST                 
+######################################################################################################################    
+######################################################################################################################
+
+  - title: music_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed     
+    icon: mdi:cast-connected
+    cards:
+      - type: vertical-stack
+        cards:  
+
+          - type: conditional
+            conditions:
+              - entity: media_player.salon_2
+                state_not: "unavailable"
+              - entity: media_player.salon_2
+                state_not: "off"         
+            card:
+              type: media-control
+              entity: media_player.salon_2   
+               
+          - type: conditional
+            conditions:
+              - entity: media_player.chambre
+                state_not: "unavailable"
+              - entity: media_player.chambre
+                state_not: "off"         
+            card:
+              type: media-control
+              entity: media_player.chambre                  
+ 
+
+                          
+          - type: conditional
+            conditions:
+              - entity: media_player.home_cinema_main
+                state_not: "unavailable"
+              - entity: media_player.home_cinema_main
+                state_not: "off"         
+            card:
+              type: media-control
+              entity: media_player.home_cinema_main  
+        
+          - type: custom:mini-media-player
+            icon: mdi:google-home
+            entity: media_player.salon_2
+            name: Salon
+            artwork: cover
+            power_color: true
+            hide_controls: true              
+            hide_volume: false
+            show_progress: true     
+          - type: custom:mini-media-player
+            icon: mdi:google-circles-communities
+            entity: media_player.chambre
+            name: Chambre
+            artwork: cover
+            power_color: true
+            hide_volume: false
+            hide_controls: true              
+            show_progress: true     
+
+          - type: custom:mini-media-player
+            icon: mdi:speaker      
+            entity: media_player.home_cinema_main
+            name: Yamaha
+            artwork: cover
+            power_color: false
+            hide_volume: false
+            hide_controls: true       
+            show_progress: false  
+
+
+######################################################################################################################
+######################################################################################################################    
+#  PLUGS         
+######################################################################################################################
+######################################################################################################################
+
+  - title: plugs_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed       
+    icon: mdi:flash
+    panel : true
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:        
+           
+          - type: horizontal-stack
+            cards:
+
+              - type: "custom:button-card"
+                icon: mdi:television
+                entity: input_boolean.tv_power_switch
+                color: rgb(28, 128, 199)
+
+              - type: "custom:button-card"
+                icon: mdi:apple
+                entity: switch.sonoff1
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:windows
+                entity: switch.wake_on_lan
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:amplifier
+                entity: input_boolean.amp_power_switch
+                color: rgb(28, 128, 199)
+
+          - type: horizontal-stack
+            cards:
+
+              - type: "custom:button-card"
+                icon: mdi:playstation
+                entity: switch.sonoff4
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:xbox
+                entity: input_boolean.one_power_switch
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:nintendo-switch
+                entity: switch.sonoff3
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:gamepad
+                entity: light.multi
+                color: rgb(28, 128, 199)
+
+          - type: horizontal-stack
+            cards:
+
+              - type: "custom:button-card"
+                icon: mdi:movie
+                entity: input_boolean.zappiti_power_switch
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:google-chrome
+                entity: switch.sonoff2
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:headset
+                entity: light.astro
+                color: rgb(28, 128, 199)
+              - type: "custom:button-card"
+                icon: mdi:fan
+                entity: fan.salon
+                color: rgb(28, 128, 199)  
+
+
+          - type: custom:vertical-stack-in-card
+
+            cards:             
+
+              - type: vertical-stack
+                cards:
+                  - type: "custom:button-card"
+                    entity: switch.tplink_1                 
+                    color_type: card
+                    color: rgb(44, 109, 214)
+                    size: 20px            
+                    name: Tplink 1
+                    icon: mdi:power-standby  
+                    
+              - type: horizontal-stack
+                cards:                
+                  - type: gauge
+                    name: Actuel
+                    unit: 'W'
+                    min: 0
+                    max: 500
+                    entity: sensor.tplink_1_current_power_w
+                    severity:
+                      green: 0
+                      yellow: 200
+                      red: 350 
+                  - type: gauge
+                    name: Jour
+                    unit: 'kW'
+                    entity: sensor.tplink_1_today_energy_kwh
+                    severity:
+                      green: 0
+                      yellow: 45
+                      red: 85    
+                  - type: gauge
+                    name: Total
+                    unit: 'kW'
+                    entity: sensor.tplink_1_total_energy_kwh
+                    severity:
+                      green: 0
+                      yellow: 45
+                      red: 85      
+
+          - type: custom:vertical-stack-in-card
+
+            cards:             
+
+              - type: vertical-stack
+                cards:
+                  - type: "custom:button-card"
+                    entity: switch.tplink_2                 
+                    color_type: card
+                    color: rgb(44, 109, 214)
+                    size: 20px            
+                    name: Tplink 2
+                    icon: mdi:power-standby  
+                    
+              - type: horizontal-stack
+                cards:                
+                  - type: gauge
+                    name: Actuel
+                    unit: 'W'
+                    min: 0
+                    max: 500
+                    entity: sensor.tplink_2_current_power_w
+                    severity:
+                      green: 0
+                      yellow: 200
+                      red: 350 
+                  - type: gauge
+                    name: Jour
+                    unit: 'kW'
+                    entity: sensor.tplink_2_today_energy_kwh
+                    severity:
+                      green: 0
+                      yellow: 45
+                      red: 85    
+                  - type: gauge
+                    name: Total
+                    unit: 'kW'
+                    entity: sensor.tplink_2_total_energy_kwh
+                    severity:
+                      green: 0
+                      yellow: 45
+                      red: 85   
+          - break                
+
+          - type: history-graph
+            title: 'Consommation'
+            entities: 
+
+              - entity: sensor.current_power_usage
+                name: Total
+              - entity: sensor.tplink_1_current_power_w
+                name: tplink 1                  
+              - entity: sensor.tplink_2_current_power_w
+                name: tplink 2          
+
+          - type: horizontal-stack
+            cards:                
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=2" width="450" height="200" frameborder
+                aspect_ratio: 60%    
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=3" width="450" height="200" frameborder
+                aspect_ratio: 60%          
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=5" width="450" height="200" frameborder
+                aspect_ratio: 60%        
+          - type: horizontal-stack
+            cards:                
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=10" width="450" height="200" frameborder
+                aspect_ratio: 60%    
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=6" width="450" height="200" frameborder
+                aspect_ratio: 60%          
+              - type: iframe
+                url: http://labelrouge.ddns.net:3000/d-solo/XMgGL2WRz/maison-energie-copy?orgId=1&panelId=7" width="450" height="200" frameborder
+                aspect_ratio: 60%    
+
+
+######################################################################################################################
+######################################################################################################################    
+#  LAMPES      
+######################################################################################################################
+######################################################################################################################  
+
+  - title: lights_view
+    panel: true     
+    icon: mdi:lightbulb
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed    
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:       
+          - type: entities
+            title: Salon
+            show_header_toggle: true
+            entities:
+              - type: custom:slider-entity-row
+                entity: light.lamp_1
+                toggle: true   
+              - type: custom:slider-entity-row
+                entity: light.lamp_2
+                toggle: true    
+              - type: custom:slider-entity-row
+                entity: light.play_1
+                toggle: true    
+              - type: custom:slider-entity-row
+                entity: light.play_2
+                toggle: true      
+              - type: custom:slider-entity-row
+                entity: light.strip_2
+                toggle: true   
+              - type: custom:slider-entity-row
+                entity: light.strip_3
+                toggle: true    
+              - type: custom:slider-entity-row
+                entity: light.signe_1
+                toggle: true    
+              - type: custom:slider-entity-row
+                entity: light.bloom_1
+                toggle: true     
+              - type: custom:slider-entity-row
+                entity: light.living
+                toggle: true     
+          - break     
+          - type: custom:vertical-stack-in-card                
+            cards:        
+              - type: horizontal-stack
+                cards:                 
+                  - type: picture
+                    image: /local/hue/tropical.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.tropical
+                  - type: picture
+                    image: /local/hue/detente.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.detente       
+                  - type: picture
+                    image: /local/hue/savane.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.savane
+                  - type: picture
+                    image: /local/hue/disco.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.tropical               
+                  - type: picture
+                    image: /local/hue/green.png
+                    service: script.toggle
+                    service_data:
+                     entity_id: script.tropical  
+                      
+              - type: horizontal-stack
+                cards:                 
+                  - type: picture
+                    image: /local/hue/spring.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.printemps
+                  - type: picture
+                    image: /local/hue/boreale.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.boreale      
+                  - type: picture
+                    image: /local/hue/dim.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.dim
+                  - type: picture
+                    image: /local/hue/candle.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.tropical               
+                  - type: picture
+                    image: /local/hue/blue.png
+                    service: script.toggle
+                    service_data:
+                      entity_id: script.tropical  
+          - type: vertical-stack
+            cards:           
+              - type: entities
+                title: Chambre
+                show_header_toggle: true
+                entities:
+                  - type: custom:slider-entity-row
+                    entity: light.strip_1
+                    toggle: true   
+                  - type: custom:slider-entity-row
+                    entity: light.lamp_6       
+                    toggle: true     
+
+          - break                  
+          - type: entities
+            title: Cuisine
+            show_header_toggle: true
+            entities:
+              - type: custom:slider-entity-row
+                entity: light.lamp_4
+                toggle: true   
+              - type: custom:slider-entity-row
+                entity: light.lamp_5        
+                toggle: true 
+              - type: custom:slider-entity-row
+                entity: light.gateway_light_7811dcb7aac9
+                toggle: true                    
+                      
+          - type: entities
+            title: "Entr\xE9e"
+            show_header_toggle: true
+            entities:
+              - type: custom:slider-entity-row
+                entity: light.spot_1
+                toggle: true   
+              - type: custom:slider-entity-row
+                entity: light.spot_2
+                toggle: true   
+              - type: custom:slider-entity-row
+                entity: light.lamp_3
+                toggle: true   
+
+######################################################################################################################
+######################################################################################################################    
+#  CAMERA             
+######################################################################################################################
+######################################################################################################################
+
+  - title: camera_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed        
+    icon: mdi:cctv
+    cards:    
+      - type: picture-entity
+        title: Salon
+        entity: camera.salon
+        camera_image: camera.salon
+        show_info: true
+        tap_action: dialog
+
+
+######################################################################################################################
+######################################################################################################################    
+#  MAP      
+######################################################################################################################  
+######################################################################################################################
+
+  - title: map_view
+    icon: mdi:map-marker-radius
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed         
+    cards:
+      - type: map
+        aspect_ratio: 16:9
+        default_zoom: 13
+        entities:
+          - device_tracker.my_device
+          - zone.home
+
+
+######################################################################################################################
+######################################################################################################################    
+#  FLOORPLAN        
+###################################################################################################################### 
+######################################################################################################################
+
+  - title: floorplan_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed       
+    icon: mdi:floor-plan
+    cards:
+
+
+######################################################################################################################
+######################################################################################################################    
+#  AUTOMATIONS     
+######################################################################################################################
+######################################################################################################################
+
+  - title: automations_view
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed      
+    icon: mdi:file-document
+    cards:
+
+
+######################################################################################################################
+######################################################################################################################    
+#  ENTREE    
+######################################################################################################################
+######################################################################################################################
+
+  - title: entree_view
+    icon: mdi:security-home
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed          
+    panel: true    
+    cards:
+      - type: custom:layout-card
+        layout: vertical
+        cards:   
+          - type: vertical-stack
+            cards:            
+              - type: entities
+                title: "Entr\xE9e"
+                show_header_toggle: true
+                entities:
+                  - light.spot_1
+                  - light.spot_2     
+                  - light.lamp_3                  
+              - type: entities
+                title: Réveil
+                show_header_toggle: false
+                entities:
+                  - sensor.alarmclock_wd_time_template
+                  - input_boolean.alarmclock_wd_enabled
+                  - input_number.alarmclock_wd_hour
+                  - input_number.alarmclock_wd_minute        
+
+          - break 
+          - type: custom:alarm_control_panel-card
+            entity: alarm_control_panel.maison
+            show_keypad: true
+            title: Alarme
+            style: '--alarm-color-disarmed: var(--label-badge-blue);'
+            states:
+              - arm_home
+              - arm_away
+            labels:
+              ui.card.alarm_control_panel.code: Entrer un code a 4 chiffres
+              state.alarm_control_panel.arm_away: Away!!                 
+
+          - break                
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - binary_sensor.door_window_sensor_158d0001de6572
+              - sensor.couloir_template                
+              - sensor.cuisine_template  
+              - type: divider      
+              - input_select.gateway_sound
+              - input_number.gateway_volume              
+              - input_number.loop_delay
+              - script.play_sel_sound_single
+              - script.play_sel_sound
+              - input_boolean.mute_gateway_sounds
+
+######################################################################################################################
+######################################################################################################################    
+#  SETTINGS            
+######################################################################################################################   
+######################################################################################################################
+
+  - title: settings_view
+    icon: mdi:settings
+    background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed        
+    cards:
+      - type: entities
+        title: Profile
+        show_header_toggle: false
+        entities:
+          - input_select.ha_mode
+      - type: custom:vertical-stack-in-card
+        title: Systeme
+        cards:          
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - script.1516752539526
+              - sensor.time_template
+              - sensor.since_last_boot_template
+              - sensor.version
+                            
+          - type: horizontal-stack
+            cards:                
+              - type: gauge
+                name: CPU
+                unit: '%'
+                min: 0
+                max: 100
+                entity: sensor.processor_use
+                severity:
+                  green: 0
+                  yellow: 200
+                  red: 350 
+              - type: gauge
+                name: MEM
+                unit: '%'
+                min: 0
+                max: 100                
+                entity: sensor.memory_use_percent
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 85    
+              - type: gauge
+                name: DISK
+                unit: 'GB'
+                min: 0
+                max: 100                
+                entity: sensor.disk_free_
+                severity:
+                  green: 0
+                  yellow: 45
+                  red: 85                 
+      - type: entities
+        title: Themes
+        show_header_toggle: false
+        entities:
+          - input_select.hass_theme
+      - type: glance
+        title: Sabnzbd
+        entities:          
+          - sensor.sabnzbd_status
+          - sensor.sabnzbd_speed
+          - sensor.sabnzbd_left
+          - sensor.sabnzbd_queue
+          - sensor.sabnzbd_disk_free
+      - type: glance
+        title: Synology
+        entities:     
+          - sensor.cpu_load_total
+          - sensor.memory_usage_real
+          - sensor.network_down
+          - sensor.network_up
+          - sensor.volume_used_volume_1

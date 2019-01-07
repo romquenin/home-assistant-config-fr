@@ -1,0 +1,41 @@
+PmxDefault:
+  base-hue: '220' #Controls the base (and accent) color hue (0-360) | 0=Red 60=Yellow 120=Green 180=Cyan 240=Blue 300=Magenta 360=Red
+  base-sat: '5%' #Controls the saturation of the theme (0%-100%) | 0%=Grey 100%=Full Saturation
+  # MyVar
+  huesat: 'var(--base-hue), var(--base-sat),'
+  # Primary Color
+  primary-color: 'hsl(var(--huesat) 36%)' #header colors and some text colors
+
+  # Backgrounds
+  primary-background-color: 'hsl(0, 0%, 98%)'
+  secondary-background-color: 'hsl(0, 0%, 95%)'
+  paper-card-background-color: 'var(--primary-background-color)'
+  # Text colors
+  primary-text-color: 'hsl(0, 0%, 50%)'
+  secondary-text-color: 'hsl(0, 0%, 60%)'
+  disabled-text-color: 'hsl(0, 0%, 70%)'
+  # Divider
+  divider-color: 'hsla(0, 0%, 0%, 0)'  
+  # Paper card
+  paper-card-header-color: 'hsla(0, 0%, 0%, 0.5)'
+  paper-item-icon-color: 'hsl(0, 0%, 80%)'
+  paper-item-icon_-_color: 'var(--paper-item-icon-color)'  
+  # Nav Menu
+  paper-listbox-color: 'hsl(0, 0%, 85%)'
+  paper-grey-200: 'hsl(0, 0%, 95%)'
+  # Switches
+  paper-toggle-button-checked-ink-color: 'hsl(192, 0%, 50%)'
+  paper-toggle-button-checked-button-color: 'hsl(192, 0%, 98%)'
+  paper-toggle-button-checked-bar-color: 'hsl(192, 0%, 50%)'
+  paper-toggle-button-unchecked-bar-color: 'hsl(192, 0%, 85%)'
+  # Shadows  
+  # Sliders
+  paper-slider-knob-color: 'var(--primary-color)'
+  paper-slider-knob-start-color: 'var(--primary-color)'
+  paper-slider-pin-color: 'var(--primary-color)'
+  paper-slider-active-color: 'var(--primary-color)'
+  paper-slider-secondary-color: 'hsl(0, 0%, 90%)'
+  # Labels
+  label-badge-red: 'var(--primary-color)'
+  label-badge-background-color: 'var(--paper-card-background-color)'
+  accent-color: '#f1c40f'

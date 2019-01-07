@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- (c) ammap.com | SVG weather icons -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="64"
+   height="64"
+   id="svg72"
+   sodipodi:docname="rainy-1.svg"
+   viewBox="0 0 64 64"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata76">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="724"
+     inkscape:window-height="480"
+     id="namedview74"
+     showgrid="false"
+     inkscape:zoom="3.6875"
+     inkscape:cx="-14.644068"
+     inkscape:cy="32"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg72" />
+  <defs
+     id="defs19">
+    <filter
+       id="blur"
+       width="2"
+       height="2">
+      <feGaussianBlur
+         in="SourceAlpha"
+         stdDeviation="3"
+         id="feGaussianBlur2" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offsetblur"
+         id="feOffset4" />
+      <feComponentTransfer
+         id="feComponentTransfer8">
+        <feFuncA
+           type="linear"
+           slope="0.05"
+           id="feFuncA6" />
+      </feComponentTransfer>
+      <feMerge
+         id="feMerge14">
+        <feMergeNode
+           id="feMergeNode10" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode12" />
+      </feMerge>
+    </filter>
+    <style
+       type="text/css"
+       id="style17"><![CDATA[
+/*
+** SUN
+*/
+@keyframes am-weather-sun {
+  0% {
+    -webkit-transform: rotate(0deg);
+       -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.am-weather-sun {
+  -webkit-animation-name: am-weather-sun;
+     -moz-animation-name: am-weather-sun;
+      -ms-animation-name: am-weather-sun;
+          animation-name: am-weather-sun;
+  -webkit-animation-duration: 9s;
+     -moz-animation-duration: 9s;
+      -ms-animation-duration: 9s;
+          animation-duration: 9s;
+  -webkit-animation-timing-function: linear;
+     -moz-animation-timing-function: linear;
+      -ms-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+/*
+** RAIN
+*/
+@keyframes am-weather-rain {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+.am-weather-rain-1 {
+  -webkit-animation-name: am-weather-rain;
+     -moz-animation-name: am-weather-rain;
+      -ms-animation-name: am-weather-rain;
+          animation-name: am-weather-rain;
+  -webkit-animation-duration: 8s;
+     -moz-animation-duration: 8s;
+      -ms-animation-duration: 8s;
+          animation-duration: 8s;
+  -webkit-animation-timing-function: linear;
+     -moz-animation-timing-function: linear;
+      -ms-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.am-weather-rain-2 {
+  -webkit-animation-name: am-weather-rain;
+     -moz-animation-name: am-weather-rain;
+      -ms-animation-name: am-weather-rain;
+          animation-name: am-weather-rain;
+  -webkit-animation-delay: 0.25s;
+     -moz-animation-delay: 0.25s;
+      -ms-animation-delay: 0.25s;
+          animation-delay: 0.25s;
+  -webkit-animation-duration: 8s;
+     -moz-animation-duration: 8s;
+      -ms-animation-duration: 8s;
+          animation-duration: 8s;
+  -webkit-animation-timing-function: linear;
+     -moz-animation-timing-function: linear;
+      -ms-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+     -moz-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+        ]]></style>
+  </defs>
+  <g
+     id="rainy-1"
+     style="filter:url(#blur)">
+    <g
+       transform="translate(20,10)"
+       id="g63">
+      <g
+         id="g57">
+        <g
+           class="am-weather-sun"
+           id="g53">
+          <g
+             id="g23">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line21"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(45)"
+             id="g27">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line25"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(90)"
+             id="g31">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line29"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(135)"
+             id="g35">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line33"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="scale(-1)"
+             id="g39">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line37"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(-135)"
+             id="g43">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line41"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(-90)"
+             id="g47">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line45"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+          <g
+             transform="rotate(-45)"
+             id="g51">
+            <line
+               transform="translate(0,9)"
+               x1="0"
+               x2="0"
+               y1="0"
+               y2="3"
+               id="line49"
+               style="fill:none;stroke:#ffa500;stroke-width:2;stroke-linecap:round" />
+          </g>
+        </g>
+        <circle
+           cx="0"
+           cy="0"
+           r="5"
+           id="circle55"
+           style="fill:#ffa500;stroke:#ffa500;stroke-width:2" />
+      </g>
+      <g
+         id="g61">
+        <path
+           d="m 47.7,35.4 c 0,-4.6 -3.7,-8.2 -8.2,-8.2 -1,0 -1.9,0.2 -2.8,0.5 -0.3,-3.4 -3.1,-6.2 -6.6,-6.2 -3.7,0 -6.7,3 -6.7,6.7 0,0.8 0.2,1.6 0.4,2.3 -0.3,-0.1 -0.7,-0.1 -1,-0.1 -3.7,0 -6.7,3 -6.7,6.7 0,3.6 2.9,6.6 6.5,6.7 h 17.2 c 4.4,-0.5 7.9,-4 7.9,-8.4 z"
+           id="path59"
+           inkscape:connector-curvature="0"
+           style="fill:#57a0ee;stroke:#ffffff;stroke-width:1.5;stroke-linejoin:round" />
+      </g>
+    </g>
+    <g
+       id="g69">
+      <line
+         class="am-weather-rain-1"
+         transform="translate(-6,1)"
+         x1="0"
+         x2="0"
+         y1="0"
+         y2="8"
+         id="line65"
+         style="fill:none;stroke:#91c0f8;stroke-width:2;stroke-linecap:round;stroke-dasharray:4, 7" />
+      <line
+         class="am-weather-rain-2"
+         transform="translate(0,-1)"
+         x1="0"
+         x2="0"
+         y1="0"
+         y2="8"
+         id="line67"
+         style="fill:none;stroke:#91c0f8;stroke-width:2;stroke-linecap:round;stroke-dasharray:4, 7" />
+    </g>
+  </g>
+</svg>

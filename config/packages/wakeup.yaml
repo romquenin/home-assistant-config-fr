@@ -1,0 +1,25 @@
+
+##################################################
+## Customizes
+##################################################
+
+homeassistant:
+  customize:
+    script.Wakeup:
+      icon: mdi:weather-sunset-up
+      can_cancel: false
+      show_last_changed: true
+
+
+##################################################
+## Scripts
+##################################################
+
+script:
+  wakeup:
+    alias: Wake Up
+    sequence:
+      - service: script.kodi_play_something
+      - delay:
+           minutes: 10
+      - service: script.mp_stop

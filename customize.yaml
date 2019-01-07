@@ -1,0 +1,320 @@
+######################################################################################################################    
+#  SWITCH
+###################################################################################################################### 
+  ###  SONOFF  ###
+switch.sonoff3:
+  friendly_name: Switch
+switch.sonoff4:
+  friendly_name: PS4
+switch.sonoff1:
+  friendly_name: Apple TV
+switch.sonoff2:
+  friendly_name: Chromecast
+
+  ###  WOL  ###
+switch.wake_on_lan:
+  friendly_name: PC
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true  
+
+######################################################################################################################    
+#  SENSOR
+######################################################################################################################   
+  ###  PYTHON SCRIPT SUMMARY  ###
+sensor.summary:
+  friendly_name: Summary
+  custom_ui_state_card: state-card-value_only
+
+  ###  SYSTEME  ###     
+sensor.version:
+  friendly_name: Version
+  icon: mdi:home-assistant  
+sensor.processor_use:
+  friendly_name: CPU Load
+  icon: mdi:chip
+sensor.memory_use_percent:
+  friendly_name: Memory Use
+sensor.disk_free_:
+  friendly_name: Disk Free
+sensor.memory_free:
+  friendly_name: Memory Free 
+
+  ###  PRESENCE  ###
+binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor:
+  friendly_name: Cuisine présence
+  icon: mdi:run    
+binary_sensor.motion_sensor_158d0001d556ae:
+  friendly_name: Couloir présence
+  icon: mdi:run  
+
+  ###  TEMPLATE  ###
+sensor.time_template:
+  friendly_name: Il est exactement
+  icon: mdi:clock      
+sensor.since_last_boot_template:
+  friendly_name: Allumé depuis
+  icon: mdi:av-timer
+sensor.cuisine_template:
+  friendly_name: Cuisine présence
+
+  ###  SABNZBD  ###
+sensor.sabnzbd_status:
+  friendly_name: Status
+sensor.sabnzbd_speed:
+  friendly_name: Download
+  icon: mdi:download
+sensor.sabnzbd_left:
+  friendly_name: Left
+  icon: mdi:progress-download
+sensor.sabnzbd_queue:
+  friendly_name: Queue
+  icon: mdi:chart-pie
+sensor.sabnzbd_disk_free:
+  friendly_name: Disk Free
+  icon: mdi:harddisk   
+
+  ###  SYNOLOGY  ###  
+sensor.cpu_load_total:
+  friendly_name: CPU Load
+sensor.memory_usage_real:
+  friendly_name: Memory Use
+sensor.network_down:
+  friendly_name: Download
+sensor.network_up:
+  friendly_name: Upload
+sensor.volume_used_volume_1:
+  friendly_name: Disk Use
+  icon: mdi:harddisk      
+
+  ###  DYSON  ###
+sensor.salon_temperature:
+  friendly_name: Température
+  icon: mdi:thermometer    
+sensor.salon_humidity:
+  friendly_name: Humidité
+  icon: mdi:water-percent  
+sensor.salon_aqi:
+  friendly_name: AQi
+sensor.salon_dust:
+  friendly_name: Poussière
+sensor.salon_filter_life:
+  friendly_name: Filtre
+
+  ###  TADO  ###  
+sensor.salle_de_bain_humidity:
+  friendly_name: Salle de bain humidité
+sensor.chambre_humidity:
+  friendly_name: Chambre humidité   
+sensor.cuisine_humidity:
+  friendly_name: Cuisine humidité 
+
+  ###  DARK SKY  ###
+sensor.dark_sky_humidity:
+  friendly_name: Humidité   
+
+   ###  WAQI  ###  
+sensor.waqi_pha10vrsovice_prague_czech_republic:   
+    friendly_name: Qualité de l'air extérieur   
+
+  ###  NETATMO  ###    
+sensor.salon_humidity_2:
+  friendly_name: Salon humidité     
+sensor.netatmo_chambre_humidity_2:
+  friendly_name: Chambre Humidité
+sensor.netatmo_chambre_temperature_2:
+  friendly_name: Chambre Température
+sensor.netatmo_salon_co2_2:
+  friendly_name: Salon Co2
+sensor.netatmo_salon_humidity_2:
+  friendly_name: Salon Humidité
+sensor.netatmo_salon_noise_2:
+  friendly_name: Salon Bruit
+sensor.netatmo_salon_pressure_2:
+  friendly_name: Salon Pression  
+sensor.netatmo_salon_temperature_2:
+  friendly_name: Salon Température   
+   
+  ###  TPLINK  ###  
+sensor.tplink_2_current_a:
+  friendly_name: actuel     
+sensor.tplink_2_current_power_w:
+  friendly_name: actuel    
+sensor.tplink_2_today_energy_kwh:
+  friendly_name: jour
+sensor.tplink_2_total_energy_kwh:
+  friendly_name: total
+sensor.tplink_2_voltage:          
+  friendly_name: actuel
+sensor.tplink_1_current_a:
+  friendly_name: actuel     
+sensor.tplink_1_current_power_w:
+  friendly_name: actuel    
+sensor.tplink_1_today_energy_kwh:
+  friendly_name: jour
+sensor.tplink_1_total_energy_kwh:  
+  friendly_name: total
+sensor.tplink_1_voltage:          
+  friendly_name: actuel 
+
+######################################################################################################################    
+#  BINARY SENSOR
+######################################################################################################################  
+binary_sensor.floorplan:
+  custom_ui_state_card: state-card-floorplan
+  config: !include floorplan.yaml    
+  
+binary_sensor.door_window_sensor_158d0001de6572:     
+  friendly_name: Porte d'entrée
+  icon: mdi:door
+        
+######################################################################################################################    
+#  LIGHT
+######################################################################################################################          
+light.hgrp0000001022:
+  hidden: true
+light.hgrp0000012336:
+  hidden: true
+light.hgrp0000013376:
+  hidden: true
+light.hgrp0000032766:
+  hidden: true
+light.strip_2:
+  hidden: true
+
+light.astro:
+  friendly_name: Astro
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+light.multi:
+  friendly_name: Multi
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+
+light.salon:
+  friendly_name: Salon
+  icon: mdi:sofa
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.cuisine:
+  friendly_name: Cuisine
+  icon: mdi:fridge
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+light.chambre:
+  icon: mdi:hotel
+  friendly_name: Chambre
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.entree:
+  icon: mdi:door
+  friendly_name: Entrée
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+ 
+light.gateway_light_7811dcb7aac9:
+  friendly_name: Gateway      
+  custom_ui_state_card: state-card-custom-ui
+  state_card_mode: single-line
+  slider_theme:
+    min: 0
+    max: 100
+    pin: true
+    off_when_min: false
+    report_when_not_changed: false   
+
+######################################################################################################################    
+#  SCRIPT
+######################################################################################################################    
+script.input_select_harmony:
+  hidden: true   
+
+script.1516752539526:
+  friendly_name: Redémarrer
+  icon: mdi:restart
+
+script.play_sel_sound:
+  friendly_name: Boucle  
+  icon: mdi:loop 
+
+script.play_sel_sound_single:
+  friendly_name: Lecture  
+  icon: mdi:play-circle-outline  
+
+######################################################################################################################    
+#  INPUT SELECT
+######################################################################################################################    
+input_select.harmony_hub:
+  friendly_name: ACTIVITES
+  entity_picture: /local/icons/harmony.jpg
+
+input_select.ha_mode:
+  friendly_name: Mode
+  entity_picture: /local/badges/roman.jpg 
+
+input_select.amp_input_select:
+  entity_picture: /local/icons/yamaha.png   
+
+input_select.hass_theme:
+  friendly_name: Themes
+  entity_picture: /local/icons/theme.png
+
+input_select.tv_input_select:
+
+  entity_picture: /local/icons/samsung.png     
+
+######################################################################################################################    
+#  MEDIA PLAYER
+######################################################################################################################    
+media_player.home_cinema_main:
+  friendly_name: Yamaha  
+
+media_player.googlehome1472:
+  friendly_name: Google Home
+
+media_player.googlehome0840:
+  friendly_name: Google Home Mini 
+
+######################################################################################################################    
+#  INPUT NUMBER
+######################################################################################################################         
+input_number.dyson_fan_speed:
+  friendly_name: Vitesse
+  entity_picture: /local/icons/dysonpicblue.png
+
+######################################################################################################################    
+#  INPUT BOOLEAN
+######################################################################################################################   
+switch.tplink_1:
+  friendly_name: Tp-Link 1    
+  custom_ui_state_card: state-card-custom-ui  
+  confirm_controls_show_lock: true  
+
+switch.tplink_2:
+  friendly_name: Tp-Link 2      
+  custom_ui_state_card: state-card-custom-ui
+  confirm_controls_show_lock: true
+
+######################################################################################################################    
+#  ALARM CONTROL PANEL
+######################################################################################################################       
+alarm_control_panel.maison:
+  friendly_name: Maison
+  icon: mdi:shield-outline     
+  
+  
+  
+  

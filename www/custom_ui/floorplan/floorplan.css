@@ -1,0 +1,347 @@
+/* SVG shapes */
+svg, svg * {
+  vector-effect: non-scaling-stroke !important;
+  pointer-events: all !important;
+}
+
+@keyframes blink {
+  50% { stroke-opacity: 0; }
+}
+
+@-webkit-keyframes blink-urgent {
+    0% { stroke-opacity: 1; }
+    50% { stroke-opacity: 1; }
+    50.01% { stroke-opacity: 0; }
+    100% { stroke-opacity: 0; }
+}
+
+/* TEXT */
+
+.text-time {
+  color: #656565;
+  font-size: 45px;
+  text-align: center;
+  vertical-align: middle;
+  font-family:'Abel', sans-serif;
+}
+.text-button {
+  fill: #b1b1b1;
+  font-size: 22px;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  vertical-align: middle;
+}
+.text-subheading {
+  fill: #b1b1b1;
+  font-size: 22px;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+}
+.text-armed_away {
+  fill: #f05d32;
+  font-size: 22px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+}
+.text-armed_home {
+  fill: #cbe960;
+  font-size: 22px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+}
+.text-alarm_pending {
+  fill: #ffe582;
+  font-size: 22px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Abel', sans-serif;
+  animation: blink 2s linear infinite;
+}
+
+
+/* COFFEE */
+.coffee-refillwater .coffee-circle {
+  stroke: #f05d32 !important;
+}
+.coffee-refillwater .coffee-cup {
+  fill: #58c1f0 !important;
+}
+.coffee-refillwater .coffee-check {
+  opacity: 0.0 !important;
+}
+.coffee-refillwater .coffee-steam {
+  opacity: 0.0 !important;
+}
+.coffee-refillwater .coffee-waterdrop {
+  opacity: 1.0 !important;
+  animation: blink-fill 2s linear infinite !important;
+}
+.coffee-ready .coffee-circle {
+  stroke: #656565 !important;
+}
+.coffee-ready .coffee-cup {
+  fill: #cbe960 !important;
+}
+.coffee-ready .coffee-check {
+  opacity: 0.5 !important;
+}
+.coffee-ready .coffee-steam {
+  opacity: 0.0 !important;
+  animation: blink-fill 2s linear infinite !important;
+}
+.coffee-ready .coffee-waterdrop {
+  opacity: 0.0 !important;
+}
+.coffee-brewed .coffee-circle {
+  stroke: #cbe960 !important;
+  animation: blink-urgent 1.5s linear infinite;
+}
+.coffee-brewed .coffee-check {
+  opacity: 0.0 !important;
+}
+.coffee-brewed .coffee-waterdrop {
+  opacity: 0.0 !important;
+}
+.coffee-brewed .coffee-steam {
+  opacity: 1.0 !important;
+  animation: blink 2s linear infinite !important;
+}
+.coffee-brewed .coffee-cup {
+  fill: #656565 !important;
+}
+.coffee-brewing .coffee-circle {
+  stroke: #ffe582 !important;
+  animation: blink 2s linear infinite !important;
+}
+.coffee-brewing .coffee-waterdrop {
+  opacity: 0.0 !important;
+}
+.coffee-brewing .coffee-check {
+  opacity: 0.0 !important;
+}
+.coffee-brewing .coffee-steam {
+  opacity: 1.0 !important;
+  fill: #b1b1b1 !important;
+  animation: blink 2s linear infinite;
+}
+.coffee-brewing .coffee-cup {
+  fill: #b1b1b1 !important;
+  animation: blink 2s linear infinite;
+}
+.coffee-carafe .coffee-circle {
+  stroke: #f05d32 !important;
+  animation: blink-urgent 1.5s linear infinite;
+}
+.coffee-carafe .coffee-check {
+  opacity: 0.0 !important;
+}
+.coffee-carafe .coffee-waterdrop {
+  opacity: 0.0 !important;
+}
+.coffee-carafe .coffee-steam {
+  opacity: 0.0 !important;
+}
+.coffee-carafe .coffee-cup {
+  opacity: 0.0 !important;
+}
+
+/* Motion Background */
+.motion-background {
+  fill-opacity: 0.35 !important;
+  fill: #cbe960 !important;
+}
+.motion-none-background {
+  fill: #ffffff !important;
+}
+
+.layer-visible {
+  display: initial !important;
+}
+
+.layer-hidden {
+  display: none !important;
+}
+
+/* Openings */
+.opening-open {
+  fill: #ff0000 !important;
+}
+.opening-closed {
+  fill: #cbe960 !important;
+}
+
+/* Bikes */
+.bike-gone {
+  opacity: 0.1 !important;
+}
+.bike-home {
+  opacity: 1.0 !important;
+}
+
+/* Switches */
+
+.switch-on .switch-circle {
+stroke: #cbe960 !important;
+}
+.switch-on .switch-icon {
+  fill: #656565 !important;
+}
+.switch-on .light-detail {
+    animation: blink 3s linear infinite;
+    stroke: #cbe960 !important;
+}
+.switch-off .switch-circle {
+  stroke: #b1b1b1 !important;
+}
+.switch-off .switch-icon {
+  fill: #b1b1b1;
+}
+.switch-off .light-detail {
+  fill: #b1b1b1;
+}
+
+/* Fans */
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+
+.fan-on .fan-circle {
+  stroke: #cbe960 !important;
+}
+.fan-on .fan-icon {
+  fill: #656565 !important;
+  transform-origin: center;  
+  -webkit-animation: rotation 3s infinite linear;
+  transform-box: fill-box;
+}
+.fan-off .fan-circle {
+  stroke: #b1b1b1 !important;
+}
+.fan-off .fan-icon {
+  fill: #b1b1b1;
+}
+
+/* Lights */
+@-webkit-keyframes light_blink {
+	from { fill: #ffffff; }
+	to { fill: #ffe582; }
+}
+@-webkit-keyframes room_fade_in {
+  0%   { opacity: 0; }
+  100% { opacity: .2; }
+}
+@-webkit-keyframes room_fade_out {
+  0%   { opacity: .2; }
+  100% { opacity: 0; }
+}
+.light-on .light-circle {
+  stroke: #656565 !important;
+  fill: #ffe582 !important;
+}
+.light-on .light-circle2 {
+  fill: #ffe582 !important;
+}
+.light-on .light-strike {
+  opacity: 0.0 !important;
+}
+.light-on .light-room {
+  fill: #f4e032 !important;
+  -webkit-animation: room_fade_in 4s 1 forwards !important;
+}
+.light-on .light-icon {
+  stroke: #656565 !important;
+  fill: #656565 !important;
+}
+.light-on .light-detail {
+  -webkit-animation: light_blink 2s infinite alternate !important;
+}
+.light-on .light-detail2 {
+  -webkit-animation: light_blink 2s infinite alternate !important;
+  fill: #ff0000 !important;    
+}
+.light-on .light-icon-fill {
+  fill: #ffffff !important;
+}
+.light-off .light-circle {
+  stroke: #b1b1b1 !important;
+}
+.light-off .light-circle2 {
+}
+.light-off .light-icon {
+  stroke: #b1b1b1 !important;
+}
+.light-off .light-icon-fill {
+  fill: #ffffff !important;
+}
+/* not working .... */
+.light-off .light-room {
+  -webkit-animation: room_fade_out 4s 1 forwards !important;
+}
+
+
+/* Media Players */
+.media-idle {
+  stroke: #808080 !important;
+}
+.media-playing {
+  stroke: #cbe960 !important;
+}
+.media-paused {
+  stroke: #f05d32 !important;
+}
+
+/* Plants */
+.plant-ok {
+  stroke: #cbe960 !important;
+}
+.plant-soon {
+  stroke: #ffe582 !important;
+}
+.plant-notok {
+  stroke: #f05d32 !important;
+  animation: blink-urgent 1.5s linear infinite;
+}
+.plant-unknown {
+  stroke: #b1b1b1 !important;
+}
+
+.warning-text {
+  fill: #8a6d3b !important;
+}
+
+.warning-background, .warning-text-background  {
+  fill: #fcf8e3 !important;
+  fill-opacity: 1 !important;
+  stroke: #faebcc !important;
+  stroke-width: 0px !important;
+}
+
+/* Last motion entity */
+
+.last-motion {
+  stroke: #808080 !important;
+  stroke-width: 1px !important;
+  stroke-opacity: 0 !important;
+}
+
+/* Camera */
+
+.camera-idle {
+/*  fill: #B9CEF7 !important; */
+  stroke: #cbe960 !important;
+}
+.camera-other {
+  stoke: #ff0000;
+}

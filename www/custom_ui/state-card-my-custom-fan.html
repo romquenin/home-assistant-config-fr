@@ -1,0 +1,39 @@
+<link rel="import" href="state-card-with-speed.html">
+
+<dom-module id="state-card-custom_fan">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      :host {
+        line-height: 1.5;
+      }
+    </style>
+
+    <div class='horizontal justified layout'>
+      <state-info state-obj="[[stateObj]]" in-dialog='[[inDialog]]'></state-info>
+      <state-card-with-speed hass="[[hass]]" state-obj="[[stateObj]]" in-dialog='[[inDialog]]'></state-card-with-speed>
+      <ha-entity-toggle state-obj='[[stateObj]]' hass='[[hass]]' in-dialog='[[inDialog]]'></ha-entity-toggle>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+  is: 'state-card-custom_fan',
+
+  properties: {
+    hass: {
+      type: Object,
+    },
+
+    inDialog: {
+      type: Boolean,
+      value: false,
+    },
+
+    stateObj: {
+      type: Object,
+    },
+  },
+});
+</script>

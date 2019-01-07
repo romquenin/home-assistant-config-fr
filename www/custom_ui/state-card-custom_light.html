@@ -1,0 +1,60 @@
+<dom-module id="state-card-custom_light">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      :host {
+        line-height: 1.5;
+      }
+      paper-button {
+        min-width: 30px;
+        height: 20px;
+        margin: 10px 2px 10px 2px;
+        padding: 0 0 0 0;
+      }
+    </style>
+
+<div class='horizontal justified layout'>
+  <state-info state-obj="[[stateObj]]"></state-info>
+  <paper-button-group>
+      <paper-button style="background-color:#74e7ff" on-tap="btntap1"></paper-button>
+      <paper-button style="background-color:#74ffc2" on-tap="btntap2"></paper-button>
+      <paper-button style="background-color:#ffd574" on-tap="btntap3"></paper-button>
+      <paper-button style="background-color:#eaeae1" on-tap="btntap4"></paper-button>
+  </paper-button-group>
+  <ha-entity-toggle state-obj="[[stateObj]]" hass="[[hass]]"></ha-entity-toggle>
+</div>
+</template>
+</dom-module>
+<script>
+        Polymer({
+          is: 'state-card-custom_light',
+          properties: {
+            hass: {
+              type: Object,
+            },
+            stateObj: {
+              type: Object,
+            },
+          },
+
+          btntap1: function (ev) {
+            this.setColor(116, 231, 255, 200, ev);
+          },
+          btntap2: function (ev) {
+            this.setColor(116, 255, 194, 200, ev);
+          },
+          btntap3: function (ev) {
+            this.setColor(255, 213, 116, 200, ev);
+          },
+          btntap4: function (ev) {
+            this.setColor(255, 225, 255, 255, ev);
+          },
+         
+          setColor(r,g,b,br,ev) {
+            var serviceData = {entity_id: this.stateObj.entity_id, rgb_color: [r, g, b], brightness: br, transition: 1} || {};
+            this.hass.callService('light', 'turn_on', serviceData);
+            ev.stopPropagation();
+  },
+  
+});
+</script>

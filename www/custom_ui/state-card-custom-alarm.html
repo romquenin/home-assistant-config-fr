@@ -1,0 +1,136 @@
+<dom-module id="state-card-custom_alarm">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      :host {
+        line-height: 1.5;
+      }
+      paper-button {
+        min-width: 30px;
+        height: 30px;
+        margin: 0px 0px 0px 0px;
+        padding: 5 5 5 5;
+      }
+      .info {
+        font-family: var(--paper-font-body1_-_font-family); -webkit-font-smoothing: var(--paper-font-body1_-_-webkit-font-smoothing); font-size: var(--paper-font-body1_-_font-size); font-weight: var(--paper-font-body1_-_font-weight); line-height: var(--paper-font-body1_-_line-height);min-width:10px;white-space:nowrap;float:left
+      }
+      .info {
+        margin-left:16px
+      }
+      .name {
+        white-space: var(--paper-font-common-nowrap_-_white-space); overflow: var(--paper-font-common-nowrap_-_overflow); text-overflow: var(--paper-font-common-nowrap_-_text-overflow);color:var(--primary-text-color);line-height:40px
+      }
+      .name[in-dialog],:host([secondary-line]) .name {
+        line-height:20px
+      }
+      .status,::content> * {
+        white-space: var(--paper-font-common-nowrap_-_white-space); overflow: var(--paper-font-common-nowrap_-_overflow); text-overflow: var(--paper-font-common-nowrap_-_text-overflow);color:var(--status-text-color);
+      }
+      .badge {
+        position:relative;display:inline-block;width:40px;color:var(--status-text-color);border-radius:50%;height:40px;text-align:center;background-size:cover;line-height:40px
+      }
+    </style>
+<div class='horizontal justified layout'>
+    <div class='horizontal start-justified layout'>
+      <div class="badge">
+        <state-badge class="badge" state-obj="[[stateObj]]"></state-badge>
+      </div>
+      <div class="info">
+        <div class="name" in-dialog>Status:</div>
+        <div class="status">[[statusValue]]</div>
+      </div>
+    </div>
+  <paper-button-group>
+        <paper-button
+        style="background-color:#4CAF50; color: #FFFFFF;"
+        on-tap='handleDisarmTap'
+        hidden$='[[!disarmButtonVisible]]'>Disarm</paper-button>
+      <paper-button
+      style="background-color:#673AB7; color: #FFFFFF;"
+        on-tap='handleStayTap'
+        hidden$='[[!armStayButtonVisible]]'> Arm Stay </paper-button>
+      <paper-button
+      style="background-color:#F44336; color: #FFFFFF;"
+        on-tap='handleAwayTap'
+        hidden$='[[!armAwayButtonVisible]]'>Arm Away</paper-button>
+  </paper-button-group>
+</div>
+</template>
+</dom-module>
+<script>
+        Polymer({
+          is: 'state-card-custom_alarm',
+          properties: {
+            hass: {
+              type: Object,
+            },
+            stateObj: {
+              type: Object,
+              observer: 'stateObjChanged',
+            },
+            disarmButtonVisible: {
+              type: Boolean,
+              value: false,
+            },
+            armStayButtonVisible: {
+              type: Boolean,
+              value: false,
+            },
+            armAwayButtonVisible: {
+              type: Boolean,
+              value: false,
+            },
+            statusValue: {
+              type: String,
+              value: 'unknown',
+            },
+          },
+          stateObjChanged: function (newVal) {
+            if (newVal) {
+              if (newVal.state == 'disarmed_stay') {
+                this.disarmButtonVisible = false;
+                this.armStayButtonVisible = true;
+                this.armAwayButtonVisible = false;
+                this.statusValue = 'disarmed';
+                this.updateStyles({'--status-text-color': '#4CAF50'});
+              } else if (newVal.state == 'disarmed') {
+                 this.disarmButtonVisible = false;
+                 this.armStayButtonVisible = true;
+                 this.armAwayButtonVisible = true;
+                 this.statusValue = 'disarmed';     
+                this.updateStyles({'--status-text-color': '#4CAF50'});       
+              } else if (newVal.state == 'armed_stay') {
+                this.disarmButtonVisible = true;
+                this.armStayButtonVisible = false;
+                this.armAwayButtonVisible = false;
+                this.statusValue = 'armed stay';
+                this.updateStyles({'--status-text-color': '#673AB7'});
+              } else if (newVal.state == 'armed_away') {
+                this.disarmButtonVisible = true;
+                this.armStayButtonVisible = false;
+                this.armAwayButtonVisible = false;
+                this.statusValue = 'armed away';
+                this.updateStyles({'--status-text-color': '#F44336'});
+              }              
+            }
+          },
+          handleDisarmTap: function (ev) {
+            var serviceData = {entity_id: "input_boolean.home_switch"}
+            this.hass.callService('input_boolean', 'turn_on', serviceData);
+            this.stopProp(ev);
+          },
+          handleStayTap: function (ev) {
+            var serviceData = {entity_id: "input_boolean.stay_switch"}
+            this.hass.callService('input_boolean', 'turn_on', serviceData);
+            this.stopProp(ev);
+          },
+          handleAwayTap: function (ev) {
+            var serviceData = {entity_id: "input_boolean.away_switch"}
+            this.hass.callService('input_boolean', 'turn_on', serviceData);
+            this.stopProp(ev);
+          },
+          stopProp(ev) {
+            ev.stopPropagation();
+          },
+});
+</script>

@@ -1,0 +1,2727 @@
+<!-- CUSTOM ALARM COMPONENT PANEL
+  https://github.com/gazoscalvertos/Hass-Custom-Alarm
+  VERSION:  1.3.4
+  MODIFIED: 27/11/18
+
+  CHANGE LOG:
+  -added basic error message
+  -fixed margin issue in Firefox
+  -sorted sensors alphabetically
+  -Fixed clock, serif, weather, passcode display issues
+
+  TODO:
+  -local styles to css
+  -logsize display count
+  -design themes
+  -ha default theme
+  -disable animations
+
+  BUGS
+  -Menu resize width on click
+  -checkbox style
+  -on first start log is in reverse Border-log size not being read
+
+  CONSIDERED CHANGE
+  -Move from custom alarm to security panel?
+  -Rename panel
+
+-->
+
+<script>
+{
+  // show the version of your custom UI in the HA dev info panel (HA 0.66.0+):
+  const _NAME = 'Security Panel';
+  const _URL = 'https://github.com/gazoscalvertos/Hass-Custom-Alarm/';
+  const _VERSION = '27/11/18 v1.3.4';
+
+  if (!window.CUSTOM_UI_LIST) window.CUSTOM_UI_LIST = [];
+  window.CUSTOM_UI_LIST.push({
+    name: _NAME,
+    url: _URL,
+    version: _VERSION
+  });
+}
+</script>
+
+<script src='/local/lib/jquery-3.2.1.min.js'></script>
+<script src='/local/lib/sha256.js'></script>
+<script src='/local/lib/countdown360.js'></script>
+<script src="/local/lib/jscolor.js"></script>
+
+<link rel='import' href='/local/alarm/custom-element.html'>
+
+<style>
+  @font-face {
+    font-family: 'Lobster';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Lobster Regular'), local('Lobster-Regular'), url(/local/alarm/lobster.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+  }
+  @import url('./local/alarm/alarm.css');
+</style>
+
+<dom-module id='ha-panel-alarm'>
+  <template>
+    <link rel='stylesheet' href='/local/alarm/alarm.css'>
+
+    <style include='ha-style iron-flex iron-flex-factors'>
+    </style>
+
+    <ha-app-layout has-scrolling-region id='layout'>
+      <app-header slot='header' fixed>
+        <app-toolbar>
+          <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+            <ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
+          </template>
+          <div id='main-title-bar'>
+            <template is='dom-if' if='[[alarm.attributes.settings]]'>
+              <div></div>
+            </template>
+
+            <div main-title id='main-title-text'>[[panel_title]]</div>
+            <template is='dom-if' if='[[alarm.attributes.settings]]'>
+              <div id='settings-icon'><iron-icon on-click='toggleSettings' icon='mdi:settings'></iron-icon></div>
+            </template>
+          </div>
+        </app-toolbar>
+      </app-header>
+      <div id='content'>
+        <div id='alarm-panel' >
+          <div id='status-bar' class='horizontal layout center-justified'>
+            <div id='clock' class='box box-header' >
+              <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_clock)]]'>
+                <div id='time' class='time hours shadow'>
+                  <span>[[time]]</span>
+                </div>
+              </template>
+              <div id='countdown' class='countdown-timer'></div>
+            </div>
+
+            <div id='alarm-status' class='box box-header'>
+              <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                <span class='shadow'>Alarm Deactivated</span>
+              </template>
+              <template is='dom-if' if='[[!alarm.attributes.panel_locked]]'>
+                <template is='dom-if' if='[[!isdisarmed(alarm)]]'>
+                  <span class='shadow'>[[computeLabel(alarm.state)]]</span>
+                </template>
+              </template>
+
+              <template is='dom-if' if='[[showCodePanel(alarm)]]'>
+                <template is='dom-if' if='[[alarm.attributes.panel_locked]]'>
+                  <span class='shadow'>PANEL LOCKED OUT</span>
+                </template>
+              </template>
+            </div>
+
+            <div id='weather' class='box box-header weather'>
+              <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_weather)]]'>
+                  <div class='weather-summary shadow'>
+                    <span>[[temp]] &#176;C</span>
+                  </div>
+                  <div id='weather-icon' class='weather-summary'>
+                    <object id='weather_svg' class='weather-summary' type='image/svg+xml' data='[[weather.attributes.entity_picture]]'></object>
+                  </div>
+                  <div class='weather-summary shadow'>
+                    <span>[[weather.state]]</span>
+                  </div>
+              </template>
+            </div>
+          </div>
+
+          <div id='main-content'>
+
+            <div id='carousel_main' class='content-box'>
+              <!-- ###########################################CAROUSEL MAIN############################################### -->
+              <div id='carousel_template' class='carousel-cell carousel-slide-in' style='height: 50vh'>
+
+              </div>
+
+              <!-- ###########################################CONTROLS############################################### -->
+              <div id='controls' class='carousel-cell remove'>
+                <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                  <div class='vLayout arm'>
+                    <template is='dom-if' if='[[!showCodePanel(alarm)]]'>
+                      <template is='dom-if' if='[[!attemptedArm]]'>
+                        <template is='dom-if' if='[[alarm.attributes.enable_perimeter_mode]]'>
+                          <paper-button id='arm-perimeter' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_night'>Perimeter</paper-button>
+                        </template>
+                        <paper-button id='arm-home' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_home' raised>Home</paper-button>
+                        <paper-button id='arm-away' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_away'>Away</paper-button>
+
+                      </template>
+                    </template>
+                    <template is='dom-if' if='[[attemptedArm]]'>
+                      <div class='vertical layout'>
+                        <div style='text-align: center;'>
+                          <h1>Open Sensors Found</h1>
+                        </div>
+                        <div class='horizontal layout'>
+                          <paper-button id='arm-override' class='override' on-click='callAlarmService' data-call='override' data-arm='attemptArmMode'>Override</paper-button>
+                          <paper-button id='arm-cancel' class='cancel' on-click='callAlarmService' data-call='cancel'>Cancel</paper-button>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+
+                <template is='dom-if' if='[[showCodePanel(alarm)]]'>
+
+                  <template is='dom-if' if='[[!attemptedArm]]'>
+
+                    <template is='dom-if' if='[[requiresCode()]]'>
+                      <template is='dom-if' if='[[!alarm.attributes.panel_locked]]'>
+                          <div id='code-display'>[[display_code]]</div>
+                      </template>
+                    </template>
+
+                    <div id='codepanel' class='horizontal layout center-justified'>
+                      <div>
+                        <div class='digits horizontal layout' style='justify-content: flex-start;'>
+                          <template is='dom-if' if='[[requiresCode()]]'>
+                            <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                              <template is='dom-if' if='[[alarm.attributes.enable_perimeter_mode]]'>
+                                <paper-button id='arm-perimeter1' class='action-button' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_night'>Perim</paper-button>
+                              </template>
+                            </template>
+                            <paper-button on-click='callcode' data-digit=1 raised>1</paper-button>
+                            <paper-button on-click='callcode' data-digit=2 raised>2</paper-button>
+                            <paper-button on-click='callcode' data-digit=3 raised>3</paper-button>
+                            <paper-button class='sm action-button clear' on-click='callclearcode' raised>Clear</paper-button>
+                          </template>
+
+                        </div>
+                        <div class='digits horizontal layout center-justified'>
+                          <template is='dom-if' if='[[requiresCode()]]'>
+                            <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                              <paper-button id='arm-home1' class='action-button' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_home' raised>Home</paper-button>
+                            </template>
+                            <paper-button on-click='callcode' data-digit=4 raised>4</paper-button>
+                            <paper-button on-click='callcode' data-digit=5 raised>5</paper-button>
+                            <paper-button on-click='callcode' data-digit=6 raised>6</paper-button>
+                            <paper-button class='sm'  on-click='callcode' data-digit=0 raised>0</paper-button>
+
+                          </template>
+                        </div>
+                        <div class='digits horizontal layout'>
+                          <template is='dom-if' if='[[requiresCode()]]'>
+                            <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                              <paper-button id='arm-away1' class='action-button' on-click='callAlarmService' data-call='arm' data-arm='alarm_arm_away'>Away</paper-button>
+                            </template>
+                            <paper-button on-click='callcode' data-digit=7 raised>7</paper-button>
+                            <paper-button on-click='callcode' data-digit=8 raised>8</paper-button>
+                            <paper-button on-click='callcode' data-digit=9 raised>9</paper-button>
+                          </template>
+                          <template is='dom-if' if='[[!isdisarmed(alarm)]]'>
+                            <paper-button class='sm action-button disarm' on-click='callAlarmService' data-call='disarm' raised>Disarm</paper-button>
+                              </template>
+                        </div>
+                        <div class='xs digits horizontal layout center-justified'>
+                          <paper-button class='clear action-button' on-click='callclearcode' raised>C</paper-button>
+                          <paper-button on-click='callcode' data-digit=0 raised>0</paper-button>
+                          <template is='dom-if' if='[[!isdisarmed(alarm)]]'>
+                            <paper-icon-button class='disarm action-button' on-click='callAlarmService' data-call='disarm' icon='mdi:fingerprint' raised></paper-icon-button>
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </template>
+              </div>
+
+              <!-- ###########################################FLOOR PLAN############################################### -->
+
+                <div id='floorplan' class='carousel-cell remove'>
+                  <template is='dom-if' if='{{alarm.attributes.panel.enable_floorplan_panel}}' >
+                  <div>
+                    <div class='title'>Floor Plan</div>
+                    <state-card-content state-obj='[[getObject(alarm.attributes.panel.floorplan)]]' hass='[[hass]]'></state-card-content>
+                  </div>
+                </template>
+              </div>
+
+              <!-- ########################################### SENSORS############################################### -->
+              <div id='sensors' class='carousel-cell remove'>
+                <!-- ###########################################OPEN SENSORS############################################### -->
+                <template is='dom-if' if='[[opencount]]'>
+                  <div>
+                    <div class='openSensors'>Open Sensors</div>
+                        <div class='sensors'>
+                        <template is='dom-repeat' items='[[opensensors(alarm, allsensors)]]' as='entity'>
+                          <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                        </template>
+                      </div>
+                  </div>
+                </template>
+
+                <!-- ###########################################ARMED############################################## -->
+                <template is='dom-if' if='[[!isdisarmed(alarm)]]'>
+
+                  <div >
+                    <template is='dom-if' if='[[computeArray(delayed)]]'>
+                      <div class='box-sensors'>
+                        <div class='sensor-title'>Delayed Sensors</div>
+                        <div class='sensors'>
+                          <template is='dom-repeat' items='[[delayed]]' as='entity'>
+                            <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+
+                    <template is='dom-if' if='[[computeArray(immediate)]'>
+                      <div class='box-sensors'>
+                        <div class='sensor-title'>Immediate Sensors</div>
+                        <div class='sensors'>
+                          <template is='dom-repeat' items='[[immediate]]' as='entity'>
+                            <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+
+                   <div class='box-sensors'>
+                     <template is='dom-if' if='[[computeArray(ignored)]]'>
+                      <div class='sensor-title'>Inactive Sensors</div>
+                      <div class='sensors'>
+                        <template is='dom-repeat' items='[[ignored]]' as='entity'>
+                          <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                        </template>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+
+                <!-- ###########################################DISARMED############################################### -->
+                <template is='dom-if' if='[[isdisarmed(alarm)]]'>
+                  <div class='box-sensors'>
+                    <div class='sensor-title'>All Sensors</div>
+                    <div class='sensors'>
+                      <template is='dom-repeat' items='[[opensensors(alarm, allsensors)]]' as='entity'>
+                        <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                      </template>
+                      <template is='dom-repeat' items='[[closedsensors(alarm, allsensors)]]' as='entity'>
+                        <state-card-display state-obj='[[entity]]' hass='[[hass]]' class='tappable' on-tap='entityTapped' data-entity='[[entity.entity_id]]'></state-card-display>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </div>
+
+              <!-- ###########################################CAMERAS############################################### -->
+              <div id='cameras' class='carousel-cell remove'>
+                <div class='title' style='padding-bottom: 10px'>Cameras</div>
+                <div class='info-detail' style='text-align: center; padding-bottom: 5px;'>Cameras refreshed every [[alarm.attributes.panel.camera_update_interval]] seconds</div>
+                <div class=' vLayout'>
+                  <template is='dom-repeat' items='[[alarm.attributes.panel.cameras]]' as='camera'>
+                    <div class='cameras' >
+                         <img src='[[updateCameraFeedSrc(camera, camera_time)]]' class='camera camera-feed' alt='[[computeFriendlyName(camera)]]'>
+                        <div class='camera-caption'>
+                          [[computeFriendlyName(camera)]]
+                      </div>
+                    </div>
+                  </template>
+                </div>
+                </div>
+
+              <!-- ###########################################ACTIVITY LOG############################################### -->
+              <div id='log' class='carousel-cell remove'>
+                <template is='dom-if' if='[[alarm.attributes.enable_log]]' >
+                    <div class='title'>Activity</div>
+                        <div >
+                        <template is='dom-repeat' items='[[reverseArray(alarm.attributes.logs, 10)]]' as='entry'>
+                          <div style='display:flex; padding: 8px;'>
+                            <div>
+                              <state-badge id='icon' style$='background-image: url([[computeLog(entry, "image")]]);'></state-badge>
+                            </div>
+                            <div class='log-item'>
+                              <div style='color: var(--info-detail-text-color); margin-right: 5px;'>[[computeLog(entry,'name')]]</div>
+                              <div>[[computeLog(entry,'message')]]</div>
+                              <span></span>
+                              <div class='log-item-date' style='color: var(--info-detail-text-color);'>[[computeLog(entry,'time')]]</div>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                </template>
+              </div>
+
+                <!-- ###########################################CUSTOM PANEL############################################### -->
+                <div id='custom' class='carousel-cell remove'>
+                  <template is='dom-if' if='{{alarm.attributes.panel.enable_custom_panel}}' >
+                  <custom-element is-panel></custom-element>
+                </template>
+              </div>
+
+
+              <!-- ########################################################################### SETTINGS ##################################################################################################### -->
+                <div id='settings' class='carousel-cell' style='left: 0 !important;' >
+                  <!-- <alarm-settings is-panel></alarm-settings> -->
+
+                <!-- ###########################################SETTINGS SELECTION BAR############################################### -->
+
+                <template is='dom-if' if='[[settingsUnlock]]' >
+                  <div class='title'>Settings</div>
+                  <div id='settings-nav' class='horizontal layout'>
+                    <div class='sm horizontal layout'>
+                      <div class='settings-nav-inner vertical layout'>
+                        <paper-icon-button icon='mdi:information-outline' title='Info' on-click='carouselClick' data-selection='settings-info'></paper-icon-button>
+                        <div class='settings-nav-text'>About</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:brush' title='Design' on-click='carouselClick' data-selection='settings-all'></paper-icon-button>
+                        <div class='settings-nav-text'>Design</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:dialpad' title='Alarm' on-click='carouselClick' data-selection='settings-alarm'></paper-icon-button>
+                        <div class='settings-nav-text'>Alarm</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:radio-tower' title='Alarm Sensors' on-click='carouselClick' data-selection='settings-sensors'></paper-icon-button>
+                        <div class='settings-nav-text'>Sensors</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:floor-plan' title='Floorplan' on-click='carouselClick' data-selection='settings-floorplan'></paper-icon-button>
+                        <div class='settings-nav-text'>Floorplan</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:cctv' title='Camera' on-click='carouselClick' data-selection='settings-cameras'></paper-icon-button>
+                        <div class='settings-nav-text'>Cameras</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:access-point' title='MQTT' on-click='carouselClick' data-selection='settings-mqtt'></paper-icon-button>
+                        <div class='settings-nav-text'>MQTT</div>
+                      </div>
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:atom' title='Custom Panel' on-click='carouselClick' data-selection='settings-custom'></paper-icon-button>
+                        <div class='settings-nav-text'>Custom</div>
+                      </div>
+                      <!-- <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:help' title='Help Guide' on-click='carouselClick' data-selection='settings-help'></paper-icon-button>
+                        <div class='settings-nav-text'>Help</div>
+                      </div> -->
+                      <div class='settings-nav-inner vertical layout' >
+                        <paper-icon-button icon='mdi:logout' title='Logout' on-click='carouselClick' data-selection='set-login'></paper-icon-button>
+                        <div class='settings-nav-text'>Logout</div>
+                      </div>
+                    </div>
+
+                    <paper-dropdown-menu class='xs dropdown-content' label="Settings">
+                      <paper-listbox slot="dropdown-content" >
+                        <paper-item on-click='carouselClick' data-selection='settings-info'><iron-icon icon='mdi:information-outline'></iron-icon>About</paper-item>
+                        <paper-item on-click='carouselClick' data-selection='settings-all'><iron-icon icon='mdi:brush'></iron-icon>Design</paper-item>
+                          <paper-item on-click='carouselClick' data-selection='settings-alarm'><iron-icon icon='mdi:dialpad'></iron-icon>Alarm</paper-item>
+                          <paper-item on-click='carouselClick' data-selection='settings-sensors'><iron-icon icon='mdi:radio-tower'></iron-icon>Sensors</paper-item>
+                        <paper-item on-click='carouselClick' data-selection='settings-floorplan'><iron-icon icon='mdi:floor-plan'></iron-icon>Floorplan</paper-item>
+                        <paper-item on-click='carouselClick' data-selection='settings-cameras'><iron-icon icon='mdi:cctv'></iron-icon>Cameras</paper-item>
+                          <paper-item on-click='carouselClick' data-selection='settings-mqtt'><iron-icon icon='mdi:access-point'></iron-icon>MQTT</paper-item>
+                          <paper-item on-click='carouselClick' data-selection='settings-custom'><iron-icon icon='mdi:atom'></iron-icon>Custom</paper-item>
+                          <!-- <paper-item on-click='carouselClick' data-selection='settings-help'><iron-icon icon='mdi:help'></iron-icon>Help</paper-item> -->
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                  </div>
+                </template>
+
+                <div id='carousel_settings'>
+
+                  <!-- ########################################################################### LOGIN ##################################################################################################### -->
+                  <div id='set-login' class='carousel-cell remove'>
+                    <h1>Admin Password</h1>
+                    <div class='info-detail'>Enter the admin password defined in your alarm.yaml to access this panel</div>
+                    <paper-input class="span11" id="passwordInput" type="password" placeholder="Enter Password..." on-keyup='checkSettingsPassword'></paper-input>
+                  </div>
+
+                  <!-- ########################################################################### INFO ##################################################################################################### -->
+                  <div id='settings-info' class='carousel-cell remove'>
+
+                    <div class='setting-outer vertical layout'>
+
+                      <h1><iron-icon icon='mdi:heart-pulse' style='padding-right: 8px'></iron-icon>Help Support This Work</h1>
+
+                      <span class='info-detail'>Thanks to the community for all the input into this. Consider supporting this project and donate! All funds will go towards bringing new features, hardware support and bug squashing! It is a community effort to make both the alarm and this smart panel feature-rich as well as simple to deploy and use. We need all the help we can get!</span>
+                      <div class='setting-inner horizontal layout flexwrap' style='padding-top: 10px;'>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='paypal' class='donate-paypal'>
+                            <a href='https://paypal.me/haCustomAlarm' class='info-detail'>
+                              <span class='info-header'>Paypal:</span>
+                              <div class='logo'></div>
+                              <span class='info-detail'>Donate</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='xrp' class='donate' data-address='rwuMp76ht6dmGvipxwKr5ZE6VpF7ZKC7qs'>
+                            <span class='info-header'>Ripple (XRP):</span>
+                            <div class='logo'></div>
+                          </div>
+                          <span class='info-detail'>rwuMp76ht6dmGvipxwKr5ZE6VpF7ZKC7qs</span>
+                        </div>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='btc' class='donate' data-address='1NFeyzpKKiKbBYSmCLQZQLxBqJbhSbqmwd'>
+                            <span class='info-header'>Bitcoin (BTC):</span>
+                            <div class='logo'></div>
+                          </div>
+                          <span class='info-detail'>1NFeyzpKKiKbBYSmCLQZQLxBqJbhSbqmwd</span>
+                        </div>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='bch' class='donate' data-address='qzw3frcjnqmetphg25suac5m70348qj80qfjnaje2j'>
+                            <span class='info-header'>Bitcoin Cash (BCH):</span>
+                            <div class='logo'></div>
+                          </div>
+                          <span class='info-detail'>qzw3frcjnqmetphg25suac5m70348qj80qfjnaje2j</span>
+                        </div>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='eth' class='donate' data-address='0xCbeD2D2cf0434370c1ca126707009b876b736609'>
+                            <span class='info-header'>Ethereum (ETH):</span>
+                            <div class='logo'></div>
+                          </div>
+                          <span class='info-detail'>0xCbeD2D2cf0434370c1ca126707009b876b736609</span>
+                        </div>
+
+                        <div class='vertical layout donate-box'>
+                          <div id='ltc' class='donate' data-address='LTUViN3QUESkQk3mG2hvTzhLRQPVAd269f'>
+                            <span class='info-header'>Litecoin (LTC):</span>
+                            <div class='logo'></div>
+                            </div>
+                            <span class='info-detail'>LTUViN3QUESkQk3mG2hvTzhLRQPVAd269f</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div>
+                      <h1>Contribute</h1>
+                      <a href='https://github.com/gazoscalvertos/Hass-Custom-Alarm/issues'><iron-icon icon='mdi:bug' style='padding-right: 8px'></iron-icon><span>Found a bug or got a feature idea? Let's talk about it on Github</span></a><br>
+                      <iron-icon icon='mdi:earth' style='padding-right: 8px'></iron-icon><span>Talk to your friends and colleagues about how awesome this alarm and smart panel is</span><br>
+
+                    </div>
+
+                    <div>
+                      <h1>Your Versions:</h1>
+                      <div>
+                        <p><span class='info-header'>Home Assistant: </span><span class='info-detail'>v[[hass.config.version]]</span></p>
+                        <p><span class='info-header'>This Panel: </span><span class='info-detail'>v[[version]]</span></p>
+                        <p><span class='info-header'>Component (Bwalarm): </span><span class='info-detail'>v[[alarm.attributes.bwalarm_version]]</span></p>
+                        <p><span class='info-header'>Python: </span><span class='info-detail'>v([[alarm.attributes.py_version]])</span></p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <template is='dom-if' if='[[errors]]' >
+                        <h1>Issues:</h1>
+                        <div>
+                          <template is='dom-repeat' items='[[errors]]' as='entity'>
+                            <p class='info-detail'>&#8226;  [[entity]]</p>
+                          </template>
+                        </div>
+                      </template>
+                    </div>
+
+                    <paper-button id='restart' data-type='button' on-click='restartHA'><iron-icon icon='mdi:restart' style='padding-right: 8px'></iron-icon><span>Restart Home Assistant</span></paper-button>
+
+                  </div>
+
+                  <!-- ########################################################################### @PANEL ##################################################################################################### -->
+                  <div id='settings-all' class='carousel-cell remove'>
+                    <h1>Panel Interface Related:</h1>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Admin Password: </span>
+                        <span class='info-detail'>Reset the password used to access this settings panel.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='admin_password' type="password" placeholder='Admin Password'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='admin_password' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Disable Animations: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.disable_animations)}}' on-change='settingsSave' data-setting='panel' data-attribute='disable_animations'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>If enabled, this will disable all animations. This is designed to improve performance on older devices. NOTE you can also disable animations per user within the user section. This is handy to set animations per device.</span>
+                    </div> -->
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Alarm Panel Title: </span>
+                        <span class='info-detail'>The text that shows on the header bar. Defaults to 'Home Alarm' if not set</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='panel_title' value='{{alarm.attributes.panel.panel_title}}' placeholder='Panel Title'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='panel' data-attribute='panel_title' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Clock: </span>
+                        <paper-toggle-button class='setting-toggle' checked$='{{alarm.attributes.panel.enable_clock}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_clock'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enables the clock widget in this panel. A Time Sensor named: 'sensor.time' must exist within your Home Assistant setup</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Clock 12 Hour Mode?: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.enable_clock_12hr)}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_clock_12hr'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Changes the clock to 12hour mode when enabled. Default False which shows 24hr mode</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Weather: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.enable_weather)}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_weather'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enables the weather widget in this panel. A Weather Sensor named: 'sensor.weather_summary' or 'sensor.dark_sky_summary' must exist within your Home Assistant setup</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Passcode Hidden: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.hide_passcode)}}' on-change='settingsSave' data-setting='panel' data-attribute='hide_passcode'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Masks the passcode within the panel input box when typing</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Hide HA Sidebar When Armed: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.hide_sidebar)}}' on-change='settingsSave' data-setting='panel' data-attribute='hide_sidebar'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>When the alarm is armed the Home Assistant sidebar will be disabled if enabled. This prevents an intruder simply stopping home assistant from the configuration menu. For this to be truly effective use a browser which locks access to the URL function.</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Round Buttons: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.round_buttons)}}' on-change='settingsSave' data-setting='panel' data-attribute='round_buttons'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Choose whether the alarm buttons should be round or not.</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Shadow Text Effect: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.shadow_effect)}}' on-change='settingsSave' data-setting='panel' data-attribute='shadow_effect'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enables the shadow text effect in this panel. Defaults to false</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Serif Font: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.enable_serif_font)}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_serif_font'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enables the 'Lobster' serif font on the title, time and weather within this panel. Default False</span>
+                    </div>
+
+                    <div>
+                      <h1>Themes</h1>
+                      <div class='info-detail'>Themes allow you to override the default Home Assistant colors.</div>
+
+                      <!-- Themes List [Buttons] {defineColors(themeName), unhide div}  -->
+                        <template is='dom-if' if='[[alarm.attributes.themes]]'>
+                          <!-- <span class='info-header' style='padding-top: 10px;'>Defined:</span> -->
+                          <paper-listbox id='themes-listbox' class='vertical layout'>
+                          <template is='dom-repeat' items='[[alarm.attributes.themes]]'>
+                            <div class='horizontal layout'>
+                              <paper-item on-click='defineColors' data-theme$='[[item.name]]' style='width: 75%;  text-transform: uppercase; text-transform: uppercase;'><iron-icon on-click='defineColors' data-theme$='[[item.name]]' icon='mdi:format-paint' style=' padding-right: 7px;'></iron-icon>[[item.name]]</paper-item>
+                              <paper-toggle-button class='setting-toggle' checked$='[[item.active]]' on-change='settingsSave' data-type='boolean' name$='[[item.name]]' data-attribute='activated' data-setting='themes'>Activated?</paper-toggle-button>
+                              <paper-icon-button on-click='settingsSave' data-setting='themes' name$='[[item.name]]' data-type='delete' icon='mdi:delete' style='margin-left: 20px; color: white;'></paper-icon-button>
+                            </div>
+                          </template>
+                        </paper-listbox>
+                      </template>
+                      <paper-button on-click='unhideDiv' data-div='#themeDetail' style='background: unset; text-transform: capitalize;'><iron-icon  on-click='unhideDiv' data-div='#themeDetail' icon='mdi:plus-circle-outline' style='padding-right: 7px;'></iron-icon>New</paper-button>
+                    </div>
+
+                    <!-- /* Theme Name [Input] | Update [Button] | Delete [Button] */ -->
+                    <div id='themeDetail' class='remove'>
+
+                      <h1>Update Theme</h1>
+
+                      <div class='setting-outer horizontal layout'>
+                        <div class='setting-inner vertical layout'>
+                          <span class='info-header'>Theme Name: </span>
+                          <span class='info-detail'>Name of the theme.</span>
+                          <div class='setting-input horizontal layout'>
+                            <paper-input id='theme-name' type="text" placeholder='Theme Name'></paper-input>
+                            <paper-icon-button id='theme-name-button' data-type='input_text' data-attribute='theme-name' data-setting='themes' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Time Based Settings [TODO] -->
+
+                      <template is='dom-repeat' items='{{settingColors}}' as='color'>
+                        <div class='setting-outer vertical layout'>
+                          <div class='setting-inner horizontal layout' style='display: block;'>
+                            <div style='float: left'>
+                              <span class='info-header'>[[color.header]]: </span>
+                            </div>
+                            <div class='horizontal layout' style='float: right'>
+                              <paper-button class='deleteThemeColor' on-click='settingsSave' name$='[[color.theme]]' data-attribute$='[[color.name]]' data-type='clear' data-setting='themes' style='background: unset;'><iron-icon icon='mdi:delete'></iron-icon>Clear?</paper-button>
+                              <span class='colPicker' id$='[[color.name]]_span' value='[[color.color]]' style='margin: auto;'></span>
+                              <paper-icon-button data-type='color' data-setting='themes' name$='[[color.theme]]' data-attribute$='[[color.name]]' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                            </div>
+                          </div>
+                          <span class='info-detail'>[[color.description]]</span>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+
+                  <!-- ########################################################################### @ALARM ##################################################################################################### -->
+                  <div id='settings-alarm' class='carousel-cell remove'>
+                    <h1>Alarm</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Alarm Persistence: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.enable_persistence}}' on-change='settingsSave' data-setting='root' data-attribute='enable_persistence'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>When enabled the alarm state is persistently saved when eith Home Assistant or the underlying host is restarted. This is useful in the event of power loss. Default False.</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Master Code: </span>
+                        <span class='info-detail'>Set/Reset the master passcode to arm/disarm your alarm</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='code' type="password" placeholder='Master Passcode'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='code' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Panic Code: </span>
+                        <span class='info-detail'>Set/Reset the panic code to arm/disarm your alarm. This is a special code which disarms the alarm when used yet sets a panic state within HA. It can therefore be used in conjunction with automations for example notifiying the authorities or someone who is able to help. To the intruder the alarm appears to have disarmed as normal.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='panic_code' type="password" placeholder='Panic Code'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='panic_code' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Require a code to set the alarm: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.code_to_arm}}' on-change='settingsSave' data-setting='root' data-attribute='code_to_arm'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>If enabled a valid code is required to arm the alarm.</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Passcode Attempts: </span>
+                        <span class='info-detail'>Amount of allowed passcode attempts before the panel locks out. Defaults to -1 which means infinite attempts</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='passcode_attempts' value='{{alarm.attributes.passcode_attempts}}' placeholder='Passcode Attempts'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='passcode_attempts' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Passcode Attempts Timeout: </span>
+                        <span class='info-detail'>Amount of time in seconds after the panel is locked before a user is allowed to try again. Defaults to 15 minutes.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='passcode_attempts_timeout' value='{{alarm.attributes.passcode_attempts_timeout}}' placeholder='Passcode Attempts Timeout'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='passcode_attempts_timeout' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Log: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.enable_log}}' on-change='settingsSave' data-setting='root' data-attribute='enable_log'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>When enabled the alarm records a log, permissions must be granted to HA to allow the log file to be saved in the configuration directory as alarm_log.json. Default Disabled.</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>log Size: </span>
+                        <span class='info-detail'>Amount of records which can be saved and displayed. Defaults to 10 records.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='log_size' value='{{alarm.attributes.log_size}}' placeholder='Log Size'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='root' data-attribute='log_size' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ########################################################################### @USERS ##################################################################################################### -->
+                    <h1>User Specific Codes</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <span class='info-detail'>This setting provides the ability to configure user specific accounts that are able to control your alarm. If logging is enabled then these users will be captured as part of the log. Home Assistant users using the new authentication system introcuded in v0.70 will be automatically imported.</span>
+                    </div>
+
+                    <template is='dom-repeat' items='[[alarm.attributes.users]]' as='user'>
+
+                      <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+
+                          <div style='margin-top: auto; margin-bottom: auto; margin-left: 15px;'>
+                            <paper-toggle-button class='setting-toggle' checked='{{user.enabled}}' data-userid$='[[user.id]]' on-change='toggleUser'>Enable</paper-toggle-button>
+                          </div>
+                          <paper-button data-type='button' style='background-color: unset; width: 40%; justify-content: left;' data-userid$='{{user.id}}' on-click='editUser'>
+                            <div style='margin-left: 5px; margin-right: 10px; padding-left: 15px;' data-userid$='[[user.id]]' on-click='editUser'>
+                              <state-badge style$='background-image: url({{computeImage(user.picture)}});' data-userid$='[[user.id]]' on-click='editUser'></state-badge>
+                            </div>
+                            <div style='margin-top: auto; margin-bottom: auto; font-size: x-large;' data-userid$='[[user.id]]' on-click='editUser'>
+                              [[user.name]]
+                            </div>
+                          </paper-button>
+
+                          <div style='margin-top: auto; margin-bottom: auto;'>
+                            <paper-button  data-userid$='[[user.id]]' on-click='deleteUser' style='color: white;background-color: unset;'><iron-icon icon='mdi:delete'></iron-icon>&nbsp;&nbsp;Delete</paper-button>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+
+                    <paper-button id='user-add' data-type='button' on-click='unhideDiv' data-div='#userDetail' style='background-color: unset; margin-bottom: 15px;'><iron-icon icon='mdi:account-plus'></iron-icon>&nbsp;&nbsp;Add A New User</paper-button>
+
+                    <div id='userDetail' class='remove'>
+
+                      <h1>Update User</h1>
+
+                      <div class='setting-outer horizontal layout'>
+                        <div class='setting-inner vertical layout'>
+                          <span class='info-header'>Name: </span>
+                          <span class='info-detail'>Set a name for your user.</span>
+                          <div class='setting-input horizontal layout'>
+                            <paper-input id='user-name' placeholder='Name of user' required auto-validate error-message="Required." ></paper-input>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+                          <span class='info-header'>Enable User: </span>
+                          <paper-toggle-button id='user-enabled' checked='true'></paper-toggle-button>
+                        </div>
+                        <span class='info-detail'>Enable this user to control the alarm?</span>
+                      </div>
+
+                      <div class='setting-outer horizontal layout'>
+                        <div class='setting-inner vertical layout'>
+                          <span class='info-header'>Passcode: </span>
+                          <span class='info-detail'>Set a new passcode for your user.</span>
+                          <div class='setting-input horizontal layout'>
+                            <paper-input id='user-passcode' placeholder='User passcode' type="password" required auto-validate error-message="Required - Minimum of 4 digits/characters" char-counter minlength='4'></paper-input>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='setting-outer horizontal layout'>
+                        <div class='setting-inner vertical layout'>
+
+                          <span class='info-header'>Badge: </span>
+                          <span class='info-detail'>Enter the location and name of your image. Ensure you upload your image to your HA server under the folders [HA config]/www/images. then use filename /local/images/myimage.jpg.</span>
+                          <div class='setting-input horizontal layout'>
+                            <state-badge id='user-badge' style='background-image: url("/local/images/ha.png"); margin-top: auto; margin-bottom: auto; margin-right: 15px;'></state-badge>
+                            <paper-input id='user-picture' placeholder='Image path i.e. /local/images/myimage.jpg' on-change="loadPreviewImage" ></paper-input>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+                          <span class='info-header'>Disable Animations: </span>
+                          <paper-toggle-button id='user-disable_animations' checked='false'></paper-toggle-button>
+                        </div>
+                        <span class='info-detail'>If enabled, the animations in the panel will be disabled for this user to help with performance on older devices.</span>
+                      </div> -->
+
+                      <!-- <h1>Permissions Based Settings</h1>
+                      <span class='info-detail'>Customise which areas of the alarm you want to allow your user to control. By default the user can control all areas.</span>
+
+                      <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+                          <span class='info-header'>Home: </span>
+                          <paper-toggle-button id='user-home-permission' checked='true' class='setting-toggle'></paper-toggle-button>
+                        </div>
+                      </div>
+
+                      <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+                          <span class='info-header'>Away: </span>
+                          <paper-toggle-button id='user-away-permission' checked='true' class='setting-toggle'></paper-toggle-button>
+                        </div>
+                      </div>
+
+                      <div class='setting-outer vertical layout'>
+                        <div class='setting-inner horizontal layout'>
+                          <span class='info-header'>Perimeter: </span>
+                          <paper-toggle-button id='user-perimeter-permission' checked='true' class='setting-toggle'></paper-toggle-button>
+                        </div>
+                      </div> -->
+
+                      <paper-button id='user-save' data-type='button' on-click='saveUser' style='background-color: unset; margin-bottom: 15px;'><iron-icon icon='mdi:content-save'></iron-icon>&nbsp;&nbsp;Save User</paper-button>
+                      <paper-button on-click='resetUserDetail' style='background-color: unset; margin-bottom: 15px;'><iron-icon icon='mdi:cancel'></iron-icon>&nbsp;&nbsp;Cancel</paper-button>
+                    </div>
+
+                  </div>
+
+                  <!-- ########################################################################### @SENSORS ##################################################################################################### -->
+                  <div id='settings-sensors' class='carousel-cell remove'>
+                    <h1>Sensors</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Sensors Panel: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{isChecked(alarm.attributes.panel.enable_sensors_panel)}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_sensors_panel'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enabling this allows you to view your sensors groups in a panel</span>
+                    </div>
+
+                    <h1>Away Mode</h1>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Pending (Exit) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is armed. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Exit Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_away-pending_time' value='[[alarm.attributes.states.armed_away.pending_time]]' placeholder='Pending Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_away' data-attribute='pending_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Warning (Entry) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is triggered. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Entry Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_away-warning_time' value='[[alarm.attributes.states.armed_away.warning_time]]' placeholder='Warning Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_away' data-attribute='warning_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Trigger Time: </span>
+                        <span class='info-detail'>The amount of time in seconds the alarm stays triggered before returning to its previous state. Default is 300 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_away-trigger_time' value='[[alarm.attributes.states.armed_away.trigger_time]]' placeholder='Trigger Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_away' data-attribute='trigger_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class='horizontal layout' id='sensors-away-immediate'>
+
+                      <div class='vertical layout'>
+                        <h2>Immediate</h2>
+                        <paper-listbox id='sensors-checkboxs' class='vertical layout' attr-for-selected='title' multi selected-values='{{alarm.attributes.states.armed_away.immediate}}' selected-attribute='checked' >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="[[sensor]]" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_away' data-group='immediate' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='sensor vertical layout'>
+                        <h2>Delayed</h2>
+                        <paper-listbox id='sensors-checkboxs1' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_away.delayed}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_away' data-group='delayed' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='vertical layout'>
+                        <h2>Override</h2>
+                        <paper-listbox id='sensors-checkboxs2' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_away.override}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_away' data-group='override' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+                    </div>
+
+                    <h1>Home Mode</h1>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Pending (Exit) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is armed. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Exit Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_home-pending_time' value='[[alarm.attributes.states.armed_home.pending_time]]' placeholder='Pending Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_home' data-attribute='pending_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Warning (Entry) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is triggered. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Entry Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_home-warning_time' value='[[alarm.attributes.states.armed_home.warning_time]]' placeholder='Warning Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_home' data-attribute='warning_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Trigger Time: </span>
+                        <span class='info-detail'>The amount of time in seconds the alarm stays triggered before returning to its previous state. Default is 300 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_home-trigger_time' value='[[alarm.attributes.states.armed_home.trigger_time]]' placeholder='Trigger Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_home' data-attribute='trigger_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='horizontal layout'>
+                      <div class='vertical layout'>
+                        <h2>Immediate</h2>
+                        <paper-listbox id='sensors-checkboxs3' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_home.immediate}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_home' data-group='immediate' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='vertical layout'>
+
+                        <h2>Delayed</h2>
+                        <paper-listbox id='sensors-checkboxs4' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_home.delayed}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_home' data-group='delayed' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='vertical layout'>
+
+                        <h2>Override</h2>
+                        <paper-listbox id='sensors-checkboxs5' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_home.override}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_home' data-group='override' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+                    </div>
+
+                    <h1>Perimeter Mode</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Perimeter Mode: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.enable_perimeter_mode}}' on-change='settingsSave' data-setting='root' data-attribute='enable_perimeter_mode'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enable perimeter mode. Default is False</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Pending (Exit) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is armed. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Exit Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_perimeter-pending_time' value='[[alarm.attributes.states.armed_perimeter.pending_time]]' placeholder='Pending Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_perimeter' data-attribute='pending_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Warning (Entry) Time: </span>
+                        <span class='info-detail'>Grace time in seconds before the alarm is triggered. Any sensor tripped within this time period will not trigger the alarm. Also known as 'Entry Time'. Default is 25 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_perimeter-warning_time' value='[[alarm.attributes.states.armed_perimeter.warning_time]]' placeholder='Warning Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_perimeter' data-attribute='warning_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Trigger Time: </span>
+                        <span class='info-detail'>The amount of time in seconds the alarm stays triggered before returning to its previous state. Default is 300 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='armed_perimeter-trigger_time' value='[[alarm.attributes.states.armed_perimeter.trigger_time]]' placeholder='Trigger Time'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='states' data-mode='armed_perimeter' data-attribute='trigger_time' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='horizontal layout'>
+                      <div class='vertical layout'>
+                        <h2>Immediate</h2>
+                        <paper-listbox id='sensors-checkboxs6' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_perimeter.immediate}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_perimeter' data-group='immediate' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='vertical layout'>
+
+                        <h2>Delayed</h2>
+                        <paper-listbox id='sensors-checkboxs7' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_perimeter.delayed}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_perimeter' data-group='delayed' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+
+                      <div class='vertical layout'>
+
+                        <h2>Override</h2>
+                        <paper-listbox id='sensors-checkboxs8' class='vertical layout' attr-for-selected="title" multi selected-values={{alarm.attributes.states.armed_perimeter.override}} selected-attribute="checked" >
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='sensor'>
+                            <checkbox type='checkbox' class='checkbox' title="{{sensor}}" on-click='settingsSave' data-setting='sensor_select' data-mode='armed_perimeter' data-group='override' >[[computeFriendlyName(sensor)]]</checkbox>
+                          </template>
+                        </paper-listbox>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- ########################################################################### @FLOORPLAN ##################################################################################################### -->
+                  <div id='settings-floorplan' class='carousel-cell remove'>
+                    <h1>Floorplan</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Floorplan Panel: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.panel.enable_floorplan_panel}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_floorplan_panel'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enabling this allows you to setup your custom floorplan to be displayed as a panel</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='horizontal layout'>
+                        <div class='setting-inner vertical layout'>
+                          <span class='info-header'>Floorplan Entity: </span>
+                          <span class='info-detail'>Choose the binary_sensor which relates to your floorplan setup</span>
+                        </div>
+                      </div>
+                      <div class='setting-inner vertical layout'>
+                        <paper-listbox id='floorplan-listbox' class='vertical layout' selected='{{alarm.attributes.panel.floorplan}}' attr-for-selected="name" on-selected-item-changed='settingsSave' data-type='listbox' data-setting='panel' data-attribute='floorplan'>
+                          <template is='dom-repeat' items='{{binary_sensors}}' as='bs'>
+                            <paper-item name="[[bs]]" class='list-item' title="{{bs}}">[[computeFriendlyName(bs)]]</paper-item>
+                          </template>
+                        </paper-listbox>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ########################################################################### CAMERAS ##################################################################################################### -->
+                  <div id='settings-cameras' class='carousel-cell remove'>
+                    <h1>Cameras</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Camera Panel: </span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.panel.enable_camera_panel}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_camera_panel'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enabling this allows you to add your cameras listed below to be displayed as a panel</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Update Interval: </span>
+                        <span class='info-detail'>The time in seconds the camera image updates. Default is 5 seconds</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='camera_update_interval' value='{{alarm.attributes.panel.camera_update_interval}}' placeholder='Update Interval'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='panel' data-attribute='camera_update_interval' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <paper-listbox id='cameras-checkboxs' class='vertical layout' attr-for-selected="name" multi selected-values={{alarm.attributes.panel.cameras}} selected-attribute="checked" on-selected-items-changed='settingsSave' data-type='checkbox' data-setting='panel-cameras'>
+                      <template is='dom-repeat' items='{{cameras}}' as='camera'>
+                        <checkbox name="{{camera}}" class='checkbox' title$="{{camera}}">[[computeFriendlyName(camera)]]</checkbox>
+                      </template>
+                    </paper-listbox>
+                  </div>
+
+                  <!-- ########################################################################### MQTT ##################################################################################################### -->
+                  <div id='settings-mqtt' class='carousel-cell remove'>
+                    <h1>MQTT</h1>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable MQTT:</span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.mqtt.enable_mqtt}}' on-change='settingsSave' data-setting='mqtt' data-attribute='enable_mqtt'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>(RESTART REQUIRED) Enabling this allows you to send and receive MQTT messages to interact with your alarm</span>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>QOS: </span>
+                        <span class='info-detail'>Quality of Service. The maximum QoS level for subscribing and publishing to MQTT messages. Default is 0.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='qos' value='{{alarm.attributes.mqtt.qos}}' placeholder='QOS'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='qos' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>State Topic: </span>
+                        <span class='info-detail'>The MQTT topic HA will publish state updates to. Default is 'home/alarm'</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='state_topic' value='{{alarm.attributes.mqtt.state_topic}}' placeholder='State Topic'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='state_topic' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Command Topic: </span>
+                        <span class='info-detail'>The MQTT topic HA will subscribe to, to receive commands from a remote device to change the alarm state. Default is 'home/alarm/set'</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='command_topic' value='{{alarm.attributes.mqtt.command_topic}}' placeholder='Command Topic'></paper-input>
+                          <paper-icon-button data-type='imput_text' data-setting='mqtt' data-attribute='command_topic' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Payload Disarm: </span>
+                        <span class='info-detail'>The payload to disarm this Alarm Panel. Default is 'DISARM'.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='payload_disarm' value='{{alarm.attributes.mqtt.payload_disarm}}' placeholder='Payload Disarm'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='payload_disarm' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Payload Arm Home: </span>
+                        <span class='info-detail'>The payload to set armed-home mode on this Alarm Panel. Default is 'ARM_HOME'.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='payload_arm_home' value='{{alarm.attributes.mqtt.payload_arm_home}}' placeholder='Payload Disarm'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='payload_arm_home' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Payload Arm Away: </span>
+                        <span class='info-detail'>The payload to set armed-away mode on this Alarm Panel. Default is 'ARM_AWAY'.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='payload_arm_away' value='{{alarm.attributes.mqtt.payload_arm_away}}' placeholder='Payload Away'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='payload_arm_away' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer horizontal layout'>
+                      <div class='setting-inner vertical layout'>
+                        <span class='info-header'>Payload Arm Perimeter: </span>
+                        <span class='info-detail'>The payload to set armed-perimeter mode on this Alarm Panel. Default is 'ARM_NIGHT'.</span>
+                        <div class='setting-input horizontal layout'>
+                          <paper-input id='payload_arm_night' value='{{alarm.attributes.mqtt.payload_arm_night}}' placeholder='Payload Perimeter'></paper-input>
+                          <paper-icon-button data-type='input_text' data-setting='mqtt' data-attribute='payload_arm_night' on-click='settingsSave' icon='mdi:check-circle-outline'></paper-icon-button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-input horizontal layout'>
+                        <span class='info-header'>Override Code:</span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.mqtt.override_code}}' on-change='settingsSave' data-setting='mqtt' data-attribute='override_code'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>If true allows MQTT commands to disarm the alarm without a valid code. False by default.</span>
+                    </div>
+
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Pending On Warning:</span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.mqtt.pending_on_warning}}' on-change='settingsSave' data-setting='mqtt' data-attribute='pending_on_warning'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Broadcast Pending state when the alarm is tripped instead of the default Warning state. This is to allow integration with other MQTT panels which use this state. False by default.</span>
+                    </div>
+
+                  </div>
+
+                  <!-- ########################################################################### CUSTOM ##################################################################################################### -->
+                  <div id='settings-custom' class='carousel-cell remove'>
+                    <h1>Custom</h1>
+                    <div class='setting-outer vertical layout'>
+                      <div class='setting-inner horizontal layout'>
+                        <span class='info-header'>Enable Custom Panel:</span>
+                        <paper-toggle-button class='setting-toggle' checked='{{alarm.attributes.panel.enable_custom_panel}}' on-change='settingsSave' data-setting='panel' data-attribute='enable_custom_panel'></paper-toggle-button>
+                      </div>
+                      <span class='info-detail'>Enabling this allows you to add your own panel to this interface. For this to work see the template custom-element.html file. You will need to modify this with your own HTML code. Using this you could bring additional custom features of your own such as displaying extra information from Home Assistant or a 3rd party website. You could hook into external cameras or have a stocks and shared ticker.</span>
+                    </div>
+                  </div>
+
+                  <!-- ########################################################################### HELP ##################################################################################################### -->
+                  <!-- <div id='settings-help' class='carousel-cell remove'>
+                    <h1>Help Guide</h1>
+                    <div class='setting-outer vertical layout'>
+                      <span class='info-detail'>This section is a work in progress. I'm knackered from just creating this interface, too many late nights :-D Let me know what you think would be good to display here. I'll likely provide the basics plus links to yaml automations and sample node-red files</span>
+                    </div>
+                  </div> -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ###########################################SELECTION BAR############################################### -->
+      <div id='info-panel-selection'>
+        <paper-icon-button icon='mdi:dialpad' title='Keypad' on-click='carouselClick' data-selection='controls'></paper-icon-button>
+        <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_floorplan_panel)]]' >
+          <paper-icon-button icon='mdi:floor-plan' title='Floorplan' on-click='carouselClick' data-selection='floorplan'></paper-icon-button>
+        </template>
+        <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_sensors_panel)]]' >
+          <paper-icon-button icon='mdi:radio-tower' title='Alarm Sensors' on-click='carouselClick' data-selection='sensors' style$='color: [[computeButtonColor(opencount)]] !important;'></paper-icon-button>
+        </template>
+        <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_camera_panel)]]' >
+          <paper-icon-button icon='mdi:cctv' title='Cameras' on-click='carouselClick' data-selection='cameras'></paper-icon-button>
+        </template>
+        <template is='dom-if' if='[[isChecked(alarm.attributes.enable_log)]]' >
+          <paper-icon-button icon='mdi:view-headline' title='Activity Log' on-click='carouselClick' data-selection='log'></paper-icon-button>
+        </template>
+        <template is='dom-if' if='[[isChecked(alarm.attributes.panel.enable_custom_panel)]]' >
+          <paper-icon-button icon='mdi:atom' title='Custom Panel' on-click='carouselClick' data-selection='custom'></paper-icon-button>
+        </template>
+        <paper-icon-button icon='mdi:tune' title='Settings' on-click='carouselClick' data-selection='set-login'></paper-icon-button>
+      </div>
+
+      <!-- ###########################################CAMERA MODAL############################################### -->
+      <div id="modalCamera">
+        <img id="imgCamera" >
+        <div id='captionCamera'></div>
+      </div>
+
+      <!-- ###########################################DONATE MODAL############################################### -->
+      <div id='modalDonate'>
+        <div id='donateMethod' class='info-header'></div>
+        <div class='logo' style='padding-bottom: 20px;'></div>
+        <div class='qr'></div>
+        <div id='donateAddress' class='info-detail'></div>
+      </div>
+
+      <!-- ###########################################ERROR MODAL############################################### -->
+      <template is='dom-if' if='[[items]]' >
+        <div id='modalError' style='color: white'>
+          <div class='horizontal layout'>
+            <div id='error-icon'>
+              <iron-icon icon='mdi:alert-circle-outline'></iron-icon>
+            </div>
+            <div>
+              <div id='error-title'>Whoops!</div>
+              <div id='error-header'>Something went wrong with your alarm component!</div>
+              <div id='error-detail'>The following errors have been plucked from the Home Assistant log:</div>
+              <template is='dom-repeat' items='[[items]]'>
+               <paper-item on-click='openLog'>
+                 <paper-item-body two-line>
+                   <div class="row">
+                     [[item.message]]
+                   </div>
+                   <div secondary>
+                     [[formatTime(item.timestamp)]] [[item.source]] ([[item.level]])
+                   </div>
+                 </paper-item-body>
+               </paper-item>
+              </template>
+
+              <div id='error-version'>
+                <p><span class='info-detail'>Home Assistant: </span><span class='info-header'>v[[hass.config.version]]</span></p>
+                <p><span class='info-detail'>This Panel: </span><span class='info-header'>v[[version]]</span></p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </ha-app-layout>
+  </template>
+</dom-module>
+
+<script>
+  {
+    class HaPanelAlarm extends Polymer.Element {
+
+      static get is(){ return 'ha-panel-alarm'; }
+
+      static get properties(){
+        return {
+          hass:                 { type: Object },
+          panel:                { type: Object },
+          narrow:               { type: Boolean, value: false },
+          showMenu:             { type: Boolean, value: false },
+
+          settingsUnlock:       { type: Boolean, value: false },
+
+          panel_title:          { type: String, value: 'Home Alarm'},
+
+          carouselMainSelected: { type: Object },
+          carouselSettings:     { type: Object },
+          controls:             { type: Object },
+          controlsLoaded:       { type: Boolean, value: false },
+
+          alarm:                { type: Object, observer: 'monitorAlarm' },
+
+          attemptArmMode:       { type: String, value: ''},
+
+          // Sensor Groups
+          immediate:            { type: Array, computed: 'computeSensors(hass, alarm.attributes.immediate)' },
+          delayed:              { type: Array, computed: 'computeSensors(hass, alarm.attributes.delayed)' },
+          allsensors:           { type: Array, computed: 'computeSensors(hass, alarm.attributes.allsensors)'},
+          ignored:              { type: Array, computed: 'computeSensors(hass, alarm.attributes.ignored)' },
+
+          opencount:            { type: Number, value: 0 },
+
+          time:                 { type: Object },
+          weather:              { type: Object },
+          temp:                 { type: String },
+
+          code:                 { type: String, value: '' },
+          display_code:         { type: String, value: '' },
+
+          timeoutID:            { type: Number },
+
+          sidebarTimerId:       { type: Number },
+
+          cleanup:              { type: Array, value: [] },
+          attemptedArm:         { type: Boolean, value: false },
+
+          settings:             { type: Boolean, value: false },
+
+          panel_locked:         { type: Boolean, value: false },
+
+          cameraFeedSrc:        { type: String },
+          camera_time:     { type: String },
+          cameras:         { type: Array, value: [] },
+
+          binary_sensors:  { type: Array, value: [] },
+
+          errors:          { type: Array },
+          version:         { type: String, value: '1.3.4'},
+
+          camera_update_interval: { type: Number, value: 5000 }, // ms
+
+          settingColors: { type: Array, value: [] },
+          selectedUser:  { type: Object, value: null},
+
+        }
+      }
+
+      // Polymer observers definition
+      static get observers() {
+        return [
+          'onPanelUpdate(hass, panel)',
+          'updateTime(hass)'
+        ]
+      }
+
+      connectedCallback() {
+        super.connectedCallback();
+      }
+
+      disconnectedCallback() {
+        super.disconnectedCallback();
+        clearInterval(this.camTimer);
+      }
+
+      //Page ready
+      ready(){
+        super.ready();
+
+        // Check the alarm component successfully loaded if not then display an error
+        if (this.alarm){
+          //Countdown360
+          var script = document.createElement('script');
+          script.setAttribute('src', '/local/lib/countdown360.js');
+          document.body.appendChild(script);
+
+          this.loadSettings();
+
+          this.controls = this.$.controls;
+
+          if (this.alarm.attributes.hide_sidebar == true)  this.closeSidebar();
+
+          //Determine screensize and set appropriate controls
+          this.setupUI();
+
+          this._loadData();
+        }
+        // Display the error
+        else {
+          console.log("Whoops something went wrong and the alarm component cannot be loaded. Check your Home Assistant error log");
+          this.updating = true;
+          this.hass.callApi("get", "error/all").then((items) => {
+            this.errorItems = items;
+            this.updating = false;
+            this.items = [];
+            for (var item in this.errorItems) {
+              if (this.errorItems[item].message.includes("[alarm"))
+                this.items.push(this.errorItems[item]);
+            }
+          });
+        }
+      }
+
+      getKeys(obj){
+        if (obj != null) {
+          return Object.keys(obj);
+        }
+        else return false;
+      }
+
+      defineColors(ev){
+
+        this.unhideDiv('#themeDetail');
+
+        var theme = null;
+
+        if (ev != null){
+          ev.stopPropagation();
+
+          var themeName =  ev.target.getAttribute('data-theme');
+
+          if (this.alarm.attributes.themes)
+            for (var x in this.alarm.attributes.themes)
+              if (this.alarm.attributes.themes[x].name == themeName){
+                theme = this.alarm.attributes.themes[x];
+                this.shadowRoot.querySelector('#theme-name').value = themeName;
+                this.shadowRoot.querySelector('#theme-name-button').setAttribute('name', themeName);
+              }
+        }
+
+        this.settingColors = [{}];
+
+        this.settingColors[0] = {
+          'name':'warning_color', 'header':'Warning', 'theme':themeName,
+          'description':'If a sensor is tripped when the alarm is armed the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.warning_color != null) ? theme.warning_color : 'black'};
+
+        this.settingColors[1] = {
+          'name':'pending_color', 'header':'Pending', 'theme':themeName,
+          'description':'When the alarm is arming the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.pending_color != null) ? theme.pending_color  : 'black'};
+
+        this.settingColors[2] = {
+          'name':'disarmed_color', 'header':'Disarmed', 'theme':themeName,
+          'description':'When the alarm is disarmed the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.disarmed_color != null) ? theme.disarmed_color : 'black'};
+
+        this.settingColors[3] = {
+          'name':'triggered_color', 'header':'Triggered', 'theme':themeName,
+          'description':'When the alarm has been triggered the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.triggered_color != null) ? theme.triggered_color : 'black'};
+
+        this.settingColors[4] = {
+          'name':'armed_home_color', 'header':'Armed in \'Home\' Mode', 'theme':themeName,
+          'description':'When the alarm is set in \'Home Mode\' the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.armed_home_color != null) ? theme.armed_home_color : 'black'};
+
+        this.settingColors[5] = {
+          'name':'armed_away_color', 'header':'Armed in \'Away\' Mode', 'theme':themeName,
+          'description':'When the alarm is set in \'Away Mode\' the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.armed_away_color != null) ? theme.armed_away_color : 'black'};
+
+        this.settingColors[6] = {
+          'name':'armed_perimeter_color', 'header':'Armed in \'Perimeter\' Mode', 'theme':themeName,
+          'description':'When the alarm is set in \'Perimeter Mode\' the panel will display this color in both the top header background and the centre panel background',
+          'color': (theme != null && theme.armed_perimeter_color != null) ? theme.armed_perimeter_color  : 'black'};
+
+        this.settingColors[7] = {
+          'name':'panel_background_color', 'header':'Panel Background', 'theme':themeName,
+          'description':'The background color of the main content section.',
+          'color': (theme != null && theme.panel_background_color != null) ? theme.panel_background_color  : 'black'};
+
+        this.settingColors[8] = {
+          'name':'panel_outer_background_color', 'header':'Panel Outer Background', 'theme':themeName,
+          'description':'The background color of both the status bar and the menu bar.',
+          'color': (theme != null && theme.panel_outer_background_color != null) ? theme.panel_outer_background_color  : 'black'};
+
+        this.settingColors[9] = {
+          'name':'panel_text_color', 'header':'Panel Text', 'theme':themeName,
+          'description':'The color of the general text within the panel.',
+          'color': (theme != null && theme.panel_text_color != null) ? theme.panel_text_color  : 'black'};
+
+        this.settingColors[10] = {
+          'name':'header_background_color', 'header':'Header Background', 'theme':themeName,
+          'description':'The background color of very top header bar.',
+          'color': (theme != null && theme.header_background_color != null) ? theme.header_background_color  : 'black'};
+
+        this.settingColors[11] = {
+          'name':'header_text_color', 'header':'Header Text', 'theme':themeName,
+          'description':'The text color on very top header bar.',
+          'color': (theme != null && theme.header_text_color != null) ? theme.header_text_color  : 'black'};
+
+        this.settingColors[12] = {
+          'name':'alarmstatus_text_color', 'header':'Alarm Status Text', 'theme':themeName,
+          'description':'The text color of the Alarm Status.',
+          'color': (theme != null && theme.alarmstatus_text_color != null) ? theme.alarmstatus_text_color : 'black'};
+
+        this.settingColors[13] = {
+          'name':'time_text_color', 'header':'Time Text', 'theme':themeName,
+          'description':'The text color of the Time label.',
+          'color': (theme != null && theme.time_text_color != null) ? theme.time_text_color  : 'black'};
+
+        this.settingColors[14] = {
+          'name':'weather_text_color', 'header':'Weather Text', 'theme':themeName,
+          'description':'The text color of the Weather label.',
+          'color': (theme != null && theme.weather_text_color != null) ? theme.weather_text_color  : 'black'};
+
+        this.settingColors[15] = {
+          'name':'weather_image_color', 'header':'Weather Image', 'theme':themeName,
+          'description':'The color of the Weather image.',
+          'color': (theme != null && theme.weather_image_color != null) ? theme.weather_image_color  : 'black'};
+
+        this.settingColors[16] = {
+          'name':'info_header_text_color', 'header':'Information Header Text', 'theme':themeName,
+          'description':'The color of the Heading within a particular Section.',
+          'color': (theme != null && theme.info_header_text_color != null) ? theme.info_header_text_color  : 'black'};
+
+        this.settingColors[17] = {
+          'name':'info_detail_text_color', 'header':'Information Detail Text', 'theme':themeName,
+          'description':'The color of the descriptive text within a particular Section.',
+          'color': (theme != null && theme.info_detail_text_color != null) ? theme.info_detail_text_color  : 'black'};
+
+        this.settingColors[18] = {
+          'name':'title_text_color',   'header':'Title (Content) Text', 'theme':themeName,
+          'description':'The color of the Title text within a particular section.',
+          'color': (theme != null && theme.title_text_color!= null) ? theme.title_text_color  : 'black'};
+
+        this.settingColors[19] = {
+          'name':'subtitle_text_color', 'header':'Subtitle (Content) Text', 'theme':themeName,
+          'description':'The color of the Subtitle text within a particular section.',
+          'color': (theme != null && theme.subtitle_text_color!= null) ? theme.subtitle_text_color  : 'black'};
+
+        this.settingColors[20] = {
+          'name':'openSensors_title_color', 'header':'Open Sensors Title', 'theme':themeName,
+          'description':'The color of the Open Sensors Title to draw attention to the open sensor.',
+          'color': (theme != null && theme.opensensors_title_color != null) ? theme.opensensors_title_color  : 'black'};
+
+        this.settingColors[21] = {
+          'name':'button_background_color', 'header':'Button Background Color', 'theme':themeName,
+          'description':'The background color of the alarm buttons.',
+          'color': (theme != null && theme.button_background_color != null) ? theme.button_background_color  : 'black'};
+
+        this.settingColors[22] = {
+          'name':'cancel_color',   'header':'Cancel Button Background', 'theme':themeName,
+          'description':'The background color of the cancel button.',
+          'color': (theme != null && theme.cancel_color != null) ? theme.cancel_color  : 'black'};
+
+        this.settingColors[23] = {
+          'name':'override_color', 'header':'Override Button Background', 'theme':themeName,
+          'description':'The background color of the override button.',
+          'color': (theme != null && theme.override_color != null) ? theme.override_color  : 'black'};
+
+        this.settingColors[24] = {
+          'name':'info_panel_buttons_color', 'header':'Menu Buttons', 'theme':themeName,
+          'description':'The color of the menu buttons.',
+          'color': (theme != null && theme.info_panel_buttons_color != null) ? theme.info_panel_buttons_color : 'black'};
+
+        this.settingColors[25] = {
+          'name':'arm_button_border_color', 'header':'Alarm Button Border', 'theme':themeName,
+          'description':'The border color of the alarm buttons.',
+          'color': (theme != null && theme.arm_button_border_color != null) ? theme.arm_button_border_color  : 'black'};
+
+        this.settingColors[26] = {
+          'name':'arm_button_text_color', 'header':'Alarm Button Text', 'theme':themeName,
+          'description':'The color of the text within the alarm buttons.',
+          'color': (theme != null && theme.arm_button_text_color != null) ? theme.arm_button_text_color  : 'black'};
+
+        this.settingColors[27] = {
+          'name':'paper_listbox_background_color', 'header':'Listbox background', 'theme':themeName,
+          'description':'The background color of the listboxes.',
+          'color': (theme != null && theme.paper_listbox_background_color != null) ? theme.paper_listbox_background_color  : 'black'};
+
+        this.settingColors[28] = {
+          'name':'paper_listbox_color', 'header':'Listbox text', 'theme':themeName,
+          'description':'The text color within the listboxes.',
+          'color': (theme != null && theme.paper_listbox_color != null) ? theme.paper_listbox_color : 'black'};
+
+        this.settingColors[29] = {
+          'name':'paper_item_selected___color', 'header':'Item Selected', 'theme':themeName,
+          'description':'The text color of the item selected within a selection box.',
+          'color': (theme != null && theme.paper_item_selected___color != null) ? theme.paper_item_selected___color  : 'black'};
+
+        this.settingColors[30] = {
+          'name':'action_button_border_color', 'header':'Action button border', 'theme':themeName,
+          'description':'The color of the border surrounding the action buttons',
+          'color': (theme != null && theme.action_button_border_color != null) ? theme.action_button_border_color  : 'black'};
+
+        this.addColorPicker();
+      }
+
+      addColorPicker(){
+        setTimeout(function(instance) {
+          var colorPickers = instance.shadowRoot.querySelectorAll('.colPicker');
+
+          for (var i = 0; i <= colorPickers.length - 1; i++) {
+            var input = document.createElement('INPUT');
+            input.id = colorPickers[i].id.replace('_span','');
+            var picker = new jscolor(input)
+            picker.fromString(colorPickers[i].value);
+
+            //clear previous pickers
+            while (colorPickers[i].firstChild)
+              colorPickers[i].removeChild(colorPickers[i].firstChild);
+
+            //var clearBox = colorPickers[i];
+            if (colorPickers[i] != null)
+              colorPickers[i].appendChild(input);
+          }
+          instance.setCarouselHeight(instance.carouselMainSelected);
+        }, 200, this);
+      }
+
+      toUpper(text){
+        return text.charAt(0).toUpperCase() + text.slice(1);
+      }
+
+      unhideDiv(ev){
+        var el = null;
+        if (ev.target) el = ev.target.getAttribute('data-div');
+        else el = ev;
+        var element = this.shadowRoot.querySelector(el);
+        if (element) element.classList.remove('remove');
+        this.setCarouselHeight(this.carouselMainSelected);
+      }
+
+      hideDiv(ev){
+        var el = null;
+        if (ev.target) el = ev.target.getAttribute('data-div');
+        else el = ev;
+        var element = this.shadowRoot.querySelector(el);
+        if (element) element.classList.add('remove');
+        this.setCarouselHeight(this.carouselMainSelected);
+      }
+
+      updateTheme(){
+        if (this.alarm.attributes.themes)
+          for (var x in this.alarm.attributes.themes)
+            if (this.alarm.attributes.themes[x].active == true){
+
+              var theme = this.alarm.attributes.themes[x];
+              if (typeof theme.name == 'string'){
+                var styles = {};
+                for (var cssVar in theme){
+                  if (cssVar != 'name' && cssVar != 'active'){
+                    var style = '--' + cssVar.replace(new RegExp('_', 'g'), '-');
+                    styles[style] = this.alarm.attributes.themes[x][cssVar];
+                  }
+                }
+                this.updateStyles(styles);
+                var color = styles['--' + this.alarm.state.replace(new RegExp('_', 'g'), '-') + '-color'];
+                if (color)
+                  this.updateStyles({'--panel-outer-background-color': color});
+              }
+            }
+      }
+
+      // Log an error
+      error(message){
+        if (this.errors == null) this.errors = [];
+        this.errors.push(message);
+        console.log(message);
+      }
+
+      exists(entity){
+        if (entity) return true;
+        else return false;
+      }
+
+      getObject(entity){
+        return this.hass.states[entity];
+      }
+
+      getPanelTitle(){
+        if (this.alarm.attributes.panel.panel_title != null && this.alarm.attributes.panel.panel_title != '') this.panel_title = this.alarm.attributes.panel.panel_title;
+      }
+
+      isChecked(check){
+        if (check == 'True' || check == true) return true;
+        else return false;
+      }
+
+      computeJSONValue(entity, attribute){
+           if (entity == undefined){
+            return false;
+        } else {
+          var obj = JSON.parse(entity);
+            return obj[attribute];
+        }
+      }
+
+      computeValueArray(entity, attribute){
+           if (entity == undefined){
+            return false;
+        } else {
+            return entity[attribute];
+        }
+      }
+
+      computeValueArray(entity, attribute, attribute2){
+           if (entity == undefined){
+            return false;
+        } else {
+            return entity[attribute][attribute2];
+        }
+      }
+
+      loadSettings(){
+        this.binary_sensors = [];
+
+        for (var state in this.hass.states) {
+          if (state.split('.')[0] == 'camera'){ //find all cameras and add to array
+            this.cameras.push(state);
+          }
+          else if (state.split('.')[0] == 'binary_sensor'){
+            this.binary_sensors.push(state);
+          }
+        }
+       this.binary_sensors.sort();
+      }
+
+      computeLog(entry, type){
+        switch (type){
+          case 'time':
+            var t = new Date(entry[0] * 1000);
+            return t.toLocaleString('en-GB', { timeZone: 'UTC' }).split(",")[1] + " - " + t.toLocaleString('en-GB', { timeZone: 'UTC' }).split(",")[0];
+            break;
+          case 'name':
+            for (var user in this.alarm.attributes.users) {
+              if (this.alarm.attributes.users[user]['id'] == entry[1])
+                return this.toUpper(this.alarm.attributes.users[user]['name']);
+            }
+            return this.toUpper(entry[1]);
+          case 'image':
+            for (var user in this.alarm.attributes.users) {
+              if (this.alarm.attributes.users[user]['id'] == entry[1])
+                return this.toUpper(this.alarm.attributes.users[user]['picture']);
+            }
+            return '/local/images/ha.png';
+          case 'message':
+            switch (entry[2]){
+              case 0:
+                return 'disarmed the alarm';
+                break;
+              case 1:
+                return 'Disarm attempt failed, wrong code!';
+                break;
+              case 2:
+                return 'The alarm has been triggered! Sensor: ';
+                break;
+              case 3:
+                return 'set the alarm in Home mode';
+                break;
+              case 4:
+                return 'set the alarm in Away mode';
+                break;
+              case 5:
+                return 'Alarm has been tripped! Sensor:  ';
+                break;
+              case 6:
+                return 'Panel Locked';
+                break;
+              case 8:
+                return 'set the alarm in Perimeter mode';
+                break;
+            }
+            break;
+        }
+      }
+
+      compareString(str1, str2){
+        return true ? str1 == str2 : false;
+      }
+
+      //Check the admin password to grant access to the settings tab
+      checkSettingsPassword(){
+        //Get the password dom
+        var passwordInput = this.$.passwordInput;
+
+        //Calculate the SHA256 hash of the input
+        var passwordHash = this.passwordToHash($(passwordInput).val());
+
+        //If it matches the stored hash then grant access
+        if (passwordHash == this.alarm.attributes.admin_password){
+        //Password matches so load settings cell
+          this.settingsUnlock = true;
+          this.carouselChange(this.shadowRoot.querySelector('#settings-info'));
+
+          //Clear password input
+          $(passwordInput).val('');
+        }
+      }
+
+      //Return a sha2656 Hash from the input string
+      passwordToHash(password){
+        return sha256_digest(password);
+      }
+
+      //Determine the screensize then set the appropriate UI
+      setupUI(){
+
+        if (this.alarm.attributes.panel == null) {
+          this.alarm.attributes.panel = {};
+          this.settingsUpdate('panel', {});
+        }
+
+        if (this.alarm.attributes.panel.cameras == null) {
+          var panel = this.alarm.attributes.panel;
+          panel.cameras = [];
+          this.settingsUpdate('panel', panel);
+        }
+
+        if (this.alarm.attributes.states == null) {
+          var states = {
+            'armed_away' : {'immediate':[], 'delayed':[], 'override':[], 'pending_time': 0, 'warning_time': 0, 'trigger_time': 600},
+            'armed_home' : {'immediate':[], 'delayed':[], 'override':[], 'pending_time': 0, 'warning_time': 0, 'trigger_time': 600},
+            'armed_perimeter' : {'immediate':[], 'delayed':[], 'override':[], 'pending_time': 0, 'warning_time': 0, 'trigger_time': 600}
+          };
+          this.settingsUpdate('states', states);
+        }
+
+        if (this.alarm.attributes.panel.camera_update_interval > 0) this.camera_update_interval = this.alarm.attributes.panel.camera_update_interval * 1000;
+
+        this.camTimer = setInterval(() => this.updateCameraTime(), this.camera_update_interval);
+
+        if (this.isChecked(this.alarm.attributes.panel.enable_weather))
+          this.getWeather();
+
+        //setupCameras
+        setTimeout(this.setupCameras, 5000, this.shadowRoot);
+
+        this.setupDt();
+
+        // Screen less than 1200 px
+        if ($(window).height() < 600) {
+          this.updateStyles({'--shadow-effect': 'unset'});
+/*          if (!this.controlsLoaded) {
+            //Add the keypad and controls to the carousel
+              this.controlsLoaded = true;
+          }*/
+        }
+        else {
+          if (this.isChecked(this.alarm.attributes.panel.shadow_effect)) this.updateStyles({'--shadow-effect': 'below 0 linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .1))'});
+          else this.updateStyles({'--shadow-effect': 'unset'});
+/*          //Remove the keypad and controls to the carousel
+          this.controlsLoaded = false;*/
+        }
+        if ($(window).width() > 767)
+          if (this.alarm.attributes.panel)
+            this.weatherTimer = setInterval(() => this.updateWeatherSVG(), 500);
+
+        this.carouselMainSelected = this.$.carousel_template;
+
+        this.carouselChange(this.$.controls);
+
+        this.$.carousel_main.style.height = '40vh';
+      }
+
+      updateWeatherSVG() {
+        if (this.shadowRoot.querySelector('#weather_svg')) {
+          if (this.shadowRoot.querySelector('#weather_svg').getSVGDocument() != null){
+            this.shadowRoot.querySelector('#weather_svg').getSVGDocument().querySelectorAll('svg')[0].setAttribute("fill", window.getComputedStyle(this.shadowRoot.querySelector('#weather-icon')).getPropertyValue("fill"));
+            clearInterval(this.weatherTimer);
+          }
+        }
+      }
+
+      setupDt(){
+        // Get the modal
+        var modalDT = this.shadowRoot.querySelector('#modalDonate');
+        var dtMethod = this.shadowRoot.querySelector('#donateMethod');
+        var dtAddress = this.shadowRoot.querySelector('#donateAddress');
+
+        // Get the image and insert it inside the modal
+        var dt = this.shadowRoot.querySelectorAll(".donate");
+
+        for (var i = 0; i < dt.length; i++) {
+            dt[i].onclick = function(){
+              modalDT.className = "";
+              modalDT.style.display = "block";
+              modalDT.classList.add(this.id);
+
+              dtMethod.innerHTML = this.querySelector('.info-header').innerHTML;
+              dtAddress.innerHTML = this.getAttribute('data-address');
+            }
+        }
+        // When the user clicks on camera, close the modal
+        modalDT.onclick = function() {
+          modalDT.style.display = "none";
+        }
+      }
+
+      //One of the menu buttons has been clicked so show the appropriate tab
+      carouselClick(ev){
+        ev.stopPropagation();
+
+        //Get the selection
+        var selection = ev.target.getAttribute('data-selection');
+
+        //If the selection is not a settings item then lockup the settings lab
+        if (!selection.includes('settings'))
+          this.settingsUnlock = false;
+
+        //Show the selected tab
+        this.carouselChange(this.shadowRoot.querySelector('#' + selection));
+      }
+
+      //Show the newly selected tab
+      carouselChange(carouselCell){
+        if (this.carouselMainSelected != carouselCell){
+          //Remove the current cell
+          this.carouselMainSelected.classList.remove('carousel-slide-in');
+          setTimeout(function(sel) {sel.classList.add('remove');}, 500, this.carouselMainSelected);
+
+          //Unhide the new cell
+          carouselCell.classList.remove('remove');
+
+          //Update the parent div height to match the new selection
+          this.setCarouselHeight(carouselCell);
+          //Slidein the new cell
+          setTimeout(function(carouselCell) {carouselCell.classList.add('carousel-slide-in');}, 100, carouselCell);
+          /*carouselCell.classList.add('carousel-slide-in');*/
+
+          //Update the master selected cell for later use
+          this.carouselMainSelected = carouselCell;
+        }
+      }
+
+      //Update the parent div height to match the new selection
+      setCarouselHeight(carouselCell, instance){
+        setTimeout(function(carouselCell, instance) {instance.$.carousel_main.style.height = window.getComputedStyle(carouselCell).getPropertyValue("height");}, 50, carouselCell, this);
+      }
+
+      //Setup the camera clicks and modal
+      setupCameras(root) {
+        // Get the modal
+        var modalCamera = root.querySelector('#modalCamera');
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var camera = root.querySelectorAll(".camera");
+
+        var imgCamera = root.querySelector('#imgCamera');
+        var captionText = root.querySelector('#captionCamera');
+
+        for (var i = 0; i < camera.length; i++) {
+          var cam = camera[i];
+            camera[i].onclick = function(){
+              modalCamera.style.display = "block";
+              imgCamera.src = this.src;
+              captionText.innerHTML = this.alt;
+            }
+        }
+        // When the user clicks on camera, close the modal
+        modalCamera.onclick = function() {
+          modalCamera.style.display = "none";
+        }
+      }
+
+      //Updates camera time
+      updateCameraTime() {
+        this.camera_time = (new Date()).getTime();
+      }
+
+      //Get the latest camera snapshop
+      updateCameraFeedSrc(camera, camera_time) {
+        if (this.hass.states[camera] == null) return '';
+        var attr = this.hass.states[camera].attributes;
+        return attr.entity_picture + '&time=' + camera_time;
+      }
+
+      // Close the sidebar if alarm is set and the option is enabled
+      closeSidebar(instance){
+        if (instance) if (instance.alarm.state != 'disarmed')
+          instance.fire('hass-close-menu');
+      }
+
+      entityTapped(ev){
+        ev.stopPropagation();
+        this.fire('hass-more-info', { entityId: ev.target.getAttribute('data-entity')});
+      }
+
+      //Monitors the alarm status for any changes
+      monitorAlarm(){
+
+        var themeName = null;
+
+        this.opensensors(this.alarm, this.allsensors);
+
+        this.updateStyles({'--panel-outer-background-color': ''});
+
+        this.updateTheme();
+
+        if (this.alarm.attributes.panel)
+          this.updatePanelStyles();
+
+        //Resets countdown display
+        if (this.alarm.state != 'pending') if (this.$.countdown.querySelector('#countdown360')) this.$.countdown.querySelector('#countdown360').remove();
+
+        this.updateStyles({'--countdown-timer-display': 'none'});
+        this.updateStyles({'--time-display': 'initial'});
+
+        if (this.alarm.state == 'disarmed'){
+          if (this.attemptedArm == true) this.resetUI();
+
+        } else if (this.alarm.state == 'pending'){
+          this.updateStyles({'--countdown-timer-display': 'initial'});
+          this.updateStyles({'--time-display': 'none'});
+          this.loadUITimer(false, this.alarm.attributes.states[this.alarm.attributes.arm_state].pending_time);
+
+        } else if (this.alarm.state == 'warning'){
+          this.updateStyles({'--countdown-timer-display': 'initial'});
+          this.updateStyles({'--time-display': 'none'});
+          this.loadUITimer(false, this.alarm.attributes.states[this.alarm.attributes.arm_state].warning_time);
+        }
+
+        if (this.alarm.attributes.panel_locked == true){
+          console.log('Panel locked');
+          this.updateStyles({'--primary-color': 'grey'}); //[TODO] Implement panel locked color - this.alarm.attributes.colors['panel_locked});
+          this.updateStyles({'--countdown-timer-display': 'initial'});
+          this.updateStyles({'--time-display': 'none'});
+          this.loadUITimer(true, this.alarm.attributes.passcode_attempts_timeout);
+          this.panel_locked = true;
+        }
+        else this.panel_locked = false;
+
+        if (this.carouselMainSelected != null) this.setCarouselHeight(this.carouselMainSelected);
+      }
+
+      requiresCode(){
+        if (this.alarm.attributes.code_to_arm == false && this.alarm.state == 'disarmed') return false;
+        return true;
+      }
+
+      updatePanelStyles(){
+        //Re-aligns title bar
+        var title = this.shadowRoot.querySelector('#main-title-text');
+        if (this.alarm.attributes.panel != null && (this.alarm.state == 'disarmed' || this.alarm.attributes.panel.hide_sidebar == false)) title.classList.add('margin-left');
+        else title.classList.remove('margin-left');
+
+        //Changes the shape of the buttons
+        if (this.isChecked(this.alarm.attributes.panel.round_buttons))
+          this.updateStyles({'--button-shape': '50%'});
+        else this.updateStyles({'--button-shape': '0%'});
+
+        if (this.isChecked(this.alarm.attributes.panel.hide_sidebar)){
+          clearInterval(this.sidebarTimerId);
+          // Close the sidebar if alarm is set and the option is enabled
+          this.sidebarTimerId = setInterval(this.closeSidebar, 100, this);
+        }
+
+        //Updates the title of the panel
+        this.getPanelTitle();
+
+        if (this.isChecked(this.alarm.attributes.panel.enable_serif_font)) this.updateStyles({'--font-header': "'Lobster'"});
+        else this.updateStyles({'--font-header': "unset"});
+      }
+
+      // Loads the count down timer when arming the alarm
+      loadUITimer(locked, time){
+        var startColor = '#8ac575';
+        var middleColor = 'orange';
+        var endColor = 'red'
+
+        if (locked == true) startColor = middleColor = endColor = 'red';
+
+        var countdownDiv = this.$.countdown;
+
+        $(countdownDiv).empty();
+        $(countdownDiv).unbind().removeData();
+
+        var countdown = $(countdownDiv).countdown360(
+        {
+          radius      : 35,
+          fontColor   : '#FFFFFF',
+          autostart   : false,
+          label       : false,
+          smooth      : true,
+          seconds     : time,
+          fillStyle_0to50: startColor,
+          fillStyle_50to75: middleColor,
+          fillStyle_75to100: endColor
+        });
+        countdown.start();
+      }
+
+      // Gets the weather to display if enabled
+      getWeather(){
+        this.weather = this.hass.states['sensor.weather_summary'];
+
+        //if the above sensor can't be found then try dark_sky
+        if (this.weather == null)
+          this.weather = this.hass.states['sensor.dark_sky_summary'];
+
+        //No weather entity found display error
+        if (this.weather == null)
+          this.error('Weather entity not found in HA');
+
+        //set weather temperature
+        if (this.hass.states['sensor.weather_temperature'])
+          this.temp = Math.ceil((this.hass.states['sensor.weather_temperature']).state);
+
+        //if the above sensor is not found look for the dark sky one
+        else if (this.hass.states['sensor.dark_sky_temperature'])
+          this.temp = Math.ceil((this.hass.states['sensor.dark_sky_temperature']).state);
+
+        //if either isn't found show an error
+        else this.error('Weather temperature entity not found in HA');
+      }
+
+      // Updates time on the panel if enabled
+      updateTime(hass){
+        if (this.alarm && this.alarm.attributes.panel){
+          if (this.isChecked(this.alarm.attributes.panel.enable_clock)){
+            if (this.hass.states['sensor.time'] == null){
+              this.error('Time Sensor (sensor.time) not found in HA');
+              return;
+            }
+
+            this.time = this.hass.states['sensor.time'].state;
+
+            if (this.isChecked(this.alarm.attributes.panel.enable_clock_12hr))
+              if ((parseInt(String(this.time).split(':')[0]) - 12) > 0 )
+                this.time = String( parseInt( String(this.time).split(':')[0] ) - 12 ) + ":" + String(this.time).split(':')[1];
+          }
+        }
+      }
+
+      // Is the alarm disarmed?
+      isdisarmed(alarm){
+        return alarm.state == 'disarmed';
+      }
+
+      // Get open sensors
+      opensensors(alarm, all)   {
+        var ret = [];
+        if (all != null){
+          ret = all.filter(function (e){ return alarm.attributes.supported_statuses_on.indexOf(e.state.toLowerCase()) > -1; });
+          this.opencount = ret.length;
+          return ret;
+        }
+      }
+
+      // Get closed sensors
+      closedsensors(alarm, all)   {
+        var ret = [];
+        if (all == false){
+          return false;
+        } else {
+          ret = all.filter(function (e){ return alarm.attributes.supported_statuses_off.indexOf(e.state.toLowerCase()) > -1; });
+          return ret;
+        }
+      }
+
+      // determine whether a sensor is in a particular group
+      computeSensors(hass, ids){
+        if (ids == undefined){
+        // Control the exception when this.alarm is not ready
+          return false;
+        } else {
+          return ids.map(function (key){ return hass.states[key]; }).filter(function (e){ return e != undefined; });
+        }
+      }
+
+      // Determine if array is empty
+      computeArray(array){
+        if (array.length > 0){
+          return true;
+        }
+        return false;
+      }
+
+      //Provide a readable label
+      computeLabel(state){
+        switch (state){
+          case 'disarmed':      return 'disarmed';
+          case 'armed_away':    return 'away';
+          case 'armed_home':    return 'home';
+          case 'pending':       return 'leave';
+          case 'warning':       return 'warning';
+          case 'triggered':     return 'triggered';
+          case 'armed_perimeter': return 'perimeter';
+        }
+        return state;
+      }
+
+      //Get the friendly readable name of an entity
+      computeFriendlyName(entity) {
+        if (this.hass.states[entity] == null) return 'unknown';
+        var attr = this.hass.states[entity].attributes;
+        return attr.friendly_name;
+        }
+
+      // Change color of button
+      computeButtonColor(count){
+        if (count > 0) {
+          return 'var(--dark-orange)';
+        }
+        return 'var(--info-panel-buttons)';
+      }
+
+      // Gets an image from the username
+      computeImage(image){
+        if (image == null || image == '')
+          return '/local/images/ha.png'
+        else if (this.urlExists(image)) return image;
+        else return '/local/images/ha.png';
+      }
+
+      urlExists(url){
+        try {
+          var http = new XMLHttpRequest();
+          http.open('HEAD', url, false);
+          http.send();
+          return http.status!=404;
+        }
+        catch(err) {
+          return false;
+        }
+      }
+
+      //Reverses an array
+      reverseArray(array, quantity){
+        if (array) {
+          if (quantity == 'all') quantity = array.length - 1;
+          return array.reverse().slice(0, quantity);
+        }
+      }
+
+      //Mask the input code if enabled otherwise build up the code from inputs
+      callcode(ev){
+        ev.stopPropagation();
+        var digit = ev.target.getAttribute('data-digit');
+        this.code = this.code + digit;
+        var display_digit = digit;
+        if (this.isChecked(this.alarm.attributes.panel.hide_passcode))
+          display_digit = '*';
+        this.display_code = this.display_code + display_digit;
+      }
+
+      //Reset the display alarm codes
+      callclearcode(ev){
+        if (ev) ev.stopPropagation();
+        this.code = '';
+        this.display_code = '';
+      }
+
+      //If you require a code to arm the system then force it here
+      showCodePanel(alarm){
+        if (this.isChecked(alarm.attributes.code_to_arm) || !this.isdisarmed(alarm))
+          return true;
+        else return false;
+      }
+
+      //An Alarm service has been requested, execute it
+      callAlarmService(ev){
+        ev.stopPropagation();
+
+        this.showArmPanel   = false;
+        var call            = ev.target.getAttribute('data-call');
+
+        switch (call){
+          //Check for open sensors before arming the alarm.
+          case 'arm':
+            this.attemptArmMode = ev.target.getAttribute('data-arm');
+            if ( this.checkOpenSensors(this.attemptArmMode) )
+              return;
+            this.alarmService(this.attemptArmMode);
+            break;
+
+          //The arming of the alarm has been cancelled, reset parameters.
+          case 'cancel':
+            this.attemptArmMode = '';
+            this.resetUI();
+            break;
+
+          //Open sensors detected but overridden.
+          case 'override':
+            this.alarmService(this.attemptArmMode);
+            this.resetUI();
+            break;
+
+          //Disarm the alarm.
+          case 'disarm':
+            this.alarmService('alarm_disarm');
+            break;
+
+        }
+
+        //Reset the display alarm codes
+        this.callclearcode(null);
+      }
+
+      //Call one of the alarm services
+      alarmService(call){
+        this.hass.callService('alarm_control_panel', call, {'entity_id': this.alarm.entityId, 'code': this.code });
+      }
+
+      //Restart Home Assistant
+      restartHA(ev){
+        ev.stopPropagation();
+        this.hass.callService('homeassistant', 'restart');
+      }
+
+      //enable/disable user
+      toggleUser(ev){
+        var user_id = ev.target.getAttribute('data-userid');
+        this.settingsUpdateUser(user_id, ev.target.checked);
+      }
+
+      //Show the user edit box and load the selected user
+      editUser(ev){
+        this.hideDiv('#user-add');
+        this.unhideDiv('#userDetail');
+
+        var user_id = ev.target.getAttribute('data-userid');
+
+        for (var user in this.alarm.attributes.users) {
+          if (this.alarm.attributes.users[user].id == user_id){
+            //populate user name
+            this.shadowRoot.querySelector('#user-name').value = this.alarm.attributes.users[user].name;
+            //populate enabled toggle
+            this.shadowRoot.querySelector('#user-enabled').checked = this.alarm.attributes.users[user].enabled;
+            //clear pascode
+            this.shadowRoot.querySelector('#user-passcode').value = '';
+            //populate user picture
+            this.shadowRoot.querySelector('#user-picture').value = this.alarm.attributes.users[user].picture;
+            //populate enabled toggle
+            //this.shadowRoot.querySelector('#user-disable_animations').checked = this.alarm.attributes.users[user].disable_animations;
+            //populate permissions
+    /*        this.shadowRoot.querySelector('#user-home-permission').checked = this.alarm.attributes.users[user]['home-permission'];
+            this.shadowRoot.querySelector('#user-away-permission').checked = this.alarm.attributes.users[user]['away-permission'];
+            this.shadowRoot.querySelector('#user-perimeter-permission').checked = this.alarm.attributes.users[user]['perimeter-permission'];*/
+            this.shadowRoot.querySelector('#user-save').setAttribute('data-userID', user_id);
+          }
+        }
+      }
+
+      //Show the user edit box and load the selected user
+      saveUser(ev){
+        if (this.shadowRoot.querySelector('#user-passcode').value == ''){
+          this.shadowRoot.querySelector('#user-passcode').classList.add('validation-error');
+        }
+        else {
+          var user = {};
+          user['id'] = ev.target.getAttribute('data-userid');
+          user['name'] = this.shadowRoot.querySelector('#user-name').value.toLowerCase();
+          user['enabled'] = this.shadowRoot.querySelector('#user-enabled').checked;
+          user['code'] = this.shadowRoot.querySelector('#user-passcode').value;
+          user['picture'] = this.shadowRoot.querySelector('#user-picture').value;
+          //user['disable_animations'] = this.shadowRoot.querySelector('#user-disable_animations').checked;
+  /*        user[username]['home-permission'] = this.shadowRoot.querySelector('#user-home-permission').checked;
+          user[username]['away-permission'] = this.shadowRoot.querySelector('#user-away-permission').checked;
+          user[username]['perimeter-permission'] = this.shadowRoot.querySelector('#user-perimeter-permission').checked;*/
+          if (ev.target.getAttribute('data-userid') != null)
+            //Update Config
+            this.settingsUpdateUser(user, 'update');
+          else
+            this.settingsUpdateUser(user, 'add');
+
+          this.resetUserDetail();
+        }
+      }
+
+      //Show the user edit box and load the selected user
+      deleteUser(ev){
+        var user = ev.target.getAttribute('data-userID');
+
+        //Update Config
+        this.settingsUpdateUser(user, 'delete');
+        this.resetUserDetail();
+      }
+
+      //Reset user detail
+      resetUserDetail(){
+        this.hideDiv('#userDetail');
+        this.unhideDiv('#user-add');
+        this.shadowRoot.querySelector('#user-passcode').classList.remove('validation-error')
+        this.shadowRoot.querySelector('#user-name').classList.remove('validation-error')
+
+        //populate user name
+        this.shadowRoot.querySelector('#user-name').value = '';
+        //populate enabled toggle
+        this.shadowRoot.querySelector('#user-enabled').checked = false;
+        //clear pascode
+        this.shadowRoot.querySelector('#user-passcode').value = '';
+        //populate user picture
+        this.shadowRoot.querySelector('#user-picture').value = '';
+        //populate enabled toggle
+        //this.shadowRoot.querySelector('#user-disable_animations').checked = false;
+      }
+
+      async _loadData() {
+          this._users = await this.hass.callWS({
+            type: 'config/auth/list',
+          });
+
+          var userIDs = [];
+          for (var alarmUser in this.alarm.attributes.users)
+            userIDs.push(this.alarm.attributes.users[alarmUser].id);
+
+          for (var haUser in this._users){
+            if (!userIDs.includes(this._users[haUser].id)){
+              console.log("No match: %s", this._users[haUser].id);
+            //user name
+            var user                               = {};
+
+            user['id']                             = this._users[haUser].id;
+            user['name']                           = this._users[haUser].name;
+            user['enabled']                        = false;
+            user['code']                           = this._users[haUser].id;
+            user['picture']                        = '/local/images/ha.png';
+            //user['disable_animations']             = false;
+/*              user[username]['home-permission']      = this.shadowRoot.querySelector('#user-home-permission').checked;
+            user[username]['away-permission']      = this.shadowRoot.querySelector('#user-away-permission').checked;
+            user[username]['perimeter-permission'] = this.shadowRoot.querySelector('#user-perimeter-permission').checked;*/
+
+            this.settingsUpdateUser(user, 'add');
+          }
+        }
+       }
+
+      loadPreviewImage(ev){
+        var image = ev.target.value;
+        if (!this.urlExists(image)) image = '/local/images/ha.png';
+        this.shadowRoot.querySelector('#user-badge').setAttribute('style', 'background-image: url("' + image + '");margin-top: auto; margin-bottom: auto; margin-right: 15px;');
+      }
+
+      //Read the settings that are to be updated
+      settingsSave(ev){
+        ev.stopPropagation();
+
+        //Check the settings tab has been unlocked before commiting any changes
+        if (this.settingsUnlock == true){
+
+          //Retrieve fields set in the html form
+          var type = ev.target.getAttribute('data-type');
+          var setting = ev.target.getAttribute('data-setting');
+          var attribute = ev.target.getAttribute('data-attribute');
+
+          var id = ev.target.getAttribute('id');
+          var name = ev.target.getAttribute('name');
+          var title = ev.target.getAttribute('title');
+          var mode = ev.target.getAttribute('data-mode');
+          var sensor_group = ev.target.getAttribute('data-group');
+
+          var checked = ev.target.checked;
+
+          var value = null;
+
+          switch (setting) {
+            case 'panel':
+              if (typeof ev.target.checked === 'boolean')
+                this.alarm.attributes.panel[attribute] = ev.target.checked;
+              else if (type == 'input_text')
+                this.alarm.attributes.panel[attribute] = this.shadowRoot.querySelector('#' + attribute).value;
+              else if (type == 'listbox')
+                this.alarm.attributes.panel[attribute] = this.shadowRoot.querySelector('#' + attribute + '-listbox').selected;
+              this.settingsUpdate(setting, this.alarm.attributes.panel);
+              return;
+
+            case 'themes':
+              var pos = -1;
+
+              // If themes dont exist create them
+              if (this.alarm.attributes.themes == null){
+                this.alarm.attributes.themes = [];
+                this.settingsUpdate(setting, this.alarm.attributes.themes);
+                pos = 0
+              }
+
+              // try and find the selected theme
+              for (var x in this.alarm.attributes.themes)
+                if (this.alarm.attributes.themes[x].name == name)
+                  pos = x;
+
+              // if theme isnt selected create one
+              if (name == null){
+                this.alarm.attributes.themes.push({'name': this.shadowRoot.querySelector('#' + attribute).value});
+                this.settingsUpdate(setting, this.alarm.attributes.themes);
+                // this.unhideDiv('#themeDetail');
+                return;
+              }
+              else if (pos > -1 ){
+                if (type == 'color'){
+                  this.alarm.attributes.themes[pos][attribute] = '#' + this.shadowRoot.querySelector('#' + attribute).value;
+                  this.settingsUpdate(setting, this.alarm.attributes.themes);
+                  return;
+                }
+                else if (type == 'input_text'){
+                  this.alarm.attributes.themes[pos].name = this.shadowRoot.querySelector('#' + attribute).value;
+                  this.settingsUpdate(setting, this.alarm.attributes.themes);
+                  return;
+                }
+                else if (type == 'clear'){
+                  this.shadowRoot.querySelector('#' + attribute).value = 'FFFFFF';
+                  this.shadowRoot.querySelector('#' + attribute).setAttribute('style', 'background-color: rgb(255, 255, 255)');                  delete this.alarm.attributes.themes[pos][attribute];
+                  this.settingsUpdate(setting, this.alarm.attributes.themes);
+                  return;
+                }
+                else if (type == 'boolean'){
+                  //Disable all others
+                  for (var x in this.alarm.attributes.themes)
+                    this.alarm.attributes.themes[x].active = false;
+                  this.alarm.attributes.themes[pos].active = ev.target.checked;
+                  this.settingsUpdate(setting, this.alarm.attributes.themes);
+                  return;
+                }
+                else if (type == 'delete'){
+                  this.alarm.attributes.themes.splice(pos,1);
+                  this.settingsUpdate(setting, this.alarm.attributes.themes);
+                  return;
+                }
+              }
+              return;
+
+            case 'mqtt':
+              if (this.alarm.attributes['mqtt'] === 'undefined')
+                this.alarm.attributes.mqtt = {}
+
+              if (typeof ev.target.checked === 'boolean')
+                this.alarm.attributes.mqtt[attribute] = ev.target.checked;
+              else if (type == 'input_text')
+                this.alarm.attributes.mqtt[attribute] = this.shadowRoot.querySelector('#' + attribute).value;
+              this.settingsUpdate(setting, this.alarm.attributes.mqtt);
+              return;
+
+            case 'states':
+              if (type == 'input_text')
+                  this.alarm.attributes.states[mode][attribute] = this.shadowRoot.querySelector('#' + mode + '-' + attribute).value;
+
+              this.settingsUpdate(setting, this.alarm.attributes.states);
+              return;
+
+            case 'root':
+              if (typeof ev.target.checked === 'boolean')
+                value = ev.target.checked;
+              else {
+                value = this.shadowRoot.querySelector('#' + attribute).value;
+                if (value == ''){
+                  //set css class to red
+                  return;
+                }
+              }
+
+              this.settingsUpdate(attribute, value);
+              return;
+
+            case 'sensor_select':
+              //check if the sensor already exists in the groups
+              var index = this.alarm.attributes.states[mode][sensor_group].indexOf(title);
+
+              //add sensor to group
+              if (typeof this.alarm.attributes.states[mode][sensor_group][index] === 'undefined')
+                this.alarm.attributes.states[mode][sensor_group].push(title);
+              //remove sensor from group
+              else if (index >= 0)
+                this.alarm.attributes.states[mode][sensor_group].splice(index, 1);
+
+              this.settingsUpdate('states', this.alarm.attributes.states);
+              return;
+
+            default:
+              return;
+          }
+
+          this.updateTheme();
+        }
+      }
+
+      //Call the service to update the yaml file
+      settingsUpdate(setting, value){
+        this.hass.callService('alarm_control_panel', 'ALARM_YAML_SAVE', {'configuration': setting, 'value': value });
+      }
+
+      //Call the service to update the yaml file
+      settingsUpdateUser(user, command){
+        this.hass.callService('alarm_control_panel', 'ALARM_YAML_USER', {'user': user, 'command': command });
+      }
+
+      //Check if there are open sensors
+      checkOpenSensors(call){
+        //check to see how many open sensors there are, if none arm alarm
+        if (this.opencount == 0) return false;
+
+        for (var sensor in this.allsensors){
+          //is it open?
+          //yes
+          if (['on', 'open', 'true', 'detected', 'unlocked'].indexOf(this.allsensors[sensor].state.toLowerCase()) > -1){
+          //is it in the override list?
+            var overrideMode = '';
+            if (call == 'alarm_arm_home') var overrideMode = 'armed_home';
+            if (call == 'alarm_arm_away') var overrideMode = 'armed_away';
+            if (call == 'alarm_arm_night') var overrideMode = 'armed_perimeter';
+
+            //No: return so display message
+            if (this.alarm.attributes.states[overrideMode].override.indexOf(this.allsensors[sensor].entity_id) == -1){
+
+              //display the warning message and shake
+              this.attemptedArm = true;
+
+              this.$.content.classList.add('shake');
+
+              return true;
+            }
+          }
+        }
+
+        return false;
+      }
+
+      //Cancel the attempted alarm and reset UI
+      resetUI(){
+        this.attemptedArm = false;
+
+        //Remove the page shake from open sensors
+        this.$.content.classList.remove('shake');
+      }
+
+      // Observer: polymer gaurantees that this won't be called util hass and panel are both defined
+      onPanelUpdate(hass, panel){
+        this.alarm = hass.states[panel.config.alarmid];
+      }
+
+      fire(type, detail, options) {
+        options = options || {};
+        detail = (detail === null || detail === undefined) ? {} : detail;
+        const event = new Event(type, {
+          bubbles: options.bubbles === undefined ? true : options.bubbles,
+          cancelable: Boolean(options.cancelable),
+          composed: options.composed === undefined ? true : options.composed
+        });
+        event.detail = detail;
+        const node = options.node || this;
+        node.dispatchEvent(event);
+        return event;
+      }
+    }
+
+    customElements.define(HaPanelAlarm.is, HaPanelAlarm);
+  }
+</script>

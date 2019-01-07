@@ -1,0 +1,51 @@
+## Summary Module
+## Main script: https://github.com/maattdiy/home-assistant-config/blob/master/python_scripts/summary.py
+
+##################################################
+## Automations
+##################################################
+
+automation:
+
+  # Call service trigger (Script)
+  - alias: 'Call Service Event (Script)'
+    hide_entity: True
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: script
+    action:
+      - delay: 00:00:02
+      - service: python_script.summary
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"
+
+  # Call service trigger (Switch)
+  - alias: 'Call Service Event (Switch)'
+    hide_entity: True
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: switch
+    action:
+      - delay: 00:00:02
+      - service: python_script.summary
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"
+      
+  # Time interval update (each 1 minute)
+  - alias: 'Time interval updates'
+    hide_entity: True
+    initial_state: 'on'
+    trigger:
+      - platform: time
+        minutes: '/1'
+        seconds: 00
+    action:
+      - service: python_script.summary
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"
