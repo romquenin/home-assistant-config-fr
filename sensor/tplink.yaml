@@ -1,0 +1,50 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                         TPLINK                         ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+    current_power_usage:
+      value_template: '{%- if not is_state("sensor.tplink_1_current_power_w","unknown") -%}  {{ ((states.sensor.tplink_1_current_power_w.state | float) + (states.sensor.tplink_2_current_power_w.state | float)) | round(2) }} {%- endif -%}' 
+      friendly_name: 'Current power usage'
+      unit_of_measurement: 'W'
+    total_power_usage:
+      value_template: '{%- if not is_state("sensor.tplink_1_total_energy_kwh","unknown") -%}  {{ ((states.sensor.tplink_1_total_energy_kwh.state | float) + (states.sensor.tplink_2_total_energy_kwh.state | float)) | round(2) }} {%- endif -%}' 
+      friendly_name: 'Total power usage'
+      unit_of_measurement: 'kW'
+    today_power_usage:
+      value_template: '{%- if not is_state("sensor.tplink_1_today_energy_kwh","unknown") -%}  {{ ((states.sensor.tplink_1_today_energy_kwh.state | float) + (states.sensor.tplink_2_today_energy_kwh.state | float)) | round(2) }} {%- endif -%}' 
+      friendly_name: 'Today power usage'
+      unit_of_measurement: 'kW'      
+  
+    tplink_1_total_energy_kwh:
+      value_template: '{{ states.switch.tplink_1.attributes["total_energy_kwh"] }}'
+      unit_of_measurement: 'kW'      
+    tplink_1_current_power_w:
+      value_template: '{{ states.switch.tplink_1.attributes["current_power_w"] }}'
+      unit_of_measurement: 'W'     
+    tplink_1_today_energy_kwh:
+      value_template: '{{ states.switch.tplink_1.attributes["today_energy_kwh"] }}'
+      unit_of_measurement: 'kW'
+  
+    tplink_2_total_energy_kwh:
+      value_template: '{{ states.switch.tplink_2.attributes["total_energy_kwh"] }}'
+      unit_of_measurement: 'kW'      
+    tplink_2_current_power_w:
+      value_template: '{{ states.switch.tplink_2.attributes["current_power_w"] }}'
+      unit_of_measurement: 'W'     
+    tplink_2_today_energy_kwh:
+      value_template: '{{ states.switch.tplink_2.attributes["today_energy_kwh"] }}'
+      unit_of_measurement: 'kW'
+
+
+
+- platform: template
+  sensors:
+    taux_de_change_court:
+      value_template: "{{ '%.2f'%(states('sensor.taux_de_change') | float) }}"
+      unit_of_measurement: 'CZK'
+

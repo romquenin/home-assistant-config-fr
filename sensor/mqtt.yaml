@@ -1,0 +1,38 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                          MQTT                          ##
+   ##                                                        ##
+   ############################################################
+
+  ###  TRACKS  ###
+     
+- platform: mqtt
+  name: "Battery A5"
+  state_topic: "zanzito/roman_a5/battery_level"
+  qos: 0
+  unit_of_measurement: "%"
+  
+- platform: mqtt
+  name: "Battery TAB"
+  state_topic: "zanzito/roman_tab/battery_level"
+  qos: 0
+  unit_of_measurement: "%"
+
+  
+  ###  SONOFF  ###
+#- platform: mqtt
+#  name: "Room Temp"
+#  state_topic: "tele/sonoffTemp/SENSOR"
+#  value_template: "{{ value_json.AM2301.Temperature }}"
+#  unit_of_measurement: "°C"
+#  qos: 1    
+  
+#- platform: mqtt
+#  name: "Room Hum"
+#  state_topic: "tele/sonoffTemp/SENSOR"
+#  value_template: "{{ value_json.AM2301.Humidity }}"
+#  unit_of_measurement: "%"
+#  qos: 1     
+   
+   

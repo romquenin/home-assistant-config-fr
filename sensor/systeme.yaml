@@ -1,0 +1,103 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                        SYSTEME                         ##
+   ##                                                        ##
+   ############################################################
+   
+- platform: systemmonitor
+  resources:
+    - type: last_boot
+    - type: memory_use_percent
+    - type: process    
+    - type: processor_use
+    - type: memory_free
+    - type: disk_use_percent 
+      arg: /       
+    - type: disk_free    
+      arg: /
+
+- platform: version    
+  name: version  
+  
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+
+- platform: uptime
+  name: Uptime
+  scan_interval: 60
+  unit_of_measurement: hours
+           
+- platform: command_line
+  name: CPU Temp
+  scan_interval: 60
+  unit_of_measurement: °C
+  icon_template: mdi:thermometer
+  command: >-
+    if [ -e /sys/class/thermal/thermal_zone0/temp ]
+      then cat /sys/class/thermal/thermal_zone0/temp
+    fi
+  value_template: >-
+    {% if value != '' %}
+      {{ value | multiply(0.001) | round }}
+    {% else %}
+      unknown
+    {% endif %} 
+
+- platform: template
+  sensors:
+    since_last_boot_template:
+      friendly_name: 'Uptime'
+      icon_template: mdi:home-assistant
+      value_template: >-
+        {% set uptime = states('sensor.uptime') | float(-1) %}
+        {% if uptime >= 0 %}
+          {% set time = (3600 * uptime) | int %}
+          {% set minutes = ((time % 3600) / 60) | int %}
+          {% set hours = ((time % 86400) / 3600) | int %}
+          {% set days = (time / 86400) | int %}
+          {% if time < 60 %}
+            {{ time }} seconds
+          {% else %}
+            {%- if days > 0 -%}
+              {%- if days == 1 -%}
+                1 day
+              {%- else -%}
+                {{ days }} days
+              {%- endif -%}
+            {%- endif -%}
+            {%- if hours > 0 and days < 7 -%}
+              {%- if days > 0 -%}
+                {{ ', ' }}
+              {%- endif -%}
+              {%- if hours == 1 -%}
+                1 hour
+              {%- else -%}
+                {{ hours }} hours
+              {%- endif -%}
+            {%- endif -%}
+            {%- if days == 0 and minutes > 0 -%}
+              {%- if hours > 0 -%}
+                {{ ', ' }}{{ minutes }} min
+              {%- else -%}
+                {%- if minutes == 1 -%}
+                  1 minute
+                {%- else -%}
+                  {{ minutes }} minutes
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          {% endif %}
+        {% else %}
+          unknown
+        {% endif %}   
+        
+   
+
+ 
+
+
+   
+

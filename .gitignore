@@ -13,6 +13,7 @@ home-assistant_v2.db
 lib
 deps
 tts
+ui-lovelace.yaml
 secrets.yaml
 known_devices.yaml
 *.conf

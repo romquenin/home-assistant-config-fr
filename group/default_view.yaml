@@ -1,0 +1,31 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                      DEFAULT VIEW                      ##
+   ##                                                        ##
+   ############################################################
+
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:           
+    - device_tracker.my_device
+    - device_tracker.gabrielas_iphone
+
+
+
+
+all_scenes:
+  name: Scènes
+  entities:  
+    - scene.alarm 
+    - scene.detente 
+    - scene.dim  
+    - scene.livingroom_dim  
+    - scene.livingroom_normal  
+    - scene.livingroom_off 
+    - scene.printemps   
+    - scene.savane 
+    - scene.super_dim  
+    - scene.tropical
+   

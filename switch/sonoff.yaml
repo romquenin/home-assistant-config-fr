@@ -1,0 +1,74 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        SONOFF                          ##
+   ##                                                        ##
+   ############################################################
+
+  ###  SONOFF  ###
+- platform: mqtt
+  name: "Sonoff"
+  state_topic: "stat/sonoff/POWER"
+  command_topic: "cmnd/sonoff/POWER"
+  availability_topic: "tele/sonoff/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Sonoff1"
+  state_topic: "stat/sonoff1/POWER"
+  command_topic: "cmnd/sonoff1/POWER"
+  availability_topic: "tele/sonoff1/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Sonoff2"
+  state_topic: "stat/sonoff2/POWER"
+  command_topic: "cmnd/sonoff2/POWER"
+  availability_topic: "tele/sonoff2/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Sonoff3"
+  state_topic: "stat/sonoff3/POWER"
+  command_topic: "cmnd/sonoff3/POWER"
+  availability_topic: "tele/sonoff3/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Sonoff4"
+  state_topic: "stat/sonoff4/POWER"
+  command_topic: "cmnd/sonoff4/POWER"
+  availability_topic: "tele/sonoff4/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+#- platform: mqtt
+ # name: "Room"
+ # state_topic: "stat/sonoffTemp/POWER"
+ # command_topic: "cmnd/sonoffTemp/POWER"
+ # availability_topic: "tele/sonoffTemp/LWT"
+ # qos: 1
+ # payload_on: "ON"
+ # payload_off: "OFF"
+ # payload_available: "Online"
+ # payload_not_available: "Offline"
+ # retain: true

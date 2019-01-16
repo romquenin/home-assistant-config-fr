@@ -1,0 +1,77 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                    PYTHON SCRIPT                       ##
+   ##                                                        ##
+   ############################################################   
+        
+- alias: '[Script] Activity change'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  action:
+    - service: python_script.activity
+      data_template:
+        event: "{{ trigger.event }}"
+    - service: python_script.summary
+      data_template:
+        event: "{{ trigger.event }}"
+        
+- alias: '[Script] Call Script Event'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: call_service
+      event_data:
+        domain: script
+  action:
+    - delay: 00:00:02
+    - service: python_script.last_cmd
+      data_template:
+        event: "{{ trigger.event }}"
+
+# Call service trigger (Script)
+- alias: '[Script] Call Service Event'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: call_service
+      event_data:
+        domain: script
+  action:
+    - delay: 00:00:02
+    - service: python_script.summary
+      data_template:
+        entity_id: "{{ trigger.entity_id }}"
+
+# Call service trigger (Switch)
+- alias: '[Script] Call Service Event'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: call_service
+      event_data:
+        domain: switch
+  action:
+    - delay: 00:00:02
+    - service: python_script.summary
+      data_template:
+        entity_id: "{{ trigger.entity_id }}"
+    
+# Time interval update (each 1 minute)
+- alias: '[Script] Time interval updates'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      minutes: '/1'
+      seconds: 00
+  action:
+    - service: python_script.summary
+      data_template:
+        entity_id: "{{ trigger.entity_id }}"        

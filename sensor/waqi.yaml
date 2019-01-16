@@ -1,0 +1,283 @@
+   ############################################################
+   ##                                                        ##
+   ##                          WAQI                          ##
+   ##                                                        ##
+   ############################################################
+  
+- platform: waqi
+  token: !secret waqi_token
+  locations: !secret waqi_location
+  stations:  !secret waqi_stations
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                    WAQI TEMPLATE                       ##
+   ##                                                        ##
+   ############################################################
+ 
+#
+# WAQI: Stations
+#
+- platform: template
+  sensors:
+    aqi_stations:
+      friendly_name: Stations AQI
+      icon_template: mdi:radar
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'name' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | join('|') %}
+        {% if stations %}
+          {{ stations }}
+        {% endif %}
+    aqi_stations_count:
+      friendly_name: Stations AQI Nombre
+      icon_template: mdi:radar
+      value_template: >-
+        {% set stations = states('sensor.aqi_stations') %}
+        {% if stations != '' %}
+          {{ stations.split('|') | length }}
+        {% else %}
+          0
+        {% endif %}
+#
+# WAQI: Average
+#
+- platform: template
+  sensors:
+    aqi:
+      friendly_name: Qualité de l'air
+      icon_template: mdi:chemical-weapon
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'state' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | map('float')
+                                 | list %}
+        {% if stations %}
+          {{ (stations|sum / stations|length) | round }}
+        {% else %}
+          unknown
+        {% endif %}
+    aqi_friendly:
+      friendly_name: Qualité de l'air
+      icon_template: mdi:chemical-weapon
+      value_template: >-
+        {% set index = states('sensor.aqi') | float(-1) %}
+        {% if index > 300 %}
+          Hasardeux
+        {% elif index > 200 %}
+          Très mauvais
+        {% elif index > 150 %}
+          Mauvais
+        {% elif index > 100 %}
+          Mauvais pour les personnes sensibles
+        {% elif index > 50 %}
+          Modéré
+        {% elif index >= 0 %}
+          Bon
+        {% else %}
+          unknown
+        {% endif %}
+        
+        
+#
+# WAQI: Particulate matter 2.5μm
+#
+- platform: template
+  sensors:
+    aqi_particles:
+      friendly_name: PM2.5
+      icon_template: mdi:chart-bubble
+      unit_of_measurement: 'PPM'
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'attributes.pm_2_5' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | map('float')
+                                 | list %}
+        {% if stations %}
+          {{ (stations|sum / stations|length) | round }}
+        {% else %}
+          unknown
+        {% endif %}
+    aqi_particles_friendly:
+      friendly_name: PM2.5
+      icon_template: mdi:chart-bubble
+      value_template: >-
+        {% set pm25 = states('sensor.aqi_particles') | int(-1) %}
+        {% if pm25 > 300 %}
+          Hasardeux
+        {% elif pm25 > 200 %}
+          Très mauvais
+        {% elif pm25 > 150 %}
+          Mauvais
+        {% elif pm25 > 100 %}
+          Mauvais pour les personnes sensibles
+        {% elif pm25 > 50 %}
+          Modéré
+        {% elif pm25 >= 0 %}
+          Bon
+        {% else %}
+          unknown
+        {% endif %}
+#
+# WAQI: Nitrogen dioxide
+#
+- platform: template
+  sensors:
+    aqi_nitrogen_dioxide:
+      friendly_name: Dioxyde d'azote
+      icon_template: mdi:car
+      unit_of_measurement: 'PPM'
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'attributes.nitrogen_dioxide' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | map('float')
+                                 | list %}
+        {% if stations %}
+          {{ (stations|sum / stations|length) | round }}
+        {% else %}
+          unknown
+        {% endif %}
+    aqi_nitrogen_dioxide_friendly:
+      friendly_name: Dioxyde d'azote
+      icon_template: mdi:car
+      value_template: >-
+        {% set nox = states('sensor.aqi_nitrogen_dioxide') | int(-1) %}
+        {% if nox > 300 %}
+          Hors des mesures
+        {% elif nox > 200 %}
+          Très mauvais
+        {% elif nox > 150 %}
+          Mauvais
+        {% elif nox > 100 %}
+          Mauvais pour les personnes sensibles
+        {% elif nox > 50 %}
+          Modéré
+        {% elif nox >= 0 %}
+          Bon
+        {% else %}
+          unknown
+        {% endif %}
+#
+# WAQI: Ozone
+#
+- platform: template
+  sensors:
+    aqi_ozone:
+      friendly_name: Ozone
+      icon_template: mdi:earth
+      unit_of_measurement: 'PPM'
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'attributes.ozone' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | map('float')
+                                 | list %}
+        {% if stations %}
+          {{ (stations|sum / stations|length) | round }}
+        {% else %}
+          unknown
+        {% endif %}
+    aqi_ozone_friendly:
+      friendly_name: Ozone
+      icon_template: mdi:earth
+      value_template: >-
+        {% set ozone = states('sensor.aqi_ozone') | int(-1) %}
+        {% if ozone > 300 %}
+          Hasardeux
+        {% elif ozone > 200 %}
+          Très mauvais
+        {% elif ozone > 150 %}
+          Mauvais
+        {% elif ozone > 100 %}
+          Mauvais pour les personnes sensibles
+        {% elif ozone > 50 %}
+          Modéré
+        {% elif ozone >= 0 %}
+          Bon
+        {% else %}
+          unknown
+        {% endif %}
+#
+# WAQI: Sulphur dioxide
+#
+- platform: template
+  sensors:
+    aqi_sulphur_dioxide:
+      friendly_name: Dioxyde de soufre
+      icon_template: mdi:factory
+      unit_of_measurement: 'PPM'
+      entity_id:
+        - sensor.time_quarterly
+      value_template: >-
+        {% set attribute = 'attributes.sulfur_dioxide' %}
+        {% set max_hours_behind = 4 %}
+        {% set cutoff = (as_timestamp(now())|int - max_hours_behind * 60 * 60) | timestamp_local %}
+        {% set stations = states | selectattr('entity_id', 'in', state_attr('group.waqi', 'entity_id'))
+                                 | rejectattr('attributes.time', 'lt', cutoff)
+                                 | selectattr(attribute)
+                                 | map(attribute=attribute)
+                                 | map('float')
+                                 | list %}
+        {% if stations %}
+          {{ (stations|sum / stations|length) | round }}
+        {% else %}
+          unknown
+        {% endif %}
+    aqi_sulphur_dioxide_friendly:
+      friendly_name: Dioxyde de soufre
+      icon_template: mdi:factory
+      value_template: >-
+        {% set so2 = states('sensor.aqi_sulphur_dioxide') | int(-1) %}
+        {% if so2 > 300 %}
+          Hors des mesures
+        {% elif so2 > 200 %}
+          Très mauvais
+        {% elif so2 > 150 %}
+          Mauvais
+        {% elif so2 > 100 %}
+          Mauvais pour les personnes sensibles
+        {% elif so2 > 50 %}
+          Modéré
+        {% elif so2 >= 0 %}
+          Bon
+        {% else %}
+          unknown
+        {% endif %}
+
+   

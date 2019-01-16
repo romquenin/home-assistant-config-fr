@@ -1,0 +1,43 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       DATE TEMPS                       ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+    date_fr:
+      entity_id: sensor.date
+      friendly_name: "Date du jour"  
+      icon_template: mdi:calendar-today          
+      value_template: >
+        {% set months = ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"] %}
+        {% set days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]  %}
+        {{ days[now().weekday()] + ' ' + now().day | string + ' ' + months[now().month-1] }}
+    date_court_fr:
+      entity_id: sensor.date
+      friendly_name: "Date court"
+      icon_template: mdi:calendar-today            
+      value_template: >
+        {% set months = ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Dec"] %}
+        {{ now().day | string + ' ' + months[now().month-1] }}           
+
+    time_quarterly:
+      friendly_name: Time
+      icon_template: mdi:clock 
+      value_template: >-
+        {% set hour = states('sensor.time').split(':')[0] | int %}
+        {% set minutes = states('sensor.time').split(':')[1] | int %}
+        {% if minutes >= 45 %}
+          {% set minute = '45' %}
+        {% elif minutes >= 30 %}
+          {% set minute = '30' %}
+        {% elif minutes >= 15 %}
+          {% set minute = '15' %}
+        {% else %}
+          {% set minute = '00' %}
+        {% endif %}
+        {{ hour }}:{{ minute }}    
+
+   

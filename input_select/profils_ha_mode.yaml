@@ -1,0 +1,18 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                    PROFILS HA MODE                     ##
+   ##                                                        ##
+   ############################################################
+
+ha_mode:
+  name: Mode
+  icon: mdi:account-circle
+  options:
+   - Normal
+   - Visitors
+   - Show off
+   - Developer
+  initial: Normal
+
+   

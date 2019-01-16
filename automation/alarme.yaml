@@ -1,0 +1,144 @@
+  
+############################################################
+##                                                        ##
+##                      ACTIVÉE                           ##
+##                                                        ##
+############################################################    
+
+- alias: '[Alarme] Activée'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.maison
+    to: 'triggered'
+  action:
+    - service: script.turn_on
+      entity_id: script.xiaomi_alarm_siren
+    - delay:
+        seconds: .1      
+    - service: script.turn_on
+      entity_id: script.lumieres_flash     
+    - delay:
+        seconds: .1                
+    - service: notify.pushbullet
+      data:
+        message: 'ALARME ACTIVÉE!!!'
+        target: email/romquenin@gmail.com
+  
+  
+############################################################
+##                                                        ##
+##                      DESACTIVÉE                        ##
+##                                                        ##
+############################################################    
+
+- alias: '[Alarme] Désactivée'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.maison
+    to: 'disarmed'
+  action:
+    - delay:
+        seconds: 1
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:AA:C9   
+      entity_id: script.lumieres_flash     
+    - delay:
+        seconds: .1                   
+    - service: script.turn_on
+      data:   
+        entity_id: script.xiaomi_alarm_siren_cancel               
+#    - service: script.turn_off
+#      entity_id:
+#        - script.xiaomi_alarm_siren
+#        - script.xiaomi_alarm_siren_loop   
+      entity_id: script.lumieres_flash     
+    - delay:
+        seconds: .1     
+    - service: script.turn_on
+      data:   
+        entity_id: script.annuler_lumieres_flash            
+    - service: notify.pushbullet
+      data:
+        message: 'Alarme Désactivée'
+        target: email/romquenin@gmail.com 
+       
+- alias: '[Alarme] Désactivée lumières off'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.maison
+    to: 'disarmed'
+  action:   
+    - delay:
+        seconds: 10  
+    - service: script.turn_on
+      entity_id: script.eteindre_lumieres         
+  
+
+############################################################
+##                                                        ##
+##                     ALARME ARMÉE                       ##
+##                                                        ##
+############################################################   
+
+- alias: '[Alarme] Mode Absent activé'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.maison
+    to: 'armed_away'
+  action:
+    - service: notify.pushbullet
+      data:
+        message: 'Alarme Absent activé'
+        target: email/romquenin@gmail.com
+
+- alias: '[Alarme] Mode Maison activé'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.maison
+    to: 'armed_home'
+  action:
+    - service: notify.pushbullet
+      data:
+        message: 'Alarme Maison activé'
+        target: email/romquenin@gmail.com
+  
+
+############################################################
+##                                                        ##
+##                     BOOLEAN SIRÈNE                     ##
+##                                                        ##
+############################################################  
+
+- alias: '[Alarme] Boolean Sirène on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mute_gateway_sounds
+      to: 'on'
+  action:
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:AA:C9
+    - service: script.turn_on
+      entity_id: script.mute_alarm_siren
+      
+- alias: '[Alarme] Boolean Sirène off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.mute_gateway_sounds
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.unmute_alarm_siren
+      
+          
+       
+        
+        

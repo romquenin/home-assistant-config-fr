@@ -1,0 +1,64 @@
+######################################################################################################################    
+#  INPUT SELECT
+######################################################################################################################
+input_select_harmony:
+  alias: '[Input Select] activité HARMONY'
+  sequence:
+  - service: remote.turn_on
+    data_template:
+      entity_id: remote.harmony_hub 
+      activity: >
+        {% if is_state("input_select.harmony_hub", "Power Off") %}
+            -1
+        {% elif is_state("input_select.harmony_hub", "MOVIES") %}
+            30471246
+        {% elif is_state("input_select.harmony_hub", "PC") %}
+            21826792
+        {% elif is_state("input_select.harmony_hub", "PS4") %}
+            21826901
+        {% elif is_state("input_select.harmony_hub", "RETRO TV") %}
+            20137481
+        {% elif is_state("input_select.harmony_hub", "SMART TV") %}
+            20137433
+        {% elif is_state("input_select.harmony_hub", "APPLE TV") %}
+            36470351
+        {% elif is_state("input_select.harmony_hub", "CHROMECAST") %}
+            27932527
+        {% elif is_state("input_select.harmony_hub", "PS3 TV") %}
+            25313252
+        {% elif is_state("input_select.harmony_hub", "RETRO") %}
+            25094446
+        {% elif is_state("input_select.harmony_hub", "ONE") %}
+            20492432            
+        {% elif is_state("input_select.harmony_hub", "SWITCH TV") %}
+            28414227
+        {% elif is_state("input_select.harmony_hub", "MOVIES TV") %}
+            30471346
+        {% elif is_state("input_select.harmony_hub", "360 TV") %}
+            36480756
+        {% elif is_state("input_select.harmony_hub", "PS4 TV") %}
+           20137469
+        {% elif is_state("input_select.harmony_hub", "SWITCH") %}
+            29197122           
+        {% elif is_state("input_select.harmony_hub", "PC TV") %}
+            20138144
+        {% elif is_state("input_select.harmony_hub", "ONE TV") %}
+            25310224
+        {% endif %}         
+        
+        
+        
+input_select_tv:
+  alias: '[Input Select] input TV'
+  sequence:
+  - service: remote.send_command
+    data_template:
+      entity_id: input_select.tv_input_select
+      command: "{% if is_state(\"input_select.tv_input_select\", \"Power Off\") %}\n\
+        \    PowerOff\n{% elif is_state(\"input_select.tv_input_select\", \"HDMI 1\"\
+        ) %}\n    InputHdmi1\n{% elif is_state(\"input_select.tv_input_select\", \"\
+        HDMI 2\") %}\n    InputHdmi2\n{% elif is_state(\"input_select.tv_input_select\"\
+        , \"HDMI 3\") %}\n    InputHdmi3\n{% elif is_state(\"input_select.tv_input_select\"\
+        , \"HDMI 4\") %}\n    InputHdmi4\n{% elif is_state(\"input_select.tv_input_select\"\
+        , \"TV\") %}\n    InputTv\n{% endif %}\n"
+  

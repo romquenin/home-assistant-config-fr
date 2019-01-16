@@ -1,0 +1,17 @@
+  
+############################################################
+##                                                        ##
+##                ACTIONS DE DEMARRAGE                    ##
+##                                                        ##
+############################################################ 
+
+- alias: '[Démarrage] Harnony hub'
+  initial_state: on
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - delay:
+        seconds: 10  
+    - service: automation.trigger
+      entity_id: automation.input_select_mis_a_jour_par_harmony

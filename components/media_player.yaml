@@ -1,0 +1,19 @@
+  
+   ############################################################
+   ##                                                        ##
+   ##                       MEDIA PLAYER                     ##
+   ##                                                        ##
+   ############################################################
+
+- platform: yamaha_musiccast
+  host: 192.168.2.8
+  port: 8888
+- platform: samsungtv
+  name: Samsung TV  
+  host: 192.168.2.5
+  port: 8001
+  timeout: 5    
+  mac: C0:48:E6:C2:51:A0
+- platform: xboxone
+  device: FD007AFAAEBB42A9
+  name: Xbox One      

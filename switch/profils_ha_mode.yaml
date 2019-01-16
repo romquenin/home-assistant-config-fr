@@ -1,0 +1,17 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                    HA MODE PROFILS DEV                 ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  switches:
+    mode_developer:
+      value_template: "{{ is_state('input_select.ha_mode', 'Developer') }}"
+      turn_on:
+        - service: script.mode_developer
+      turn_off:
+        - service: script.mode_normal
+   
+

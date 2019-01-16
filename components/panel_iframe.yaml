@@ -1,0 +1,31 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        IFRAME                          ##
+   ##                                                        ##
+   ############################################################
+
+grafana:
+  title: 'Grafana'
+  url: 'http://labelrouge.ddns.net:3000'
+  icon: mdi:graphql
+synology:
+  title: 'DSM'
+  url: 'http://192.168.2.12:5000/'
+  icon: mdi:server
+configurator:
+  title: Configurator
+  icon: mdi:wrench
+  url: http://192.168.2.29:3218
+tasmoadmin:
+  title: TasmoAdmin
+  icon: mdi:power-socket-eu
+  url: http://192.168.2.29:9541
+ide:
+  title: IDE
+  icon: mdi:code-braces
+  url: http://192.168.2.29:8321
+log:
+  title: Log
+  icon: mdi:login-variant
+  url: http://192.168.2.29:4277

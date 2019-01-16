@@ -1,0 +1,27 @@
+######################################################################################################################    
+#   HA MODE PROFILS
+######################################################################################################################
+mode_developer:
+  alias: '[Profils] mode Developer'
+  sequence:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.ha_mode
+        option: Developer
+    - service: group.set_visibility
+      entity_id: group.developer
+      data:
+        visible: True
+
+
+mode_normal:
+  alias: '[Profils] Retour en mode Normal'
+  sequence:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.ha_mode
+        option: Normal
+    - service: group.set_visibility
+      entity_id: group.developer
+      data:
+        visible: False

@@ -1,0 +1,15 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        SENSOR                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Sensor] Taux_de_change_court_update'
+  trigger:
+    - platform: time
+      minutes: '/180'
+      seconds: 0
+  action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.taux_de_change_court

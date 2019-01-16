@@ -1,0 +1,66 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                        METEO                           ##
+   ##                                                        ##
+   ############################################################
+
+- platform: darksky
+  api_key: !secret dark_sky_key
+  forecast:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  monitored_conditions:
+    - icon
+    - summary
+    - humidity
+    - temperature
+    - temperature_high
+    - temperature_low
+    - apparent_temperature
+    - apparent_temperature_high
+    - apparent_temperature_low
+    - wind_speed
+    - wind_bearing
+    - precip_type
+    - precip_probability
+    - precip_accumulation
+    - precip_intensity
+    - precip_intensity_max
+    - uv_index
+    - daily_summary
+    - pressure
+    - visibility
+  update_interval:
+     minutes: 15
+
+  ###  UV  ###
+- platform: template
+  sensors:
+    uv:
+      friendly_name: Indice UV
+      icon_template: mdi:sunglasses
+      value_template: >-
+        {{ states('sensor.dark_sky_uv_index') }}
+    uv_friendly:
+      friendly_name: Indice UV
+      icon_template: mdi:sunglasses
+      value_template: >-
+        {% set uv = states('sensor.dark_sky_uv_index') | int(-1) %}
+        {% if uv >= 11 %}
+          Extreme
+        {% elif uv >= 8 %}
+          Very high
+        {% elif uv >= 6 %}
+          Elevé
+        {% elif uv >= 3 %}
+          Modéré
+        {% elif uv >= 0 %}
+          Faible
+        {% else %}
+          unknown
+        {% endif %}   
+

@@ -1,8 +1,20 @@
 
 include:
+
   domains:
+
     - device_tracker
+    - input_select
+    - input_number  
+    - input_boolean   
+    - switch 
+
+
   entities:
+
+    - media_player.home_cinema_main
+    - media_player.xbox_one
+            
     - alarm_control_panel.maison
     
     - binary_sensor.aeotec_zw100_multisensor_6_sensor
@@ -10,13 +22,6 @@ include:
     - binary_sensor.fibaro_system_fgms001zw5_motion_sensor_sensor
     - binary_sensor.motion_sensor_158d0001d556ae 
     
-    - input_boolean.amp_power_switch
-    - input_boolean.fan
-    - input_boolean.one_power_switch
-    - input_boolean.tv_power_switch
-    - input_boolean.zappiti_power_switch
-    
-
     - sensor.aqi
     - sensor.aqi_carbon_monoxide
     - sensor.aqi_carbon_monoxide_friendly
@@ -58,21 +63,19 @@ include:
     - sensor.yweather_temperature
     - sensor.yweather_humidity
 
+    - sensor.memory_use_percent  
+    - sensor.cpu_temp
     - sensor.current_power_usage
-    - sensor.cpu_load_total
-    - switch.tplink_2
-    - switch.wake_on_lan
-    - switch.tplink_1
-    - switch.sonoff1
-    - switch.sonoff2
-    - switch.sonoff3
-    - switch.sonoff4
-    - switch.sonoff    
+    - sensor.cpu_load_total 
+    - sensor.taux_de_change
+    - sensor.taux_de_change_court  
+
 
 exclude:
   domains:
+
     - automation
     - weblink
     - updater   
-    - sensor
-    - switch    
+
+   

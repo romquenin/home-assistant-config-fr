@@ -1,0 +1,47 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                     SIRÈNE ALARME                      ##
+   ##                                                        ##
+   ############################################################
+
+gateway_sound:
+  name: Sirènes
+  options: 
+    - "0 - Police car 1"
+    - "1 - Police car 2"
+    - "2 - Accident"
+    - "3 - Countdown"
+    - "4 - Ghost"
+    - "5 - Sniper rifle"
+    - "6 - Battle"
+    - "7 - Air raid"
+    - "8 - Bark"
+#    - "9 - None"
+    - "10 - Doorbell"
+    - "11 - Knock at a door"
+    - "12 - Amuse"
+    - "13 - Alarm clock"
+#    - "14 - None"
+#    - "15 - None"
+#    - "16 - None"
+#    - "17 - None"
+#    - "18 - None"
+#    - "19 - None"
+    - "20 - MiMix"
+    - "21 - Enthusiastic"
+    - "22 - GuitarClassic"
+    - "23 - IceWorldPiano"
+    - "24 - LeisureTime"
+    - "25 - ChildHood"
+    - "26 - MorningStreamLiet"
+    - "27 - MusicBox"
+    - "28 - Orange"
+    - "29 - Thinker"
+  initial: "1 - Police car 2"    
+  icon: mdi:alarm-bell 
+  
+
+  
+
+   

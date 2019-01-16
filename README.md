@@ -75,10 +75,10 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 <div align="center">
     <figure>
         <div>
-            <a href="https://i.imgur.com/1mFBtAK.jpg" title="Wiretap meme"><img src="https://i.imgur.com/iVruWs1.jpg" alt="Wiretap meme" width="400"></a>
+            <a href="https://i.imgflip.com/203r6j.jpg" title="Wiretap meme"><img src="https://i.imgflip.com/203r6j.jpg" alt="Wiretap meme" width="400"></a>
         </div>
         <figcaption>
-            <p><strong>Big Brother!?🙈🙉🙊</strong></p>
+            <p><strong>🙈🙉🙊</strong></p>
         </figcaption>
     </figure>
 </div>

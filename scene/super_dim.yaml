@@ -1,0 +1,53 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       SUPER DIM                        ##
+   ##                                                        ##
+   ############################################################
+     
+- name: Super Dim
+  entities:
+    light.bloom_1:    
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20
+    light.strip_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20
+    light.lamp_2:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20
+    light.lamp_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20      
+    light.living:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20      
+    light.spot_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20       
+    light.spot_2:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 20  
+
+   
+
+
+   
+   
+
+
+   

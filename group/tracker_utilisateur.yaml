@@ -1,0 +1,21 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                  TRACKER UTILISATEUR                   ##
+   ##                                                        ##
+   ############################################################
+
+roman:
+  name: Roman
+  entities:     
+    - device_tracker.40d3ae59481c
+    - device_tracker.my_device
+    - devive_tracker.galaxy_a5_2017
+
+gabriela:
+  name: Gabriela
+  entities:       
+    - device_tracker.6c8dc12eca0b  
+    - device_tracker.gabrielas_iphone         
+    
+   

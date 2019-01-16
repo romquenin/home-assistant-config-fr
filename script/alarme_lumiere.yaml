@@ -1,0 +1,111 @@
+######################################################################################################################    
+#  ALARME LUMIERES
+######################################################################################################################
+lumieres_flash:
+  alias: "[Alarme lumieres] Lumieres Flash"  
+  sequence:
+    - service: light.turn_on
+      entity_id: light.gateway_light_7811dcb7aac9
+      data:
+        brightness_pct: 100
+        rgb_color: [255,0,0]   
+    - service: light.turn_on
+      entity_id: light.salon
+      data:
+        brightness_pct: 100
+        rgb_color: [255,0,0]          
+    - delay:
+        seconds: .1 
+    - service: light.turn_off
+      entity_id: light.salon
+    - service: light.turn_off
+      entity_id: light.gateway_light_7811dcb7aac9
+    - service: light.turn_off
+      entity_id: light.lamp_3
+    - delay: 00:00:01
+    - service: light.turn_on
+      entity_id: light.gateway_light_7811dcb7aac9
+      data:
+        brightness_pct: 100
+        rgb_color: [255,0,0]   
+    - service: light.turn_on
+      entity_id: light.salon
+      data:
+        brightness_pct: 100
+        rgb_color: [255,0,0]          
+    - delay:
+        seconds: .1  
+    - service: light.turn_off
+      entity_id: light.salon
+    - service: light.turn_off
+      entity_id: light.gateway_light_7811dcb7aac9
+    - service: light.turn_off
+      entity_id: light.lamp_3
+    - service: script.turn_on
+      entity_id: script.boucle_lumieres_flash      
+
+boucle_lumieres_flash:
+  alias: "[Alarme lumieres] Lumieres Flash en boucle"  
+  sequence:
+    - delay:
+        seconds: .1
+    - service: script.turn_on
+      entity_id: script.lumieres_flash
+      
+annuler_lumieres_flash:
+ alias: "[Alarme lumieres] Annuler Lumieres Flash"  
+ sequence: 
+    - delay:
+        seconds: .1  
+    - service: homeassistant.turn_off
+      entity_id: script.lumieres_flash
+    - delay:
+        seconds: .1      
+    - service: homeassistant.turn_off
+      entity_id: script.boucle_lumieres_flash 
+    - delay:
+        seconds: .5  
+    - service: homeassistant.turn_off
+      entity_id: script.lumieres_flash
+    - delay:
+        seconds: .1      
+    - service: homeassistant.turn_off
+      entity_id: script.boucle_lumieres_flash     
+    - delay:
+        seconds: .1  
+    - service: homeassistant.turn_off
+      entity_id: script.lumieres_flash
+    - delay:
+        seconds: .5      
+    - service: homeassistant.turn_off
+      entity_id: script.boucle_lumieres_flash 
+    - delay:
+        seconds: .1    
+    - service: homeassistant.turn_off
+      entity_id: script.lumieres_flash
+    - delay:
+        seconds: .1      
+    - service: homeassistant.turn_off
+      entity_id: script.boucle_lumieres_flash     
+    - delay:
+        seconds: .5  
+    - service: homeassistant.turn_off
+      entity_id: script.lumieres_flash
+    - delay:
+        seconds: .1             
+    - service: homeassistant.turn_off
+      entity_id: script.eteindre_lumieres  
+    - delay:
+        seconds: .1             
+    - service: homeassistant.turn_off
+      entity_id: script.eteindre_lumieres   
+      
+eteindre_lumieres:
+  alias: "[Alarme lumieres] Éteindre toutes les lumieres" 
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: 
+        - light.gateway_light_7811dcb7aac9
+        - light.salon
+        - light.lamp_3  

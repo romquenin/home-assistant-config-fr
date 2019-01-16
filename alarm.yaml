@@ -15,60 +15,38 @@ code: !secret alarm_code
 panic_code: !secret alarm_panic
 pending_time: 30 #Grace time in seconds to allow for exit and entry using Away mode
 trigger_time: 600
-alarm: automation.alarm_triggered
-warning: automation.alarm_warning
+alarm: automation.alarme_activee
 
-##[STATE RELATED]
-#[OPTIONAL]
-armed_perimeter:
-  ##[OPTIONAL however either an immediate or delayed group must exist] Sensors in this group tigger the alarm immediately 
-  immediate:
-  - binary_sensor.door_window_sensor_158d0001de6572
-
-#[REQUIRED]
-armed_home:
-  #[OPTIONAL] State specific overrides default time above
-  pending_time: 3
-  #[OPTIONAL] State specific overrides default time above
-  trigger_time: 300
-  ##[OPTIONAL however either an immediate or delayed group must exist] Sensors in this group tigger the alarm immediately 
-  immediate:
-  - binary_sensor.door_window_sensor_158d0001de6572
-  ##[OPTIONAL] Sensors in this group start the clock (pending_time) when tripped before the alarm is triggered 
-
-
-#[REQUIRED]
-armed_away:
-  #[OPTIONAL] State specific overrides default time above
-  trigger_time: 600
-  ##[OPTIONAL however either an immediate or delayed group must exist] Sensors in this group tigger the alarm immediately 
-  immediate:
-  - binary_sensor.door_window_sensor_158d0001de6572
-  ##[OPTIONAL] Sensors in this group start the clock (pending_time) when tripped before the alarm is triggered 
-
-  #[OPTIONAL] Use this group to automatically override the warning message on open sensors when arming. (I use this as I have a motion sensor at the front door)
 panel:
   cameras: []
-  enable_clock: true
-  enable_weather: true
-  shadow_effect: false
+  enable_clock: 'True'
+  enable_weather: 'True'
+  shadow_effect: 'False'
+  panel_title: ''
+  camera_update_interval: ''
+  enable_sensors_panel: 'True'
+  enable_floorplan_panel: false
+  enable_camera_panel: false
 states:
   armed_away:
-    immediate: []
+    immediate:
+    - binary_sensor.door_window_sensor_158d0001de6572
     delayed: []
     override: []
     pending_time: 0
     warning_time: 0
     trigger_time: 600
   armed_home:
-    immediate: []
+    immediate:
+    - binary_sensor.door_window_sensor_158d0001de6572
     delayed: []
     override: []
     pending_time: 0
     warning_time: 0
     trigger_time: 600
   armed_perimeter:
-    immediate: []
+    immediate:
+    - binary_sensor.door_window_sensor_158d0001de6572
     delayed: []
     override: []
     pending_time: 0
@@ -85,7 +63,6 @@ mqtt:
   pending_on_warning: false
   payload_arm_home: ARM_HOME
   override_code: true
-
 users:
 - id: 85a8e609f3fb4a2f95fc7d20fee968ee
   name: Hass.io
@@ -97,8 +74,8 @@ users:
   enabled: false
   code: 821f135bfb8a4f5eae41585228c87bb4
   picture: /local/images/ha.png
-- id: 9a926149d2f84718b39cba050613a6e9
+- id: 966be660623a495295fc967d0332b85e
   name: Legacy API password user
   enabled: false
-  code: 9a926149d2f84718b39cba050613a6e9
+  code: 966be660623a495295fc967d0332b85e
   picture: /local/images/ha.png

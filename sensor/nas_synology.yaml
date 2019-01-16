@@ -1,0 +1,20 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                      NAS SYNOLOGY                      ##
+   ##                                                        ##
+   ############################################################
+       
+- platform: synologydsm
+  host: 192.168.2.12
+  username: !secret syno_name
+  password: !secret syno_password
+  monitored_conditions:
+    - cpu_total_load
+    - memory_real_usage
+    - network_up
+    - network_down
+    - volume_percentage_used
+    - volume_disk_temp_max
+    
+   

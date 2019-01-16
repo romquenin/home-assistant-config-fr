@@ -1,0 +1,26 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                        RÉVEIL                          ##
+   ##                                                        ##
+   ############################################################
+
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      minutes: '/1'
+      seconds: 00
+
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+        - condition: template
+          value_template: '{{ now().time().strftime("%H:%M") == states.sensor.alarmclock_wd_time_template.state }}'
+        - condition: state
+          entity_id: input_boolean.alarmclock_wd_enabled
+          state: 'on'
+
+  action:
+    - service: script.sonnerie_reveil

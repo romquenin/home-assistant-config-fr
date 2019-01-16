@@ -36,12 +36,6 @@ if (!window.cardTools){
       ev.detail = detail || {};
       document
         .querySelector("home-assistant")
-        .shadowRoot.querySelector("home-assistant-main")
-        .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver")
-        .shadowRoot.querySelector("#panel ha-panel-lovelace")
-        .shadowRoot.querySelector("hui-root")
-        .shadowRoot.querySelector("ha-app-layout #view")
-        .firstChild
         .dispatchEvent(ev);
     }
 

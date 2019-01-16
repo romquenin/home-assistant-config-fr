@@ -1,0 +1,30 @@
+   ############################################################
+   ##                                                        ##
+   ##                    HARMONY HUB                         ##
+   ##                                                        ##
+   ############################################################
+
+harmony_hub:
+  name: Harmony Hub
+  options:
+    - PowerOff
+    - APPLE TV
+    - PC TV      
+    - SMART TV
+    - MOVIES TV
+    - SWITCH TV
+    - PS4 TV
+    - ONE TV
+    - RETRO TV
+    - 360 TV          
+    - PC      
+    - MOVIES
+    - SWITCH
+    - PS4
+    - ONE
+    - RETRO
+    - CHROMECAST
+  initial: PowerOff
+  icon: mdi:monitor   
+
+   

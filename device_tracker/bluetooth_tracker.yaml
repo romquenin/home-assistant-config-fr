@@ -1,0 +1,15 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                   BLUETOOTH TRACKER                    ##
+   ##                                                        ##
+   ############################################################
+
+- platform: bluetooth_tracker
+  new_device_defaults:
+    track_new_devices: false  
+  track_new_devices: no
+  consider_home: 180
+  interval_seconds: 60
+
+   

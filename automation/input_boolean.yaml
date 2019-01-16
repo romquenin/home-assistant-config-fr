@@ -1,0 +1,230 @@
+
+############################################################
+##                                                        ##
+##                    INPUT BOOLEAN                       ##
+##                                                        ##
+############################################################
+
+  ###  TV  ###
+- alias: '[Boolean] TV on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.tv_power_switch
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.tv_on
+     
+- alias: '[Boolean] TV off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.tv_power_switch
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.1515353133084
+
+  ###  AMP  ###       
+- alias: '[Boolean] AMPLI on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.amp_power_switch
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.amp_power_on
+     
+- alias: '[Boolean] AMPLI off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.amp_power_switch
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.amp_power_off
+
+  ###  ONE  ###
+- alias: '[Boolean] ONE on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.xbox_one_power_switch
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.1515356098614
+     
+- alias: '[Boolean] ONE off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.xbox_one_power_switch
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.1515353304047  
+
+  ###  ZAPPITI  ###      
+- alias: '[Boolean] ZAPPITI on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.zappiti_power_switch
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.zappiti_power_on
+     
+- alias: '[Boolean] ZAPPITI off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.zappiti_power_switch
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.zappiti_power_off    
+
+  ###  ALARM  ###      
+- alias: '[Boolean] Alarme lumières on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_light
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.light_flash
+    
+- alias: '[Boolean] Alarme lumières off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_light
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.cancel_loop
+
+
+############################################################
+##                                                        ##
+##                   BOOLEAN UPDATE                       ##
+##                                                        ##
+############################################################
+
+  ###  TV  ### 
+- alias: '[Boolean] mise a jour TV on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.samsung_tv
+  condition:
+    - condition: state
+      entity_id: media_player.samsung_tv
+      state: 'on'    
+  action:   
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.tv_power_switch  
+
+- alias: '[Boolean] mise a jour TV off'
+  initial_state: on
+  trigger:    
+    - platform: state
+      entity_id: media_player.samsung_tv
+  condition:
+    - condition: state
+      entity_id: media_player.samsung_tv
+      state: 'off'    
+  action:    
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.tv_power_switch
+
+  ###  ZAPPITI  ###    
+- alias: '[Boolean] mise a jour ZAPPITI on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: sensor.zappiti_template
+      from: 'off'
+      to: 'on'
+  action: 
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.zappiti_power_switch
+
+- alias: '[Boolean] mise a jour ZAPPITI off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: sensor.zappiti_template
+      from: 'on'
+      to: 'off'
+  action: 
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.zappiti_power_switch
+       
+  ###  AMPLI  ###       
+- alias: '[Boolean] mise a jour AMPLI on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.home_cinema_main
+  condition:
+    - condition: state
+      entity_id: media_player.home_cinema_main
+      state: 'on'
+  action: 
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.amp_power_switch
+        
+- alias: '[Boolean] mise a jour AMPLI off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.home_cinema_main
+  condition:
+    - condition: state
+      entity_id: media_player.home_cinema_main
+      state: 'off'
+  action:    
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.amp_power_switch 
+
+  ###  XBOX ONE  ###       
+- alias: '[Boolean] mise a jour XBOX ONE on'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.xbox_one
+  condition:
+    - condition: state
+      entity_id: media_player.xbox_one
+      state: 'on'
+  action: 
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.xbox_one_power_switch
+        
+- alias: '[Boolean] mise a jour XBOX ONE off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.xbox_one
+  condition:
+    - condition: state
+      entity_id: media_player.xbox_one
+      state: 'off'
+  action:    
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.xbox_one_power_switch 

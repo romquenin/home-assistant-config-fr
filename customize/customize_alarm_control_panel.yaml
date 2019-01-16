@@ -1,0 +1,11 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                   ALARM CONTROL PANEL                  ##
+   ##                                                        ##
+   ############################################################
+       
+alarm_control_panel.maison:
+  friendly_name: Maison
+  icon: mdi:shield-outline     
+   

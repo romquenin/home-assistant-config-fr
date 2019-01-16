@@ -26,12 +26,12 @@ if debug:
 
 # Summary by groups
 groups = ['group.users_tracker', 'group.switch_tracker', 'group.device_tracker']
-groups_format = ['{} at home: {}', '{} in use: {}', '!{} offline: {}'] # Message prefix
+groups_format = ['{} à la maison: {}', '{} utilisé: {}', '{} éteint: {}'] # Message prefix
 groups_filter = ['home', 'on|playing|home', 'off|idle|not_home'] # Filter to list
 groups_badge = ['Home', 'In use', 'Status'] # Badge 'belt' (unit_of_measurement)
 groups_badge_pic = ['', '', 'ok|bug|critical'] # Pictures: none, on picure or a list of picture (in this case the picture position will match the count)
 groups_min_show = [0, 0, 0] # Mininum count to show
-groups_desc = ['Nobody home', '', 'System ok'] # Can set the default description, for use in case count = 0
+groups_desc = ['La maison est vide', '', 'Système ok'] # Can set the default description, for use in case count = 0
 #groups_desc = ['Nobody in home', '', 'System ok']
 groups_count = [0, 0, 0]
 
@@ -126,9 +126,9 @@ for entity_id in alarms_prefix:
     idx = idx + 1
 
 if (alarms_desc == ''):
-    alarms_desc = 'Alarm clock is disabled'
+    alarms_desc = 'Réveil désactivé'
 else:
-    alarms_desc = 'Alarm clock at ' + alarms_desc[:-2]
+    alarms_desc = 'Réveil activé pour ' + alarms_desc[:-2]
 
 ##################################################
 ## Profile/mode
@@ -152,7 +152,7 @@ if (not state is None):
     })
     
     if not hidden:
-        profile_desc = '{} profile is activated'.format(state.state)
+        profile_desc = '{} profil est actvé'.format(state.state)
 
 ##################################################
 ## Activity
@@ -169,11 +169,11 @@ state_value = hass.states.get('input_select.harmony_hub').state
 if not state is None:
     hidden = False #if (state.state != 'Normal') else True
     if state.state != 'Unknown':
-        dt = hass.states.get('automation.activity_change').attributes.get('last_triggered')
+        dt = hass.states.get('automation.script_activity_change').attributes.get('last_triggered')
         if not dt is None:
             time = "%02d:%02d" % (dt.hour+1, dt.minute)
     if not hidden:
-        activity_desc = '{}{} activity selected at: {}\n'.format(summary, state.state, time)
+        activity_desc = '{}{} activité lancée à: {}\n'.format(summary, state.state, time)
         
         hass.states.set('sensor.activity_badge', state_value, {
             'friendly_name': ' ', #state_value,

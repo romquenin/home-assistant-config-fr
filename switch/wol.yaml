@@ -1,0 +1,16 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                    WAKE ON LINE                        ##
+   ##                                                        ##
+   ############################################################
+
+- platform: wake_on_lan
+  mac_address: "4C-CC-6A-67-52-EE"
+  host: 192.168.2.10
+  turn_off:
+      service: hassio.addon_stdin
+      data:
+          addon: core_rpc_shutdown
+          input: roman
+   

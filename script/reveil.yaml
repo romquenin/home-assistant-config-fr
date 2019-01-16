@@ -1,0 +1,12 @@
+sonnerie_reveil:
+  alias: '[Réveil] Sonnerie réveil'
+  sequence:
+    - service: script.debout
+
+debout:
+  alias: '[Réveil] Debout!'
+  sequence:
+    - service: script.kodi_play_something
+    - delay:
+         minutes: 10
+    - service: script.mp_stop    

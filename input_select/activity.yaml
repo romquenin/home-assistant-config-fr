@@ -1,0 +1,33 @@
+  
+   ############################################################
+   ##                                                        ##
+   ##                       ACTIVITY                         ##
+   ##                                                        ##
+   ############################################################
+
+activity:
+  name: Activity
+  options:
+    - PowerOff
+    - APPLE TV
+    - SMART TV
+    - MOVIES TV    
+    - ONE TV    
+    - PC TV      
+    - PS4 TV
+    - SWITCH TV
+    - RETRO TV
+    - 360 TV              
+    - MOVIES    
+    - ONE
+    - PC      
+    - PS4
+    - SWITCH    
+    - RETRO
+    - CHROMECAST
+  initial: PowerOff
+  icon: mdi:face  
+
+   
+
+  

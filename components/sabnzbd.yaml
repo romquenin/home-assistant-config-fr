@@ -1,0 +1,19 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                       SABNZBD                          ##
+   ##                                                        ##
+   ############################################################
+    
+api_key: !secret sab_key
+host: 192.168.2.12
+port: 8080
+ssl: false
+sensors:
+  - current_status
+  - speed
+  - queue_size
+  - queue_remaining
+  - disk_size
+  - disk_free
+  - queue_count   

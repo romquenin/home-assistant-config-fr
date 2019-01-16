@@ -1,0 +1,32 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                    LIVINGROOM OFF                      ##
+   ##                                                        ##
+   ############################################################
+              
+- name: Livingroom off
+  entities:
+    light.bloom_1:
+      state: off
+      transition: 4        
+    light.strip_1:
+      state: off
+      transition: 4
+    light.lamp_1:
+      state: off
+      transition: 4        
+    light.lamp_2:
+      state: off
+      transition: 4        
+    light.living:
+      state: off
+      transition: 4      
+    light.spot_1:
+      state: off
+      transition: 4       
+    light.spot_2:
+      state: off
+      transition: 4    
+
+   

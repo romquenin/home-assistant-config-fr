@@ -1,0 +1,13 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                      INPUT NUMBER                      ##
+   ##                                                        ##
+   ############################################################
+         
+input_number.dyson_fan_speed:
+  friendly_name: Vitesse
+  entity_picture: /local/icons/dysonpicblue.png  
+
+
+   

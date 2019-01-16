@@ -1,0 +1,62 @@
+  
+   ############################################################
+   ##                                                        ##
+   ##               PYTHON SCRIPT SUMMARY                    ##
+   ##                                                        ##
+   ############################################################
+   
+sensor_harmony:
+  name: Sensor Harmony
+  entities:
+    - sensor.harmony_hub_sensor       
+
+custom:
+  name: Summary
+  entities:
+    - sensor.summary 
+      
+profile:
+  name: Profile
+  entities:
+    - input_select.ha_mode
+
+activity:
+  name: Main activity
+  entities:
+    - input_select.harmony_hub
+    - sensor.harmony_hub_sensor     
+
+  ###  TRACKER  ###
+device_tracker:
+  name: Device Tracker
+  entities:       
+    - sensor.harmony_hub_template
+    - sensor.synology_template 
+
+switch_tracker:
+  name: Switch Tracker
+  entities:    
+    - input_boolean.tv_power_switch
+    - switch.wake_on_lan    
+    - input_boolean.amp_power_switch
+    - input_boolean.one_power_switch
+    - input_boolean.projo_power_switch      
+    - input_boolean.zappiti_power_switch
+    - input_boolean.toile_power_switch
+    - input_boolean.astro_power_switch
+    - light.multi
+    - light.free
+    - fan.salon    
+    - switch.sonoff      
+    - switch.sonoff1
+    - switch.sonoff2    
+    - switch.sonoff3  
+    - switch.sonoff4      
+    - switch.room    
+
+users_tracker:
+  name: Users Tracker
+  entities:       
+    - group.gabriela
+    - group.roman 
+   

@@ -1,0 +1,50 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        TROPICAL                        ##
+   ##                                                        ##
+   ############################################################
+
+- name: Tropical
+  entities:
+    light.bloom_1:    
+      state: on
+      rgb_color: [236,149,70]
+      brightness: 113      
+      transition: 6
+    light.strip_1:
+      state: on
+      rgb_color: [236,149,70]
+
+      brightness: 113      
+      transition: 6
+    light.lamp_2:
+      state: on
+      rgb_color: [236,149,70]
+      brightness: 113      
+      transition: 6
+    light.lamp_1:
+      state: on
+      rgb_color: [194,163,244]
+      brightness: 113      
+      transition: 6         
+    light.living:
+      state: on
+      rgb_color: [194,163,244]
+      brightness: 113      
+      transition: 6         
+    light.spot_1:
+      state: on
+      rgb_color: [194,163,244]
+      brightness: 113      
+      transition: 6             
+    light.spot_2:
+      state: on
+      rgb_color: [194,163,244]
+      brightness: 113      
+      transition: 6       
+   
+
+
+
+   

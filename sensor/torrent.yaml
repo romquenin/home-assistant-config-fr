@@ -1,0 +1,21 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        TORRENT                         ##
+   ##                                                        ##
+   ############################################################
+   
+- platform: transmission
+  host: 192.168.2.12
+  port: 9091
+  username: roman
+  password: !secret transmission_password
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
+    - 'active_torrents'
+    - 'paused_torrents'
+
+   
+

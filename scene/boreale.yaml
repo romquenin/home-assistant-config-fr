@@ -1,0 +1,52 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        BOREALE                         ##
+   ##                                                        ##
+   ############################################################
+
+- name: Boreale
+  entities:
+    light.bloom_1:    
+      state: on
+      rgb_color: [68,225,216]
+      brightness: 142      
+      transition: 6
+    light.strip_1:
+      state: on
+      rgb_color: [68,225,216]
+      brightness: 142      
+      transition: 6
+    light.lamp_2:
+      state: on
+      rgb_color: [184,180,255]
+      brightness: 143      
+      transition: 6 
+    light.lamp_1:
+      state: on
+      rgb_color: [68,225,216]
+      brightness: 142      
+      transition: 6         
+    light.living:
+      state: on
+      rgb_color: [68,225,216]
+      brightness: 142      
+      transition: 6        
+    light.spot_1:
+      state: on
+      rgb_color: [184,180,255]
+      brightness: 143      
+      transition: 6           
+    light.spot_2:
+      state: on
+      rgb_color: [184,180,255]
+      brightness: 143      
+      transition: 6 
+
+   
+
+
+   
+
+
+   

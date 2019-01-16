@@ -1,0 +1,11 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                   DYSON VENTILATEUR                    ##
+   ##                                                        ##
+   ############################################################
+   
+username: romquenin@gmail.com
+password: !secret dyson_password
+language: FR
+

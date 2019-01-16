@@ -1,0 +1,263 @@
+######################################################################################################################    
+#  TV HARMONY
+######################################################################################################################
+'1515353133084':
+  alias: '[TV] off'
+  sequence:
+  - data:
+      command: PowerOff
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv_on:
+  alias: '[TV] on'
+  sequence:
+  - data:
+      command: PowerOn
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvinputtv:
+  alias: '[TV] input tv'
+  sequence:
+  - data:
+      command: InputTv
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+'1515352997947':
+  alias: '[TV] hdmi 1' 
+  sequence:
+  - data:
+      command: InputHdmi1
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+    
+'1515352957625':
+  alias: '[TV] hdmi 2' 
+  sequence:
+  - data:
+      command: InputHdmi2
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command    
+
+'1515337890501':
+  alias: '[TV] hdmi 3' 
+  sequence:
+  - data:
+      command: InputHdmi3
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvhdmi4:
+  alias: '[TV] hdmi 4' 
+  sequence:
+  - data:
+      command: InputHdmi4
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvvolumeup:
+  alias: '[TV] volume up'
+  sequence:
+  - data:
+      command: VolumeUp
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvvolumedown:
+  alias: '[TV] volume down'
+  sequence:
+  - data:
+      command: VolumeDown
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvmute:
+  alias: '[TV] mute'
+  sequence:
+  - data:
+      command: Mute
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+    
+tvup:
+  alias: '[TV] up'
+  sequence:
+  - data:
+      command: DirectionUp
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvdown:
+  alias: '[TV] down'
+  sequence:
+  - data:
+      command: DirectionDown
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvleft:
+  alias: '[TV] left'
+  sequence:
+  - data:
+      command: DirectionLeft
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvright:
+  alias: '[TV] right'
+  sequence:
+  - data:
+      command: DirectionRight
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvok:
+  alias: '[TV] ok'
+  sequence:
+  - data:
+      command: Select
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvback:
+  alias: '[TV] back'
+  sequence:
+  - data:
+      command: Return
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvhome:
+  alias: '[TV] home'
+  sequence:
+  - data:
+      command: Home
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+       
+tvplay:
+  alias: '[TV] play'
+  sequence:
+  - data:
+      command: Play
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tvstop:
+  alias: '[TV] stop'
+  sequence:
+  - data:
+      command: Stop
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv01:
+  alias: '[TV] 01'
+  sequence:
+  - data:
+      command: 1
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+    
+tv02:
+  alias: '[TV] 02'
+  sequence:
+  - data:
+      command: 2
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv03:
+  alias: '[TV] 03'
+  sequence:
+  - data:
+      command: 3
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv04:
+  alias: '[TV] 04'
+  sequence:
+  - data:
+      command: 4
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv05:
+  alias: '[TV] 05'
+  sequence:
+  - data:
+      command: 5
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv06:
+  alias: '[TV] 06'
+  sequence:
+  - data:
+      command: 6
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv07:
+  alias: '[TV] 07'
+  sequence:
+  - data:
+      command: 7
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv08:
+  alias: '[TV] 08'
+  sequence:
+  - data:
+      command: 8
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command   
+
+tv09:
+  alias: '[TV] 09'
+  sequence:
+  - data:
+      command: 9
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+tv00:
+  alias: '[TV] 00'
+  sequence:
+  - data:
+      command: 0
+      device: '36034946'
+      entity_id: remote.harmony_hub
+    service: remote.send_command  

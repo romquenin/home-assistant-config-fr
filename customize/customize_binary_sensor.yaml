@@ -1,0 +1,20 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                      BINARY SENSOR                     ##
+   ##                                                        ##
+   ############################################################
+
+binary_sensor.door_window_sensor_158d0001de6572:
+  friendly_name: Porte d'entrée 
+  icon: mdi:door
+  templates:
+    icon_color: >
+      if (state === 'off') return 'rgb(200, 0, 0)';
+      return 'rgb(0,200,0)';
+   
+
+  
+  
+  
+

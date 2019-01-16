@@ -1,0 +1,31 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       APPAREILS                        ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+
+    harmony_hub_template:
+      friendly_name: 'Harmony Hub'
+      value_template: "{{ 'on' if is_state('device_tracker.000420f6a1b5', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:monitor' if is_state('device_tracker.000420f6a1b5', 'home') else 'mdi:close-circle' }}"
+      
+    synology_template:
+      friendly_name: 'Synology'
+      value_template: "{{ 'on' if is_state('device_tracker.diskstation', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:monitor' if is_state('device_tracker.diskstation', 'home') else 'mdi:close-circle' }}"   
+      
+
+    qled_tv_template:
+      friendly_name: 'Qled TV'
+      value_template: "{{ 'on' if is_state('device_tracker.samsung', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:monitor' if is_state('device_tracker.samsung', 'home') else 'mdi:close-circle' }}"   
+      
+    zappiti_template:
+      friendly_name: 'Zappiti'
+      value_template: "{{ 'on' if is_state('device_tracker.9cf8dbee2419', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:android' if is_state('device_tracker.9cf8dbee2419', 'home') else 'mdi:close-circle' }}"   
+

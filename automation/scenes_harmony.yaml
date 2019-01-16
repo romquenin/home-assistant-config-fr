@@ -1,0 +1,147 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                    SCENES HARMONY                      ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Scenes] MOVIES faible'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'   
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
+     
+- alias: '[Scenes] PC faible'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}' 
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
+     
+- alias: '[Scenes] PS4 faible'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}' 
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
+     
+- alias: '[Scenes] ONE faible'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}' 
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
+     
+- alias: '[Scenes] SWITCH faible'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}' 
+  action:
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
+     
+- alias: '[Scenes] PowerOff MOVIES allume la lumière'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'MOVIES'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.livingroom_normal
+     
+- alias: '[Scenes] PowerOff PC allume la lumière'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'PC'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.livingroom_normal
+ 
+- alias: '[Scenes] PowerOff PS4 allume la lumière'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'PS4'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:
+    - service: scene.turn_on
+      data:
+        entity_id: scene.livingroom_normal
+    
+- alias: '[Scenes] PowerOff ONE TV allume la lumière'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'ONE'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:  
+    - service: scene.turn_on
+      data:
+        entity_id: scene.livingroom_normal
+
+- alias: '[Scenes] PowerOff SWITCH allume la lumière'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'SWITCH'
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+  action:  
+    - service: scene.turn_on
+      data:
+        entity_id: scene.livingroom_normal
+        

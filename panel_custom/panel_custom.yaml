@@ -1,0 +1,26 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                      FLOORPLAN                         ##
+   ##                                                        ##
+   ############################################################
+
+  - name: floorplan
+    sidebar_title: Floorplan
+    sidebar_icon: mdi:home
+    url_path: floorplan
+    config: !include floorplan.yaml
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                        ALARME                          ##
+   ##                                                        ##
+   ############################################################
+
+  - name: alarm
+    sidebar_title: Alarme
+    sidebar_icon: mdi:security-home
+    config:
+      alarmid: alarm_control_panel.maison
+      

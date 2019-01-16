@@ -1,0 +1,34 @@
+######################################################################################################################    
+#  SCENES
+######################################################################################################################       
+printemps:
+  alias: "[Scène] Printemps"
+  sequence:
+    - service: scene.turn_on 
+      entity_id: scene.printemps   
+tropical:
+  alias: "[Scène] Tropical"
+  sequence:
+    - service: scene.turn_on  
+      entity_id: scene.tropical
+      
+boreale:
+  alias: "[Scène] Boreale"
+  sequence:
+    - service: scene.turn_on 
+      entity_id: scene.boreale   
+savane:
+  alias: "[Scène] Savane"
+  sequence:
+    - service: scene.turn_on  
+      entity_id: scene.savane      
+dim:
+  alias: "[Scène] Dim"
+  sequence:
+    - service: scene.turn_on 
+      entity_id: scene.dim   
+detente:
+  alias: "[Scène] Detente"
+  sequence:
+    - service: scene.turn_on  
+      entity_id: scene.detente

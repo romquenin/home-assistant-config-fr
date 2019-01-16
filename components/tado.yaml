@@ -1,0 +1,11 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                  TADO SMART THERMOSTAT                 ##
+   ##                                                        ##
+   ############################################################
+       
+username: romquenin@gmail.com
+password: !secret tado_password
+
+   

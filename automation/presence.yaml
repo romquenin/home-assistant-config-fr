@@ -1,0 +1,107 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       PRÉSENCE                         ##
+   ##                                                        ##
+   ############################################################
+
+  ###  NUIT COULOIR  ###
+- alias: '[Présence] Si mouvement allumer la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001d556ae
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: time  
+    after: '23:55:00'
+    before: '08:00:00'
+  action:
+    - service: light.turn_on
+      entity_id: light.gateway_light_7811dcb7aac9
+      
+- alias: '[Présence] Si pas de mouvement éteindre la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001d556ae
+    from: 'on'
+    to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.gateway_light_7811dcb7aac9
+ 
+  ###  CUISINE JOUR  ###    
+- alias: '[Présence] Si mouvement allumer la Cuisine'
+  initial_state: 'on'
+  trigger:  
+    - platform: state
+      entity_id: sensor.fibaro_system_fgms001zw5_motion_sensor_burglar
+      from: '0'
+      to: '8'  
+  condition:
+    condition: time  
+    after: '20:00:00'
+    before: '18:00:00'      
+  action:
+    - service: light.turn_on
+      entity_id: light.cuisine
+
+- alias: '[Présence] Si pas de mouvement éteindre la Cuisine'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: sensor.fibaro_system_fgms001zw5_motion_sensor_burglar
+      from: '8'
+      to: '0'
+  condition:
+    condition: time  
+    after: '20:00:00'
+    before: '18:00:00' 
+  action:
+    - service: light.turn_off
+      entity_id: light.cuisine      
+            
+- alias: '[Présence] Si mouvement allumer la Cuisine'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: sensor.fibaro_system_fgms001zw5_motion_sensor_burglar
+    from: '0'
+    to: '3'
+  condition:
+    condition: time  
+    after: '20:00:00'
+    before: '18:00:00'      
+  action:
+    - service: light.turn_on
+      entity_id: light.cuisine  
+
+- alias: '[Présence] Si pas de mouvement éteindre la Cuisine'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: sensor.fibaro_system_fgms001zw5_motion_sensor_burglar
+      from: '3'
+      to: '0'
+  condition:
+    condition: time  
+    after: '20:00:00'
+    before: '18:00:00' 
+  action:
+    - service: light.turn_off
+      entity_id: light.cuisine  
+
+  ###  PORTE  ###
+- alias: '[Présence] Alerte Pushbullet Porte Ouverte'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_window_sensor_158d0001de6572
+    from: 'off'
+    to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.pushbullet_porte_ouverte
+      

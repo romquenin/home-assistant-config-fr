@@ -1,0 +1,26 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                       INPUT SELECT                     ##
+   ##                                                        ##
+   ############################################################
+   
+input_select.harmony_hub:
+  friendly_name: ACTIVITES
+  entity_picture: /local/icons/harmony.jpg
+
+input_select.ha_mode:
+  friendly_name: Profils
+  entity_picture: /local/badges/roman.jpg 
+
+input_select.hass_theme:
+  friendly_name: Themes
+  entity_picture: /local/icons/theme.png
+
+input_select.tv_input_select:
+  entity_picture: /local/icons/samsung.png     
+
+input_select.amp_input_select:
+  entity_picture: /local/icons/yamaha.png   
+
+   

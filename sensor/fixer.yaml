@@ -1,0 +1,13 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         FIXER                          ##
+   ##                                                        ##
+   ############################################################
+
+- platform: fixer_hour
+  api_key: !secret fixer_api
+  target: !secret fixer_target
+  name: Taux de change
+
+   

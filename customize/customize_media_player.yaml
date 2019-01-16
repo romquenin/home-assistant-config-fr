@@ -1,0 +1,17 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                      MEDIA PLAYER                      ##
+   ##                                                        ##
+   ############################################################
+    
+media_player.home_cinema_main:
+  friendly_name: Yamaha  
+
+media_player.googlehome1472:
+  friendly_name: Google Home
+
+media_player.googlehome0840:
+  friendly_name: Google Home Mini 
+
+   

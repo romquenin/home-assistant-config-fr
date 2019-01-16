@@ -1,0 +1,577 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                          PS4                           ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] PS4 TV allume Sonoff4'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'    
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff4   
+
+- alias: '[Switch] PowerOff PS4 TV et Sonoff4'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PS4 TV'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'     
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff4
+
+- alias: '[Switch] PS4 allume Sonoff4'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'    
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff4   
+
+- alias: '[Switch] PowerOff PS4 et Sonoff4'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PS4'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'   
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff4
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                      APPLE TV                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] APPLE TV allume Sonoff1'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff1
+
+- alias: '[Switch] PowerOff Apple TV et Sonoff1'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'APPLE TV'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'  
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'             
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'   
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff1
+      
+   
+   ############################################################
+   ##                                                        ##
+   ##                      CHROMECAST                        ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] Chromecast allume Sonoff2 '
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff2    
+
+- alias: '[Switch] PowerOff Chromecast et Sonoff2'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'CHROMECAST'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'            
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'  
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'             
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}' 
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff2
+      
+   
+   ############################################################
+   ##                                                        ##
+   ##                        SWITCH                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] SWITCH allume Sonoff3'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff3   
+
+- alias: '[Switch] PowerOff Switch et Sonoff3'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'SWITCH'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'            
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff3      
+
+- alias: '[Switch] SWITCH TV allume Sonoff3'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff3   
+
+- alias: '[Switch] PowerOff SWITCH TV et Sonoff3'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'SWITCH TV'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'     
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'       
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff3   
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                        360 TV                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] 360 TV allume Multi'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "360 TV" }}'   
+  action:
+    - service: light.turn_on
+      entity_id: light.multi
+    - delay:
+        seconds: 5  
+    -  service: script.turn_on
+       entity_id: script.360_power_on     
+
+- alias: '[Switch] PowerOff 360 TV et Multi'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: '360 TV'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'             
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'           
+  action:
+    - service: light.turn_off
+      entity_id: light.multi
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                        RETRO                           ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] RETRO allume Multi'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'   
+  action:
+    service: light.turn_on
+    entity_id: light.multi   
+
+- alias: '[Switch] PowerOff RETRO et Multi'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'RETRO'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'             
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'       
+  action:
+    - service: light.turn_off
+      entity_id: light.multi      
+
+- alias: '[Switch] RETRO TV allume Multi'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'   
+  action:
+    service: light.turn_on
+    entity_id: light.multi    
+
+- alias: '[Switch] PowerOff RETRO TV et Multi'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'RETRO TV'
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+          - condition: template      
+            value_template: '{{ trigger.to_state.attributes.current_activity == "APPLE TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SMART TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC TV" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'             
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "ONE" }}'    
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'   
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'
+          - condition: template
+            value_template: '{{ trigger.to_state.attributes.current_activity == "PC" }}'       
+  action:
+    - service: light.turn_off
+      entity_id: light.multi
+      

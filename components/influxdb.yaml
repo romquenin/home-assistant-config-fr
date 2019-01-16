@@ -1,0 +1,14 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                      INFLUC DB                         ##
+   ##                                                        ##
+   ############################################################
+
+host: a0d7b954-influxdb
+port: 8086
+database: homeassistant
+username: !secret influxdb_name
+password: !secret influxdb_password
+max_retries: 3
+default_measurement: state    

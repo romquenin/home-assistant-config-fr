@@ -1,0 +1,27 @@
+  
+   ############################################################
+   ##                                                        ##
+   ##                     GATEWAY VOLUME                     ##
+   ##                                                        ##
+   ############################################################
+
+  ### Input number pour controler le volume du GATEWAY ###
+gateway_volume:
+  name: Volume
+  initial: 10
+  min: 0
+  max: 100
+  step: 2
+  icon: mdi:volume-high
+
+  ### Input number pour regler la duree de la boucle ###
+loop_delay:
+  name: "Durée"
+  initial: 3
+  min: 0
+  max: 15
+  step: 1
+  icon: mdi:fast-forward-outline
+   
+
+  

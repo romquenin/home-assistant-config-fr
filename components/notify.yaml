@@ -1,0 +1,11 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                   NOTIFY PUSHBULLET                    ##
+   ##                                                        ##
+   ############################################################
+      
+
+- name: pushbullet
+  platform: pushbullet
+  api_key: !secret pushbullet_key

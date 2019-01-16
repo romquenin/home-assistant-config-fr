@@ -1,0 +1,24 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        AMPLI                           ##
+   ##                                                        ##
+   ############################################################
+
+amp_input_select:
+  name: AMPLIFICATEUR
+  options:
+    - PowerOff    
+    - PC
+    - APPLE TV
+    - PS4
+    - RETRO
+    - 360
+    - ZAPPITI
+    - SWITCH
+    - CHROMECAST
+    - MUSICAST
+  initial: PowerOff
+
+   
+  

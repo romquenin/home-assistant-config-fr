@@ -1,0 +1,10 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                          MQTT                          ##
+   ##                                                        ##
+   ############################################################
+    
+broker: core-mosquitto
+username: !secret mqtt_name
+password: !secret mqtt_password

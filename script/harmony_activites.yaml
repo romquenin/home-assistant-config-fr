@@ -1,0 +1,142 @@
+######################################################################################################################    
+#  ACTIVITES HARMONY
+######################################################################################################################
+'1515326774093':
+  alias: '[Harmony] PC TV'
+  sequence:
+  - data:
+      activity: '20138144'
+    service: remote.turn_on
+
+'1515327048655':
+  alias: '[Harmony] PC'
+  sequence:
+  - data:
+      activity: '21826792'
+    service: remote.turn_on
+
+'1515327237237':
+  alias: '[Harmony] TV'
+  sequence:
+  - data:
+      activity: '25698182'
+    service: remote.turn_on
+
+'1515327331527':
+  alias: '[Harmony] ONE'
+  sequence:
+  - data:
+      activity: '20492432'
+    service: remote.turn_on
+
+'1515327471008':
+  alias: '[Harmony] ONE TV'
+  sequence:
+  - data:
+      activity: '25310224'
+    service: remote.turn_on
+
+'1515327517610':
+  alias: '[Harmony] MOVIES'
+  sequence:
+  - data:
+      activity: '30471246'
+    service: remote.turn_on
+    
+'1515327540596':
+  alias: '[Harmony] MOVIES TV'
+  sequence:
+  - data:
+      activity: '30471346'
+    service: remote.turn_on
+
+'1515327559406':
+  alias: '[Harmony] PS4'
+  sequence:
+  - data:
+      activity: '21826901'
+    service: remote.turn_on
+
+'1515327583972':
+  alias: '[Harmony] PS4 TV'
+  sequence:
+  - data:
+      activity: '20137469'
+    service: remote.turn_on
+
+'1515327610370':
+  alias: '[Harmony] Wii U TV'
+  sequence:
+  - data:
+      activity: '20137504'
+    service: remote.turn_on
+
+'1515327627914':
+  alias: '[Harmony] Wii U'
+  sequence:
+  - data:
+      activity: '25094446'
+    service: remote.turn_on
+
+'1515327641814':
+  alias: '[Harmony] 360'
+  sequence:
+  - data:
+      activity: '25313232'
+    service: remote.turn_on
+
+'1515327655098':
+  alias: '[Harmony] 360 TV'
+  sequence:
+  - data:
+      activity: '20137481'
+    service: remote.turn_on
+
+'1515327674292':
+  alias: '[Harmony] SWITCH TV'
+  sequence:
+  - data:
+      activity: '28414227'
+    service: remote.turn_on
+
+'1515327688932':
+  alias: '[Harmony] SWITCH'
+  sequence:
+  - data:
+      activity: '29197122'
+    service: remote.turn_on
+
+'1515327707943':
+  alias: '[Harmony] PS3 TV'
+  sequence:
+  - data:
+      activity: '25313252'
+    service: remote.turn_on
+
+'1515327731548':
+  alias: '[Harmony] PS3'
+  sequence:
+  - data:
+      activity: '25313259'
+    service: remote.turn_on
+
+'1515327816025':
+  alias: '[Harmony] Chromecast Audio'
+  sequence:
+  - data:
+      activity: '27932527'
+    service: remote.turn_on
+
+'1515327847785':
+  alias: '[Harmony] SMART TV'
+  sequence:
+  - data:
+      activity: '20137433'
+    service: remote.turn_on
+
+activity_off:
+  alias: '[Harmony] Turn Off Activity'
+  sequence:
+  - data:
+      entity_id: remote.harmony_hub
+    service: remote.turn_off

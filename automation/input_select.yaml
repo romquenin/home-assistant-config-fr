@@ -1,0 +1,332 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                   BOOLEAN UPDATE                       ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Input_select] met a jour Themes'
+  initial_state: 'on'
+  trigger: 
+    - platform: state
+      entity_id: input_select.hass_theme
+  action:
+    - service: frontend.set_theme
+      data_template:
+       name: "{{ states.input_select.hass_theme.state }}"
+
+
+   ############################################################
+   ##                                                        ##
+   ##                     HARMONY HUB                        ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Input_select] met a jour HARMONY'
+  initial_state: on
+  trigger: 
+    - platform: state
+      entity_id: input_select.harmony_hub
+  action:
+    - service: script.turn_on
+      entity_id: script.input_select_harmony
+
+                              ###  MISE A JOUR SCRIPT DEMARRAGE ###       
+- alias: '[Input_select] mis a jour par HARMONY'
+  initial_state: on
+  trigger: 
+    - platform: state
+      entity_id: remote.harmony_hub
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.harmony_hub
+        option: >
+          {{ states.remote.harmony_hub.attributes.current_activity }} 
+
+  ###  MISE A JOUR OFF ###
+- alias: '[Input_select] PowerOff met a jour Harmony'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  condition:  
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'PowerOff'
+  action:
+    - service: script.turn_on
+      entity_id: script.activity_off                
+
+- alias: '[Input_select] PowerOff mis a jour par HARMONY'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:  
+    - condition: state
+      entity_id: remote.harmony_hub
+      state: 'off'
+  action:  
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.harmony_hub
+        option: 'PowerOff' 
+
+
+   ############################################################
+   ##                                                        ##
+   ##                         AMPLI                          ##
+   ##                                                        ##
+   ############################################################  
+
+- alias: '[Input_select] met a jour AMPLI'
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: input_select.amp_input_select
+  action:
+    - service: homeassistant.turn_on
+      data_template:
+        entity_id: >
+         {% if is_state('input_select.amp_input_select', 'PowerOff') %}
+         script.amp_power_off
+         {% elif is_state('input_select.amp_input_select', 'PC') %}
+         script.amp_pc
+         {% elif is_state('input_select.amp_input_select', 'APPLE TV') %}
+         script.amp_apple_tv
+         {% elif is_state('input_select.amp_input_select', 'PS4') %}
+         script.amp_ps4
+         {% elif is_state('input_select.amp_input_select', 'RETRO') %}
+         script.amp_retro
+         {% elif is_state('input_select.amp_input_select', '360') %}
+         script.amp_360
+         {% elif is_state('input_select.amp_input_select', 'ZAPPITI') %}
+         script.amp_zappiti
+         {% elif is_state('input_select.amp_input_select', 'SWITCH') %}
+         script.amp_switch
+         {% elif is_state('input_select.amp_input_select', 'CHROMECAST') %}
+         script.amp_chromecast
+         {% elif is_state('input_select.amp_input_select', 'MUSICAST') %}
+         script.amp_musicast
+         {% endif %}
+
+- alias: '[Input_select] mis a jour par AMPLI'
+  initial_state: on
+  trigger: 
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av1') }}"
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av2') }}"
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av3') }}"
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av4') }}"     
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av5') }}"
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av6') }}"     
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'av7') }}"
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'audio2') }}"     
+    - platform: template
+      value_template: "{{ is_state_attr('media_player.home_cinema_main', 'source', 'server') }}"            
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.amp_input_select
+        option: >
+          {% if is_state_attr('media_player.home_cinema_main', 'source', 'av1') %}
+          PC         
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av2') %}
+          APPLE TV
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av3') %}
+          PS4
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av4') %}
+          RETRO
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av5') %}
+          360
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av6') %}
+          ZAPPITI
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'av7') %}
+          SWITCH
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'audio2') %}
+          CHROMECAST
+          {% elif is_state_attr('media_player.home_cinema_main', 'source', 'server') %}
+          MUSICAST           
+          {% endif %}
+
+  ###  MISE A JOUR OFF  ### 
+- alias: '[Input_select] PowerOff mis a jour par AMPLI'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.home_cinema_main
+  condition:
+    - condition: state
+      entity_id: media_player.home_cinema_main
+      state: 'off'
+  action:   
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.amp_input_select
+        option: 'PowerOff'   
+
+     
+   ############################################################
+   ##                                                        ##
+   ##                           TV                           ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Input_select] met a jour TV' 
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    platform: state
+    entity_id: input_select.tv_input_select
+  action:
+    - service: homeassistant.turn_on
+      data_template:
+        entity_id: >
+         {% if is_state('input_select.tv_input_select', 'PowerOff') %}
+         script.1515353133084
+         {% elif is_state('input_select.tv_input_select', 'HDMI 1') %}
+         script.1515352997947
+         {% elif is_state('input_select.tv_input_select', 'HDMI 2') %}
+         script.1515352957625
+         {% elif is_state('input_select.tv_input_select', 'HDMI 3') %}
+         script.1515337890501
+         {% elif is_state('input_select.tv_input_select', 'HDMI 4') %}
+         script.tvhdmi4
+         {% elif is_state('input_select.tv_input_select', 'TV') %}
+         script.tvinputtv
+         {% endif %}
+
+  ###  MISE A JOUR OFF  ### 
+- alias: '[Input_select] PowerOff mis a jour par TV'
+  initial_state: on
+  trigger:    
+    - platform: state
+      entity_id: media_player.samsung_tv
+  condition:
+    - condition: state
+      entity_id: media_player.samsung_tv
+      state: 'off'        
+  action: 
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.tv_input_select   
+        option: PowerOff
+
+                 
+  ###  MISE A JOUR HDMI  ###         
+- alias: '[Input_select] mise a jour Hdmi 1'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  condition:     
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'ONE TV' 
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'ONE'      
+  action: 
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.tv_input_select   
+        option: HDMI 1   
+        
+- alias: '[Input_select] mise a jour Hdmi 2'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  condition:     
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'APPLE TV'      
+  action: 
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.tv_input_select   
+        option: HDMI 2   
+        
+- alias: '[Input_select] mise a jour Hdmi 3'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  condition: 
+    - condition: state
+      entity_id: input_select.harmony_hub
+      state: 'SMART TV'  
+  action: 
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.tv_input_select   
+        option: HDMI 3               
+        
+- alias: '[Input_select] mise a jour Hdmi 4'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+  condition: 
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PC TV'        
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PS4 TV'   
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'MOVIES TV'      
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'SWITCH TV' 
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'RETRO TV'  
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PC' 
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: '360 TV'         
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'PS4'   
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'MOVIES'      
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'SWITCH' 
+      - condition: state
+        entity_id: input_select.harmony_hub
+        state: 'RETRO'          
+  action: 
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.tv_input_select   
+        option: HDMI 4              
+  
+
+
+
+         
+
+
+           
+            
+
+
+
+

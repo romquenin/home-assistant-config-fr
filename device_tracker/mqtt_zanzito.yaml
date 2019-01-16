@@ -1,0 +1,14 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                    MQTT ZANZITO                        ##
+   ##                                                        ##
+   ############################################################
+
+- platform: mqtt_json
+  devices:
+    my_device: zanzito/roman_a5/location
+- platform: mqtt_json
+  devices:
+    my_device1: zanzito/roman_tab/location  
+  

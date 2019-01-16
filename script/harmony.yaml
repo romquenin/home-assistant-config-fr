@@ -1,0 +1,80 @@
+######################################################################################################################    
+#  HARMONY
+######################################################################################################################
+  ###  ZAPPITI  #####################################################################################################
+'1515353224614':
+  alias: '[Zappiti] power'
+  sequence:
+  - data:
+      command: PowerToggle
+      device: '50272082'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+'zappiti_power_on':
+  alias: '[Zappiti] on'
+  sequence:
+  - data:
+      command: PowerOn
+      device: '50272082'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+    
+'zappiti_power_off':
+  alias: '[Zappiti] off'
+  sequence:
+  - data:
+      command: PowerOff
+      device: '50272082'
+      entity_id: remote.harmony_hub
+    service: remote.send_command  
+
+  ###  ONE  #####################################################################################################
+'1515353304047':
+  alias: '[Xbox One] off'
+  sequence:
+  - data:
+      command: PowerOff
+      device: '36034949'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+'1515356098614':
+  alias: '[Xbox One] on'
+  sequence:
+  - data:
+      command: PowerON
+      device: '36034949'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+
+  ###  360  #####################################################################################################    
+'360_power_on':
+  alias: '[Xbox 360] on'
+  sequence:
+  - data:
+      command: PowerOn
+      device: '36034951'
+      entity_id: remote.harmony_hub
+    service: remote.send_command
+    
+'360_power_off':
+  alias: '[Xbox 360] off'
+  sequence:
+  - data:
+      command: PowerOff
+      device: '36034951'
+      entity_id: remote.harmony_hub
+    service: remote.send_command  
+
+
+    
+
+
+
+
+
+
+
+
+

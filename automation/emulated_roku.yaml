@@ -1,0 +1,41 @@
+############################################################
+##                                                        ##
+##                EMULATED ROKU LUMIÈRES                  ##
+##                                                        ##
+############################################################
+ 
+- alias: '[Emulated Roku] Play'
+  initial_state: on
+  trigger:
+    - platform: event
+      event_type: roku_command
+      event_data:
+        roku_usn: baQ5vE2xTNZGM8q5kWb7C2
+        type: keypress
+        key: Play
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_off
+    - service: remote.send_command
+      entity_id: remote.Harmony_Hub
+      data:
+        device: "50272082"
+        command: "Play"   
+     
+- alias: '[Emulated Roku] stop'
+  initial_state: on
+  trigger:
+    - platform: event
+      event_type: roku_command
+      event_data:
+        roku_usn: baQ5vE2xTNZGM8q5kWb7C2
+        type: keypress
+        key: Back
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_dim
+    - service: remote.send_command
+      entity_id: remote.Harmony_Hub
+      data:
+        device: "50272082"
+        command: "Back"   

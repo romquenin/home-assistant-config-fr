@@ -1,0 +1,52 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        DETENTE                         ##
+   ##                                                        ##
+   ############################################################
+  
+- name: Detente
+  entities:
+    light.bloom_1:    
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65
+    light.strip_1:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65
+    light.lamp_2:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65
+    light.lamp_1:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65   
+    light.living:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65    
+    light.spot_1:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65     
+    light.spot_2:
+      profile: reading        
+      state: on
+      transition: 6
+      brightness_pct: 65
+   
+
+
+   
+   
+
+
+   

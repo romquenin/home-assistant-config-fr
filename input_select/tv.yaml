@@ -1,0 +1,19 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                          TV                            ##
+   ##                                                        ##
+   ############################################################ 
+
+tv_input_select:
+  name: TELEVISION
+  options:
+    - PowerOff
+    - HDMI 1
+    - HDMI 2
+    - HDMI 3
+    - HDMI 4
+    - TV
+  initial: PowerOff
+  icon: mdi:theme-light-dark
+   

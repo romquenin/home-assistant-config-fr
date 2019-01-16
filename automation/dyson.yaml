@@ -1,0 +1,53 @@
+############################################################
+##                                                        ##
+##                         DYSON                          ##
+##                                                        ##
+############################################################
+         
+- alias: '[Dyson] Rotation On'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.fan
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.1516402506314
+     
+- alias: '[Dyson] Rotation Off'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.fan
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.1516402701204
+
+- alias: "[Dyson] mis a jour par Input Number"
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_number.dyson_fan_speed
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ (trigger.to_state.state | int) != (states.fan.salon.attributes.speed|int) }}'
+  action:
+    - service: fan.set_speed
+      entity_id: fan.salon
+      data_template:
+        speed: '{{states.input_number.dyson_fan_speed.state|int}}'
+
+- alias: "[Dyson] met a jour Input Number"
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: '{% if (states.fan.salon.attributes.speed|int) != (states.input_number.dyson_fan_speed.state|int) %}true{%endif%}'
+  action:
+    - service: input_number.set_value
+      entity_id:  input_number.dyson_fan_speed
+      data_template:
+        value: '{{states.fan.salon.attributes.speed|int}}'
+

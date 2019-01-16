@@ -1,0 +1,26 @@
+    
+   ############################################################
+   ##                                                        ##
+   ##                  PRESENCE TEMPLATE                     ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+  
+    cuisine_template:
+      friendly_name: 'Cuisine'
+      value_template: "{{ 'Détecté' if is_state('sensor.fibaro_system_fgms001zw5_motion_sensor_burglar', '8') else 'RAS' }}"
+      icon_template: "{{ 'mdi:run-fast' if is_state('sensor.fibaro_system_fgms001zw5_motion_sensor_burglar', '8') else 'mdi:run' }}" 
+
+    couloir_template:
+      friendly_name: 'Couloir'
+      value_template: "{{ 'Détecté' if is_state('binary_sensor.motion_sensor_158d0001d556ae', 'on') else 'RAS' }}"
+      icon_template: "{{ 'mdi:run-fast' if is_state('binary_sensor.motion_sensor_158d0001d556ae', 'on') else 'mdi:run' }}"       
+
+    entree_template:
+      friendly_name: 'Entrée'
+      value_template: "{{ 'Détecté' if is_state('sensor.aeotec_zw100_multisensor_6_burglar', '8') else 'RAS' }}"
+      icon_template: "{{ 'mdi:run-fast' if is_state('sensor.aeotec_zw100_multisensor_6_burglar', '8') else 'mdi:run' }}"            
+ 
+

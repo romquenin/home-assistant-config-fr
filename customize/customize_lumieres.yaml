@@ -1,0 +1,60 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       LUMIÈRES                         ##
+   ##                                                        ##
+   ############################################################
+         
+light.astro:
+  friendly_name: Astro
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+light.multi:
+  friendly_name: Multi
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+
+light.salon:
+  friendly_name: Salon
+  icon: mdi:sofa
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.cuisine:
+  friendly_name: Cuisine
+  icon: mdi:fridge
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+light.chambre:
+  icon: mdi:hotel
+  friendly_name: Chambre
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.entree:
+  icon: mdi:door
+  friendly_name: Entrée
+  custom_ui_state_card: state-card-custom-ui
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+ 
+light.gateway_light_7811dcb7aac9:
+  friendly_name: Gateway      
+  custom_ui_state_card: state-card-custom-ui
+  state_card_mode: single-line
+  slider_theme:
+    min: 0
+    max: 100
+    pin: true
+    off_when_min: false
+    report_when_not_changed: false   
+

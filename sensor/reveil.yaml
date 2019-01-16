@@ -1,0 +1,17 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         RÉVEIL                         ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+    alarmclock_wd_time_template:
+      friendly_name: 'Réglage du réveil'
+      icon_template: "{{ 'mdi:alarm' if is_state('input_boolean.alarmclock_wd_enabled', 'on') else 'mdi:alarm-off' }}"
+      value_template: '{{ "%0.02d:%0.02d" | format(states("input_number.alarmclock_wd_hour") | int, states("input_number.alarmclock_wd_minute") | int) }}'
+        
+   
+
+ 

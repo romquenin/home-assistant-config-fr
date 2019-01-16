@@ -1,0 +1,15 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                 NETATMO STATION METEO                  ##
+   ##                                                        ##
+   ############################################################
+      
+
+api_key: !secret api_netatmo
+secret_key: !secret secret_netatmo
+username: romquenin@gmail.com
+password: !secret password_netatmo
+discovery: True
+
+   

@@ -1,0 +1,30 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         SWITCH                         ##
+   ##                                                        ##
+   ############################################################
+
+  ###  SONOFF  ###
+switch.sonoff3:
+  friendly_name: Switch
+switch.sonoff4:
+  friendly_name: PS4
+switch.sonoff1:
+  friendly_name: Apple TV
+switch.sonoff2:
+  friendly_name: Chromecast
+
+  ###  TPLINK  ###  
+switch.tplink_1:
+  friendly_name: Tp-Link 1    
+switch.tplink_2:
+  friendly_name: Tp-Link 2      
+
+  ###  WOL  ###
+switch.wake_on_lan:
+  friendly_name: PC
+  custom_ui_state_card: state-card-custom-ui
+   
+
+  

@@ -1,0 +1,48 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                        ALARME                          ##
+   ##                                                        ##
+   ############################################################
+
+- name: Alarm
+  entities:
+    light.gateway_light_7811dcb7aac9:        
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]
+    light.bloom_1:    
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]
+    light.strip_1:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]
+    light.lamp_2:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]
+    light.lamp_1:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]  
+    light.lamp_3:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]        
+    light.living:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0] 
+    light.spot_1:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]   
+    light.spot_2:
+      state: on
+      brightness_pct: 100
+      rgb_color: [255,0,0]   
+     
+
+      

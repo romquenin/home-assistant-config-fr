@@ -1,0 +1,52 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                           DIM                          ##
+   ##                                                        ##
+   ############################################################
+      
+- name: Dim
+  entities:
+    light.bloom_1:    
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50
+    light.strip_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50
+    light.lamp_2:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50
+    light.lamp_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50      
+    light.living:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50      
+    light.spot_1:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50       
+    light.spot_2:
+      profile: relax
+      state: on
+      transition: 8
+      brightness_pct: 50
+ 
+
+
+   
+   
+
+
+   
