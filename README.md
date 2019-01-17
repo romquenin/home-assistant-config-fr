@@ -250,6 +250,111 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 
 <p align="right"><a href="#top" title="Back to top">🔝</a></p>
 
+### Panel Custom 🌡
+
+- **Ajouter de nouvelles fonctionnalités** des pieces salon, chambre, cuisine et salle de bain.
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/gif/panel.gif" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+
+- **Floorplan** des pieces salon, chambre, cuisine et salle de bain.
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/floorplan.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+- **Hass Custom Alarm** et qualité de l'air du salon.
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/d.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+- **TasmoAdmin**, le système d'automatisation Tado° étant tellement performant, tous mes réglages sont fait sur l'application mobile officielle. Le changement de température de la chaudière principale et de chaque radiateurs reste toutefois possible depuis l'UI. 
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/k.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+- **Grafana** des pieces salon, chambre, cuisine et salle de bain.
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/h.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+- **Cloud9 IDE** et qualité de l'air du salon.
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/j.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+- **Hass.io Addons**, le système d'automatisation Tado° étant tellement performant, tous mes réglages sont fait sur l'application mobile officielle. Le changement de température de la chaudière principale et de chaque radiateurs reste toutefois possible depuis l'UI. 
+
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/i.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Informations pértinentes.</strong></p>
+        </figcaption>
+    </figure>
+</div>
+
+<p align="right"><a href="#top" title="Back to top">🔝</a></p>
+
+
+
 ## Setup 🔩
 
 <div align="center">
