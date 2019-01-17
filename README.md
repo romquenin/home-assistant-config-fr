@@ -100,11 +100,10 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/01.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Page d'acceuil <a href="ui-lovelace.yaml">
+            <p><strong>Interface utilisateur Lovelace <a href="ui-lovelace.yaml">
         </figcaption>
     </figure>
 </div>
-
 
 <p align="right"><a href="#top" title="Back to top">🔝</a></p>
 
