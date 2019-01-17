@@ -94,18 +94,6 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **En tant que couple** nous voulons pouvoir unifier simplement nos appareils connectés sur la même interface, ainsi qu'obtenir un aperçu rapide des prévisions météorologiques et de la qualité de l'air dans l'appartement grâce à des interfaces simples à utiliser.
 
 
-
-<div align="center">
-    <figure>
-        <div>
-            <img src="www/images/capture/01.png" alt="Lovelace animation" title="Vues">
-        </div>
-        <figcaption>
-            <p><strong>Page d'acceuil<a href="ui-lovelace.yaml">
-        </figcaption>
-    </figure>
-</div>
-
 <p align="right"><a href="#top" title="Back to top">🔝</a></p>
 
 ## Principales caractéristiques ✅
