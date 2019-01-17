@@ -252,8 +252,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 
 ### Panel Custom 🌡
 
-- **Ajouter de nouvelles fonctionnalités** des pieces salon, chambre, cuisine et salle de bain.
-
+- **Ajouter de nouvelles fonctionnalités**, panel_custom vous permet d’ajouter des panneaux à votre interface Home Assistant. Les panneaux sont répertoriés dans la barre latérale si vous le souhaitez et peuvent être hautement personnalisés.
 
 <div align="center">
     <figure>
@@ -267,7 +266,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 </div>
 
 
-- **Floorplan** des pieces salon, chambre, cuisine et salle de bain.
+- **Floorplan** est une extension pour Home Assistant qui simplifie le contrôle de votre maison. Plutôt que de contrôler votre installation via les contrôles de Home Assistant, vous pouvez utiliser un plan de votre maison et interagir avec celui-ci.
 
 
 <div align="center">
@@ -281,7 +280,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Hass Custom Alarm** et qualité de l'air du salon.
+- **Hass Custom Alarm**. Les systèmes d’alarme domotique permettent un pilotage centralisé des équipements. Ils disposent d’une interface web et d’une application smartphone qui rendent les différentes fonctionnalités de votre installation accessibles n’importe où et n’importe quand.
 
 
 <div align="center">
@@ -295,7 +294,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **TasmoAdmin**, le système d'automatisation Tado° étant tellement performant, tous mes réglages sont fait sur l'application mobile officielle. Le changement de température de la chaudière principale et de chaque radiateurs reste toutefois possible depuis l'UI. 
+- **TasmoAdmin** (anciennement SonWEB) est une interface Web d’administration permettant de gérer de manière centralisée tous vos périphériques flashés Sonoff-Tasmota. Quelques unes de ses caractéristiques:
 
 
 <div align="center">
@@ -323,7 +322,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Cloud9 IDE** et qualité de l'air du salon.
+- **Cloud9 IDE**, ce module complémentaire est une version intégrée de l'EDI Cloud9, conçu pour être utilisé avec Home Assistant. Il est conçu pour vous permettre de configurer et d'éditer la configuration de votre Home Assistant directement à partir de l'interface Web à l'aide d'un éditeur utile, joli et complet.
 
 
 <div align="center">
@@ -337,7 +336,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Hass.io Addons**, le système d'automatisation Tado° étant tellement performant, tous mes réglages sont fait sur l'application mobile officielle. Le changement de température de la chaudière principale et de chaque radiateurs reste toutefois possible depuis l'UI. 
+- **Hass.io Addons**, Les modules complémentaires de Hass.io permettent à l'utilisateur d'étendre la fonctionnalité autour de Home Assistant. Il peut s’agir d’exécuter une application que Home Assistant peut intégrer (comme un courtier MQTT) ou de partager la configuration via Samba pour une édition facile à partir d’autres ordinateurs. Les modules complémentaires peuvent être configurés via le panneau Hass.io dans Home Assistant.
 
 
 <div align="center">
