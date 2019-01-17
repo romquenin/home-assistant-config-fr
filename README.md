@@ -264,7 +264,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 </div>
 
 
-## Floorplan
+### Floorplan
 
 - **Floorplan** est une extension pour Home Assistant qui simplifie le contrôle de votre maison. Plutôt que de contrôler votre installation via les contrôles de Home Assistant, vous pouvez utiliser un plan de votre maison et interagir avec celui-ci.
 
@@ -282,7 +282,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 </div>
 
 
-## Hass Custom Alarm
+### Hass Custom Alarm
 
 - **Hass Custom Alarm** les systèmes d’alarme domotique permettent un pilotage centralisé des équipements. Ils disposent d’une interface web et d’une application smartphone qui rendent les différentes fonctionnalités de votre installation accessibles n’importe où et n’importe quand.
 
@@ -299,7 +299,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 </div>
 
 
-## TasmoAdmin
+### TasmoAdmin
 - **TasmoAdmin** (anciennement SonWEB) est une interface Web d’administration permettant de gérer de manière centralisée tous vos périphériques flashés Sonoff-Tasmota. Quelques unes de ses caractéristiques:
 
 
@@ -313,7 +313,9 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
         </figcaption>
     </figure>
 </div>
-## Grafana
+
+### Grafana
+
 - **Grafana** est un logiciel libre sous licence Apache 2.0 qui permet la visualisation et la mise en forme de données métriques. Il permet de réaliser des tableaux de bord et des graphiques depuis plusieurs sources dont des bases de données de série temporelle comme Graphite, InfluxDB et OpenTSDB.
 
 
@@ -327,7 +329,9 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
         </figcaption>
     </figure>
 </div>
-## Cloud9 IDE
+
+### Cloud9 IDE
+
 - **Cloud9 IDE** ce module complémentaire est une version intégrée de l'EDI Cloud9, conçu pour être utilisé avec Home Assistant. Il est conçu pour vous permettre de configurer et d'éditer la configuration de votre Home Assistant directement à partir de l'interface Web à l'aide d'un éditeur utile, joli et complet.
 
 
@@ -341,7 +345,9 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
         </figcaption>
     </figure>
 </div>
-## Hass.io
+
+### Hass.io
+
 - **Hass.io** Les modules complémentaires de Hass.io permettent à l'utilisateur d'étendre la fonctionnalité autour de Home Assistant. Il peut s’agir d’exécuter une application que Home Assistant peut intégrer (comme un courtier MQTT) ou de partager la configuration via Samba pour une édition facile à partir d’autres ordinateurs. Les modules complémentaires peuvent être configurés via le panneau Hass.io dans Home Assistant.
 
 
