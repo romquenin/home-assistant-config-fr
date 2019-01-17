@@ -28,14 +28,14 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](htt
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/gauge.PNG" alt="Security group (Dark theme)" title="Security (Dark theme)" width="200">
-            <img src="www/images/capture/bouttons.PNG" alt="Weather group" title="Weather" width="200">
-            <img src="www/images/capture/reveil.PNG" alt="Battery Levels group (Dark theme)" title="Battery Levels (Dark theme)" width="200">          
-            <img src="www/images/capture/temp.PNG" alt="Climate Control group" title="Climate Control" width="200">
-            <img src="www/images/capture/conso.PNG" alt="Ceiling group" title="Ceiling" width="200">
-            <img src="www/images/capture/systeme.PNG" alt="Atmospheric Safety group" title="Atmospheric Safety" width="200">
-            <img src="www/images/capture/alarme.PNG" alt="Actions group" title="Actions" width="200">            
-            <img src="www/images/capture/tele.PNG" alt="Public Transit group" title="Public Transit schedules" width="200">
+            <img src="www/images/capture/01b.png" alt="Security group (Dark theme)" title="Security (Dark theme)" width="200">
+            <img src="www/images/capture/02b.png" alt="Weather group" title="Weather" width="200">
+            <img src="www/images/capture/03b.png" alt="Battery Levels group (Dark theme)" title="Battery Levels (Dark theme)" width="200">          
+            <img src="www/images/capture/04b.png" alt="Climate Control group" title="Climate Control" width="200">
+            <img src="www/images/capture/05b.png" alt="Ceiling group" title="Ceiling" width="200">
+            <img src="www/images/capture/06b.png" alt="Atmospheric Safety group" title="Atmospheric Safety" width="200">
+            <img src="www/images/capture/07b.png" alt="Actions group" title="Actions" width="200">            
+            <img src="www/images/capture/08b.png" alt="Public Transit group" title="Public Transit schedules" width="200">
         </div>
         <figcaption>
             <p><strong>Sensor <a href="sensors.yaml"><code>sensors.yaml</code></a>.</strong></p>
