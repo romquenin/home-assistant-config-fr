@@ -246,9 +246,14 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 
 <p align="right"><a href="#top" title="Back to top">🔝</a></p>
 
+
+
 ### Panel Custom 🌡
 
+
 - **Ajouter de nouvelles fonctionnalités** panel_custom vous permet d’ajouter des panneaux à votre interface Home Assistant. Les panneaux sont répertoriés dans la barre latérale si vous le souhaitez et peuvent être hautement personnalisés.
+
+
 
 <div align="center">
     <figure>
@@ -262,7 +267,10 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 </div>
 
 
+
+
 - **Floorplan** est une extension pour Home Assistant qui simplifie le contrôle de votre maison. Plutôt que de contrôler votre installation via les contrôles de Home Assistant, vous pouvez utiliser un plan de votre maison et interagir avec celui-ci.
+
 
 
 <div align="center">
@@ -275,6 +283,9 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
         </figcaption>
     </figure>
 </div>
+
+
+
 
 - **Hass Custom Alarm** les systèmes d’alarme domotique permettent un pilotage centralisé des équipements. Ils disposent d’une interface web et d’une application smartphone qui rendent les différentes fonctionnalités de votre installation accessibles n’importe où et n’importe quand.
 
