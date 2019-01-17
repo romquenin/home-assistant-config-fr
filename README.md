@@ -243,7 +243,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/14.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -260,7 +260,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/gif/panel.gif" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -275,7 +275,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/floorplan.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -289,7 +289,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/d.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -303,7 +303,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/k.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -317,7 +317,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/h.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -331,7 +331,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/j.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
@@ -345,7 +345,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
             <img src="www/images/capture/i.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
-            <p><strong>Informations pértinentes.</strong></p>
+            <p><strong></strong></p>
         </figcaption>
     </figure>
 </div>
