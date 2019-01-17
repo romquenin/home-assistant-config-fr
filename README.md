@@ -210,7 +210,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/scenes.PNG" alt="Actions group" title="Actions" width="325">
+            <img src="www/images/capture/scene.PNG" alt="Actions group" title="Actions" width="325">
         </div>
         <figcaption>
             <p><strong>Scènes.</strong></p>
