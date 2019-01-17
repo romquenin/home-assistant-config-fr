@@ -252,7 +252,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 
 ### Panel Custom 🌡
 
-- **Ajouter de nouvelles fonctionnalités**, panel_custom vous permet d’ajouter des panneaux à votre interface Home Assistant. Les panneaux sont répertoriés dans la barre latérale si vous le souhaitez et peuvent être hautement personnalisés.
+- **Ajouter de nouvelles fonctionnalités** panel_custom vous permet d’ajouter des panneaux à votre interface Home Assistant. Les panneaux sont répertoriés dans la barre latérale si vous le souhaitez et peuvent être hautement personnalisés.
 
 <div align="center">
     <figure>
@@ -280,7 +280,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Hass Custom Alarm**. Les systèmes d’alarme domotique permettent un pilotage centralisé des équipements. Ils disposent d’une interface web et d’une application smartphone qui rendent les différentes fonctionnalités de votre installation accessibles n’importe où et n’importe quand.
+- **Hass Custom Alarm** les systèmes d’alarme domotique permettent un pilotage centralisé des équipements. Ils disposent d’une interface web et d’une application smartphone qui rendent les différentes fonctionnalités de votre installation accessibles n’importe où et n’importe quand.
 
 
 <div align="center">
@@ -308,7 +308,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Grafana** des pieces salon, chambre, cuisine et salle de bain.
+- **Grafana** est un logiciel libre sous licence Apache 2.0 qui permet la visualisation et la mise en forme de données métriques. Il permet de réaliser des tableaux de bord et des graphiques depuis plusieurs sources dont des bases de données de série temporelle comme Graphite, InfluxDB et OpenTSDB.
 
 
 <div align="center">
@@ -322,7 +322,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Cloud9 IDE**, ce module complémentaire est une version intégrée de l'EDI Cloud9, conçu pour être utilisé avec Home Assistant. Il est conçu pour vous permettre de configurer et d'éditer la configuration de votre Home Assistant directement à partir de l'interface Web à l'aide d'un éditeur utile, joli et complet.
+- **Cloud9 IDE** ce module complémentaire est une version intégrée de l'EDI Cloud9, conçu pour être utilisé avec Home Assistant. Il est conçu pour vous permettre de configurer et d'éditer la configuration de votre Home Assistant directement à partir de l'interface Web à l'aide d'un éditeur utile, joli et complet.
 
 
 <div align="center">
@@ -336,7 +336,7 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
     </figure>
 </div>
 
-- **Hass.io Addons**, Les modules complémentaires de Hass.io permettent à l'utilisateur d'étendre la fonctionnalité autour de Home Assistant. Il peut s’agir d’exécuter une application que Home Assistant peut intégrer (comme un courtier MQTT) ou de partager la configuration via Samba pour une édition facile à partir d’autres ordinateurs. Les modules complémentaires peuvent être configurés via le panneau Hass.io dans Home Assistant.
+- **Hass.io Addons** Les modules complémentaires de Hass.io permettent à l'utilisateur d'étendre la fonctionnalité autour de Home Assistant. Il peut s’agir d’exécuter une application que Home Assistant peut intégrer (comme un courtier MQTT) ou de partager la configuration via Samba pour une édition facile à partir d’autres ordinateurs. Les modules complémentaires peuvent être configurés via le panneau Hass.io dans Home Assistant.
 
 
 <div align="center">
