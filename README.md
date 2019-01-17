@@ -16,7 +16,7 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](htt
     <p><strong>N'hésite pas a <a href="#" title="star">⭐️</a> mon repo si tu le trouves utile! 😃</strong></p>
     <figure>
         <div>
-            <img src="www/images/capture/lovelace.gif" alt="Lovelace animation" title="Vues">
+            <img src="www/images/gif/uilovelace.gif" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
             <p><strong>Interface utilisateur Lovelace <a href="ui-lovelace.yaml">
@@ -94,6 +94,18 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **En tant que couple** nous voulons pouvoir unifier simplement nos appareils connectés sur la même interface, ainsi qu'obtenir un aperçu rapide des prévisions météorologiques et de la qualité de l'air dans l'appartement grâce à des interfaces simples à utiliser.
 
 
+
+<div align="center">
+    <figure>
+        <div>
+            <img src="www/images/capture/01.png" alt="Lovelace animation" title="Vues">
+        </div>
+        <figcaption>
+            <p><strong>Page d'acceuil<a href="ui-lovelace.yaml">
+        </figcaption>
+    </figure>
+</div>
+
 <p align="right"><a href="#top" title="Back to top">🔝</a></p>
 
 ## Principales caractéristiques ✅
@@ -106,11 +118,11 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **Controle climatique de la chaleur avec Tado°**, le système d'automatisation Tado° étant tellement performant, tous mes réglages sont fait sur l'application mobile officielle. Le changement de température de la chaudière principale et de chaque radiateurs reste toutefois possible depuis l'UI. 
 
 
+
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/climat1.PNG" alt="Climate Control group" title="Climate Control" width="325">
-            <img src="www/images/capture/temp.PNG" alt="Humidity notification" title="Humidity notification" width="325">
+            <img src="www/images/capture/04.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
             <p><strong>Contrôle du climat et suivi des températures.</strong></p>
@@ -125,11 +137,11 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **Statut et prévisions faciles à lire** avec [Custom animated weather card for Lovelace](https://community.home-assistant.io/t/custom-animated-weather-card-for-lovelace/58338) présentation des données réellement importantes.
 - **Surveillance de la qualité de l'air extérieur** avec des niveaux numériques et une classification conviviale pour l'ozone, le monoxyde de carbone, le dioxyde d'azote, le dioxyde de soufre, les particules de 2,5 µm et la lumière ultraviolette.
 
+
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/meteo.PNG" alt="Today's Weather group" title="Today's Weather" width="325">
-            <img src="www/images/capture/air.PNG" alt="Weekly Forecast group" title="Weekly Forecast" width="325">
+            <img src="www/images/capture/05.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
             <p><strong>Météo du jour et rapport sur la qualité de l'air.</strong></p>
@@ -150,12 +162,13 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **Veilleuses basées sur le mouvement**, lorsqu'un mouvement est détecté la nuit, par exemple, lorsque quelqu'un se réveille pour aller aux toilettes.
 - Voir [`/lights/`](lights) et [`/automations/`](automations).
 
+
+
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/lumieres.PNG" alt="Lounge group" title="Lounge lights" width="325">
-            <img src="www/images/capture/pieces.PNG" alt="Weekly Forecast group" title="Weekly Forecast" width="325">
-        </div>                      
+            <img src="www/images/capture/09.png" alt="Lovelace animation" title="Vues">
+        </div>
         <figcaption>
             <p><strong>Contrôle des lumières.</strong></p>
         </figcaption>
@@ -172,11 +185,11 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **Détection de porte ouverte**, savoir si la porte d'entrée vient de s'ouvrir.
 - **Activation de l'alarme** l'alarme activée, si un malandrain venait à ouvrir votre porte d'entrée la détection de son ouverture vous permettra de déclencher une serie d'automatisation son et lumières qui lui feront regretter d'être passé.
 
+
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/alarme.PNG" alt="Presence group" title="Presence" width="325">
-            <img src="www/images/capture/presence.PNG" title="Security Status" width="325">
+            <img src="www/images/capture/13.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
             <p><strong>Clavier de l'alarme, détecteurs et réglages.</strong></p>
@@ -223,11 +236,11 @@ Tu trouveras sur mon repo une configuration de Home Assistant complète et docum
 - **Surveillance de l'état du nas Synology** pour la charge cpu, l'utilisation de la mémoire, l'upspeed, le downspeed et l'utilisation du disque.
 - **Surveillance du statut de Home Assistant** pour la charge cpu, l'utilisation de la RAM, l'utilisation du disque, la version, la durée d'execution du systeme, l'heure actuelle... 🤓
 
+
 <div align="center">
     <figure>
         <div>
-            <img src="www/images/capture/systeme.PNG" alt="System group" title="System" width="325">
-            <img src="www/images/capture/summary.PNG" alt="Public Transit group" title="Public Transit" width="325">
+            <img src="www/images/capture/14.png" alt="Lovelace animation" title="Vues">
         </div>
         <figcaption>
             <p><strong>Informations pértinentes.</strong></p>
