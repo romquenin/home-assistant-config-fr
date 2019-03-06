@@ -18,6 +18,9 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](htt
         <div>
             <img src="www/images/gif/uilovelace.gif" alt="Lovelace animation" title="Vues">
         </div>
+        <div>
+            <img src="www/images/gif/uilovelace.gif" alt="Lovelace animation" title="Vues">
+        </div>
         <figcaption>
             <p><strong>Interface utilisateur Lovelace <a href="ui-lovelace.yaml">
  <code>Lovelace.yaml</code></a>.</strong></strong></p>
