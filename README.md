@@ -549,4 +549,4 @@ Merci pour votre dévouement, votre gentillesse et vos précieuses connaissances
 [link-license]:LICENSE.txt
 [link-release]:https://github.com/renemarc/home-assistant-config/releases
 [link-travis-ci]:https://travis-ci.org/renemarc/home-assistant-config
-[link-twitter]:https://twitter.com/intent/tweet?text=Automate%20your%20home%20into%20a%20smart-looking%20place!&url=https://github.com/renemarc/home-assistant-config&via=renemarc&hashtags=HomeAssistant,SmartHome,ConnectedHome,HomeAutomation,IoT
+[link-twitter]:https://twitter.com/par_artificiels=https://github.com/renemarc/home-assistant-config&via=renemarc&hashtags=HomeAssistant,SmartHome,ConnectedHome,HomeAutomation,IoT
