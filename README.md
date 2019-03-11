@@ -542,11 +542,10 @@ Merci pour votre dévouement, votre gentillesse et vos précieuses connaissances
 [img-travis-ci]:https://img.shields.io/travis/renemarc/home-assistant-config.svg?branch=master&logo=travis
 [img-twitter]:https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=86400
 
-[link-board]:https://github.com/renemarc/home-assistant-config/projects/1
-[link-ha-version]:https://github.com/home-assistant/home-assistant/tree/0.84.3
+[link-board]:https://github.com/romquenin/home-assistant-config-fr
+[link-ha-version]:https://github.com/home-assistant/home-assistant/tree/0.89.1
 [link-hassio]:https://home-assistant.io/hassio/
-[link-issues]:https://github.com/renemarc/home-assistant-config/issues
+[link-issues]:https://github.com/romquenin/home-assistant-config-fr
 [link-license]:LICENSE.txt
-[link-release]:https://github.com/renemarc/home-assistant-config/releases
-[link-travis-ci]:https://travis-ci.org/renemarc/home-assistant-config
+[link-release]:https://github.com/romquenin/home-assistant-config-fr
 [link-twitter]:https://twitter.com/par_artificiels
