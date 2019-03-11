@@ -12,6 +12,16 @@
 
 Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](https://home-assistant.io/hassio/) sur une [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/) pour un T3, offrant des automatisations pour la lumière, le climat, la sécurité et les appareils électroniques grâce à des commandes vocales et une interface intuitive.
 
+<div align="center">
+    <p><strong>N'hésite pas a <a href="#" title="star">⭐️</a> mon repo si tu le trouves utile! 😃</strong></p>
+    <figure>     
+        <figcaption>
+            <p><strong>Interface utilisateur Lovelace <a href="ui-lovelace.yaml">
+ <code>Lovelace.yaml</code></a>.</strong></strong></p>
+        </figcaption>
+    </figure>
+</div>
+
 
 [![Fibonacci RMI Java EE](https://i.ytimg.com/vi/3WUhMpWf12c/maxresdefault.jpg)](https://www.youtube.com/watch?v=3WUhMpWf12c&t=1s "La domotique")
 
