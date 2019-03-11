@@ -522,7 +522,7 @@ Kudos pour:
 - **La horde de développeurs volontaires** de tous les composants et add-ons.
 - **La [communautée dynamique](https://community.home-assistant.io)**, toujours prête à aider et à partager des échantillons de code.
 - **La chaine YouTube de [BRUH Automation](https://www.youtube.com/c/bruhautomation1)**, Les vidéos de Ben m'ont rendu accro à Home Assistant.
-- **Le Github de [René-Marc Simmard](https://github.com/renemarc/home-assistant-config)**, que j'ai copié, traduit et adapté pour mon repo. Merci pour le partage René-Marc.
+- **Le Github de [René-Marc Simmard](https://github.com/renemarc/home-assistant-config)**, que j'ai traduit et adapté pour mon repo. Merci pour le partage René-Marc.
 
 Merci pour votre dévouement, votre gentillesse et vos précieuses connaissances. À votre santé! 🍻😃
 
