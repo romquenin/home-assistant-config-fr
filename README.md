@@ -16,6 +16,8 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](htt
     <p><strong>N'hésite pas a <a href="#" title="star">⭐️</a> mon repo si tu le trouves utile! 😃</strong></p>
     <figure>
         <div>
+[![Alt text](https://img.youtube.com/vi/VID/0.jpg)](https://youtu.be/3WUhMpWf12c?v=VID)
+          
 https://youtu.be/3WUhMpWf12c
         </div>
         <div>
