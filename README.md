@@ -15,18 +15,12 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hass.io](htt
 <div align="center">
     <p><strong>N'hésite pas a <a href="#" title="star">⭐️</a> mon repo si tu le trouves utile! 😃</strong></p>
     <figure>     
-        <figcaption>
-            <p><strong>Interface utilisateur Lovelace <a href="ui-lovelace.yaml">
- <code>Lovelace.yaml</code></a>.</strong></strong></p>
-        </figcaption>
-    </figure>
 </div>
 
 
 [![Fibonacci RMI Java EE](https://i.ytimg.com/vi/3WUhMpWf12c/maxresdefault.jpg)](https://www.youtube.com/watch?v=3WUhMpWf12c&t=1s "La domotique")
 
 <div align="center">
-    <p><strong>N'hésite pas a <a href="#" title="star">⭐️</a> mon repo si tu le trouves utile! 😃</strong></p>
     <figure>     
         <div>
             <img src="www/images/gif/uilovelace.gif" alt="Lovelace animation" title="Vues">
