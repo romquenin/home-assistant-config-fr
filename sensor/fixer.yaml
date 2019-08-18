@@ -5,7 +5,7 @@
    ##                                                        ##
    ############################################################
 
-- platform: fixer_hour
+- platform: fixer
   api_key: !secret fixer_api
   target: !secret fixer_target
   name: Taux de change
