@@ -34,7 +34,6 @@
   name: CPU Temp
   scan_interval: 60
   unit_of_measurement: °C
-  icon_template: mdi:thermometer
   command: >-
     if [ -e /sys/class/thermal/thermal_zone0/temp ]
       then cat /sys/class/thermal/thermal_zone0/temp
