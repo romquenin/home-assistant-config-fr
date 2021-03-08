@@ -1,0 +1,29 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                        CAMERA YI                       ##
+   ##                                                        ##
+   ############################################################
+
+- platform: ffmpeg
+  name: yi_hack_v4
+  input: !secret yi_hack_v4
+
+- platform: ffmpeg
+  name: dafang_hack
+  input: !secret dafang_hack
+
+
+   ############################################################
+   ##                                                        ##
+   ##                        YR METEOGRAM                    ##
+   ##                                                        ##
+   ############################################################
+
+#YR METEOGRAM
+- platform: generic
+  name: Weather
+  still_image_url: https://www.yr.no/place/Frankrike/Provence-Alpes-C%C3%B4te_d%E2%80%99Azur/Saint-Tropez/meteogram.svg
+  content_type: 'image/svg+xml'  
+
+

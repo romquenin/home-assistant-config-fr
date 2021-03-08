@@ -1,0 +1,52 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        DETENTE                         ##
+   ##                                                        ##
+   ############################################################
+  
+- name: Salon Relax
+  entities:
+    light.bloom_1:    
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57
+    light.strip_2:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57
+    light.strip_3:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57      
+    light.lamp_2:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57
+    light.lamp_1:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57    
+    light.spot_1:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57     
+    light.spot_2:
+      profile: relax        
+      state: on
+      transition: 6
+      brightness_pct: 57
+   
+
+
+   
+   
+
+
+   

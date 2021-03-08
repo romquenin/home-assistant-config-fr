@@ -1,0 +1,83 @@
+  - url: /hacsfiles/apexcharts-card/apexcharts-card.js
+    type: module 
+  - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+    type: module         
+  - url: /hacsfiles/bar-card/bar-card.js
+    type: module 
+  - url: /hacsfiles/battery-state-card/battery-state-card.js
+    type: module    
+  - url: /hacsfiles/button-card/button-card.js
+    type: module
+  - url: /hacsfiles/lovelace-card-mod/card-mod.js
+    type: module    
+  - url: /hacsfiles/lovelace-card-tools/card-tools.js
+    type: module       
+  - url: /hacsfiles/color-lite-card/color-lite-card.js
+    type: module
+  - url: /hacsfiles/content-card-linky/content-card-linky.js  
+    type: js        
+  - url: /hacsfiles/cover-element/cover-element-bundle.js
+    type: module  
+  - url: /hacsfiles/config-template-card/config-template-card.js
+    type: module
+  - url: /hacsfiles/decluttering-card/decluttering-card.js
+    type: module               
+  - url: /hacsfiles/lovelace-fold-entity-row/fold-entity-row.js
+    type: module      
+  - url: /hacsfiles/gauge-card/gauge-card.js
+    type: module    
+  - url: /hacsfiles/ha-card-weather-conditions/ha-card-weather-conditions.js 
+    type: module
+  - url: /hacsfiles/lovelace-hui-element/hui-element.js
+    type: module   
+  - url: /hacsfiles/lovelace-layout-card/layout-card.js
+    type: module 
+  - url: /hacsfiles/light-popup-card/light-popup-card.js
+    type: module            
+  - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
+    type: module   
+  - url: /hacsfiles/media_player-popup-card/media_player-popup-card.js
+    type: module           
+  - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+    type: module   
+  - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+    type: module 
+  - url: /hacsfiles/now-playing-card/now-playing-card.js
+    type: module      
+  - url: /hacsfiles/paper-buttons-row/paper-buttons-row.js
+    type: module     
+  - url: /hacsfiles/radial-menu/radial-menu.js
+    type: module  
+  - url: /hacsfiles/restriction-card/restriction-card.js
+    type: module 
+  - url: /hacsfiles/rgb-light-card/card.js   
+    type: js  
+  - url: /hacsfiles/scheduler-card/scheduler-card.js
+    type: module      
+  - url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
+    type: module
+  - url: /hacsfiles/lovelace-state-switch/state-switch.js
+    type: module          
+  - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+    type: module     
+  - url: /hacsfiles/stack-in-card/stack-in-card.js
+    type: module
+  - url: /hacsfiles/swipe-card/swipe-card.js
+    type: module  
+  - url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js
+    type: module    
+  - url: /hacsfiles/transmission-card/transmission-card.js
+    type: module      
+  - url: /hacsfiles/upcoming-media-card/upcoming-media-card.js
+    type: js
+  - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
+    type: js    
+  - url: /hacsfiles/weather-card/weather-card.js
+    type: module
+         
+  - url: /browser_mod.js
+    type: module
+### FONTS ##############
+  - url: 'https://fonts.googleapis.com/css?family=Quicksand'
+    type: css
+

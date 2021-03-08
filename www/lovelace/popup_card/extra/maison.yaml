@@ -1,0 +1,57 @@
+                - type: custom:mini-media-player
+                  entity: media_player.maison
+                  artwork: cover
+                  power_color: true
+                  group: true
+                  source: icon
+                  info: short
+                  hide:
+                    volume: true
+                - type: entities
+                  entities:
+                    - type: custom:mini-media-player
+                      entity: media_player.hub
+                      group: true
+                      hide:
+                        controls: true
+                        power: true
+                        icon: true
+                        progress: true
+                        info: true
+                    - type: custom:mini-media-player
+                      entity: media_player.salon
+                      group: true
+                      hide:
+                        controls: true
+                        power: true
+                        icon: true
+                        progress: true
+                        info: true
+                    - type: custom:mini-media-player
+                      entity: media_player.chambre
+                      group: true
+                      hide:
+                        controls: true
+                        power: true
+                        icon: true
+                        progress: true
+                        info: true
+                - type: conditional
+                  conditions:
+                    - entity: media_player.chromecast_audio
+                      state_not: "unavailable"
+                    - entity: media_player.chromecast_audio
+                      state_not: "off"
+                  card:
+                    type: custom:mini-media-player
+                    entity: media_player.chromecast_audio
+                    group: true
+                    hide:
+                      controls: true
+                      power: true
+                      icon: true
+                      progress: true
+                      info: true
+
+
+

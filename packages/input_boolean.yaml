@@ -1,0 +1,276 @@
+
+################################################################
+##                        INPUT BOOLEAN                       ##
+################################################################
+input_boolean:
+     ############################################################
+     ##                 SAMSUNG ENERGY MODE                    ##
+     ############################################################   
+  tv_power_switch:
+    name: TV
+     ############################################################
+     ##                       ZAPPITI                          ##
+     ############################################################ 
+  xbox_power_switch:
+    name: Xbox Series X
+     ############################################################
+     ##                 SAMSUNG ENERGY MODE                    ##
+     ############################################################   
+  samsungtv_mode_switch:
+    name: Samsung TV Energy Mode
+     ############################################################
+     ##                       ZAPPITI                          ##
+     ############################################################ 
+  zappiti_power_switch:
+    name: Zappiti
+     ############################################################
+     ##                  EPSON PROJECTEUR                      ##
+     ############################################################    
+  projecteur_power_switch:
+    name: Vidéoprojecteur
+     ############################################################
+     ##                  TOILE PROJECTEUR                      ##
+     ############################################################    
+  toile_power_switch:
+    name: Toile projection 
+     ############################################################
+     ##                      WEATHER                           ##
+     ############################################################  
+  weather:  
+
+
+################################################################
+##                        AUTOMATION                          ##
+################################################################
+automation:
+    ############################################################
+    ##                            TV                          ##
+    ############################################################       
+  - alias: '[Boolean] TV on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.tv_power_switch
+        to: 'on'
+    action:
+      - service:  media_player.turn_on
+        entity_id: media_player.samsung_tv_remote   
+  - alias: '[Boolean] TV off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.tv_power_switch
+        to: 'off'
+    action:
+      - service:  media_player.turn_off
+        entity_id: media_player.samsung_tv_remote
+
+    ###  UPDATE  ###    
+  - alias: '[Boolean] mise a jour TV on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        from: 'off'
+        to: 'on'
+    action: 
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.tv_power_switch
+          
+  - alias: '[Boolean] mise a jour TV off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        from: 'on'
+        to: 'off'
+    action: 
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.tv_power_switch  
+    ############################################################
+    ##              SAMSUNG TV ENERGY MODE                    ##
+    ############################################################  
+  - alias: '[Boolean] SAMSUNG TV ENERGY MODE on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.samsungtv_mode_switch
+        to: 'on'
+    action:
+      - service: samsungtv_smart.select_picture_mode
+        data:    
+          entity_id: media_player.samsung_tv_remote 
+          picture_mode: "Standard"   
+  - alias: '[Boolean] SAMSUNG TV ENERGY MODE off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.samsungtv_mode_switch
+        to: 'off'
+    action:
+      - service: samsungtv_smart.select_picture_mode
+        data:
+          entity_id: media_player.samsung_tv_remote
+          picture_mode: "Dynamique"                
+    ############################################################
+    ##                          XBOX                          ##
+    ############################################################       
+  - alias: '[Boolean] XBOX on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.xbox_power_switch
+        to: 'on'
+    action:
+      - service:  media_player.turn_on
+        entity_id: media_player.xbox_series_x    
+  - alias: '[Boolean] XBOX off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.xbox_power_switch
+        to: 'off'
+    action:
+      - service: media_player.turn_off
+        entity_id: media_player.xbox_series_x  
+
+    ###  UPDATE  ###    
+  - alias: '[Boolean] mise a jour XBOX on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.xbox_series_x
+        to: 'on'
+    action: 
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.xbox_power_switch
+          
+  - alias: '[Boolean] mise a jour XBOX off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.xbox_series_x
+        to: 'off'
+    action: 
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.xbox_power_switch          
+
+    ############################################################
+    ##                          ZAPPITI                       ##
+    ############################################################       
+  - alias: '[Boolean] ZAPPITI on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.zappiti_power_switch
+        to: 'on'
+    action:
+      - service: script.turn_on
+        entity_id: script.zappiti_power_on     
+  - alias: '[Boolean] ZAPPITI off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.zappiti_power_switch
+        to: 'off'
+    action:
+      - service: script.turn_on
+        entity_id: script.zappiti_power_off 
+
+    ###  UPDATE  ###    
+  - alias: '[Boolean] mise a jour ZAPPITI on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.zappiti_template
+        from: 'off'
+        to: 'on'
+    action: 
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.zappiti_power_switch
+          
+  - alias: '[Boolean] mise a jour ZAPPITI off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.zappiti_template
+        from: 'on'
+        to: 'off'
+    action: 
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.zappiti_power_switch
+
+    ############################################################
+    ##                      PROJECTEUR                        ##
+    ############################################################  
+  - alias: '[Boolean] EPSON on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.projecteur_power_switch
+        to: 'on'
+    action:
+      - service: script.turn_on
+        entity_id: script.projecteur_power_on     
+  - alias: '[Boolean] EPSON off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.projecteur_power_switch
+        to: 'off'
+    action:
+      - service: script.turn_on
+        entity_id: script.projecteur_power_off  
+    ############################################################
+    ##                 TOILE PROJECTION                       ##
+    ############################################################  
+  - alias: '[Boolean] Toile ouverte'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.toile_power_switch
+        to: 'on'
+    action:
+      - service: script.turn_on
+        entity_id: script.toile_ouverte     
+  - alias: '[Boolean] Toile fermée'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.toile_power_switch
+        to: 'off'
+    action:
+      - service: script.turn_on
+        entity_id: script.toile_fermee        
+    ############################################################
+    ##                   ALARM LUMIERES                       ##
+    ############################################################  
+  - alias: '[Boolean] Alarme lumières on'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_light
+        to: 'on'
+    action:
+      - service: script.turn_on
+        entity_id: script.light_flash    
+  - alias: '[Boolean] Alarme lumières off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_light
+        to: 'off'
+    action:
+      - service: script.turn_on
+        entity_id: script.cancel_loop
+
+
+
+
+

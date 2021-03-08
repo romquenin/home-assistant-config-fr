@@ -1,0 +1,117 @@
+   ############################################################
+   ##                        SENSOR                          ##
+   ############################################################
+sensor:  
+  - platform: systemmonitor
+    resources:
+      - type: last_boot
+      - type: memory_use_percent
+      - type: process  
+        arg: octave-cli  
+      - type: processor_use
+      - type: memory_free   
+      - type: disk_use_percent  
+        arg: /       
+      - type: disk_free
+        arg: /
+
+  - platform: filesize
+    file_paths:
+      - /config/home-assistant_v2.db
+
+  - platform: version    
+    name: version 
+   
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+
+  - platform: uptime
+    name: Uptime
+    scan_interval: 60
+             
+  - platform: command_line
+    name: CPU Temp
+    scan_interval: 60
+    unit_of_measurement: °C
+    command: >-
+      if [ -e /sys/class/thermal/thermal_zone0/temp ]
+        then cat /sys/class/thermal/thermal_zone0/temp
+      fi
+    value_template: >-
+      {% if value != '' %}
+        {{ value | multiply(0.001) | round }}
+      {% else %}
+        unknown
+      {% endif %} 
+
+  - platform: template
+    sensors:
+      ha_uptime:
+        friendly_name: 'Uptime'
+        icon_template: mdi:home-assistant
+        value_template: >-
+          {% set up_time =  as_timestamp(now()) - as_timestamp(states('sensor.uptime')) %}
+          {% if up_time == 0 %}
+            Démarrage...
+          {% else %}
+            {% set minutes = (up_time // 60) | int %}
+            {% set hours = (minutes // 60) %}
+            {% set days = (hours // 24) %}
+            {% set weeks = (days // 7) %}
+            {% set minutes = (minutes % 60) %}
+            {% set hours =  (hours % 24) %}
+            {% set days = (days % 7) %}
+            {% macro phrase(value, name) %}
+                      {%- set value = value %}
+                      {{- '{} {}{}'.format(value, name, end) if value | int > 0 else '' }}
+            {%- endmacro %}
+            {% set text = [ phrase(weeks, 's'), phrase(days, 'j'), phrase(hours, 'h'), phrase(minutes, 'min') ] | select('!=','') | list | join(', ') %}
+            {% set last_comma = text.rfind(',') %}
+            {% if last_comma != -1 %}
+              {% set text = text[:last_comma] + ',' + text[last_comma + 1:] %}
+            {% endif %}
+          {{ text }}
+          {% endif %}
+############################################################
+##                        SCRIPT                          ##
+############################################################
+script:           
+  'reboot_ha':
+    alias: '[Systeme] Redémarrer'
+    sequence:
+    - data: {}
+      service: homeassistant.restart
+
+############################################################
+##                      AUTOMATION                        ##
+############################################################ 
+automation:
+  - alias: '[Démarrage] Système'
+    initial_state: on
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - delay:
+          seconds: 10  
+      - service: automation.trigger
+        entity_id: automation.input_select_mis_a_jour_par_harmony
+      - delay:
+          seconds: 5        
+      - service: script.turn_on
+        entity_id: script.create_all_automations_group
+      - service: script.turn_on
+        entity_id: script.create_all_scripts_group 
+      - delay:
+          seconds: 120 
+      - service: python_script.set_state
+        data_template:
+          entity_id: group.all_scenes
+          state: Liste
+      - service: python_script.set_state
+        data_template:
+          entity_id: group.all_scripts
+          state: Liste
+          

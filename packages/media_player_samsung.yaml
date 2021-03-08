@@ -1,0 +1,511 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                      SAMSUNG TV                        ##
+  ##                                                        ##
+  ############################################################    
+
+automation:
+  - alias: 'SAMSUNG TV ENERGY MODE ACTIF AU DEMARRAGE'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        to: 'on'
+    action:
+#      - delay: 
+#          seconds: 1  
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.samsungtv_mode_switch  
+#      - delay: 10s          
+#      - service: media_player.turn_off
+#        entity_id: media_player.home_cinema_main
+#      - service: media_player.turn_off
+#        entity_id: media_player.xbox_series_x
+
+
+  - alias: 'SAMSUNG TV ENERGY MODE ACTIF MOLOTOV'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'Molotov'
+    action:
+#      - delay: 
+#          seconds: 1  
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.samsungtv_mode_switch  
+      - service: media_player.turn_off
+        entity_id: media_player.home_cinema_main 
+
+  - alias: 'SAMSUNG TV ENERGY MODE INACTIF SOURCES'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'Netflix' 
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'Plex' 
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'RMC Sport' 
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'Prime Video'   
+      - platform: state
+        entity_id: media_player.samsung_tv_remote
+        attribute: source
+        to: 'Disney+'                         
+    action:
+#      - delay: 
+#          seconds: 1          
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.samsungtv_mode_switch   
+      - service: media_player.turn_on
+        entity_id: media_player.home_cinema_main 
+
+
+
+
+script:    
+
+  tvmolotov:
+    alias: '[TV] Molotov' 
+    sequence:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: Molotov
+  tvnetflix:
+    alias: '[TV] Netflix' 
+    sequence:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: Netflix
+  tvprime_video:
+    alias: '[TV] Prime Video' 
+    sequence:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: Prime Video
+  tvdisney:
+    alias: '[TV] Disney+' 
+    sequence:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: Disney+
+  tvrmc_sport:
+    alias: '[TV] RMC Sport' 
+    sequence:
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: RMC Sport
+  tvplex:
+    alias: '[TV] Plex' 
+    sequence:    
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.samsung_tv_remote
+        source: Plex
+
+  tvtf1:
+    alias: '[TV] TF1' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_ENTER"
+        media_content_type: send_key
+  tvfrance_2:
+    alias: '[TV] FRANCE 2' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_2+KEY_ENTER"
+        media_content_type: send_key
+  tvfrance_3:
+    alias: '[TV] FRANCE 3' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_3+KEY_ENTER"
+        media_content_type: send_key
+  tvfrance_5:
+    alias: '[TV] FRANCE 5' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_5+KEY_ENTER"
+        media_content_type: send_key
+
+  tvm6:
+    alias: '[TV] M6' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_6+KEY_ENTER"
+        media_content_type: send_key
+  tvarte:
+    alias: '[TV] Arte' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_7+KEY_ENTER"
+        media_content_type: send_key
+  tvc8:
+    alias: '[TV] C8' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_8+KEY_ENTER"
+        media_content_type: send_key
+  tvw9:
+    alias: '[TV] W9' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_9+KEY_ENTER"
+        media_content_type: send_key
+
+  tvtmc:
+    alias: '[TV] TMC' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_0+KEY_ENTER"
+        media_content_type: send_key
+  tvtfx:
+    alias: '[TV] TFX' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_1+KEY_ENTER"
+        media_content_type: send_key
+  tvnrj12:
+    alias: '[TV] NRJ12' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_2+KEY_ENTER"
+        media_content_type: send_key
+  tvlcp:
+    alias: '[TV] LCP' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_3+KEY_ENTER"
+        media_content_type: send_key
+  tvfrancce_4:
+    alias: '[TV] FRANCE 4' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_4+KEY_ENTER"
+        media_content_type: send_key        
+  tvbfm:
+    alias: '[TV] BFM' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_5+KEY_ENTER"
+        media_content_type: send_key
+
+  tvcnews:
+    alias: '[TV] CNEWS' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_6+KEY_ENTER"
+        media_content_type: send_key
+
+
+  tvcstar:
+    alias: '[TV] CSTAR' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_7+KEY_ENTER"
+        media_content_type: send_key
+  tvgulli:
+    alias: '[TV] GULLI' 
+    sequence:   
+    - service: media_player.play_media    
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_8+KEY_ENTER"
+        media_content_type: send_key
+  tvtf1_serie_film:
+    alias: '[TV] TF1 Serie Film' 
+    sequence:
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_1+KEY_9+KEY_ENTER"
+        media_content_type: send_key
+  tvlequipe_tv:
+    alias: '[TV] LEQUIPE TV'
+    sequence:    
+    - service: media_player.play_media 
+      data:
+        entity_id: media_player.samsung_tv_remote
+        media_content_id: "KEY_TV+KEY_2+KEY_1+KEY_ENTER"
+        media_content_type: send_key
+
+
+  tv_off:
+    alias: '[TV] off'
+    sequence:
+    - data:
+        command: PowerOff
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv_on:
+    alias: '[TV] on'
+    sequence:
+    - data:
+        command: PowerOn
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvinputtv:
+    alias: '[TV] input tv'
+    sequence:
+    - data:
+        command: InputTv
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvhdmi1:
+    alias: '[TV] hdmi 1' 
+    sequence:
+    - data:
+        command: InputHdmi1
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command  
+  tvhdmi2:
+    alias: '[TV] hdmi 2' 
+    sequence:
+    - data:
+        command: InputHdmi2
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command    
+  tvhdmi3:
+    alias: '[TV] hdmi 3' 
+    sequence:
+    - data:
+        command: InputHdmi3
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvhdmi4:
+    alias: '[TV] hdmi 4' 
+    sequence:
+    - data:
+        command: InputHdmi4
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvvolumeup:
+    alias: '[TV] volume up'
+    sequence:
+    - data:
+        command: VolumeUp
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvvolumedown:
+    alias: '[TV] volume down'
+    sequence:
+    - data:
+        command: VolumeDown
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvmute:
+    alias: '[TV] mute'
+    sequence:
+    - data:
+        command: Mute
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  tvup:
+    alias: '[TV] up'
+    sequence:
+    - data:
+        command: DirectionUp
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvdown:
+    alias: '[TV] down'
+    sequence:
+    - data:
+        command: DirectionDown
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvleft:
+    alias: '[TV] left'
+    sequence:
+    - data:
+        command: DirectionLeft
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvright:
+    alias: '[TV] right'
+    sequence:
+    - data:
+        command: DirectionRight
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvok:
+    alias: '[TV] ok'
+    sequence:
+    - data:
+        command: Select
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvback:
+    alias: '[TV] back'
+    sequence:
+    - data:
+        command: Return
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvhome:
+    alias: '[TV] home'
+    sequence:
+    - data:
+        command: Home
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command         
+  tvplay:
+    alias: '[TV] play'
+    sequence:
+    - data:
+        command: Play
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tvstop:
+    alias: '[TV] stop'
+    sequence:
+    - data:
+        command: Stop
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv00:
+    alias: '[TV] 00'
+    sequence:
+    - data:
+        command: 0
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command       
+  tv01:
+    alias: '[TV] 01'
+    sequence:
+    - data:
+        command: 1
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command     
+  tv02:
+    alias: '[TV] 02'
+    sequence:
+    - data:
+        command: 2
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv03:
+    alias: '[TV] 03'
+    sequence:
+    - data:
+        command: 3
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv04:
+    alias: '[TV] 04'
+    sequence:
+    - data:
+        command: 4
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv05:
+    alias: '[TV] 05'
+    sequence:
+    - data:
+        command: 5
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv06:
+    alias: '[TV] 06'
+    sequence:
+    - data:
+        command: 6
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv07:
+    alias: '[TV] 07'
+    sequence:
+    - data:
+        command: 7
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  tv08:
+    alias: '[TV] 08'
+    sequence:
+    - data:
+        command: 8
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  tv09:
+    alias: '[TV] 09'
+    sequence:
+    - data:
+        command: 9
+        device: '36034946'
+        entity_id: remote.harmony_hub
+      service: remote.send_command

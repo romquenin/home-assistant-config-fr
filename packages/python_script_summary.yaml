@@ -1,0 +1,144 @@
+   ############################################################
+   ##                      BINARY SENSOR                     ##
+   ############################################################
+binary_sensor:
+  - platform: template
+    sensors:
+      somebody_home:
+        value_template: >-
+          {{ is_state('person.roman', 'home')
+             or is_state('person.gabriela', 'home') }}           
+ 
+   ############################################################
+   ##                         GROUPES                        ##
+   ############################################################
+group:   
+  sensor_harmony:
+    name: Sensor Harmony
+    entities:
+      - sensor.harmony_hub_sensor       
+
+  custom:
+    name: Summary
+    entities:
+      - sensor.summary
+
+  profile:
+    name: Profile
+    entities:
+      - input_select.ha_mode
+
+  activity:
+    name: Main activity
+    entities:
+      - input_select.harmony_hub
+      - sensor.harmony_hub_sensor     
+
+    ###  TRACKER  ###
+  device_tracker:
+    name: Device Tracker
+    entities:       
+      - sensor.harmony_hub_template
+      - sensor.synology_template
+      - sensor.serveur_vm_template 
+
+  switch_tracker:
+    name: Switch Tracker
+    entities:   
+      - input_boolean.projo_power_switch      
+      - input_boolean.toile_power_switch
+      - input_boolean.tv_power_switch
+      - switch.wake_on_lan 
+      - input_boolean.zappiti_power_switch               
+      - media_player.home_cinema_main      
+      - input_boolean.xbox_power_switch            
+      - switch.huiles_essentielles
+      - fan.dyson_pure_cool_linktm    
+      - switch.sonoff      
+      - switch.sonoff1
+      - switch.sonoff2    
+      - switch.sonoff3  
+      - switch.sonoff4         
+      - switch.multi
+  users_tracker:
+    name: Users Tracker
+    entities:       
+      - person.gabriela
+      - person.roman
+   
+   ############################################################
+   ##                      AUTOMATION                        ##
+   ############################################################   
+automation:
+  # Call service trigger Harmony        
+  - alias: '[Script] Activity change'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_select.harmony_hub
+    action:
+      - service: python_script.activity
+        data_template:
+          event: "{{ trigger.event }}"
+      - service: python_script.summary
+        data_template:
+          event: "{{ trigger.event }}"
+
+
+  - alias: '[Script] Call Script Event'
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: script
+    action:
+      - delay: 00:00:02
+      - service: python_script.last_cmd
+        data_template:
+          event: "{{ trigger.event }}"
+  # Call service trigger
+  - alias: '[Script] Call Service Event'
+    initial_state: 'on'
+    trigger:
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: switch 
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: person                 
+      - platform: event
+        event_type: call_service
+        event_data:
+          domain: fan      
+      - platform: state
+        entity_id: media_player.home_cinema_main  
+      - platform: state
+        entity_id: input_boolean.alarmclock_wd_enabled  
+      - platform: state
+        entity_id: input_boolean.zappiti_power_switch   
+      - platform: state
+        entity_id: input_boolean.tv_power_switch  
+      - platform: state
+        entity_id: input_boolean.xbox_power_switch                                             
+    action:
+      - delay: 00:00:01
+      - service: python_script.summary
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"  
+      
+  # Time interval update (each 1 minute)
+  - alias: '[Script] Time interval updates'
+    initial_state: 'on'
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+        seconds: 00
+    action:
+      - service: python_script.summary
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"   
+
+   

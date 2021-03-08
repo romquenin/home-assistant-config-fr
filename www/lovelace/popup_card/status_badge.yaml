@@ -1,0 +1,88 @@
+      action: fire-dom-event
+      browser_mod:
+        command: popup
+        title: Status
+        hide_header: true              
+        deviceID:
+          - this
+          - dashboard 
+        style:
+          $: |
+            .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+              box-shadow:none;
+            }
+          .: |
+            :host {
+              --mdc-theme-surface: rgba(0,0,0,0);
+              --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+              --mdc-dialog-min-height: 87%;
+              --mdc-dialog-min-width: 10%;
+              --mdc-dialog-max-width: 10%;
+            }        
+        card:
+          type: custom:vertical-stack-in-card
+          cards:
+            - type: entities
+              state_color: true
+              show_header_toggle: false
+              entities:
+                - entity: sensor.status_badge
+                  secondary_info: last-changed
+                - type: custom:hui-element
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }                
+                  card_type: history-graph
+                  entities:
+                    - entity: sensor.harmony_hub_template
+                      name: HUB 
+                    - entity: sensor.synology_template
+                      name: NAS  
+                    - entity: sensor.serveur_vm_template
+                      name: VM                                                
+                  hours_to_show: 24
+                  refresh_interval: 0
+                - type: custom:hui-element
+                  card_type: glance
+                  show_state: false
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }
+                    "ha-card>div>div:nth-child(1)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('sensor.harmony_hub_template', 'on') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(2)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('sensor.synology_template', 'on') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(3)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.ea_2b_d7_01_c4_84', 'home') else '#FFFFFF20' }};
+                            }
+                  entities:
+                    - entity: sensor.harmony_hub_template
+                      name: Harmony HUB
+                      icon: mdi:remote
+                    - entity: sensor.synology_template
+                      name: Synology NAS
+                      icon: mdi:server
+                    - entity: sensor.serveur_vm_template
+                      name: Serveur VM
+                      icon: mdi:ubuntu
+

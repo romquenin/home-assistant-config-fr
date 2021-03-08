@@ -1,0 +1,158 @@
+######################################################################################################################                       
+######################################################################################################################    
+#  METEO
+######################################################################################################################    
+######################################################################################################################
+
+title: 01_meteo_view 
+icon: mdi:weather-partly-cloudy
+cards:    
+
+  - type: vertical-stack
+    cards:    
+
+                      
+
+
+      - type: iframe
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: 1em;
+
+            }          
+        url: https://embed.windy.com/embed2.html?lat=43.397&lon=6.594&zoom=8&level=surface&overlay=wind&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=45.522&detailLon=2.373&metricWind=default&metricTemp=default&radarRange=-1
+        aspect_ratio: 100%
+      - type: iframe
+        url: https://platforms5.joada.net/embeded/embeded.html?uuid=c7d5bd32-7d68-400a-3338-3530-6d61-63-a4f2-aa3a962b4b85d&type=live&liveicon=0&vsheader=0    
+        aspect_ratio: 56%  
+
+                             
+
+  - type: 'custom:stack-in-card' 
+    card_mod: 
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none; 
+        } 
+    cards:
+      - type: custom:ha-card-weather-conditions        
+        name: "Météo"
+        language: "fr"
+        animation: true
+        camera: camera.weather
+        pollen:
+#             tree:
+#               entity: sensor.cc_climacell_pollen_tree
+#               min: 0
+#               max: 5
+#               low: 1
+#               high: 3
+          weed:
+            entity: sensor.cc_climacell_pollen_weed
+            min: 0
+            max: 5
+            low: 1
+            high: 3
+          grass:
+            entity: sensor.cc_climacell_pollen_grass
+            min: 0
+            max: 5
+            low: 1
+            high: 3        
+        uv:
+          protection_window: binary_sensor.protection_window
+          ozone_level: sensor.current_ozone_level
+          uv_index: sensor.current_uv_index
+          uv_level: sensor.current_uv_level
+          max_uv_index: sensor.max_uv_index
+          set_skin_type_1: sensor.skin_type_1_safe_exposure_time
+          set_skin_type_2: sensor.skin_type_2_safe_exposure_time
+          set_skin_type_3: sensor.skin_type_3_safe_exposure_time
+          set_skin_type_4: sensor.skin_type_4_safe_exposure_time
+          set_skin_type_5: sensor.skin_type_5_safe_exposure_time
+          set_skin_type_6: sensor.skin_type_6_safe_exposure_time              
+
+        air_quality:
+          pm25: sensor.cc_climacell_pm25
+          pm10: sensor.cc_climacell_pm10
+          o3: sensor.cc_climacell_o3
+          no2: sensor.cc_climacell_no2
+          co: sensor.cc_climacell_co
+          so2: sensor.cc_climacell_so2
+          epa_aqi: sensor.cc_climacell_epa_aqi
+          epa_health_concern: sensor.cc_climacell_epa_health_concern
+        weather:
+          icons_model: climacell
+          current:
+            sun: sun.sun
+            moon_phase: sensor.cc_climacell_moon_phase_0d           
+            current_conditions: sensor.cc_climacell_weather_condition
+            humidity: sensor.saint_tropez_humidity
+            pressure: sensor.saint_tropez_pressure
+            temperature: sensor.saint_tropez_temperature
+            visibility: sensor.saint_tropez_cloud_cover
+            wind_bearing: sensor.saint_tropez_wind_gust
+            wind_speed: sensor.saint_tropez_wind_speed
+            precipitation: sensor.saint_tropez_daily_precipitation
+            forecast: true
+          forecast:
+            icons:
+              day_1: sensor.cc_climacell_weather_condition_0d
+              day_2: sensor.cc_climacell_weather_condition_1d
+              day_3: sensor.cc_climacell_weather_condition_2d
+              day_4: sensor.cc_climacell_weather_condition_3d
+              day_5: sensor.cc_climacell_weather_condition_4d
+            temperature_high:
+              day_1: sensor.cc_climacell_temperature_maximum_0d
+              day_2: sensor.cc_climacell_temperature_maximum_1d
+              day_3: sensor.cc_climacell_temperature_maximum_2d
+              day_4: sensor.cc_climacell_temperature_maximum_3d
+              day_5: sensor.cc_climacell_temperature_maximum_4d
+            temperature_low:
+              day_1: sensor.cc_climacell_temperature_minimum_0d
+              day_2: sensor.cc_climacell_temperature_minimum_1d
+              day_3: sensor.cc_climacell_temperature_minimum_2d
+              day_4: sensor.cc_climacell_temperature_minimum_3d
+              day_5: sensor.cc_climacell_temperature_minimum_4d
+#                precipitation_probability:
+#                  day_1: sensor.cc_test_precipitation_probability_0d
+#                  day_2: sensor.cc_test_precipitation_probability_1d
+#                  day_3: sensor.cc_test_precipitation_probability_2d
+#                  day_4: sensor.cc_test_precipitation_probability_3d
+#                  day_5: sensor.cc_test_precipitation_probability_4d
+            precipitation_intensity:
+              day_1: sensor.cc_climacell_precipitation_maximum_0d
+              day_2: sensor.cc_climacell_precipitation_maximum_1d
+              day_3: sensor.cc_climacell_precipitation_maximum_2d
+              day_4: sensor.cc_climacell_precipitation_maximum_3d
+              day_5: sensor.cc_climacell_precipitation_maximum_4d
+        alert:
+          fire_risk:
+            entity: sensor.cc_climacell_fire_index
+            icon: mdi:campfire             
+          wind_risk:
+            entity: sensor.meteo_france_vent
+            icon: mdi:windsock                               
+          thunderstorms_risk:
+            entity: sensor.meteo_france_orage
+            icon: mdi:weather-lightning                
+          hydraulic_risk:
+            entity: sensor.meteo_france_inondation
+            icon: mdi:home-flood                 
+          hydrogeological_risk:
+            entity: sensor.meteo_france_vague
+            icon: mdi:waves                
+          neige_risk:
+            entity: sensor.meteo_france_neige
+            icon: mdi:snowflake-alert                
+
+
+
+
+ 
+
+
+
+             

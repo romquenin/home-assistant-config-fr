@@ -1,0 +1,49 @@
+
+  ############################################################
+  ##                                                        ##
+  ##               UTILITY METER FREEBOX STATS              ##
+  ##                                                        ##
+  ############################################################    
+
+utility_meter:
+  download:
+    source: sensor.stats_freebox_download_speed
+    cycle: weekly
+  upload:
+    source: sensor.stats_freebox_upload_speed
+    cycle: weekly
+
+
+
+
+sensor:
+  - platform: template
+    sensors: 
+      down_max_freebox:
+        friendly_name: "Max Down"        
+        unit_of_measurement: 'kB/s'
+        value_template: "{{ state_attr('sensor.stats_freebox_download_speed', 'max_value') }}"
+
+      up_max_freebox:
+        friendly_name: "Max Up"        
+        unit_of_measurement: 'kB/s'
+        value_template: "{{ state_attr('sensor.stats_freebox_upload_speed', 'max_value') }}"
+
+      mb_received:
+        friendly_name: "MB Received"        
+        unit_of_measurement: 'MB/s'
+        value_template: "{{ (states('sensor.download')|filesizeformat()) | round(2) }}"
+
+      mb_sent:
+        friendly_name: "MB Sent"        
+        unit_of_measurement: 'MB/s'
+        value_template: "{{ (states('sensor.upload')|filesizeformat()) | round(2) }}"
+
+
+  - platform: statistics
+    name: Stats Freebox Download Speed
+    entity_id: sensor.freebox_download_speed
+  - platform: statistics
+    name: Stats Freebox Upload Speed
+    entity_id: sensor.freebox_upload_speed
+

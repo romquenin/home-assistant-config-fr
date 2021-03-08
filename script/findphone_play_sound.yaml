@@ -1,0 +1,38 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                FIND MY PHONE/PLAY SOUND                ##
+   ##                                                        ##
+   ############################################################
+
+audio_movies:
+  alias: '[Audio] Movies'
+  sequence:  
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.salon
+      media_content_id: !secret audio_movies
+      media_content_type: 'audio/mp3'
+
+audio_apple:
+  alias: '[Audio] Apple'
+  sequence:  
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.salon
+      media_content_id: !secret audio_apple
+      media_content_type: 'audio/mp3'
+
+find_my_phone:
+  alias: Find My Phone
+  sequence:
+    - service: notify.mobile_app_oneplus_a6013
+      data:
+        message: Home Assistant
+        title: Home Assistant recherche le téléphone!
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream  
+
+

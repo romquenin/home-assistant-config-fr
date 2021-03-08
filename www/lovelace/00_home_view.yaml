@@ -1,0 +1,585 @@
+######################################################################################################################
+######################################################################################################################
+#  HOME ASSISTANT
+######################################################################################################################
+######################################################################################################################
+title: 00_home_view
+icon: mdi:home-assistant
+badges:
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BADGES
+####################################################################################################################################################################################################################################################################################################################################################  
+  - entity: sensor.activity_badge
+    card_mod:
+      style: |
+        :host {
+          --label-badge-red:
+            {% if is_state('remote.harmony_hub', 'on') %}
+              rgb(52, 152, 219);
+            {% elif is_state('remote.harmony_hub', 'off') %}                      
+              darkgrey; 
+            {% endif %}   
+        }  
+    hold_action:
+      action: more-info   
+    double_tap_action: 
+      action: call-service
+      service: remote.turn_off
+      service_data:  
+        entity_id: remote.harmony_hub    
+      haptic: true
+    tap_action: !include popup_card/activity_harmony.yaml
+
+  - entity: sensor.status_badge
+    card_mod:
+      style: |
+        :host {
+          --label-badge-red:
+            {% if is_state('sensor.status_badge', '0') %}
+              rgb(52, 152, 219);
+            {% elif is_state('sensor.status_badge', '2') %}                      
+              rgba(50, 50, 50, 50); 
+            {% elif is_state('sensor.status_badge', '1') %}                      
+              darkgrey;             
+            {% endif %}   
+        }  
+    tap_action: !include popup_card/status_badge.yaml
+
+  - entity: media_player.ytube_music_player
+    card_mod:
+      style: |
+        :host {
+          --label-badge-red:
+            {% if is_state('media_player.ytube_music_player', 'playing') %}
+              rgb(52, 152, 219);
+            {% elif is_state('media_player.ytube_music_player', 'off') %}                      
+              darkgrey; 
+            {% endif %}   
+        }  
+    hold_action: 
+      action: more-info
+    tap_action: !include popup_card/yt_badge_tap.yaml
+    double_tap_action: !include popup_card/yt_badge_double_tap.yaml
+
+  - entity: person.roman
+    card_mod:
+      style: |
+        :host {
+          --label-badge-red:
+            {% if is_state('person.roman', 'home') %}
+              rgb(52, 152, 219);
+            {% elif is_state('person.roman', 'not_home') %}                      
+              darkgrey; 
+            {% endif %}   
+        }
+    tap_action: !include popup_card/roman.yaml
+
+  - entity: person.gabriela
+    card_mod:
+      style: |
+        :host {
+          --label-badge-red:
+            {% if is_state('person.gabriela', 'home') %}
+              rgb(52, 152, 219);
+            {% elif is_state('person.gabriela', 'not_home') %}                      
+              darkgrey; 
+            {% endif %}   
+        }
+    tap_action: !include popup_card/gabriela.yaml
+
+cards:
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    METEO STATE-SWITCH MOBILE
+####################################################################################################################################################################################################################################################################################################################################################
+  - type: vertical-stack
+    cards:    
+      - type: custom:state-switch
+        entity: deviceID
+        states:
+          "f75ca247-ed28565a":
+            type: custom:simple-weather-card
+            card_mod:
+              style: |
+                ha-card {
+                  background: none;
+                  box-shadow: none;                               
+                }
+            entity:  weather.saint_tropez
+            name: Saint-Tropez
+            primary_info:
+              - humidity
+              - precipitation
+            secondary_info:
+              - wind_bearing
+              - wind_speed
+            tap_action:
+              action: call-service
+              service: browser_mod.popup
+              service_data:
+                title: Météo
+                hide_header: true                      
+                card:
+                  type: custom:decluttering-card
+                  template: weather
+                deviceID:
+                  - "f75ca247-ed28565a"
+                                 
+####################################################################################################################################################################################################################################################################################################################################################
+####    SURVEILLANCE
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"           
+            entity: alarm_control_panel.home
+            template: button_alarme
+            name: Alarme
+          - type: custom:button-card
+            template: button_porte
+            name: Porte
+            entity: binary_sensor.porte_entree_contact
+          - type: custom:button-card
+            template: button_fuite
+            name: Fuite
+            entity: binary_sensor.capteur_fuite_d_eau_aqara_water_leak                
+          - type: custom:button-card
+            template: button_motion
+            name: Entrée
+            entity: binary_sensor.multisensor_6_home_security_motion_detection
+          - type: custom:button-card
+            template: button_motion
+            name: Couloir
+            entity: binary_sensor.motion_sensor_home_security_motion_detection
+          - type: custom:button-card
+            template: button_motion
+            name: Cuisine
+            entity: binary_sensor.capteur_mouvement_aqara_occupancy
+
+####################################################################################################################################################################################################################################################################################################################################################     
+####    SUMMARY STATE-SWITCH MOBILE
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: custom:state-switch
+        entity: deviceID
+        states:
+          "f75ca247-ed28565a":
+            type: custom:decluttering-card
+            template: summary
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    LIGHTS
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack   
+        cards:
+          - type: custom:decluttering-card
+            template: light
+            variables:
+              - name: Salon
+              - entity: group.all_lights_salon
+              - sensor: sensor.all_lights_salon
+              - double_tap_action: !include popup_card/light_salon.yaml
+          - type: custom:decluttering-card
+            template: light
+            variables:
+              - name: Entrée
+              - entity: group.all_lights_entree
+              - sensor: sensor.all_lights_entree
+              - double_tap_action: !include popup_card/light_entree.yaml
+          - type: custom:decluttering-card
+            template: light
+            variables:
+              - name: Cuisine
+              - entity: group.all_lights_cuisine
+              - sensor: sensor.all_lights_cuisine
+              - double_tap_action: !include popup_card/light_cuisine.yaml
+          - type: custom:decluttering-card
+            template: light
+            variables:
+              - name: Salle de bain
+              - entity: group.all_lights_sdb
+              - sensor: sensor.all_lights_sdb
+              - double_tap_action: !include popup_card/light_sdb.yaml
+          - type: custom:decluttering-card
+            template: light
+            variables:
+              - name: Chambre
+              - entity: group.all_lights_chambre
+              - sensor: sensor.all_lights_chambre
+              - double_tap_action: !include popup_card/light_chambre.yaml                                                                
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SCENES
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_tropical              
+              - name: Tropical
+              - entity_picture: "/local/images/hue/tropical.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_energize              
+              - name: Détente
+              - entity_picture: "/local/images/hue/energize.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_savane              
+              - name: Savane
+              - entity_picture: "/local/images/hue/savane.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_relax              
+              - name: Relax
+              - entity_picture: "/local/images/hue/relax.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_boreale              
+              - name: Boréale
+              - entity_picture: "/local/images/hue/boreale.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_concentrate              
+              - name: Concentrate
+              - entity_picture: "/local/images/hue/concentrate.png"
+          - type: custom:decluttering-card
+            template: scenes
+            variables:
+              - entity_id: scene.salon_spring              
+              - name: Printemps
+              - entity_picture: "/local/images/hue/spring.png"
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA_PLAYER STATE-SWITCH MOBILE
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: vertical-stack
+        cards: !include popup_card/conditional_media_player_mobile.yaml 
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MINI_GRAPH_CARD
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: graph
+            variables:
+              - entities: sensor.netatmo_indoor_temperature             
+              - name: Température
+              - line_color: "#3498db"
+          - type: custom:decluttering-card
+            template: graph
+            variables:
+              - entities: sensor.netatmo_indoor_humidity             
+              - name: Humidité
+              - line_color: "#e74c3c"
+          - type: custom:decluttering-card
+            template: graph
+            variables:
+              - entities: sensor.netatmo_indoor_co2             
+              - name: CO2
+              - line_color: "#3498db"
+
+####################################################################################################################################################################################################################################################################################################################################################
+#### BAR_CARD
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: bar
+            variables:
+              - entity: sensor.netatmo_indoor_noise 
+              - max: 100
+              - min: 0                                       
+              - severity: 
+                  - color: "#40bf40"
+                    from: 0
+                    to: 50
+                  - color: Orange
+                    from: 51
+                    to: 70
+                  - color: "red"
+                    from: 71
+                    to: 100
+        
+          - type: custom:decluttering-card
+            template: bar
+            variables:
+              - entity: sensor.netatmo_indoor_pressure 
+              - max: 2000
+              - min: 0                             
+              - severity: 
+                  - color: "#40bf40"
+                    from: 0
+                    to: 1000
+                  - color: Orange
+                    from: 1001
+                    to: 1500
+                  - color: red
+                    from: 1501
+                    to: 2000
+
+####################################################################################################################################################################################################################################################################################################################################################
+#### INFO SYSTEME
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - template: button_raspberry
+            type: "custom:decluttering-card"
+            variables:
+              - entity: "sensor.cpu_temp"
+              - icon: "mdi:raspberry-pi"
+              - name: RasPi 4
+              - colorstyle: "[[[
+                  if (entity.state == 'OL') return 'lime';
+                  if (entity.state == 'OB') return 'yellow';
+                  if (entity.state == 'LB') return 'magenta';
+                  if (entity.state == 'OB LB') return 'red';
+                  if (entity.state == 'OL LB') return 'cyan';
+                  else return 'deepskyblue';
+                  ]]]"
+              - tempfield: "[[[
+                  return `<ha-icon icon='mdi:thermometer' style='width: 20px; height: 20px; color: yellow;'></ha-icon>
+                  <span style='align: left;'>${Math.round(states['sensor.cpu_temp'].state)}°C</span>`
+                  ]]]"
+              - cpufield: "[[[
+                  return `<ha-icon icon='mdi:server' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>CPU: <span style='color: var(--text-color-sensor);'>${states['sensor.processor_use'].state}%</span></span>`
+                  ]]]"
+              - ramfield: "[[[
+                  return `<ha-icon icon='mdi:memory' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>RAM: <span style='color: var(--text-color-sensor);'>${states['sensor.memory_use_percent'].state}%</span></span>`
+                  ]]]"
+              - sdfield: "[[[
+                  return `<ha-icon icon='mdi:harddisk' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>SSD: <span style='color: var(--text-color-sensor);'>${states['sensor.disk_use_percent'].state}%</span></span>`
+                  ]]]"
+              - cpustyle: "[[[
+                  if (states['sensor.processor_use'].state < 40) return 'lime';
+                  if (states['sensor.processor_use'].state >= 60 && states['sensor.processor_use'].state < 80) return 'red';
+                  else return 'orange';
+                  ]]]"
+              - ramstyle: "[[[
+                  if (states['sensor.memory_use_percent'].state < 40) return 'lime';
+                  if (states['sensor.memory_use_percent'].state >= 60 && states['sensor.memory_use_percent'].state < 80) return 'red';
+                  else return 'orange';
+                  ]]]"
+              - sdstyle: "[[[
+                  if (states['sensor.disk_use_percent'].state < 40) return 'lime';
+                  if (states['sensor.disk_use_percent'].state >= 60 && states['sensor.disk_use_percent'].state < 80) return 'red';
+                  else return 'orange';
+                  ]]]"
+
+          - type: custom:decluttering-card
+            template: button_hassos
+
+          - template: button_synology
+            type: "custom:decluttering-card"
+            variables:
+              - entity: "sensor.synology_cpu_load_total"
+              - icon: mdi:nas
+              - name: Synology
+              - colorstyle: "[[[
+                  if (entity.state == 'OL') return 'lime';
+                  if (entity.state == 'OB') return 'yellow';
+                  if (entity.state == 'LB') return 'magenta';
+                  if (entity.state == 'OB LB') return 'red';
+                  if (entity.state == 'OL LB') return 'cyan';
+                  else return 'deepskyblue';
+                  ]]]"
+              - tempfield: "[[[
+                  return `<ha-icon icon='mdi:thermometer' style='width: 20px; height: 20px; color: yellow;'></ha-icon>
+                  <span style='align: left;'>${Math.round(states['sensor.synology_temperature_sda'].state)}°C</span>`
+                  ]]]"
+              - cpufield: "[[[
+                  return `<ha-icon icon='mdi:server' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>CPU: <span style='color: var(--text-color-sensor);'>${states['sensor.synology_cpu_load_total'].state}%</span></span>`
+                  ]]]"
+              - ramfield: "[[[
+                  return `<ha-icon icon='mdi:memory' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>RAM: <span style='color: var(--text-color-sensor);'>${states['sensor.synology_memory_usage_real'].state}%</span></span>`
+                  ]]]"
+              - sdfield: "[[[
+                  return `<ha-icon icon='mdi:harddisk' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+                  <span>HDD: <span style='color: var(--text-color-sensor);'>${states['sensor.synology_volume_used_volume_1'].state}%</span></span>`
+                  ]]]"
+              - cpustyle: "[[[
+                  if (states['sensor.synology_cpu_load_total'].state > 40) return 'orange';
+                  if (states['sensor.synology_cpu_load_total'].state >= 60 && states['sensor.synology_cpu_load_total'].state < 80) return 'red';
+                  else return 'lime';
+                  ]]]"
+              - ramstyle: "[[[
+                  if (states['sensor.synology_memory_usage_real'].state > 40) return 'orange';
+                  if (states['sensor.synology_memory_usage_real'].state >= 60 && states['sensor.synology_memory_usage_real'].state < 80) return 'red';
+                  else return 'lime';
+                  ]]]"
+              - sdstyle: "[[[
+                  if (states['sensor.synology_volume_used_volume_1'].state > 50) return 'orange';
+                  if (states['sensor.synology_volume_used_volume_1'].state >= 60 && states['sensor.synology_volume_used_volume_1'].state < 80) return 'red';
+                  else return 'lime';
+                  ]]]"
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SUMMARY STATE-SWITCH DESKTOP
+####################################################################################################################################################################################################################################################################################################################################################
+  - type: vertical-stack
+    cards:
+      - type: custom:state-switch
+        entity: deviceID
+        states:
+          "macbook":
+            type: custom:decluttering-card
+            template: summary
+          "windows":
+            type: custom:decluttering-card
+            template: summary
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA_PLAYER STATE-SWITCH DESKTOP
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: vertical-stack
+        cards: !include popup_card/conditional_media_player_desktop.yaml
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BOUTONS
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: button_tv
+            variables:
+              - name: TV
+              - entity: input_boolean.tv_power_switch
+          - type: custom:decluttering-card
+            template: button_apple_tv_4k
+            variables:
+              - name: Apple TV
+              - entity: switch.sonoff1
+          - type: custom:decluttering-card
+            template: button_pc
+            variables:
+              - name: PC
+              - entity: switch.wake_on_lan
+          - type: custom:decluttering-card
+            template: button_amp
+            variables:
+              - name: Ampli
+              - entity: media_player.home_cinema_main
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: button_ps4
+            variables:
+              - name: PS4
+              - entity: switch.sonoff4
+          - type: custom:decluttering-card
+            template: button_xbox
+            variables:
+              - name: XBOX
+              - entity: input_boolean.xbox_power_switch
+          - type: custom:decluttering-card
+            template: button_switch
+            variables:
+              - name: Switch
+              - entity: switch.sonoff3
+          - type: custom:decluttering-card
+            template: button_multi
+            variables:
+              - name: Multi
+              - entity: switch.multi
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: button_zappiti
+            variables:
+              - name: Zappiti
+              - entity: input_boolean.zappiti_power_switch
+          - type: custom:decluttering-card
+            template: button_chromecast
+            variables:
+              - name: Cast
+              - entity: switch.sonoff2
+          - type: custom:decluttering-card
+            template: button_purifier
+            variables:
+              - name: Diffuseur
+              - entity: switch.huiles_essentielles
+              - timer: timer.timer_diffuseur
+          - type: custom:decluttering-card
+            template: button_dyson_fan
+            variables:
+              - name: Ventilo
+              - entity: fan.dyson_pure_cool_linktm
+              - timer: timer.timer_ventilateur             
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: cover
+            variables:
+              - name: Rideau gauche
+              - size: 80%
+              - entity: cover.rideau_gauche
+          - type: custom:decluttering-card
+            template: cover
+            variables:
+              - name: Rideau droite
+              - size: 80%
+              - entity: cover.rideau_droite
+
+####################################################################################################################################################################################################################################################################################################################################################
+#### LINKY CARD
+####################################################################################################################################################################################################################################################################################################################################################
+  - type: vertical-stack
+    cards:
+      - type: 'custom:content-card-linky'
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;    
+            }      
+        entity: sensor.myenedis_25322286436805
+        showIcon: false
+        showHistory : true
+        showPeakOffPeak: true
+        showInTableUnit : false
+        showDayPrice : true
+        showDayPriceHCHP: false
+        showDayHCHP: false
+
+####################################################################################################################################################################################################################################################################################################################################################
+#### CAMERA
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: horizontal-stack
+        cards:
+          - type: custom:decluttering-card
+            template: camera
+            variables:
+              - entity: camera.yi_hack_v4
+          - type: custom:decluttering-card
+            template: camera
+            variables:
+              - entity: camera.dafang_hack
+
+####################################################################################################################################################################################################################################################################################################################################################              
+####    METEO STATE-SWITCH DESKTOP
+####################################################################################################################################################################################################################################################################################################################################################
+      - type: vertical-stack
+        cards:
+          - type: custom:state-switch
+            entity: deviceID
+            states:
+              'macbook':
+                type: custom:decluttering-card
+                template: weather
+              'windows':
+                type: custom:decluttering-card
+                template: weather
+
+
+

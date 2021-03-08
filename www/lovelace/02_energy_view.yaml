@@ -1,0 +1,609 @@
+
+######################################################################################################################
+######################################################################################################################    
+#  PLUGS         
+######################################################################################################################
+######################################################################################################################
+
+title: 02_energy_view
+#background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed       
+icon: mdi:flash
+#panel : true
+cards:
+  - type: vertical-stack
+    cards:       
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 20px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: 0em;
+              margin-left: -5px;
+              margin-bottom: -0.5em;
+              box-shadow: none;
+            }
+        content: <center> CONSO/ACTUELLE= {{ states('sensor.current_power_usage') }} W <center>     
+      - type: horizontal-stack
+
+        cards:
+          - type: custom:restriction-card
+
+            card:                    
+              template: button_tplink
+              type: "custom:decluttering-card"                    
+              variables:
+                - coloron: 'var(--tplink-1-color)'
+                - coloroff: 'red'                                 
+                - entity: "switch.tp_link_plug_1"
+                - icon: mdi:power
+                - name: TP-Link 1
+
+                - tempfield: "[[[
+                    return `<ha-icon icon='mdi:lightning-bolt' style='width: 20px; height: 20px; color: var(--tplink-1-color);'></ha-icon>
+                    <span style='align: left;'>${Math.round(states['sensor.tplink_1_volts'].state)} V</span>`
+                    ]]]"
+                - cpufield: "[[[
+                    return `<ha-icon icon='mdi:flash' style='width: 20px; height: 20px; color: var(--tplink-1-color);'></ha-icon>
+                    <span>Actuel: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_1_current_power_w'].state} W</span></span>`
+                    ]]]"
+                - ramfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-today' style='width: 20px; height: 20px; color: var(--tplink-1-color);'></ha-icon>
+                    <span>Jour: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_1_today_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - sdfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-clock' style='width: 20px; height: 20px; color: var(--tplink-1-color);'></ha-icon>
+                    <span>Total: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_1_total_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - cpustyle: "[[[
+                    if (states['sensor.tplink_1_current_power_w'].state > 300) return 'orange';
+                    if (states['sensor.tplink_1_current_power_w'].state >= 600 && states['sensor.tplink_1_current_power_w'].state < 1000) return 'red';
+                    else return 'var(--tplink-1-color)';
+                    ]]]"
+                - ramstyle: "[[[
+                    if (states['sensor.tplink_1_today_energy_kwh'].state > 1.5) return 'orange';
+                    if (states['sensor.tplink_1_today_energy_kwh'].state >= 2 && states['sensor.tplink_1_today_energy_kwh'].state < 1000) return 'red';
+                    else return 'var(--tplink-1-color)';
+                    ]]]"
+                - sdstyle: "[[[
+                    if (states['sensor.tplink_1_total_energy_kwh'].state > 300) return 'orange';
+                    if (states['sensor.tplink_1_total_energy_kwh'].state >= 600 && states['sensor.tplink_1_total_energy_kwh'].state < 1000) return 'red';
+                    else return 'var(--tplink-1-color)';
+                    ]]]" 
+          - type: custom:restriction-card
+            card:            
+              template: button_tplink
+              type: "custom:decluttering-card"                    
+              variables:
+                - entity: "switch.tp_link_plug_2"
+                - icon: mdi:power
+                - name: TP-Link 2
+                - coloron: 'var(--tplink-2-color)'
+                - coloroff: 'red'  
+                - tempfield: "[[[
+                    return `<ha-icon icon='mdi:lightning-bolt' style='width: 20px; height: 20px; color: var(--tplink-2-color);'></ha-icon>
+                    <span style='align: left;'>${Math.round(states['sensor.tplink_2_volts'].state)} V</span>`
+                    ]]]"
+                - cpufield: "[[[
+                    return `<ha-icon icon='mdi:flash' style='width: 20px; height: 20px; color: var(--tplink-2-color);'></ha-icon>
+                    <span>Actuel: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_2_current_power_w'].state} W</span></span>`
+                    ]]]"
+                - ramfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-today' style='width: 20px; height: 20px; color: var(--tplink-2-color);'></ha-icon>
+                    <span>Jour: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_2_today_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - sdfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-clock' style='width: 20px; height: 20px; color: var(--tplink-2-color);'></ha-icon>
+                    <span>Total: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_2_total_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - cpustyle: "[[[
+                    if (states['sensor.tplink_2_current_power_w'].state > 300) return 'orange';
+                    if (states['sensor.tplink_2_current_power_w'].state >= 600 && states['sensor.tplink_2_current_power_w'].state < 1000) return 'red';
+                    else return 'var(--tplink-2-color)';
+                    ]]]"
+                - ramstyle: "[[[
+                    if (states['sensor.tplink_2_today_energy_kwh'].state > 1.5) return 'orange';
+                    if (states['sensor.tplink_2_today_energy_kwh'].state >= 2 && states['sensor.tplink_2_today_energy_kwh'].state < 3) return 'red';
+                    else return 'var(--tplink-2-color)';
+                    ]]]"
+                - sdstyle: "[[[
+                    if (states['sensor.tplink_2_total_energy_kwh'].state > 300) return 'orange';
+                    if (states['sensor.tplink_2_total_energy_kwh'].state >= 600 && states['sensor.tplink_2_total_energy_kwh'].state < 1000) return 'red';
+                    else return 'var(--tplink-2-color)';
+                    ]]]" 
+          - type: custom:restriction-card
+            card:                           
+              template: button_tplink
+              type: "custom:decluttering-card"                    
+              variables:
+                - entity: "switch.tp_link_plug_3"
+                - icon: mdi:power
+                - name: TP-Link 3
+                - coloron: 'var(--tplink-3-color)'
+                - coloroff: 'red'  
+                - tempfield: "[[[
+                    return `<ha-icon icon='mdi:lightning-bolt' style='width: 20px; height: 20px; color: var(--tplink-3-color);'></ha-icon>
+                    <span style='align: left;'>${Math.round(states['sensor.tplink_3_volts'].state)} V</span>`
+                    ]]]"
+                - cpufield: "[[[
+                    return `<ha-icon icon='mdi:flash' style='width: 20px; height: 20px; color: var(--tplink-3-color);'></ha-icon>
+                    <span>Actuel: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_3_current_power_w'].state} W</span></span>`
+                    ]]]"
+                - ramfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-today' style='width: 20px; height: 20px; color: var(--tplink-3-color);'></ha-icon>
+                    <span>Jour: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_3_today_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - sdfield: "[[[
+                    return `<ha-icon icon='mdi:calendar-clock' style='width: 20px; height: 20px; color: var(--tplink-3-color);'></ha-icon>
+                    <span>Total: <span style='color: var(--text-color-sensor);'>${states['sensor.tplink_3_total_energy_kwh'].state} kWh</span></span>`
+                    ]]]"
+                - cpustyle: "[[[
+                    if (states['sensor.tplink_3_current_power_w'].state > 300) return 'orange';
+                    if (states['sensor.tplink_3_current_power_w'].state >= 600 && states['sensor.tplink_3_current_power_w'].state < 1000) return 'red';
+                    else return 'var(--tplink-3-color)';
+                    ]]]"
+                - ramstyle: "[[[
+                    if (states['sensor.tplink_3_today_energy_kwh'].state > 1.5) return 'orange';
+                    if (states['sensor.tplink_3_today_energy_kwh'].state >= 2 && states['sensor.tplink_3_today_energy_kwh'].state < 1000) return 'red';
+                    else return 'var(--tplink-3-color)';
+                    ]]]"
+                - sdstyle: "[[[
+                    if (states['sensor.tplink_3_total_energy_kwh'].state > 300) return 'orange';
+                    if (states['sensor.tplink_3_total_energy_kwh'].state >= 600 && states['sensor.tplink_3_total_energy_kwh'].state < 1000) return 'red';
+                    else return 'var(--tplink-3-color)';
+                    ]]]"
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: -0.1em; 
+              background: none;
+              box-shadow: none;                           
+            }             
+        entities:
+          - type: divider    
+
+
+      - type: custom:stack-in-card
+        card_mod: 
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              margin-top: -0.9em;            
+            } 
+
+        mode: vertical
+        cards: 
+
+
+     
+              
+                    
+          - type: markdown
+            card_mod: 
+              style: |
+                ha-card {
+                  font-size: 20px;
+                  font-family: Quicksand;
+                  height: 40px;
+                  background: none;
+                  margin-top: -0.4em;
+                  margin-left: -5px;
+                  margin-bottom: -1em;
+                  box-shadow: none;
+                }
+            content: <center> CONSO/24H= {{ states('sensor.today_power_usage') }} kWh - {{ states('sensor.daily_cost')}} €<center> 
+
+
+
+
+          - type: 'custom:apexcharts-card'
+            card_mod: 
+              style: |
+                ha-card {
+                  font-family: Quicksand;
+                  background: none;
+                  box-shadow: none;
+                  margin-top: 0.5em; 
+                  margin-bottom: 0.5em;                             
+                }        
+            graph_span: 1d
+            stacked: false
+            apex_config:
+              chart:
+                zoom:
+                  enabled: true
+                toolbar:
+                  show: true
+                  tools:
+                    zoom: true
+                    zoomin: true
+                    zoomout: true
+                    pan: true
+                    reset: true
+            header:
+              show: false
+              title: Coût de l'énergie par jour €
+            chart_type: line             
+
+            series:
+              - color: 'rgb(235,10,104)'
+                entity: sensor.current_power_usage
+                name: Total
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+                  func: avg                
+              - color: 'var(--tplink-1-color)' 
+                entity: sensor.tplink_1_current_power_w
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+                  func: avg          
+              - color: 'var(--tplink-2-color)'
+                entity: sensor.tplink_2_current_power_w
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+                  func: avg  
+              - color: 'var(--tplink-3-color)'
+                entity: sensor.tplink_3_current_power_w 
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+                  func: avg  
+
+          - type: horizontal-stack
+            cards:
+
+              - type: 'custom:apexcharts-card'
+                card_mod: 
+                  style: |
+                    ha-card {
+                      font-family: Quicksand;
+                      background: none;
+                      box-shadow: none;
+                      margin-top: -0.9em;            
+                    }        
+    #                stacked: true
+                header:
+                  show: false
+                  title: Coût de l'énergie par jour €
+                chart_type: pie             
+                apex_config:
+
+                  chart:
+                    height: 250
+                  stroke:
+                    show: true
+                    width: 1
+                    curve: smooth
+                  legend:
+                    show: false
+                  xaxis:
+                    labels:
+                      format: dd-MM
+                  fill:
+                    type: gradient
+                    gradient:
+                      shadeIntensity: 0.1
+                      opacityFrom: 0.50
+                      opacityTo: 1
+                      inverseColors: true
+                      stops:
+                        - 0
+                        - 90
+                        - 100
+                series:
+                  - color: 'var(--tplink-1-color)' 
+                    entity: sensor.tplink_1_today_energy_kwh
+                    name: TP-Link 1                    
+                    show:
+                      datalabels: true            
+                  - color: 'var(--tplink-2-color)' 
+                    entity: sensor.tplink_2_today_energy_kwh
+                    name: TP-Link 2
+                    show:
+                      datalabels: true  
+                  - color: 'var(--tplink-3-color)' 
+                    entity: sensor.tplink_3_today_energy_kwh
+                    name: TP-Link 3                    
+                    show:
+                      datalabels: true  
+
+              - type: 'custom:apexcharts-card'
+                card_mod: 
+                  style: |
+                    ha-card {
+                      font-family: Quicksand;
+                      background: none;
+                      box-shadow: none;
+                      margin-top: -0.9em;            
+                    }        
+                graph_span: 7d
+                stacked: false
+                span:
+                  end: day
+                  offset: -1sec
+                header:
+                  show: false
+                  title: Peak/Offpeak
+                  floating: true
+                chart_type: donut             
+                apex_config:
+
+                  chart:
+                    height: 250
+                  stroke:
+                    show: true
+                    width: 1
+                    curve: smooth
+                  legend:
+                    show: false
+                  xaxis:
+                    labels:
+                      format: dd-MM
+                  fill:
+                    type: gradient
+                    gradient:
+                      shadeIntensity: 0.1
+                      opacityFrom: 0.25
+                      opacityTo: 1
+                      inverseColors: true
+                      stops:
+                        - 0
+                        - 90
+                        - 100
+                series:
+                  - color: 'teal' 
+                    entity: sensor.daily_power_usage_offpeak
+                    name: Offpeak
+                    show:
+                      datalabels: true            
+                  - color: 'orange' 
+                    entity: sensor.daily_power_usage_peak
+                    name: Peak                    
+                    show:
+                      datalabels: true
+
+
+
+           
+  - type: markdown
+    card_mod: 
+      style: |
+        ha-card {
+          font-size: 20px;
+          font-family: Quicksand;
+          height: 40px;
+          background: none;
+          margin-top: 0em;
+          margin-left: -5px;
+          margin-bottom: -0.5em;
+          box-shadow: none;
+        }
+    content: <center> CONSO/SEMAINE= {{ states('sensor.weekly_energy') }} kWh - {{ states('sensor.weekly_cost')}} €<center>  
+
+  - type: vertical-stack
+    cards:    
+      - type: custom:mini-graph-card
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: Quicksand;
+              background: none;
+              box-shadow: none;
+              margin-top: -4em;            
+            }    
+        font_size: 80     
+
+        name: 'Consommation/Semaine'
+        hours_to_show: 168
+        points_per_hour: 0.25        
+        icon: mdi:flash
+        align_state: center        
+        height: 120
+        show:
+          name: false
+          state: false
+          labels: true
+          labels_secondary: true
+          icon: false  
+          legend: false  
+        entities:
+          - entity: sensor.tplink_1_current_power_w
+            color: 'var(--tplink-1-color)'   
+          - entity: sensor.tplink_2_current_power_w
+            color: 'var(--tplink-2-color)'    
+          - entity: sensor.tplink_3_current_power_w
+            color: 'var(--tplink-3-color)'    
+
+
+      - type: 'custom:apexcharts-card'
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: Quicksand;
+              background: none;
+              box-shadow: none;
+              margin-top: -0.3em;            
+            }        
+        graph_span: 7d
+        stacked: false
+        all_series_config:
+          type: column           
+        span:
+          end: day
+          offset: -1sec
+        header:
+          show: false
+          title: Coût de l'énergie par jour €
+        apex_config:
+          stroke:
+            show: true
+            width: 1
+            curve: smooth
+          legend:
+            show: true
+          xaxis:
+            labels:
+              format: dd-MM
+          chart:
+            height: 300            
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: true
+                zoomin: true
+                zoomout: true
+                pan: true
+                reset: true
+          fill:
+            type: gradient
+            gradient:
+              shadeIntensity: 0.1
+              opacityFrom: 0.25
+              opacityTo: 1
+              stops:
+                - 0
+                - 90
+                - 100
+        series:
+          - color: 'var(--tplink-1-color)' 
+            entity: sensor.tplink_1_today_energy_kwh
+            name: TP-Link 1
+            group_by:
+              func: max
+              duration: 1d
+            show:
+              datalabels: true            
+          - color: 'var(--tplink-2-color)' 
+            entity: sensor.tplink_2_today_energy_kwh
+            name: TP-Link 2           
+            group_by:
+              func: max
+              duration: 24h
+            show:
+              datalabels: true  
+          - color: 'var(--tplink-3-color)' 
+            entity: sensor.tplink_3_today_energy_kwh
+            name: TP-Link 3            
+            group_by:
+              func: max
+              duration: 24h
+            show:
+              datalabels: true  
+
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: -1.5em; 
+              background: none;
+              box-shadow: none;
+
+            }             
+        entities:
+          - type: divider 
+
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 20px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.4em;
+              margin-left: -5px;
+              margin-bottom: -1em;
+              box-shadow: none;
+            }
+        content: <center> CONSO/MOIS= {{ states('sensor.monthly_energy') }} kWh - {{ states('sensor.monthly_cost')}} €<center>  
+       
+      - type: 'custom:apexcharts-card'
+        card_mod: 
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              margin-top: 0.5em;            
+            }        
+        graph_span: 14d
+        stacked: true 
+        span:
+          end: day
+          offset: -1sec
+        header:
+          show: false
+          title: Coût de l'énergie par jour €
+        all_series_config:
+          type: column           
+        apex_config:
+          stroke:
+            show: true
+            width: 4
+            curve: smooth
+          legend:
+            show: false
+          xaxis:
+            labels:
+              format: dd-MM
+          fill:
+            type: gradient
+            gradient:
+              shadeIntensity: 0.1
+              opacityFrom: 0.55
+              opacityTo: 1
+              stops:
+                - 0
+                - 90
+                - 100
+          chart:
+            height: 300            
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: true
+                zoomin: true
+                zoomout: true
+                pan: true
+                reset: true
+
+        series:
+          - entity: sensor.daily_cost          
+            color: 'rgb(235,10,104)'
+            group_by:
+              func: max
+              duration: 1d
+            show:
+              datalabels: true  
+          - entity: sensor.today_power_usage                        
+            color: 'rgb(52, 152, 219)'
+            group_by:
+              func: max
+              duration: 1d
+            show:
+              datalabels: true  
+
+
+
+
+
+
+
+
+       

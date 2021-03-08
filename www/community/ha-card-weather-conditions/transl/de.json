@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N", 
+    "NNE": "NNO", 
+    "NE": "NO",
+    "ENE": "ONO", 
+    "E": "O", 
+    "ESE": "OSO", 
+    "SE": "SO",
+    "SSE": "SSO", 
+    "S": "S", 
+    "SSW": "SSW", 
+    "SW": "SW", 
+    "WSW": "WSW", 
+    "W": "W",
+    "WNW": "WNW", 
+    "NW": "NW",
+    "NNW": "NNW"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Gefühlt",
+    "new_moon": "Neumond",
+    "new": "Neumond",
+    "waxing_crescent": "Zunehmende Sichel",
+    "first_quarter": "Erstes Viertel",
+    "waxing_gibbous": "Zunehmender Halbmond",
+    "full": "Vollmond",
+    "full_moon": "Vollmond",
+    "waning_gibbous": "Abnehmender Halbmond",
+    "third_quarter": "Drittes Viertel",
+    "last_quarter": "Letztes Viertel",
+    "waning_crescent": "Abnehmende Sichel"
+  }
+}

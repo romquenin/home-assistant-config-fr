@@ -1,0 +1,687 @@
+######################################################################################################################         
+######################################################################################################################    
+#  CAST                 
+######################################################################################################################    
+######################################################################################################################
+
+title: 03_info_view
+#panel: true      
+#background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed     
+icon: mdi:information
+cards:
+
+
+
+  - type: custom:stack-in-card
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }       
+    mode: vertical
+    cards: 
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-left: -5px;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }          
+        content: <center> RASPBERRY PI 4 
+
+      - type: horizontal-stack
+        cards:                   
+          - type: 'custom:mini-graph-card'
+            card_mod: 
+              style: |
+                ha-card {
+                  font-family: var(--primary-font-family);
+                }
+                .graph {
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                .info {
+                  padding-bottom: 0px;
+                }
+                .flex {
+                  padding-bottom: 10px;
+                }
+            entities: 
+              - sensor.cpu_temp
+            name: CPU TEMP
+            align_state: center
+            align_icon: right
+            font_size: 100
+            font_size_header: 11
+            hours_to_show: 24
+            line_color: var(--tplink-1-color)
+            line_width: 4
+            animate: true
+            points_per_hour: 2
+            #lower_bound: 0
+            show:
+              fill: false
+              graph: line
+              extrema: true
+              icon: true
+              name: true
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: var(--primary-font-family);
+            }
+            .card-content {
+              padding-top: 0px;
+              padding-bottom: 0px;
+            }              
+        entities:
+          - type: divider 
+          - sensor.disk_use_percent
+          - sensor.home_assistant_v2_db
+          - sensor.version               
+          - sensor.ha_uptime
+          - type: divider                        
+      - type: horizontal-stack
+        cards: 
+
+          - type: 'custom:mini-graph-card'
+            card_mod: 
+              style: |
+                ha-card {
+                  font-family: var(--primary-font-family);
+                }
+                .graph {
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                .info {
+                  padding-bottom: 0px;
+                }
+                .flex {
+                  padding-bottom: 10px;
+                }
+            entities: 
+              - sensor.processor_use
+            name: CPU LOAD
+            align_state: center
+            align_icon: right
+            font_size: 100
+            font_size_header: 11
+            hours_to_show: 24
+            line_color: var(--tplink-2-color)
+            line_width: 4
+            animate: true
+            points_per_hour: 2
+            #lower_bound: 0
+            show:
+              fill: false
+              graph: line
+              extrema: true
+              icon: true
+              name: true
+          - type: 'custom:mini-graph-card'
+            card_mod: 
+              style: |
+                ha-card {
+                  font-family: var(--primary-font-family);
+                }
+                .graph {
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                .info {
+                  padding-bottom: 0px;
+                }
+                .flex {
+                  padding-bottom: 10px;
+                }
+            entities: 
+              - sensor.memory_use_percent
+            name: MEM USE
+            align_state: center
+            align_icon: right
+            font_size: 100
+            font_size_header: 11
+            hours_to_show: 24
+            line_color: var(--tplink-3-color)
+            line_width: 4
+            animate: true
+            points_per_hour: 2
+            #lower_bound: 0
+            show:
+              fill: false
+              graph: line
+              extrema: true
+              icon: true
+              name: true
+
+  - type: custom:stack-in-card 
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }            
+    mode: vertical
+    cards:
+      - type: markdown
+        style: |
+          ha-card {
+            font-size: 30px;
+            font-family: Quicksand;
+            height: 40px;
+            background: none;
+            margin-top: -0.2em;
+            margin-left: -5px;
+            margin-bottom: 0.5em;
+            box-shadow: none;
+          }
+        content: <center> NETWORK            
+      - type: horizontal-stack          
+        cards:        
+          - type: custom:bar-card
+            card_mod: 
+              style: |
+                .card-content {
+                  padding: 3px;
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                bar-card-value {
+                  margin-right: auto;
+                  font-size: 13px;
+                  font-weight: bold;
+                  text-shadow: 1px 1px #0005; 
+                  color: white;                    
+                }
+                bar-card-name {
+                  margin-right: auto;
+                  font-size: 13px;
+                  font-weight: bold;
+                  text-shadow: 1px 1px #0005; 
+                  color: white; 
+                }                                       
+                #states > * {
+                  margin-top: 1;
+                }
+            entity: sensor.down_max_freebox
+            color: 'green'
+            height: 30px
+            limit_value: 2300
+            min: 0
+            max: 2500                
+            icon: mdi:download                
+            positions:
+              icon: inside
+              indicator: 'off'
+              title: inside
+              value: inside
+          - type: custom:bar-card
+            card_mod: 
+              style: |
+                .card-content {
+                  padding: 3px;
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                bar-card-value {
+                  margin-right: auto;
+                  font-size: 13px;
+                  font-weight: bold;
+                  text-shadow: 1px 1px #0005; 
+                  color: white;                    
+                }
+                bar-card-name {
+                  margin-right: auto;
+                  font-size: 13px;
+                  font-weight: bold;
+                  text-shadow: 1px 1px #0005; 
+                  color: white; 
+                }                                       
+                #states > * {
+                  margin-top: 1;
+                }
+            entity: sensor.up_max_freebox
+            color: '#3498db'
+            height: 30px
+            icon: mdi:upload
+            limit_value: 120
+            min: 0
+            max: 120
+            positions:
+              icon: inside
+              indicator: 'off'
+              title: inside
+              value: inside
+      - type: entities     
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: var(--primary-font-family);
+              margin-top: 2em;
+            }
+            .card-content {
+              padding-top: 0px;
+              padding-bottom: 0px;
+            }                
+        entities:
+          - sensor.download
+          - sensor.upload
+      - type: custom:hui-element
+        
+        card_type: horizontal-stack
+        cards:
+          - type: entities
+            class: information_network
+            entities:
+              - entity: sensor.freebox_download_speed
+                style: ':host {--paper-item-icon-color: green;}'
+          - type: entities
+            class: information_network
+            entities:
+              - entity: sensor.freebox_upload_speed
+                name: ''
+                style: ':host {--paper-item-icon-color: #3498db;}'
+      - type: custom:mini-graph-card
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: -2em;
+            }          
+        entities:
+          - color: '#3498db'
+            entity: sensor.freebox_upload_speed
+          - color: green
+            entity: sensor.freebox_download_speed
+        align_state: left
+        group: false
+        points_per_hour: 15
+        line_width: 3
+        hour24: true
+        hours_to_show: 24
+        show:
+          {fill: fade, icon: false, name: false, state: false, 
+          name_adaptive_color: true, labels: hover, legend: false}
+        tap_action:
+          action: none                
+      - type: glance
+        columns: 4   
+        show_name: false
+        entities:
+          - entity: sensor.plex
+            image: /local/images/icones/plex.png  
+          - entity: sensor.sabnzbd
+            image: /local/images/icones/sabnzbd.png 
+          - entity: sensor.transmission
+            image: /local/images/icones/transmission.png                      
+          - entity: sensor.jackett
+            image: /local/images/icones/jackett.png          
+          - entity: sensor.lidarr
+            image: /local/images/icones/lidarr.png                     
+          - entity: sensor.radarr
+            image: /local/images/icones/radarr.png                      
+          - entity: sensor.sonarr
+            image: /local/images/icones/sonarr.png          
+          - entity: sensor.bazarr
+            image: /local/images/icones/bazarr.png
+ 
+
+      - type: iframe
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: 0.3em;          
+        url: https://www.metercustom.net/plugin/
+        aspect_ratio: 85%
+
+  - type: custom:stack-in-card
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }       
+    mode: vertical
+    cards:  
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }
+        content: <center> DOWNLOADS       
+      - type: custom:transmission-card
+        card_mod: 
+          style: |
+            ha-card {
+              text-align: center;
+              margin-top: -1em;                
+            }          
+        hide_type: false
+        default_type: 'active' 
+        display_mode: compact
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: -1.5em;                
+            }             
+        entities:
+          - type: divider  
+
+
+      - type: glance
+        card_mod: 
+          style: |
+            ha-card {
+              text-align: center;
+              margin-top: -1em;                   
+            }
+            .graph {
+              padding-top: 0px;
+              padding-bottom: 0px;
+            }
+            .info {
+              padding-bottom: 0px;
+            }
+            .flex {
+              padding-bottom: 10px;
+            }           
+        title: SABnzbd
+        entities:          
+          - sensor.sabnzbd_status
+          - sensor.sabnzbd_speed
+          - sensor.sabnzbd_left
+          - sensor.sabnzbd_queue
+          - sensor.sabnzbd_disk_free
+
+      - type: 'custom:apexcharts-card'
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: Quicksand;
+              background: none;
+              box-shadow: none;
+              margin-top: -2em;            
+            }        
+        graph_span: 7d
+        stacked: false
+        span:
+          end: day
+          offset: -1sec
+        header:
+          show: false
+          title: SABnzbd
+        apex_config:
+          stroke:
+            show: true
+            width: 1
+            curve: smooth
+          legend:
+            show: false
+          xaxis:
+            labels:
+              format: dd-MM
+          yaxis:
+            show: false       
+          fill:
+            type: gradient
+            gradient:
+              shadeIntensity: 0.1
+              opacityFrom: 0.55
+              opacityTo: 1
+              stops:
+                - 0
+                - 90
+                - 100
+          chart:
+            height: 150            
+            zoom:
+              enabled: true
+        series:
+          - color: 'rgb(235,10,104)'
+            entity: sensor.sabnzbd_daily_total
+            type: column
+            name: SABnzbd
+            group_by:
+              func: max
+              duration: 1d
+            show:
+              datalabels: true            
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: -1.5em;
+
+            }              
+        entities:
+          - type: divider  
+      - type: custom:swipe-card
+        card_mod: 
+          style: |
+            ha-card {
+              margin-top: 0.5em;
+              text-align: center;
+            }             
+        parameters:
+          spaceBetween: 8
+          scrollbar:
+            hide: false
+            draggable: true
+            snapOnRelease: true
+        cards:              
+          - type: custom:upcoming-media-card
+            card_mod: 
+              style: |
+                ha-card {
+                  margin-top: -1em;
+                  text-align: center;
+                }                 
+            entity: sensor.sonarr_upcoming_media
+            title: Sonarr
+            image_style: fanart
+          - type: custom:upcoming-media-card
+            card_mod: 
+              style: |
+                ha-card {
+                  margin-top: -1em;
+                  text-align: center;
+                }                
+            entity: sensor.radarr_upcoming_media
+            title: Radarr
+            image_style: fanart
+       
+
+
+  - type: custom:stack-in-card  
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }         
+    mode: vertical
+    cards: 
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-left: -5px;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }
+        content: <center> SYNOLOGY NAS 
+      - type: 'custom:mini-graph-card'
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: var(--primary-font-family);
+            }
+            .graph {
+              padding-top: 0px;
+              padding-bottom: 0px;
+            }
+            .info {
+              padding-bottom: 0px;
+            }
+            .flex {
+              padding-bottom: 10px;
+            }
+        entities: 
+          - sensor.synology_temperature_sda
+        name: CPU TEMP
+        align_state: center
+        align_icon: right
+        font_size: 100
+        font_size_header: 11
+        hours_to_show: 24
+        line_color: var(--tplink-1-color)
+        line_width: 4
+        animate: true
+        points_per_hour: 2
+        #lower_bound: 0
+        show:
+          fill: false
+          graph: line
+          extrema: true
+          icon: true
+          name: true
+
+
+
+
+      - type: entities
+        card_mod: 
+          style: |
+            ha-card {
+              font-family: var(--primary-font-family);
+            }
+            .card-content {
+              padding-top: 0px;
+              padding-bottom: 0px;
+            }              
+        entities:
+
+#              - sensor.cpu_speed
+          - type: divider    
+          - sensor.synology_volume_used_volume_1
+          - sensor.synology_network_up
+          - sensor.synology_network_down 
+          - sensor.synology_status_volume_1               
+          - type: divider          
+      - type: horizontal-stack
+        cards: 
+          - type: horizontal-stack
+            cards:                   
+              - type: 'custom:mini-graph-card'
+                card_mod: 
+                  style: |
+                    ha-card {
+                      font-family: var(--primary-font-family);
+                    }
+                    .graph {
+                      padding-top: 0px;
+                      padding-bottom: 0px;
+                    }
+                    .info {
+                      padding-bottom: 0px;
+                    }
+                    .flex {
+                      padding-bottom: 10px;
+                    }
+
+
+
+                entities: 
+                  - sensor.synology_cpu_load_total
+                name: CPU LOAD
+                align_state: center
+                align_icon: right
+                font_size: 100
+                font_size_header: 11
+                hours_to_show: 24
+                line_color: var(--tplink-2-color)
+                line_width: 4
+                animate: true
+                points_per_hour: 2
+                #lower_bound: 0
+                show:
+                  fill: false
+                  graph: line
+                  extrema: true
+                  icon: true
+                  name: true
+
+          - type: 'custom:mini-graph-card'
+            card_mod: 
+              style: |
+                ha-card {
+                  font-family: var(--primary-font-family);
+                }
+                .graph {
+                  padding-top: 0px;
+                  padding-bottom: 0px;
+                }
+                .info {
+                  padding-bottom: 0px;
+                }
+                .flex {
+                  padding-bottom: 10px;
+                }
+            entities: 
+              - sensor.synology_memory_usage_real
+            name: MEM USE
+            align_state: center
+            align_icon: right
+            font_size: 100
+            font_size_header: 11
+            hours_to_show: 24
+            line_color: var(--tplink-3-color)
+            line_width: 4
+            animate: true
+            points_per_hour: 2
+            #lower_bound: 0
+            show:
+              fill: false
+              graph: line
+              extrema: true
+              icon: true
+              name: true
+
+
+
+
+
+
+                
+
+
+
+ 
+
+
+

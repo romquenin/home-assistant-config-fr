@@ -1,0 +1,52 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                        DETENTE                         ##
+   ##                                                        ##
+   ############################################################
+  
+- name: Salon Concentrate
+  entities:
+    light.bloom_1:    
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100
+    light.strip_2:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100
+    light.strip_3:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100      
+    light.lamp_2:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100
+    light.lamp_1:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100    
+    light.spot_1:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100     
+    light.spot_2:
+      profile: concentrate        
+      state: on
+      transition: 6
+      brightness_pct: 100
+   
+
+
+   
+   
+
+
+   

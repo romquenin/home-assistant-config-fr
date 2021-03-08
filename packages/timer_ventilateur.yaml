@@ -1,0 +1,148 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                         TIMER                          ##
+  ##                                                        ##
+  ############################################################    
+
+input_datetime:
+  only_time_for_timer_ventilateur:
+    name: Input datetime pour timer ventilateur
+    has_date: false
+    has_time: true
+
+timer:
+  timer_ventilateur:
+
+input_number:
+  timer_ventilateur_seconds:
+    name: Seconds
+    initial: 0
+    max: 60
+    min: 0
+    step: 1
+  timer_ventilateur_minutes:
+    name: Minutes
+    initial: 0
+    max: 60
+    min: 0
+    step: 1
+
+script:
+  timer_ventilateur_start:
+    sequence:
+      - service: timer.start
+        data_template:
+          entity_id: timer.timer_ventilateur
+          duration: '00:{{ states.input_number.timer_ventilateur_minutes.state | int }}:{{ states.input_number.timer_ventilateur_seconds.state | int }}'
+  timer_ventilateur_cancel:
+    sequence:
+      - service: timer.cancel
+        data:
+          entity_id: timer.timer_ventilateur
+  timer_ventilateur_start_input_datetime:
+    sequence:
+      - service: timer.start
+        data_template:
+          entity_id: timer.timer_ventilateur
+          duration: "{{ states.input_datetime.only_time_for_timer_ventilateur.state }}"          
+      - service: fan.turn_on
+        data_template:
+          entity_id: fan.dyson_pure_cool_linktm
+
+
+automation:
+  - alias: 'Timer ventilateur terminé'
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data: 
+          entity_id: timer.timer_ventilateur
+    action:
+      - service: fan.turn_off
+        entity_id: fan.dyson_pure_cool_linktm       
+      - service: persistent_notification.create
+        data:
+          title: "Compte à rebours du ventilatuer est terminé"
+          message: "C'est terminé!" 
+
+###Carte Timer https://forum.hacf.fr/t/carte-timer/725###
+
+  - alias: timer_ventilateur_mise_a_jour_pour_les_secondes
+    #Mise à jour de l'entité sensor.timer_1h_temps_restant toutes les secondes
+    id: 'timer_ventilateur_mise_a_jour_pour_les_secondes'
+    initial_state: off      
+    trigger:
+      platform: time_pattern
+      seconds: "/1"
+    condition:
+    action:
+      - service: homeassistant.update_entity
+        entity_id: sensor.timer_ventilateur_temps_restant_int
+      - service: python_script.ecrire_etat_entite
+        data:
+          entity_id: 'sensor.timer_ventilateur_temps_restant'
+          state: "{{states('sensor.timer_ventilateur_temps_restant_int')}}"    
+
+
+  - alias: 'activation_desactivation_automation_timer_ventilateur_mise_a_jour_pour_les_secondes'
+    #Permet d'activer la mise à jour de l'entité sensor.timer_1h_temps_restant
+    trigger:
+      platform: state
+      entity_id: timer.timer_ventilateur
+    condition:
+    action:
+      - choose:
+          - conditions:
+            #Le timer n'est pas démarré
+              - condition: state
+                entity_id: timer.timer_ventilateur
+                state: "idle"
+            sequence:
+              - service: automation.turn_off
+                entity_id: automation.timer_ventilateur_mise_a_jour_pour_les_secondes
+
+          - conditions:
+            #Le timer est démarré
+              - condition: state
+                entity_id: timer.timer_ventilateur
+                state: "active"
+            sequence:
+              - service: automation.turn_on
+                entity_id: automation.timer_ventilateur_mise_a_jour_pour_les_secondes
+          - conditions:
+            #Le timer est en pause
+              - condition: state
+                entity_id: timer.timer_ventilateur
+                state: "paused"
+            sequence:
+              - service: automation.turn_off
+                entity_id: automation.timer_ventilateur_mise_a_jour_pour_les_secondes
+        default:
+          - service: automation.turn_off
+            entity_id: automation.timer_ventilateur_mise_a_jour_pour_les_secondes        
+
+sensor:
+  - platform: template
+    sensors:
+      timer_ventilateur_temps_restant_int:
+        friendly_name: "Timer temps restant int"
+        value_template: >
+          {% if is_state("timer.timer_ventilateur", "active") %}
+            {{ ( as_timestamp(state_attr('timer.timer_ventilateur', 'finishes_at')) | int - (now().timestamp()) | int ) | timestamp_custom('%M:%S', False) }}
+          {% elif is_state("timer.timer_ventilateur", "paused") %}
+            En pause
+          {% else %}
+            Non démarré
+          {% endif %}
+        attribute_templates:
+          icon: mdi:clock-fast
+  - platform: template
+    sensors:
+      #Temps restant du timer timer.timer_1h_temps mis à jour par le script python
+      timer_ventilateur_temps_restant:
+        friendly_name: 'Timer ventilateur : Temps restant'
+        value_template: ""
+        attribute_templates:
+          icon: 'mdi:clock-fast'
+

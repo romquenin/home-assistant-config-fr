@@ -1,0 +1,73 @@
+   ############################################################
+   ##                                                        ##
+   ##                     RÉVEIL TEMPLATE                    ##
+   ##                                                        ##
+   ############################################################
+
+sensor:
+  - platform: template
+    sensors:
+      alarmclock_wd_time_template:
+        friendly_name: 'Réglage du réveil'
+        icon_template: "{{ 'mdi:alarm' if is_state('input_boolean.alarmclock_wd_enabled', 'on') else 'mdi:alarm-off' }}"
+        value_template: '{{ "%0.02d:%0.02d" | format(states("input_number.alarmclock_wd_hour") | int, states("input_number.alarmclock_wd_minute") | int) }}'
+input_boolean:
+  alarmclock_wd_enabled:
+    name: Réglage du réveil
+    initial: off
+    icon: mdi:alarm
+input_number:
+  alarmclock_wd_hour:
+    name: Heure
+    icon: mdi:timer
+    initial: 7
+    min: 0
+    max: 23
+    step: 1    
+  alarmclock_wd_minute:
+    name: Minute
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 55
+    step: 5  
+automation:
+  - alias: Réveil
+    initial_state: 'on'
+    trigger:
+      - platform: time_pattern
+        minutes: '/1'
+        seconds: 00
+    condition:
+      condition: or
+      conditions:
+        - condition: and
+          conditions:
+          - condition: template
+            value_template: '{{ now().time().strftime("%H:%M") == states.sensor.alarmclock_wd_time_template.state }}'
+          - condition: state
+            entity_id: input_boolean.alarmclock_wd_enabled
+            state: 'on'
+    action:
+      - service: script.sonnerie_reveil
+
+   ############################################################
+   ##                                                        ##
+   ##                    RÉVEIL EN MUSIQUE                   ##
+   ##                                                        ##
+   ############################################################
+script:
+  sonnerie_reveil:
+    alias: '[Réveil] Sonnerie réveil'
+    sequence:
+      - service: media_player.select_source
+        data:
+          source: chambre
+          entity_id: media_player.ytube_music_player
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.ytube_music_player
+          media_content_id: PLwG00xEEyR9ELtHz61D5JJz7s2W41m-ho
+          media_content_type: playlist
+    mode: single
+

@@ -1,0 +1,354 @@
+######################################################################################################################
+######################################################################################################################    
+#  ENTREE    
+######################################################################################################################
+######################################################################################################################
+
+title: 07_test_view
+icon: mdi:test-tube
+#background: center / cover no-repeat url("/local/images/fond ecran/metal.png") fixed          
+#panel: true    
+cards:
+
+
+  - type: 'custom:apexcharts-card'   
+    graph_span: 7d
+    span:
+      end: day  
+    series:
+      - entity: sensor.tplink_1_today_energy_kwh
+        name: SABnzbd
+        type: column     
+        group_by:
+          func: max
+          duration: 1d
+        show:
+          datalabels: true       
+
+
+  - type: custom:mini-graph-card
+    style: |
+      ha-card {
+        margin-top: 0em;                
+      }     
+    hours_to_show: 168
+    points_per_hour: 0.3        
+    align_state: center        
+    height: 120
+    show:
+
+    name: Température/Semaine
+    icon: mdi:thermometer
+    entities:
+      - sensor.sonoffth16_temperature
+      - sensor.sonoffth16_humidity
+      
+
+  - type: custom:layout-card
+    layout: vertical
+    cards:   
+      - type: picture-entity
+        entity: camera.dafang_hack
+        camera_view: live
+        show_state: false
+        show_name: false
+
+      - type: picture-entity
+        entity: camera.yi_hack_v4
+        camera_view: live
+        show_state: false
+        show_name: false
+
+
+
+  - type: custom:mini-graph-card
+    style: |
+      ha-card {
+        font-family: Quicksand;
+        background: none;
+        box-shadow: none;
+        margin-top: -0.9em;            
+      }                             
+      .info {
+        padding-bottom: -4px;
+      }
+      .flex {
+        padding-bottom: -3px;                 
+      }
+    font_size: 80     
+    name: 'Consommation/MOIS'
+    hours_to_show: 720     
+    icon: mdi:flash
+    align_state: center        
+    height: 120
+    aggregate_func: max
+    group_by: date
+    show:
+      graph: bar
+      name: false
+      state: true
+      labels: true
+      labels_secondary: true
+      icon: false    
+    entities:
+      - entity: sensor.today_power_usage
+#                color: "#761919"  
+                         
+
+
+
+
+
+
+
+  
+
+  - type: custom:stack-in-card
+    mode: vertical
+    cards:
+      
+
+      - type: horizontal-stack
+        cards:                                          
+          - type: custom:gauge-card
+            style: |
+              ha-card {
+                border-radius: 15px;                
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% endif %}     
+              }                   
+            title: TP-Link 1
+            entity: sensor.tplink_1_current_power_w                      
+            scale: 28px                    
+            min: 0
+            max: 1000
+            severity:
+              lime: 0
+              yellow: 333
+              orange: 666  
+     
+                               
+          - type: custom:gauge-card
+            style: |
+              ha-card {
+                border-radius: 15px;                
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% endif %}     
+              }                     
+            scale: 28px                     
+            title: TP-Link 2
+            entity: sensor.tplink_2_current_power_w 
+            min: 0
+            max: 1000    
+            severity:                        
+              lime: 0
+              yellow: 333
+              orange: 666    
+    
+                  
+          - type: custom:gauge-card
+            style: |
+              ha-card {
+                border-radius: 15px;                
+                box-shadow: 
+                  {% if is_state('sun.sun', 'above_horizon') %}
+                    inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                  {% elif is_state('sun.sun', 'below_horizon') %}                      
+                    inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                  {% endif %}     
+              }       
+                     
+            scale: 28px                     
+            title: TP-Link 3
+            entity: sensor.tplink_3_current_power_w 
+            min: 0
+            max: 1000
+            severity:
+              lime: 0
+              yellow: 333
+              orange: 666  
+      - type: markdown
+        style: |
+          ha-card {
+            font-size: 20px;
+            font-family: Quicksand;
+            height: 40px;
+            background: none;
+            margin-top: -0.9em;
+            margin-left: -5px;
+
+            box-shadow: none;
+          }
+        content: 
+          <center> TOTAL= {{ states('sensor.current_power_usage') }} W <center>   
+
+
+  - type: picture-glance
+    entities: 
+      - switch.tp_link_plug_4
+      - switch.sonoffth16
+      - sensor.tplink_4_current_power_w
+      - sensor.sonoffth16_temperature
+      - sensor.sonoffth16_humidity
+      - sensor.fleur_1_temperature
+      - sensor.fleur_1_moisture
+      - sensor.fleur_1_conductivity
+      - sensor.fleur_1_light_intensity
+      - sensor.fleur_1_battery
+    camera_image: camera.camera_1
+    camera_view: live
+    show_state: true
+
+
+
+
+
+
+
+
+
+
+
+  - type: horizontal-stack
+    cards:               
+      - type: custom:mini-graph-card
+        name: NET UP
+        graph: line 
+        height: 40
+        show:
+          extrema: true  
+        entities:
+          - sensor.synology_network_up
+      - type: custom:mini-graph-card
+        name: NET DOWN
+        graph: line 
+        height: 40
+        show:
+          extrema: true  
+        entities:
+          - sensor.synology_network_down
+
+
+
+
+
+  - type: horizontal-stack
+    cards:
+
+      - type: custom:decluttering-card
+        template: button
+        variables:
+          - entity: "weather.saint_tropez"   
+          - icon: "[[[
+              if (entity.state == 'partlycloudy') return 'mdi:weather-partly-cloudy';
+              if (entity.state == 'clear-night') return 'mdi:weather-night';
+              if (entity.state == 'cloudy') return 'mdi:weather-cloudy';
+              if (entity.state == 'overcast') return 'mdi:weather-cloudy-arrow-right';
+              if (entity.state == 'fog') return 'mdi:weather-fog';
+              if (entity.state == 'hail') return 'mdi:weather-hail';
+              if (entity.state == 'lightning') return 'mdi:weather-lightning';
+              if (entity.state == 'lightning-rainy') return 'mdi:weather-lightning-rainy';
+              if (entity.state == 'pouring') return 'mdi:weather-pouring';
+              if (entity.state == 'rainy') return 'mdi:weather-rainy';
+              if (entity.state == 'snowy') return 'mdi:weather-snowy';
+              if (entity.state == 'snowy-rainy') return 'mdi:weather-snowy-rainy';
+              if (entity.state == 'sunny') return 'mdi:weather-sunny';
+              if (entity.state == 'windy') return 'mdi:weather-windy';
+              if (entity.state == 'windy-variant') return 'mdi:weather-windy-variant';
+              ]]]"
+          - name: Météo
+          - colorstyle: "[[[
+              if (entity.state == 'partlycloudy') return 'orange';
+              if (entity.state == 'clear-night') return 'lime';
+              if (entity.state == 'cloudy') return 'cyan';
+              if (entity.state == 'overcast') return 'cyan';
+              if (entity.state == 'fog') return 'magenta';
+              if (entity.state == 'hail') return 'magenta';
+              if (entity.state == 'lightning') return 'lime';
+              if (entity.state == 'lightning-rainy') return 'lime';
+              if (entity.state == 'pouring') return 'lime';
+              if (entity.state == 'rainy') return 'lime';
+              if (entity.state == 'snowy') return 'lime';
+              if (entity.state == 'snowy-rainy') return 'lime';
+              if (entity.state == 'sunny') return 'red';
+              if (entity.state == 'windy') return 'cyan';
+              if (entity.state == 'windy-variant') return 'cyan';
+              ]]]"
+          - tempfield: "[[[
+              var options = { hour: 'numeric', minute: 'numeric' };
+              var sunrise_date = new Date(states['sun.sun'].attributes.next_rising);
+              var sunrise_time = sunrise_date.toLocaleDateString('en-US', options).split(',')[1];
+              var sunset_date = new Date(states['sun.sun'].attributes.next_setting);
+              var sunset_time = sunset_date.toLocaleDateString('en-US', options).split(',')[1];
+              return `<ha-icon icon='mdi:weather-sunset-up' style='width: 20px; height: 20px; color: yellow;'></ha-icon>
+              <span style='align: left;'>${sunrise_time}</span>
+              <br>
+              <ha-icon icon='mdi:weather-sunset-down' style='width: 20px; height: 20px; color: yellow;'></ha-icon>
+              <span style='align: left;'>${sunset_time}</span>`;
+              ]]]"
+          - cpufield: "[[[
+              return `<ha-icon icon='mdi:thermometer' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+              <span><span style='color: var(--text-color-sensor);'>${Math.round(entity.attributes.forecast[0].templow)}°C - ${Math.round(entity.attributes.forecast[0].temperature)}°C</span></span>`
+              ]]]"
+          - ramfield: "[[[
+              var degree = 45;
+              var angle = entity.attributes.wind_bearing + 22.5;
+              var direction = (angle >= 0 * degree && angle < 1 * degree) ? 'N' :
+              (angle >= 1 * degree && angle < 2 * degree) ? 'NE' :
+              (angle >= 2 * degree && angle < 3 * degree) ? 'E' :
+              (angle >= 3 * degree && angle < 4 * degree) ? 'SE' :
+              (angle >= 4 * degree && angle < 5 * degree) ? 'S' :
+              (angle >= 5 * degree && angle < 6 * degree) ? 'W' :
+              (angle >= 6 * degree && angle < 7 * degree) ? 'NW' : 'N';
+              return `<ha-icon icon='mdi:weather-windy' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+              <span><span style='color: var(--text-color-sensor);'>${direction} ${Math.round((entity.attributes.wind_speed || 0))}km/h</span></span>`
+              ]]]"
+          - sdfield: "[[[
+              return `<ha-icon icon='mdi:water-percent' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+              <span><span style='color: var(--text-color-sensor);'>${(entity.attributes.humidity || 0)}%
+              <ha-icon icon='mdi:thermometer' style='width: 20px; height: 20px; color: deepskyblue;'></ha-icon>
+              ${(entity.attributes.temperature || 0)}°C</span></span>`
+              ]]]"    
+
+      - template: button_body
+        type: "custom:button-card"
+        styles:
+          name:
+            - display: none
+          grid:
+            - grid-template-areas: '"iframe"'
+            - grid-template-columns: 1fr
+            - grid-template-rows: 1fr
+        custom_fields:
+          iframe: '<iframe width="50" height="50" src="https://embed.windy.com/embed2.html?lat=43.397&lon=6.594&zoom=8&level=surface&overlay=wind&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=45.522&detailLon=2.373&metricWind=default&metricTemp=default&radarRange=-1" style="top: 4%; left: 4%; width: 92%; height: 92%; position: absolute; border: none; padding-right: 10px; border-radius: 10%;"></iframe>'
+                             
+  - type: alarm-panel
+    style: |
+      ha-card {
+        --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+        border-radius: 15px;                
+        box-shadow: 
+          {% if is_state('sun.sun', 'above_horizon') %}
+            -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+          {% elif is_state('sun.sun', 'below_horizon') %}                      
+            -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+          {% endif %}     
+      }      
+    entity: alarm_control_panel.home
+    name: Alarme
+
+    states:
+      - arm_home
+      - arm_away  
+
+
+
+          

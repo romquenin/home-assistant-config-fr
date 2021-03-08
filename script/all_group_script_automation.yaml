@@ -1,0 +1,22 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                   ALL AUTOMATIONS                      ##
+   ##                                                        ##
+   ############################################################
+
+create_all_automations_group:
+  sequence:
+    - service: group.set
+      data_template:
+        object_id: "all_automations"
+        entities: >
+          {{ states.automation | map(attribute='entity_id') | join(',') }}
+
+create_all_scripts_group:
+  sequence:
+    - service: group.set
+      data_template:
+        object_id: "all_scripts"
+        entities: >
+          {{ states.script | map(attribute='entity_id') | join(',') }}          

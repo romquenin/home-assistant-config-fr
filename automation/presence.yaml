@@ -1,0 +1,131 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       PRÉSENCE                         ##
+   ##                                                        ##
+   ############################################################
+
+  ###  PORTE  ###
+- alias: '[Présence] Alerte Pushbullet Porte Ouverte'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.porte_entree_contact
+    from: 'off'
+    to: 'on'
+  action:
+    - service: telegram_bot.send_message
+      data:
+        title: Alerte! Alerte!
+        message: La porte vient de s'ouvrir!
+
+
+  ###  CUISINE  ###
+- alias: '[Présence] Si mouvement allumer la cuisine'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.capteur_mouvement_aqara_occupancy
+    from: 'off'
+    to: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.cuisine
+      
+- alias: '[Présence] Si pas de mouvement éteindre la cuisine'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.capteur_mouvement_aqara_occupancy
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: time  
+    after: '20:00:00'
+    before: '18:00:00'    
+  action:
+    - service: light.turn_off
+      entity_id: light.cuisine     
+ 
+  ###  ENTREE JOUR ###
+- alias: '[Présence] Si mouvement allumer la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.multisensor_6_home_security_motion_detection
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: time  
+        after: '07:00:00'
+        before: '23:55:00'
+      - condition: state
+        entity_id: 'switch.wake_on_lan'
+        state: 'off'      
+  action:
+    - service: light.turn_on
+      entity_id: light.lamp_3
+
+- alias: '[Présence] Si pas de mouvement éteindre la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.multisensor_6_home_security_motion_detection
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: time  
+        after: '07:00:00'
+        before: '23:55:00'
+      - condition: state
+        entity_id: 'switch.wake_on_lan'
+        state: 'off'    
+  action:
+    - service: light.turn_off
+      entity_id: light.lamp_3   
+
+
+  ###  ENTREE NUIT ###
+- alias: '[Présence] Si mouvement allumer la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.multisensor_6_home_security_motion_detection
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: time  
+        after: '23:55:00'
+        before: '07:00:00'
+      - condition: state
+        entity_id: 'switch.wake_on_lan'
+        state: 'off'      
+  action:
+    - service: light.turn_on
+      entity_id: light.strip_4
+
+- alias: '[Présence] Si pas de mouvement éteindre la Veilleuse'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.multisensor_6_home_security_motion_detection
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: time  
+        after: '23:55:00'
+        before: '07:00:00'
+      - condition: state
+        entity_id: 'switch.wake_on_lan'
+        state: 'off'    
+  action:
+    - service: light.turn_off
+      entity_id: light.strip_4  

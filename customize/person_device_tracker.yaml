@@ -1,0 +1,21 @@
+
+   ############################################################
+   ##                        PERSON                          ##
+   ############################################################
+person.roman:
+  entity_picture: /local/images/person/roman.jpg
+person.gabriela:
+  entity_picture: /local/images/person/gaby.jpg
+
+   ############################################################
+   ##                    DEVICE TRACKER                      ##
+   ############################################################
+device_tracker.oneplus_a6013:  
+  entity_picture: /local/images/person/roman.jpg  
+device_tracker.roman_gps:  
+  entity_picture: /local/images/person/roman.jpg    
+device_tracker.hostname1:
+  entity_picture: /local/images/person/gaby.jpg
+  friendly_name: Gabriela's iPhone WIFI  
+device_tracker.roman_gabriela_gps:  
+  entity_picture: /local/images/person/gaby.jpg  

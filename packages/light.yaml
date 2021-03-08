@@ -1,0 +1,185 @@
+
+light:   
+   ############################################################
+   ##                    LIGHT GROUPS                        ##
+   ############################################################
+  - platform: group
+    name: Spots gauche 
+    entities:
+      - light.spot_3
+      - light.spot_4
+  - platform: group
+    name: Spots droite
+    entities:
+      - light.spot_5
+      - light.spot_6
+  - platform: group
+    name: Cuisine
+    entities:
+      - light.filament_1
+      - light.filament_2
+      - light.filament_3
+  - platform: group
+    name: Entrée
+    entities:
+      - light.lamp_3 
+      - light.strip_4  
+  - platform: group
+    name: Salon
+    entities:
+      - light.lamp_1
+      - light.lamp_2
+      - light.spot_1
+      - light.spot_2    
+      - light.play_1 
+      - light.play_2 
+      - light.strip_2
+      - light.strip_3
+      - light.signe_1 
+      - light.bloom_1           
+  - platform: group
+    name: Chambre
+    entities:
+      - light.strip_1
+      - light.lamp_6
+      - light.spots_gauche
+      - light.spots_droite
+
+group:
+   ############################################################
+   ##                    ALL LIGHTS GROUPS                   ##
+   ############################################################
+  all_lights_salon:
+    name: Salon
+    entities:  
+      - light.lamp_1
+      - light.lamp_2
+      - light.spot_1
+      - light.spot_2    
+      - light.play_1 
+      - light.play_2 
+      - light.strip_2
+      - light.strip_3
+      - light.signe_1 
+      - light.bloom_1  
+    
+  all_lights_cuisine:
+    name: Cuisine
+    entities:  
+      - light.filament_1
+      - light.filament_2
+      - light.filament_3
+
+  all_lights_chambre:
+    name: Chambre
+    entities:  
+      - light.strip_1
+      - light.lamp_6
+      - light.spots_gauche
+      - light.spots_droite
+
+  all_lights_entree:
+    name: Entrée
+    entities:  
+      - light.lamp_3 
+      - light.strip_4    
+
+  all_lights_sdb:
+    name: Salle de bain
+    entities:  
+      - light.lamp_4
+ 
+   ############################################################
+   ##                     LIGHTS COUNT                       ##
+   ############################################################
+sensor:
+  - platform: template
+    sensors:
+      all_lights_salon:
+        value_template: >
+          {{ states | selectattr('entity_id','in',state_attr('group.all_lights_salon','entity_id')) | selectattr('state','eq','on') | list | count }}
+          
+      all_lights_chambre:
+        value_template: >
+          {{ states | selectattr('entity_id','in',state_attr('group.all_lights_chambre','entity_id')) | selectattr('state','eq','on') | list | count }}
+
+      all_lights_entree:
+        value_template: >
+          {{ states | selectattr('entity_id','in',state_attr('group.all_lights_entree','entity_id')) | selectattr('state','eq','on') | list | count }}
+
+      all_lights_cuisine:
+        value_template: >
+          {{ states | selectattr('entity_id','in',state_attr('group.all_lights_cuisine','entity_id')) | selectattr('state','eq','on') | list | count }}
+
+      all_lights_sdb:
+        value_template: >
+          {{ states | selectattr('entity_id','in',state_attr('group.all_lights_sdb','entity_id')) | selectattr('state','eq','on') | list | count }}
+
+
+
+automation: 
+   ############################################################
+   ##                  LIGHTS COUNT UPDATE                   ##
+   ############################################################         
+  - alias: 'Mise a jour all_lights_salon'
+    initial_state: 'on'
+    trigger:    
+      - platform: state
+        entity_id: 
+          - light.lamp_1
+          - light.lamp_2
+          - light.spot_1
+          - light.spot_2    
+          - light.play_1 
+          - light.play_2 
+          - light.strip_2
+          - light.strip_3
+          - light.signe_1 
+          - light.bloom_1  
+    action:
+      - service: homeassistant.update_entity
+        data_template:
+          entity_id: sensor.all_lights_salon  
+
+  - alias: 'Mise a jour all_lights_chambre'
+    initial_state: 'on'
+    trigger:    
+      - platform: state
+        entity_id:  
+          - light.strip_1
+          - light.lamp_6
+          - light.spots_gauche
+          - light.spots_droite
+    action:
+      - service: homeassistant.update_entity
+        data_template:
+          entity_id: sensor.all_lights_chambre 
+
+  - alias: 'Mise a jour all_lights_entree'
+    initial_state: 'on'
+    trigger:    
+      - platform: state
+        entity_id:  
+          - light.lamp_3 
+          - light.strip_4                                                           
+    action:
+      - service: homeassistant.update_entity
+        data_template:
+          entity_id: sensor.all_lights_entree 
+
+  - alias: 'Mise a jour all_lights_cuisine'
+    initial_state: 'on'
+    trigger:      
+      - platform: state
+        entity_id:  
+          - light.filament_1
+          - light.filament_2
+          - light.filament_3                                                         
+    action:
+      - service: homeassistant.update_entity
+        data_template:
+          entity_id: sensor.all_lights_cuisine  
+
+
+
+

@@ -1,0 +1,193 @@
+alarm_control_panel:
+  - platform: manual
+    name: Home
+    code: !secret alarm_code
+    arming_time: 10
+    delay_time: 20
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      arming_time: 0
+      delay_time: 0
+    armed_away:
+      arming_time: 0
+      delay_time: 0   
+
+
+  ##########################################################################################################################################################################################################################################
+  ##                                                                                                                                                                                                                                      ##
+  ##                        AUTOMATIONS                                                                                                                                                                                                   ##
+  ##                                                                                                                                                                                                                                      ##
+  ##########################################################################################################################################################################################################################################          
+   
+automation:
+  - alias: '[Alarme] Déclencher alarme quand armed away'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.porte_entree_contact
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: alarm_control_panel.home
+        state: armed_away
+    action:
+      service: alarm_control_panel.alarm_trigger
+      target:
+        entity_id: alarm_control_panel.home 
+
+  ############################################################
+  ##                                                        ##
+  ##                      ACTIVÉE                           ##
+  ##                                                        ##
+  ############################################################    
+
+  - alias: '[Alarme] Activée'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home
+      to: 'triggered'
+    action:
+      - service: media_player.play_media
+        target:
+          entity_id: media_player.maison        
+        data:        
+          media_content_type: 'audio/mp3'
+          media_content_id: 'media-source://media_source/local/factory_alarm.mp3'       
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.salon
+          volume_level: 1        
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.chambre
+          volume_level: 1  
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.hub
+          volume_level: 1 
+
+      - service: script.turn_on
+        entity_id: script.lumiere_flash      
+      - service: telegram_bot.send_message
+        data:
+          message: 'ALARME ACTIVÉE!!!'
+
+
+  ############################################################
+  ##                      DESACTIVÉE                        ##
+  ############################################################    
+
+  - alias: '[Alarme] Désactivée'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home
+      to: 'disarmed'
+    action:
+      - service: script.turn_on
+        data:      
+          entity_id: script.lumiere_flash_annuler
+      - service: media_player.media_stop
+        data:
+          entity_id: media_player.maison
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.salon
+          volume_level: 0.5        
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.chambre
+          volume_level: 0.5  
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.hub
+          volume_level: 0.5    
+      - service: telegram_bot.send_message
+        data:
+          message: 'Alarme Désactivée'
+
+  ############################################################
+  ##                     ALARME ARMÉE                       ##
+  ############################################################   
+
+  - alias: '[Alarme] Mode Absent activé'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home
+      to: 'armed_away'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          message: 'Alarme Absent activé'
+
+  - alias: '[Alarme] Mode Maison activé'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: alarm_control_panel.home
+      to: 'armed_home'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          message: 'Alarme Maison activé'
+
+  ##########################################################################################################################################################################################################################################
+  ##                                                                                                                                                                                                                                      ##
+  ##                        SCRIPTS                                                                                                                                                                                                       ##
+  ##                                                                                                                                                                                                                                      ##
+  ##########################################################################################################################################################################################################################################          
+   
+script:  
+ 
+   ############################################################
+   ##                   ALARME LUMIERE                       ##
+   ############################################################
+
+  lumiere_flash:
+    alias: "[Alarme lumieres] Lumiere Flash" 
+    sequence:
+      - data:
+          brightness: '255'
+          hs_color:
+          - 0
+          - 100
+        entity_id: light.salon
+        service: homeassistant.turn_on
+        target:
+          entity_id: light.salon
+      - delay:
+          # time for flash light on
+          seconds: 1
+      - alias: "Light Room1 Off"
+        service: homeassistant.turn_off
+        target:
+          entity_id: light.salon
+      - alias: "loop_room1"
+        service: script.turn_on
+        target:
+          entity_id: script.lumiere_flash_boucle
+
+  lumiere_flash_boucle:
+    alias: "[Alarme lumieres] Lumiere Flash en boucle"
+    sequence:
+      - delay:
+          seconds: 1
+      - service: script.turn_on
+        target:
+          entity_id: script.lumiere_flash
+
+  lumiere_flash_annuler:
+    alias: "[Alarme lumieres] Annuler Lumiere Flash"
+    sequence:
+      -  service: script.turn_off
+         data:
+           entity_id: script.lumiere_flash
+      -  service: script.turn_off
+         data:
+           entity_id: script.lumiere_flash_boucle
+      - service: light.turn_off
+        data:
+          entity_id: light.salon

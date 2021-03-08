@@ -1,0 +1,262 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                     AMPLI YAMAHA                       ##
+  ##                                                        ##
+  ############################################################   
+
+media_player:  
+  - platform: yamaha_musiccast
+    host: 192.168.2.8
+    port: 8888
+
+script:
+  amp_power_off:
+    alias: '[Ampli] off'
+    sequence:
+    - data:
+        command: PowerOff
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_power_on:
+    alias: '[Ampli] on'
+    sequence:
+    - data:
+        command: PowerOn
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_volumeup:
+    alias: '[Ampli] Volume Up'
+    sequence:
+    - data:
+        command: VolumeUp
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_volumedown:
+    alias: '[Ampli] Volume Down'
+    sequence:
+    - data:
+        command: VolumeDown
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_mute:
+    alias: '[Ampli] Mute'
+    sequence:
+    - data:
+        command: Mute
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command 
+  amp_pc:
+    alias: '[Ampli] PC'
+    sequence:
+    - data:
+        command: InputAv1
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_xbox_one:
+    alias: '[Ampli] XBOX ONE'
+    sequence:
+    - data:
+        command: InputAv2
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_ps4:
+    alias: '[Ampli] PS4'
+    sequence:
+    - data:
+        command: InputAv3
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_retro:
+    alias: '[Ampli] RETRO'
+    sequence:
+    - data:
+        command: InputAv4
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_360:
+    alias: '[Ampli] 360'
+    sequence:
+    - data:
+        command: InputAv5
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_zappiti:
+    alias: '[Ampli] ZAPPITI'
+    sequence:
+    - data:
+        command: InputAv6
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_switch:
+    alias: '[Ampli] SWITCH'
+    sequence:
+    - data:
+        command: InputAv7
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_tv:
+    alias: '[Ampli] TV'
+    sequence:
+    - data:
+        command: InputAudio1
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  amp_chromecast:
+    alias: '[Ampli] CHROMECAST'
+    sequence:
+    - data:
+        command: InputAudio2
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_musicast:
+    alias: '[Ampli] MUSICAST'
+    sequence:
+    - data:
+        command: InputNet
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_play:
+    alias: '[Ampli] Play'
+    sequence:
+    - data:
+        command: Play
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_stop:
+    alias: '[Ampli] Stop'
+    sequence:
+    - data:
+        command: Stop
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command  
+  amp_menu:
+    alias: '[Ampli] Menu'
+    sequence:
+    - data:
+        command: OnScreen
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_back:
+    alias: '[Ampli] Back'
+    sequence:
+    - data:
+        command: Return
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  amp_up:
+    alias: '[Ampli] Up'
+    sequence:
+    - data:
+        command: DirectionUp
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command 
+  amp_down:
+    alias: '[Ampli] Down'
+    sequence:
+    - data:
+        command: DirectionDown
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_left:
+    alias: '[Ampli] Left'
+    sequence:
+    - data:
+        command: DirectionLeft
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command 
+  amp_right:
+    alias: '[Ampli] Right'
+    sequence:
+    - data:
+        command: DirectionRight
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_ok:
+    alias: '[Ampli] OK'
+    sequence:
+    - data:
+        command: Enter
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command  
+  amp_option:
+    alias: '[Ampli] Option'
+    sequence:
+    - data:
+        command: Option
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command 
+  amp_info:
+    alias: '[Ampli] Info'
+    sequence:
+    - data:
+        command: Info
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_display:
+    alias: '[Ampli] Display'
+    sequence:
+    - data:
+        command: Display
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  amp_enhancer:
+    alias: '[Ampli] Enhancer'
+    sequence:
+    - data:
+        command: DspEnhancer
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command  
+  amp_dolby:
+    alias: '[Ampli] Dolby'
+    sequence:
+    - data:
+        command: DspSurDecode
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  amp_straight:
+    alias: '[Ampli] straight'
+    sequence:
+    - data:
+        command: DspStraight
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  amp_sleep:
+    alias: '[Ampli] Sleep'
+    sequence:
+    - data:
+        command: Sleep
+        device: '42983051'
+        entity_id: remote.harmony_hub
+      service: remote.send_command     
+

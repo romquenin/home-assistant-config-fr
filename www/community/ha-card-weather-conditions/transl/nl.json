@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N",
+    "NNE": "NNO",
+    "NE": "NO",
+    "ENE": "ONO",
+    "E": "O",
+    "ESE": "OZO",
+    "SE": "ZO",
+    "SSE": "ZZO",
+    "S": "Z",
+    "SSW": "ZZW",
+    "SW": "ZW",
+    "WSW": "WZW",
+    "W": "W",
+    "WNW":  "WNW",
+    "NW": "NW",
+    "NNW": "NNW"
+  },
+
+  "cwcTerms": {
+    "Feels Like": "Voelt Als",
+    "new_moon": "Nieuwe maan",
+    "new": "Nieuwe maan",
+    "waxing_crescent": "Wassende sikkel",
+    "first_quarter": "Eerste kwartaal",
+    "waxing_gibbous": "Wassen Gibbous",
+    "full": "Volledig",
+    "full_moon": "Volledig",
+    "waning_gibbous": "Zwemmende Gibbous",
+    "third_quarter": "Derde Kwartier",
+    "last_quarter": "Laatste Kwartier",
+    "waning_crescent": "Zwemmende sikkel"
+  }
+}

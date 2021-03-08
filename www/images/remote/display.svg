@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+	<style>
+		tspan { white-space:pre }
+		.txt0 { font-size: 5px;fill: #000000;font-family: "Coda Caption";font-weight: 800 } 
+	</style>
+	<text id="DISPLAY " style="transform: matrix(1.985,0,0,1.985,0,27.961)" >
+		<tspan x="0" y="0" class="txt0">DISPLAY</tspan>
+	</text>
+</svg>

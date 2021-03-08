@@ -1,0 +1,60 @@
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          deviceID:
+            - this
+            - dashboard  
+          title: SYNOLOGY DSM
+          card: 
+            type: entities      
+            show_header_toggle: false                         
+            card_mod:                        
+              style: |
+                ha-card {             
+                  box-shadow: 
+                    {% if is_state('sun.sun', 'above_horizon') %}
+                      inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                    {% elif is_state('sun.sun', 'below_horizon') %}                      
+                      inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                    {% endif %}     
+                }                 
+            entities:            
+              - type: custom:vertical-stack-in-card
+                cards:
+                  - type: horizontal-stack
+                    cards: 
+                      - type: custom:mini-graph-card
+                        name: CPU TEMP
+                        graph: line 
+                        height: 40
+                        show:
+                          extrema: true  
+                        entities:
+                          - sensor.synology_temperature_sda
+                      - type: custom:mini-graph-card
+                        name: CPU LOAD
+                        graph: line 
+                        height: 40
+                        show:
+                          extrema: true  
+                        entities:     
+                          - sensor.tplink_1_current_power_w
+                  - type: horizontal-stack
+                    cards:               
+                      - type: custom:mini-graph-card
+                        name: MEM USE
+                        graph: line 
+                        height: 40
+                        show:
+                          extrema: true  
+                        entities:
+                          - sensor.tplink_1_today_power_w
+                      - type: custom:mini-graph-card
+                        name: DISK USE
+                        graph: line 
+                        height: 40
+                        show:
+                          extrema: true  
+                        entities:
+                          - sensor.synology_volume_used_volume_1
+                          

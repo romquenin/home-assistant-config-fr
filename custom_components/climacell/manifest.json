@@ -1,0 +1,8 @@
+{
+  "domain": "climacell",
+  "name": "Climacell weather",
+  "documentation": "https://gitlab.com/rrenato/ha-climacell-weather",
+  "dependencies": [],
+  "codeowners": ["@r-renato"],
+  "requirements": []
+}

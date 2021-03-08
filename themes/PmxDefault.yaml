@@ -1,0 +1,68 @@
+PmxDefault:
+  # Primary Color
+  primary-color: 'hsl(192, 96%, 48%)'
+  # Backgrounds
+  primary-background-color: 'hsl(0, 0%, 98%)'
+  secondary-background-color: 'hsl(0, 0%, 95%)'
+  paper-listbox-background-color: 'var(--primary-background-color)'
+  paper-card-background-color: 'var(--primary-background-color)'
+  paper-dialog-background-color: 'var(--primary-background-color)'
+  table-row-background-color: 'hsl(0, 0%, 96%)'
+  table-row-alternative-background-color: 'var(--primary-background-color)'
+  # Divider
+  divider-color: 'hsla(0, 0%, 0%, 0)'
+  dark-divider-opacity: '0'
+  light-divider-opacity: '0'
+  # Text colors
+  primary-text-color: 'hsl(0, 0%, 50%)'
+  text-primary-color: 'hsl(0, 0%, 60%)'
+  secondary-text-color: 'hsl(0, 0%, 60%)'
+  disabled-text-color: 'hsl(0, 0%, 70%)'
+  label-badge-border-color: 'hsl(0, 0%, 100%)'
+  sidebar-text_-_color: 'hsl(0, 0%, 90%)'
+  sidebar-text-color: 'hsl(0, 0%, 90%)'
+  # Text Adjustments
+  paper-font-headline_-_letter-spacing: '-0.5px'
+  paper-font-headline_-_font-weight: '500'
+  paper-font-body1_-_font-weight: '500'
+  # Nav Menu
+  paper-listbox-color: 'hsl(0, 0%, 85%)'
+  paper-grey-50: 'hsl(0, 0%, 85%)'
+  paper-grey-200: 'hsl(0, 0%, 95%)'
+  # Paper card
+  paper-card-header-color: 'hsla(0, 0%, 0%, 0.5)'
+  paper-item-icon-color: 'hsl(0, 0%, 80%)'
+  paper-item-icon-active-color: 'var(--paper-item-icon-color)'
+  paper-item-icon_-_color: 'var(--paper-item-icon-color)'
+  paper-item-selected_-_background-color: 'hsla(0, 0%, 0%, 0.2)'
+  paper-tabs-selection-bar-color: 'hsla(0, 0%, 0%, 0.2)'
+  ha-slider-background-color: 'var(--primary-background-color)'
+  paper-slider-bar-color: 'var(--primary-background-color)'
+  # Labels
+  label-badge-red: 'var(--primary-color)'
+  label-badge-background-color: 'var(--paper-card-background-color)'
+  label-badge-text-color: 'hsl(0, 0%, 60%)'
+  # Shadows
+  shadow-elevation-2dp_-_box-shadow: 'inset 0px 0px 0px 3px hsl(0, 0%, 88%)'
+  shadow-elevation-4dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-6dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-8dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-10dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-12dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-14dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-16dp_-_box-shadow: '0px 0px 0px 4px var(--primary-color)'
+  # Switches
+  paper-toggle-button-checked-button-color: 'hsl(192, 0%, 98%)'
+  paper-toggle-button-checked-bar-color: 'hsl(192, 0%, 50%)'
+  paper-toggle-button-unchecked-button-color: 'hsl(192, 0%, 98%)'
+  paper-toggle-button-unchecked-bar-color: 'hsl(192, 0%, 85%)'
+  # Sliders
+  paper-slider-knob-color: 'var(--primary-color)'
+  paper-slider-knob-start-color: 'hsl(0, 0%, 60%)'
+  paper-slider-pin-color: 'var(--primary-color)'
+  paper-slider-active-color: 'var(--primary-color)'
+  paper-slider-container-color: 'hsl(0, 0%, 90%)'
+  paper-slider-secondary-color: 'hsl(0, 0%, 90%)'
+  paper-slider-disabled-active-color: 'hsl(0, 0%, 90%)'
+  paper-slider-disabled-secondary-color: 'hsl(0, 0%, 90%)'
+  paper-dialog-color: 'hsl(0, 0%, 50%)'

@@ -1,0 +1,38 @@
+- id: '1583431721995'
+  alias: Télécommande ikea variateur haut
+  description: ''
+  trigger:
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_up_click
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_up_hold
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_up_release
+  condition: []
+  action:
+  - device_id: 7f770f9316da470e82594b239fe3c9bf
+    domain: light
+    entity_id: light.salon
+    type: brightness_increase
+- id: '1583432842575'
+  alias: Télécommande ikea variateur bas
+  description: ''
+  trigger:
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_down_click
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_down_hold
+  - entity_id: sensor.telecommande_ikea_action
+    platform: state
+    to: brightness_down_release
+  condition: []
+  action:
+  - device_id: 7f770f9316da470e82594b239fe3c9bf
+    domain: light
+    entity_id: light.salon
+    type: brightness_decrease

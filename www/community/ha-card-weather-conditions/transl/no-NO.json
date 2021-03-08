@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N",
+    "NNE": "NNØ",
+    "NE": "NØ",
+    "ENE": "ØNØ",
+    "E": "Ø",
+    "ESE": "ØSØ",
+    "SE": "SØ",
+    "SSE": "SSØ",
+    "S": "S",
+    "SSW": "SSV",
+    "SW": "SV",
+    "WSW": "VSV",
+    "W": "V",
+    "WNW": "VNV",
+    "NW": "NV",
+    "NNW": "NNV"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Føles som",
+    "new_moon": "Nymåne",
+    "new": "Nymåne",
+    "waxing_crescent": "Tiltagende halvmåne",
+    "first_quarter": "Første kvartal",
+    "waxing_gibbous": "Tiltagende måne",
+    "full": "Fullmåne",
+    "full_moon": "Fullmåne",
+    "waning_gibbous": "Avtagende måne",
+    "third_quarter": "Tredje kvartal",
+    "last_quarter": "Sidste kvartal",
+    "waning_crescent": "Avtagende halvmåne"
+  }
+}

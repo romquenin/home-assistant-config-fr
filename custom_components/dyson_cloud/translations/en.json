@@ -1,0 +1,42 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "region": "Region"
+        }
+      },
+      "email": {
+        "data": {
+          "email": "Email"
+        }
+      },
+      "email_otp": {
+        "data": {
+          "otp": "Verification code",
+          "password": "Password"
+        }
+      },
+      "mobile": {
+        "data": {
+          "mobile": "Phone number"
+        }
+      },
+      "mobile_otp": {
+        "data": {
+          "otp": "Verification code"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "email_not_registered": "Email not registered",
+      "invalid_auth": "Invalid authentication",
+      "invalid_otp": "Invalid verification code",
+      "otp_too_frequent": "You're requesting verification code too frequently"
+    },
+    "abort": {
+      "already_configured": "Device already configured"
+    }
+  }
+}

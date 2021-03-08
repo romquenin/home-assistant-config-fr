@@ -1,0 +1,14 @@
+
+   ############################################################
+   ##                                                        ##
+   ##              MISE A JOUR FETE DU JOUR                  ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Sensor] Fête du jour'
+  trigger:
+    - platform: time
+      at: '00:01:00'
+  action:
+    - service: homeassistant.update_entity
+      entity_id: sensor.fete_du_jour      

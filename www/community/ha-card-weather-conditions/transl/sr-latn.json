@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "S",
+    "NNE": "SSI",
+    "NE": "SI",
+    "ENE": "ISI",
+    "E": "I",
+    "ESE": "IJI",
+    "SE": "JI",
+    "SSE": "JJI",
+    "S": "J",
+    "SSW": "JJZ",
+    "SW": "JZ",
+    "WSW": "ZSZ",
+    "W": "Z",
+    "WNW": "ZSZ",
+    "NW": "SZ",
+    "NNW": "SSZ"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Subjektivni osećaj",
+    "new_moon": "Mlad mesec",
+    "new": "Mlad mesec",
+    "waxing_crescent": "Prva osmina",
+    "first_quarter": "Prva četvrt",
+    "waxing_gibbous": "Treća osmina",
+    "full": "Pun mesec",
+    "full_moon": "Pun mesec",
+    "waning_gibbous": "Peta osmina",
+    "third_quarter": "Treća četvrtina",
+    "last_quarter": "Zadnja četvrtina",
+    "waning_crescent": "Sedma osmina"
+  }
+}

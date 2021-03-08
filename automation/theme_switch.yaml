@@ -1,0 +1,58 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                  UI THEME SWITCH                       ##
+   ##                                                        ##
+   ############################################################
+
+- alias: "Light theme after Sunrise"
+  initial_state: on 
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: frontend.set_theme
+      data:
+# Change this to the name of your light theme
+        name: clear
+
+- alias: "Dark theme after Sunset"
+  initial_state: on 
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    - service: frontend.set_theme
+      data:
+# Change this to the name of your dark theme
+        name: slate
+
+- alias: 'Light theme after reboot in day'
+  initial_state: on 
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+# Change this to the name of your light theme
+      name: clear
+
+- alias: 'Dark theme after reboot in night'
+  initial_state: on 
+  trigger:
+    platform: homeassistant
+    event: start
+  condition:
+    condition: state
+    entity_id: sun.sun
+    state: 'below_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+# Change this to the name of your dark theme
+      name: slate

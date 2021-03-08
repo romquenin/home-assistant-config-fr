@@ -1,0 +1,398 @@
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          deviceID:
+            - this
+            - dashboard  
+          title: DYSON PURE COOL LINK
+          hide_header: true                  
+          style:
+            $: |
+              .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                box-shadow:none;
+              }
+            .: |
+              :host {
+                --mdc-theme-surface: rgba(0,0,0,0);
+                --secondary-background-color: rgba(0,0,0,0);
+                --ha-card-box-shadow: none; 
+                --div-card-header-justify-content: center;                                       
+                --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                --mdc-dialog-min-height: 50%;
+                --mdc-dialog-min-width: 100%;
+                --mdc-dialog-max-width: 100%;
+              }
+              mwc-icon-button {
+                color: #FFF;
+              }                           
+          card:  
+            type: custom:vertical-stack-in-card
+            cards:   
+              - type: markdown
+                card_mod:                        
+                  style: |
+                    ha-card {
+                      font-size: 30px;
+                      font-family: Quicksand;
+                      height: 40px;
+                    }          
+                content: <center> Contrôle du ventilateur <center>  
+
+              - type: custom:vertical-stack-in-card           
+                cards:  
+                  - type: glance
+                    show_name: false
+                    entities:
+                      - air_quality.dyson_pure_cool_linktm_air_quality
+#                      - sensor.dyson_pure_cool_linktm_dust
+                      - sensor.dyson_pure_cool_linktm_filter_life  
+                  - type: picture-elements 
+                    image: /local/images/card/emptybanner.png
+                    elements:       
+                      - entity: fan.dyson_pure_cool_linktm
+                        style:
+                          color: var(--primary-color)                           
+                          font-size: 175%
+                          font-family: Quicksand
+                          left: 50%
+                          pointer-events: none
+                          top: 15%
+                        tap_action:
+                          action: none
+                        type: state-label
+
+                      - type: conditional
+                        conditions:
+                          - entity: fan.dyson_pure_cool_linktm
+                            state: 'off'
+                        elements:
+                          - entity: fan.dyson_pure_cool_linktm
+                            icon: 'mdi:fan'
+                            style:
+                              color: var(--primary-color)
+                              '--paper-item-icon-active-color': var(--primary-color)
+                              left: 50%
+                              bottom: 0%
+                            tap_action:
+                              action: call-service
+                              service: fan.toggle
+                              service_data:
+                                entity_id: fan.dyson_pure_cool_linktm
+                            type: state-icon
+                      - type: conditional
+                        conditions:
+                          - entity: fan.dyson_pure_cool_linktm
+                            state_not: 'off'
+                        elements:
+                          - entity: fan.dyson_pure_cool_linktm
+                            icon: 'mdi:fan'
+                            style:
+                              color: var(--primary-color)
+                              '--paper-item-icon-active-color': var(--primary-color)
+                              left: 40%
+                              bottom: 0%
+                            tap_action:
+                              action: call-service
+                              service: fan.toggle
+                              service_data:
+                                entity_id: fan.dyson_pure_cool_linktm
+                            type: state-icon
+                          - entity: input_boolean.fan
+                            icon: 'mdi:rotate-3d-variant'
+                            style:
+                              color: var(--primary-color)
+                              '--paper-item-icon-active-color': var(--primary-color)
+                              width: 40px
+                              left: 60%
+                              bottom: 0%
+                            tap_action:
+                              action: call-service
+                              service: input_boolean.toggle
+                              service_data:
+                                entity_id: input_boolean.fan
+                            type: state-icon
+
+              - type: conditional
+                conditions:
+                  - entity: fan.dyson_pure_cool_linktm
+                    state_not: 'off'
+                card:
+                  type: custom:paper-buttons-row 
+                  card_mod:                       
+                    style: |
+                      ha-card {
+                        box-shadow: none
+                      } 
+
+                  buttons:
+                    - entity: script.timer_diffuseur_start
+                      icon: "mdi:numeric-1"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',1) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 1                
+                    - entity: script.timer_diffuseur_cancel
+                      icon: "mdi:numeric-2"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',2) %}
+                              var(--primary-color)
+                            {% endif %}                  
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 2                
+                    - entity: script.timer_diffuseur_start_input_datetime
+                      icon: "mdi:numeric-3"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',3) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 3                            
+                    - entity: script.timer_diffuseur_start
+                      icon: "mdi:numeric-4"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',4) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 4                            
+                    - entity: script.timer_diffuseur_cancel
+                      icon: "mdi:numeric-5"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',5) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 5                            
+                    - entity: script.timer_diffuseur_start_input_datetime
+                      icon: "mdi:numeric-6"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',6) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 6                            
+                    - entity: script.timer_diffuseur_start
+                      icon: "mdi:numeric-7"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',7) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 7                            
+                    - entity: script.timer_diffuseur_cancel
+                      icon: "mdi:numeric-8"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',8) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 8                           
+                    - entity: script.timer_diffuseur_start_input_datetime
+                      icon: "mdi:numeric-9"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',9) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 9                           
+                    - entity: script.timer_diffuseur_start_input_datetime
+                      icon: "mdi:numeric-10"
+                      name: false
+                      style:
+                        button:
+                          color: >-
+                            {% if is_state_attr('fan.dyson_pure_cool_linktm','dyson_speed',10) %}
+                              var(--primary-color)
+                            {% endif %}               
+                      tap_action:
+                        action: call-service
+                        service: dyson_local.set_speed
+                        service_data:
+                          entity_id: fan.dyson_pure_cool_linktm
+                          dyson_speed: 10
+
+
+              - type: markdown
+                style: |
+                  ha-card {
+                    font-size: 30px;
+                    font-family: Quicksand;
+                    height: 40px;
+                  }                         
+                content: <center> Minuteur <center>  
+
+              - type: 'custom:time-picker-card'
+                entity: input_datetime.only_time_for_timer_ventilateur
+                minute_step: 1
+                hide:
+                  name: true
+
+              - type: picture-elements 
+                image: /local/images/card/emptybanner.png
+                elements:       
+                  - entity: sensor.timer_ventilateur_temps_restant_int
+                    style:
+                      color: var(--primary-color)
+                      font-size: 175%
+                      font-family: Quicksand
+                      left: 50%
+                      pointer-events: none
+                      top: 15%
+                    tap_action:
+                      action: none
+                    type: state-label
+                  - type: conditional
+                    conditions:
+                      - entity: timer.timer_ventilateur
+                        state: idle
+                    elements:
+                      - entity: timer.timer_ventilateur
+                        icon: 'mdi:play'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 50%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: script.toggle
+                          service_data:
+                            entity_id: script.timer_ventilateur_start_input_datetime
+                        type: state-icon
+                  - type: conditional
+                    conditions:
+                      - entity: timer.timer_ventilateur
+                        state_not: idle
+                    elements:
+                      - entity: timer.timer_ventilateur
+                        icon: 'mdi:pause'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 20%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.pause
+                          service_data:
+                            entity_id: timer.timer_ventilateur
+                        type: state-icon
+                      - entity: timer.timer_ventilateur
+                        icon: 'mdi:close'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': red
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 40%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.cancel
+                          service_data:
+                            entity_id: timer.timer_ventilateur
+                        type: state-icon
+                      - entity: timer.timer_ventilateur
+                        icon: 'mdi:checkbox-marked-circle-outline'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': green
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 60%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.finish
+                          service_data:
+                            entity_id: timer.timer_ventilateur
+                        type: state-icon
+                      - entity: script.timer_ventilateur_start_input_datetime
+                        icon: 'mdi:play'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 80%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.start
+                          service_data:
+                            entity_id: timer.timer_ventilateur
+                        type: state-icon
+
+
+
+
+                

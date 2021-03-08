@@ -1,0 +1,49 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       LUMIÈRES                         ##
+   ##                                                        ##
+   ############################################################
+         
+
+light.multi:
+  friendly_name: Multi
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+
+light.salon:
+  friendly_name: Salon
+  icon: mdi:sofa
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.cuisine:
+  friendly_name: Cuisine
+  icon: mdi:fridge
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+light.chambre:
+  icon: mdi:hotel
+  friendly_name: Chambre
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true      
+light.entree:
+  icon: mdi:door
+  friendly_name: Entrée
+  hide_control: false
+  show_last_changed: false
+  confirm_controls_show_lock: true
+ 
+light.gateway_light_7811dcb7aac9:
+  friendly_name: Gateway      
+  state_card_mode: single-line
+  slider_theme:
+    min: 0
+    max: 100
+    pin: true
+    off_when_min: false
+    report_when_not_changed: false   
+

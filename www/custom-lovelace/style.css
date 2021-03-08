@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+body {
+  font-family: Quicksand !important;
+}
+paper-icon-item span {
+  font-family: Quicksand !important;
+}

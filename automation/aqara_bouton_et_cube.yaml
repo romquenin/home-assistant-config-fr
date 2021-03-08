@@ -1,0 +1,116 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                   XIAOMI BOUTON                        ##
+   ##                                                        ##
+   ############################################################
+
+- alias: Xiaomi button Salon toggle
+  trigger:
+    - platform: state
+      entity_id: sensor.bouton_aqara_click
+      to: "single"    
+  action:
+    - service: light.toggle
+      data:
+        brightness: 250    
+        entity_id: light.lamp_4
+
+- alias: Xiaomi button Salon printemps
+  trigger:
+    - platform: state
+      entity_id: sensor.bouton_aqara_click
+      to: "double"    
+  action:
+    service: scene.turn_on
+    entity_id: scene.printemps
+
+- alias: Xiaomi button Salon detente
+  trigger:
+    - platform: state
+      entity_id: sensor.bouton_aqara_click
+      to: "triple"    
+  action:
+    service: scene.turn_on
+    entity_id: scene.salon_normal
+
+- alias: Xiaomi button Salon film
+  trigger:
+    - platform: state
+      entity_id: sensor.bouton_aqara_click
+      to: "quadruple"    
+  action:
+    service: scene.turn_on
+    entity_id: scene.salon_film
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                    XIAOMI CUBE                         ##
+   ##                                                        ##
+   ############################################################
+
+- alias: Cube event move
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "slide"    
+  action:
+    - service: media_player.volume_up
+      entity_id: media_player.universal
+
+- alias: Cube event rotate left
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "rotate_left"  
+  action:
+    - service: media_player.volume_down
+      entity_id: media_player.universal
+
+- alias: Cube event rotate right
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "rotate_right"  
+  action:
+    - service: media_player.volume_up
+      entity_id: media_player.universal      
+
+- alias: Cube event flip90
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "flip90"  
+  action:
+    - service: media_player.media_next_track
+      entity_id: media_player.universal
+
+- alias: Cube event flip180
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "flip180"  
+  action:
+    - service: media_player.media_previous_track
+      entity_id: media_player.universal
+
+- alias: Cube event tap_twice
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "tap"  
+  action:
+    - service: media_player.media_play_pause
+      entity_id: media_player.universal
+
+
+- alias: Cube event shake_air
+  trigger:
+    - platform: state
+      entity_id: sensor.cube_aqara_action
+      to: "shake"  
+  action:
+    - service: media_player.toggle
+      entity_id: media_player.universal
+

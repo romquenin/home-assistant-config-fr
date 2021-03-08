@@ -1,0 +1,30 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                         SONARR                         ##
+   ##                                                        ##
+   ############################################################
+  
+- platform: sonarr_upcoming_media
+  api_key: !secret sonarr_key
+  host: !secret ip_server
+  port: 8989
+  days: 7
+  ssl: false
+  max: 5
+
+- platform: radarr_upcoming_media
+  api_key: !secret radarr_key
+  host: !secret ip_server
+  port: 7878
+  days: 30
+  ssl: false
+  theaters: true
+  max: 5
+   
+- platform: plex_recently_added
+  token: !secret plex_key
+  host: !secret ip_nas
+  port: 32400
+  ssl: false
+  max: 6 

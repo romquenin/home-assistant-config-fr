@@ -1,0 +1,25 @@
+   ############################################################
+   ##                                                        ##
+   ##                       IOS MOBILE APP                   ##
+   ##                                                        ##
+   ############################################################
+
+
+ios:
+  actions:
+    - name: Mute Players
+      background_color: "#000000"
+      label:
+        text: "Mute Players"
+        color: "#ff0000"
+      icon:
+        icon: earth
+        color: "#ffffff"
+    - name: Unmute Players
+      background_color: "#000000"
+      label:
+        text: "Unmute Players"
+        color: "#ff0000"
+      icon:
+        icon: earth
+        color: "#ffffff"        

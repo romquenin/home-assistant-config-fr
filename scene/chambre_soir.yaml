@@ -1,0 +1,22 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       CHAMBRE SOIR                     ##
+   ##                                                        ##
+   ############################################################
+
+- name: Chambre soir
+  entities:
+    light.strip_1:
+      profile: relax        
+      state: on
+      transition: 8
+      brightness_pct: 30
+    light.lamp_1:
+      profile: relax        
+      state: off
+      transition: 8
+
+     
+
+      

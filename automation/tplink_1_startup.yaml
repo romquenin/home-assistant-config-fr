@@ -1,0 +1,32 @@
+  
+############################################################
+##                                                        ##
+##                DEMARRAGE TPLINK 1                      ##
+##                                                        ##
+############################################################ 
+      
+- alias: '[Démarrage] Tplink1'
+  initial_state: on
+  trigger:    
+    - platform: state
+      entity_id: switch.tplink_1
+      from: 'off'
+      to: 'on'      
+  action: 
+    - delay: 
+        seconds: 50  
+    - service: remote.send_command
+      entity_id: remote.harmony_hub
+      data:
+        device: "50272082"
+        command: "PowerOff"     
+    - service: script.turn_on
+      entity_id: script.zappiti_power_off
+    - service: light.turn_off
+      entity_id: light.strip_2
+    - service: light.turn_off
+      entity_id: light.strip_3            
+    - service: light.turn_off
+      entity_id: light.play_1
+    - service: light.turn_off
+      entity_id: light.play_2   

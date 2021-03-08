@@ -1,0 +1,10 @@
+{
+    "domain": "myEnedis",
+    "name": "myEnedis sensor",
+    "documentation": "https://github.com/saniho/apiEnedis/",
+    "config_flow": true,
+    "requirements": [
+    ],
+    "dependencies": [],
+    "codeowners": []
+}

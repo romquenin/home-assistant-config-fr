@@ -1,0 +1,1382 @@
+######################################################################################################################
+######################################################################################################################    
+#  SETTINGS            
+######################################################################################################################   
+######################################################################################################################
+
+    
+
+title: 05_Floorplan
+icon: mdi:floor-plan
+path: floorplan
+badges: []
+panel: true
+cards:
+  - type: "custom:config-template-card"  
+    entities:                             ### List all the light entities here that you plan on using
+
+      - cover.rideau_droite
+      - cover.rideau_gauche
+
+      - light.salon
+      - light.cuisine  
+      - light.chambre 
+      - light.entree 
+
+      - light.spot_1
+      - light.spot_2    
+      - light.spots_droite
+      - light.spots_gauche      
+      - light.lamp_1
+      - light.lamp_3 
+      - light.lamp_4         
+      - light.lamp_6         
+      - light.signe_1   
+      - light.bloom_1   
+
+      - light.filament_1
+      - light.filament_2   
+      - light.filament_3     
+
+      - light.strip_1
+      - light.strip_2   
+      - light.strip_3            
+      - light.strip_4
+
+      - input_boolean.projecteur_power_switch
+      - input_boolean.toile_power_switch
+
+      - fan.dyson_pure_cool_linktm
+
+      - media_player.salon
+      - media_player.hub  
+      - media_player.chambre           
+      - media_player.samsung_tv_remote
+      - media_player.samsung_tv_chambre
+      - media_player.xbox_series_x
+      - switch.wake_on_line
+      
+      - switch.sonoff1       
+      - switch.sonoff3     
+      - switch.sonoff4
+    card:
+
+      type: picture-elements
+      image: /local/floorplan/images/floorplan_night.png
+      state_filter:
+        "on": brightness(110%) saturate(1.2)
+        "off": brightness(50%) hue-rotate(45deg)      
+      style: |
+        ha-card:first-child {
+          background: rgba(42, 46, 48, 1)
+        }
+      elements:
+      ### Overlay day time image when the sun is up ###
+        - type: image
+          action: none
+          entity: sun.sun
+          state_image:
+            above_horizon: /local/floorplan/images/floorplan_day.png
+            below_horizon: /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''sun.sun''].above_horizon }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+
+
+        - type: image
+          action: none
+          entity: input_boolean.projecteur_power_switch
+          state_image:
+            "on": /local/floorplan/images/light-beam.gif
+            "off": /local/floorplan/images/transparent.png
+          style:
+            left: 50.3%
+            mix-blend-mode: screen            
+            opacity: '${ states[''switch.sonoff1''].on }'
+            top: 9%
+            width: 33%
+            transform: rotate(90deg) 
+          tap_action:
+            action: none
+          hold_action:
+            action: none    
+
+
+
+
+        - type: conditional
+          conditions:
+            - entity: cover.rideau_droite
+              state: 'open'
+          elements:
+            - type: image
+              action: none
+              entity: cover.rideau_droite
+              state_image:
+                "open": /local/floorplan/images/floorplan_night_rideau_droite_open.png
+                "closed": /local/floorplan/images/transparent.png
+              style:
+                height: 100%
+                left: 50%
+                mix-blend-mode: lighten            
+                opacity: '${ states[''cover.rideau_droite''].open }'
+                top: 50%
+                width: 100%
+              tap_action:
+                action: none
+              hold_action:
+                action: none    
+
+        - type: conditional
+          conditions:
+            - entity: cover.rideau_droite
+              state: 'open'     
+            - entity: light.lamp_1
+              state: 'on'                      
+          elements:
+            - type: image
+              action: none
+              entity: cover.rideau_droite
+              state_image:
+                "open": /local/floorplan/images/floorplan_night_lamp1_cover_right_open.png
+                "closed": /local/floorplan/images/transparent.png
+              style:
+                height: 100%
+                left: 50%
+                mix-blend-mode: lighten            
+                opacity: '${ states[''cover.rideau_droite''].open }'
+                top: 50%
+                width: 100%
+              tap_action:
+                action: none
+              hold_action:
+                action: none    
+
+
+        - type: conditional
+          conditions:
+            - entity: cover.rideau_gauche
+              state: 'open'
+          elements:
+            - type: image
+              action: none
+              entity: cover.rideau_gauche
+              state_image:
+                "open": /local/floorplan/images/floorplan_night_rideau_gauche_open.png
+                "closed": /local/floorplan/images/transparent.png
+              style:
+                height: 100%
+                left: 50%
+                mix-blend-mode: lighten            
+                opacity: '${ states[''cover.rideau_gauche''].open }'
+                top: 50%
+                width: 100%
+              tap_action:
+                action: none
+              hold_action:
+                action: none    
+
+        - type: conditional
+          conditions:
+            - entity: cover.rideau_gauche
+              state: 'open'     
+            - entity: light.lamp_1
+              state: 'on'                      
+          elements:
+            - type: image
+              action: none
+              entity: cover.rideau_gauche
+              state_image:
+                "open": /local/floorplan/images/floorplan_night_lamp1_cover_left_open.png
+                "closed": /local/floorplan/images/transparent.png
+              style:
+                height: 100%
+                left: 50%
+                mix-blend-mode: lighten            
+                opacity: '${ states[''cover.rideau_gauche''].open }'
+                top: 50%
+                width: 100%
+              tap_action:
+                action: none
+              hold_action:
+                action: none    
+
+
+  
+        - type: image
+          action: none
+          entity: light.bloom_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_bloom1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.bloom_1'].attributes.hs_color
+              ? states['light.bloom_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.bloom_1'].state === 'on' ? (states['light.bloom_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none       
+
+
+        - type: image
+          action: none
+          entity: light.lamp_3
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_lamp3.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.lamp_3'].attributes.hs_color
+              ? states['light.lamp_3'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.lamp_3'].state === 'on' ? (states['light.lamp_3'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none     
+
+        - type: image
+          action: none
+          entity: light.lamp_4
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_sdb.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.lamp_4'].attributes.hs_color
+              ? states['light.lamp_4'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.lamp_4'].state === 'on' ? (states['light.lamp_4'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none                   
+
+        - type: image
+          action: none
+          entity: light.lamp_6
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_lamp6.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.lamp_6'].attributes.hs_color
+              ? states['light.lamp_6'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.lamp_6'].state === 'on' ? (states['light.lamp_6'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none  
+        - type: image
+          action: none
+          entity: light.lamp_6
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_chevet.png
+          style:
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.lamp_6'].state === 'on' ? (states['light.lamp_6'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none  
+
+
+        - type: image
+          action: none
+          entity: light.spot_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_spot1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.spot_1'].attributes.hs_color
+              ? states['light.spot_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.spot_1'].state === 'on' ? (states['light.spot_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none         
+
+
+        - type: image
+          action: none
+          entity: light.spot_2
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_spot2.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.spot_2'].attributes.hs_color
+              ? states['light.spot_2'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.spot_2'].state === 'on' ? (states['light.spot_2'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none                    
+
+
+
+        - type: image
+          action: none
+          entity: light.spots_gauche
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_spot3.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.spots_gauche'].attributes.hs_color
+              ? states['light.spots_gauche'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.spots_gauche'].state === 'on' ? (states['light.spots_gauche'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none         
+
+
+        - type: image
+          action: none
+          entity: light.spots_droite
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_spot4.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.spots_droite'].attributes.hs_color
+              ? states['light.spots_droite'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.spots_droite'].state === 'on' ? (states['light.spots_droite'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none           
+
+
+
+        - type: image
+          action: none
+          entity: light.lamp_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_lamp1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.lamp_1'].attributes.hs_color
+              ? states['light.lamp_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.lamp_1'].state === 'on' ? (states['light.lamp_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none                    
+
+
+        - type: image
+          action: none
+          entity: light.signe_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_signe1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.signe_1'].attributes.hs_color
+              ? states['light.signe_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.signe_1'].state === 'on' ? (states['light.signe_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none           
+
+
+        - type: image
+          action: none
+          entity: light.filament_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_filament1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.filament_1'].attributes.hs_color
+              ? states['light.filament_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.filament_1'].state === 'on' ? (states['light.filament_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none         
+
+
+        - type: image
+          action: none
+          entity: light.filament_2
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_filament2.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.filament_2'].attributes.hs_color
+              ? states['light.filament_2'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.filament_2'].state === 'on' ? (states['light.filament_2'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none                    
+
+
+        - type: image
+          action: none
+          entity: light.filament_3
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_filament3.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.filament_3'].attributes.hs_color
+              ? states['light.filament_3'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.filament_3'].state === 'on' ? (states['light.filament_3'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none       
+
+
+
+        - type: image
+          action: none
+          entity: light.strip_1
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_strip1.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.strip_1'].attributes.hs_color
+              ? states['light.strip_1'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.strip_1'].state === 'on' ? (states['light.strip_1'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none         
+
+
+        - type: image
+          action: none
+          entity: light.strip_2
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_strip2.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.strip_2'].attributes.hs_color
+              ? states['light.strip_2'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.strip_2'].state === 'on' ? (states['light.strip_2'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none                    
+
+
+        - type: image
+          action: none
+          entity: light.strip_3
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_strip3.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.strip_3'].attributes.hs_color
+              ? states['light.strip_3'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.strip_3'].state === 'on' ? (states['light.strip_3'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none       
+
+        - type: image
+          action: none
+          entity: light.strip_4
+          hold_action:
+           action: none
+          image: /local/floorplan/images/floorplan_night_strip4.png
+          style:
+            filter: >-
+              ${ "hue-rotate(" + (states['light.strip_4'].attributes.hs_color
+              ? states['light.strip_4'].attributes.hs_color[0] : 0) + "deg)"}
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: "${states['light.strip_4'].state === 'on' ? (states['light.strip_4'].attributes.brightness / 255) : '0'}"
+            top: 50%
+            width: 100%
+            height: 100%
+          tap_action:
+            action: none       
+
+
+
+        - type: image
+          action: none
+          entity: switch.wake_on_lan
+          state_image:
+            "on": /local/floorplan/images/floorplan_night_pc.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''switch.wake_on_lan''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none     
+
+        - type: image
+          action: none
+          entity: switch.wake_on_lan
+          state_image:
+            "on": /local/floorplan/images/floorplan_monitor.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''switch.wake_on_lan''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none     
+
+
+        - type: image
+          action: none
+          entity: media_player.samsung_tv_chambre
+          state_image:
+            "on": /local/floorplan/images/floorplan_tv_chambre_light.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''media_player.samsung_tv_chambre''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none     
+     
+
+        - type: image
+          action: none
+          entity: media_player.samsung_tv_chambre
+          state_image:
+            "on": /local/floorplan/images/floorplan_tv_chambre.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''media_player.samsung_tv_chambre''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none     
+             
+
+
+        - type: image
+          action: none
+          entity: input_boolean.tv_power_switch
+          state_image:
+            "on": /local/floorplan/images/floorplan_tv.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''media_player.samsung_tv_remote''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none     
+
+        - type: image
+          action: none
+          entity: input_boolean.tv_power_switch
+          state_image:
+            "on": /local/floorplan/images/floorplan_tv_light.png
+            "off": /local/floorplan/images/transparent.png
+          style:
+            height: 100%
+            left: 50%
+            mix-blend-mode: lighten
+            opacity: '${ states[''media_player.samsung_tv_remote''].on }'
+            top: 50%
+            width: 100%
+          tap_action:
+            action: none
+          hold_action:
+            action: none       
+
+
+
+
+
+
+
+        - type: image
+          entity: switch.wake_on_lan
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'playing': /local/floorplan/images/lite.png            
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%            
+            top: 73%
+            left: 50.5%
+
+
+
+        - type: image
+          entity: media_player.hub
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'playing': /local/floorplan/images/lite.png 
+            'idle': /local/floorplan/images/lite.png  
+            'unknown': /local/floorplan/images/liteoff.png                                       
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 62%
+            left: 38.5%
+
+        - type: image
+          entity: media_player.salon
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'playing': /local/floorplan/images/lite.png   
+            'idle': /local/floorplan/images/lite.png                       
+            'off': /local/floorplan/images/liteoff.png   
+            'unknown': /local/floorplan/images/liteoff.png                               
+          style:
+            width: 3%            
+            top: 21.3%
+            left: 83.4%
+
+
+        - type: image
+          entity: media_player.samsung_tv_chambre
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'playing': /local/floorplan/images/lite.png            
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%            
+            top: 45%
+            left: 21%
+
+        - type: image
+          entity: media_player.chambre
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'playing': /local/floorplan/images/lite.png    
+            'idle': /local/floorplan/images/lite.png                      
+            'off': /local/floorplan/images/liteoff.png  
+
+          style:
+            width: 3%            
+            top: 23.5%
+            left: 21%
+
+
+        - type: image
+          entity: light.lamp_3
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 77.5%
+            left: 43.5%
+         
+        - type: image
+          entity: light.lamp_4
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 85.5%
+            left: 25.5%
+
+
+
+        - type: image
+          entity: light.lamp_6
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 18.5%
+            left: 34%
+
+
+
+        - type: image
+          entity: light.strip_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 33%
+            left: 41.5%
+
+        - type: image
+          entity: light.strip_2
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 38%
+            left: 44%
+
+
+        - type: image
+          entity: light.strip_3
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 29%
+            left: 44%
+
+        - type: image
+          entity: light.strip_4
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 64.5%
+            left: 51%        
+
+        - type: image
+          entity: light.filament_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 71%
+            left: 80%
+
+        - type: image
+          entity: light.filament_2
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 71%
+            left: 70%
+
+
+        - type: image
+          entity: light.filament_3
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 71%
+            left: 75%
+
+        - type: image
+          entity: light.bloom_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 21.5%
+            left: 79%
+
+        - type: image
+          entity: light.lamp_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 17.5%
+            left: 71%
+
+
+        - type: image
+          entity: light.signe_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 14%
+            left: 71%
+
+        - type: image
+          entity: light.spot_1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 43%
+            left: 44.5%
+          hold_action:
+            action: call-service
+            service: browser_mod.popup
+            service_data:
+              card:
+                cards:
+                  - entities:
+                      - entity: light.spot_1
+                        secondary_info: last-changed
+                    style:
+                      z-index: 5
+                    type: entities
+                  - cards:
+                      - cards: null
+                        column_height: 1
+                        layout: vertical
+                        type: 'custom:layout-card'
+                      - entities:
+                          - color_temp: true
+                            entity: light.spot_1
+                            header: false
+                            persist_features: true
+                            type: 'custom:light-slider-card'
+                        show_header_toggle: false
+                        style: |
+                            :host{
+                              height: 100%;
+                              z-index: 0;  
+                            }
+                            ha-card {
+                              box-shadow: none !important;
+                            }
+                        type: entities
+                    column_num: 1
+                    layout: horizontal
+                    max_width:
+                      - 100%
+                    type: 'custom:layout-card'
+                type: 'custom:vertical-stack-in-card'
+              deviceID:
+                - this
+              style:
+                '--ha-card-border-radius': 0vw 0vw 0.8vw 0.8vw
+                border-radius: 0.8vw
+                opacity: 0.9
+#              title: Stairs - Upstairs
+
+
+
+
+
+        - type: image
+          entity: light.spot_2
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 24.2%
+            left: 44.5%
+
+          hold_action:
+            action: call-service
+            service: browser_mod.popup
+          
+            service_data:
+              title: Chambre   
+              card:
+
+                type: custom:light-popup-card               
+                entity: light.spot_2
+                icon: mdi:led-strip
+                actionsInARow: 2
+                brightnessWidth: 150px
+                brightnessHeight: 400px
+                switchWidth: 150px
+                switchHeight: 400px                
+                settings:
+                  openButton: Instellingen
+                  closeButton: Sluiten
+                settingsCard:
+                  type: entities
+                  cardOptions:
+                    entities:
+                      - light.spot_2
+                      - light.spot_2
+                      - light.spot_3
+                      - light.spot_4
+                  cardStyle: |
+                    background-color:#FFF;
+              deviceID:
+                - this
+          state:
+            - value: "on"
+              styles:
+                card:
+                  - box-shadow: 0px 0px 3px 2px var
+                icon:
+                  - color: "yellow"
+              id: on-icon
+            - value: "off"
+              styles:
+                card:
+                  - box-shadow: 0px 0px 3px 2px var
+              id: off-icon
+
+        - type: image
+          entity: light.spot_3
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 18%
+            left: 41.5%
+          hold_action:
+            action: call-service
+            service: browser_mod.popup
+            service_data:
+              card:
+                cards:
+                  - entities:
+                      - entity: light.spot_3
+                        secondary_info: last-changed
+                    style:
+                      z-index: 5
+                    type: entities
+                  - cards:
+                      - cards: null
+                        column_height: 1
+                        layout: vertical
+                        type: 'custom:layout-card'
+                      - entities:
+                          - color_temp: true
+                            entity: light.spot_3
+                            header: false
+                            persist_features: true
+                            type: 'custom:light-slider-card'
+                        show_header_toggle: false
+                        style: |
+                            :host{
+                              height: 100%;
+                              z-index: 0;  
+                            }
+                            ha-card {
+                              box-shadow: none !important;
+                            }
+                        type: entities
+                    column_num: 1
+                    layout: horizontal
+                    max_width:
+                      - 100%
+                    type: 'custom:layout-card'
+                type: 'custom:vertical-stack-in-card'
+              deviceID:
+                - this
+              style:
+                '--ha-card-border-radius': 0vw 0vw 0.8vw 0.8vw
+                border-radius: 0.8vw
+                opacity: 0.9
+#              title: Stairs - Upstairs
+        - type: image
+          entity: light.spot_4
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 48%
+            left: 41.5%
+          hold_action:
+            action: call-service
+            service: browser_mod.popup
+            service_data:
+              card:
+                cards:
+                  - entities:
+                      - entity: light.spot_4
+                        secondary_info: last-changed
+                    style:
+                      z-index: 5
+                    type: entities
+                  - cards:
+                      - cards: null
+                        column_height: 1
+                        layout: vertical
+                        type: 'custom:layout-card'
+                      - entities:
+                          - color_temp: true
+                            entity: light.spot_4
+                            header: false
+                            persist_features: true
+                            type: 'custom:light-slider-card'
+                        show_header_toggle: false
+                        style: |
+                            :host{
+                              height: 100%;
+                              z-index: 0;  
+                            }
+                            ha-card {
+                              box-shadow: none !important;
+                            }
+                        type: entities
+                    column_num: 1
+                    layout: horizontal
+                    max_width:
+                      - 100%
+                    type: 'custom:layout-card'
+                type: 'custom:vertical-stack-in-card'
+              deviceID:
+                - this
+              style:
+                '--ha-card-border-radius': 0vw 0vw 0.8vw 0.8vw
+                border-radius: 0.8vw
+                opacity: 0.9
+#              title: Stairs - Upstairs
+
+
+
+        - type: image
+          entity: light.salon
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 55%
+            left: 52%
+
+        - type: image
+          entity: light.cuisine
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 58%
+            left: 62%
+
+        - type: image
+          entity: light.chambre
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 55%
+            left: 36%
+
+        - type: image
+          entity: light.entree
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 86%
+            left: 37%
+
+
+
+
+        - type: image
+          entity: input_boolean.tv_power_switch
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/tv_on.png
+            'playing': /local/floorplan/images/tv_on.png            
+            'off': /local/floorplan/images/tv_off.png               
+          style:
+            width: 2%            
+            top: 30%
+            left: 56%
+
+        - type: image
+          entity: media_player.home_cinema_main
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/ampli_on.png
+            'idle': /local/floorplan/images/ampli_on.png            
+            'off': /local/floorplan/images/ampli_off.png               
+          style:
+            width: 2%
+            top: 33%
+            left: 56%
+
+        - type: image
+          entity: input_boolean.zappiti_power_switch
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/zappiti_on.png
+            'off': /local/floorplan/images/zappiti_off.png               
+          style:
+            width: 2%
+            top: 36%
+            left: 56%            
+
+
+        - type: image
+          entity: switch.sonoff1
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/apple_tv_on.png
+            'off': /local/floorplan/images/apple_tv_off.png               
+          style:
+            width: 2%
+            top: 39%
+            left: 56%    
+
+        - type: image
+          entity: media_player.xbox_series_x
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/xbox_on.png
+            'off': /local/floorplan/images/xbox_off.png               
+          style:
+            width: 2%
+            top: 42%
+            left: 56%    
+
+
+
+        - type: image
+          entity: switch.sonoff4
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/ps4_on.png
+            'off': /local/floorplan/images/ps4_off.png               
+          style:
+            width: 2%
+            top: 45%
+            left: 56%    
+
+
+        - type: image
+          entity: switch.sonoff3
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/switch_on.png
+            'off': /local/floorplan/images/switch_off.png               
+          style:
+            width: 2%
+            top: 48%
+            left: 56%    
+
+
+
+
+
+        - type: image
+          entity: input_boolean.projecteur_power_switch
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 31.8%
+            left: 86.8%
+
+        - type: image
+          entity: input_boolean.toile_power_switch
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/lite.png
+            'off': /local/floorplan/images/liteoff.png               
+          style:
+            width: 3%
+            top: 31.8%
+            left: 90%
+
+
+
+
+
+        - type: image
+          entity: fan.dyson_pure_cool_linktm
+          tap_action:
+            action: toggle
+          state_image:
+            'on': /local/floorplan/images/floorplan_fan_on.gif
+            'off': /local/floorplan/images/floorplan_fan_off.png               
+          style:
+            width: 3%
+            top: 24%
+            left: 40%
+            transform: rotate(-90deg) rotateX(-114deg) skewX(13deg) 
+
+
+
+        - type: "custom:now-playing-poster"
+          entity: media_player.salon
+          style:
+            width: 7%
+            top: 18%
+            left: 82%
+            transform: rotate(90deg) rotateX(-60deg) skewX(20deg) 
+
+
+        - type: "custom:now-playing-poster"
+          entity: media_player.chambre
+          style:
+            width: 6%
+            top: 20%
+            left: 14%
+            transform: rotate(-90deg) rotateX(60deg) skewX(-20deg) 
+
+        - type: "custom:now-playing-poster"
+          entity: media_player.hub
+          style:
+            width: 3%
+            top: 64%
+            left: 37%
+            transform: rotate(-90deg) 
+
+
+        - type: "custom:now-playing-poster"
+          entity: media_player.plex_plex_for_samsung_tv_2018
+          style:
+            width: 09.8%
+            top: 10.4%
+            left: 57.5%
+            transform: rotate(-4deg) rotateX(69deg) rotateY(-21deg) skewX(-12deg) skewY(42deg)  

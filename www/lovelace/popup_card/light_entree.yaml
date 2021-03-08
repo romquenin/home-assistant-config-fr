@@ -1,0 +1,63 @@
+              action: fire-dom-event
+              browser_mod:
+                command: popup
+                deviceID:
+                  - this
+                  - dashboard  
+                title: Salon 
+                style:
+                  $: |
+                    .mdc-dialog .mdc-dialog__container {
+                      width: 100%;
+                    }
+                    .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                      width:100%;
+                      box-shadow:none;
+                    }
+                  .: |
+                    :host {
+                      --mdc-theme-surface: rgba(0,0,0,0);
+                      --secondary-background-color: rgba(0,0,0,0);
+                      --ha-card-background: rgba(0,0,0,0);
+                      --ha-card-box-shadow: none;                      
+                      --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                      --mdc-dialog-min-height: 100%;
+                      --mdc-dialog-min-width: 100%;
+                      --mdc-dialog-max-width: 100%;
+                    }
+                    mwc-icon-button {
+                      color: #FFF;
+                    }                  
+                card:
+
+                  type: custom:light-popup-card               
+                  entity: light.entree
+                  icon: mdi:lightbulb-group
+                  actionsInARow: 8
+                  brightnessWidth: 150px
+                  brightnessHeight: 400px
+                  switchWidth: 150px
+                  switchHeight: 400px                
+                  settings:
+                    openButton: Réglages
+                    closeButton: Fermer
+                  settingsCard:
+                    type: entities
+                    cardOptions:
+                      entities:
+                        - type: custom:slider-entity-row
+                          entity: light.strip_4
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.strip_4                          
+                        - type: divider
+                        - type: divider                               
+                        - type: custom:slider-entity-row
+                          entity: light.lamp_3
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.lamp_3      

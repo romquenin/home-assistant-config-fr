@@ -1,0 +1,42 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       SALON FILM                       ##
+   ##                                                        ##
+   ############################################################
+              
+- name: Salon film
+  entities:
+    light.signe_1:      
+      state: off
+      transition: 8     
+    light.bloom_1:
+      state: off
+      transition: 8        
+    light.strip_2:
+      profile: relax        
+      state: on
+      transition: 8
+      brightness_pct: 15
+    light.strip_3:
+      profile: relax        
+      state: on
+      transition: 8
+      brightness_pct: 15  
+    light.lamp_1:
+      state: off
+      transition: 8        
+    light.lamp_2:
+      state: off
+      transition: 8        
+    light.living:
+      state: off
+      transition: 8      
+    light.play_1:      
+      state: off
+      transition: 8   
+    light.play_2:
+      state: off
+      transition: 8  
+
+   

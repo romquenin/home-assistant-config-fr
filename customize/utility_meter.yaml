@@ -1,0 +1,14 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         SWITCH                         ##
+   ##                                                        ##
+   ############################################################
+
+  ###  SONOFF  ###
+sensor.download:
+  friendly_name: Download/Semaine
+  icon: mdi:counter 
+sensor.upload:
+  friendly_name: Upload/Semaine
+  icon: mdi:counter

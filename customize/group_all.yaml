@@ -1,0 +1,24 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         GROUP                          ##
+   ##                                                        ##
+   ############################################################
+
+  ###  group  ###  
+group.all_scripts:
+  friendly_name: Scripts   
+  icon: mdi:script-text-outline 
+group.all_automations:
+  friendly_name: Automations     
+  icon: mdi:home-automation 
+group.all_scenes:
+  friendly_name: Scènes     
+  icon: mdi:palette 
+
+
+
+  
+  
+  
+  

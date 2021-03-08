@@ -1,0 +1,500 @@
+####################################################################################################################################################################################################################################################################################################################################################
+####    ICON ACTION
+####################################################################################################################################################################################################################################################################################################################################################
+  icon_action:
+    color: '#9da0a2'
+    styles:
+      card:
+        [background: '#FFFFFF10', border-radius: 0.6em, box-shadow: none, 
+        transition: none, width: 4em, height: 3.7em]
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    NAME ACTION
+####################################################################################################################################################################################################################################################################################################################################################
+  name_action:
+    styles:
+      name:
+        [display: flex, align-items: center, justify-content: center, margin-top: 0.5px]
+      card:
+        [background: '#FFFFFF10', color: '#9da0a2', border-radius: 0.6em, box-shadow: none, 
+        transition: none, width: 100%, padding: 1em 1.4em 1em 1.2em, font-size: 1.06em, 
+        font-weight: 500, letter-spacing: 0.015em]
+    style: '#name > ha-icon {width: 1.4em; margin-right: 0.3em; }'
+
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    LIGHT
+####################################################################################################################################################################################################################################################################################################################################################
+  light: 
+    custom_fields:
+      circle: >
+        [[[ if (entity.state === 'on' && entity.attributes.brightness) {
+        const brightness = Math.round(entity.attributes.brightness / 2.54);
+        const radius = 20.5; const circumference = radius * 2 * Math.PI; 
+        return `<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="${radius}" stroke="#b2b2b2" stroke-width="1.5" fill="none" style="
+        transform: rotate(-90deg); transform-origin: 50% 50%; stroke-dasharray: ${circumference}; stroke-dashoffset: ${circumference - brightness / 100 * circumference};" />
+        <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle">${brightness}<tspan font-size="10">%</tspan></text></svg>`; } ]]]
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON PICTURE
+####################################################################################################################################################################################################################################################################################################################################################
+  button_picture:
+    size: 100%
+    show_state: false
+    show_label: false
+    show_name: false
+    show_entity_picture: true
+    color_type: card
+    aspect_ratio: 1/1
+    tap_action:
+      action: toggle
+      haptic: light
+    hold_action:
+      action: more-info
+      haptic: success
+    styles:
+      card:
+        - background-color: >
+            [[background-color]]        
+        - border-radius: 20px
+    state:
+      - value: 'armed'
+        color: '#F0C209'
+        icon:
+          - color: 'lime'          
+        id: on-picture
+      - value: 'disarmed'
+        color: '#555B65'
+        id: off-picture 
+        icon:
+          - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON INFO
+####################################################################################################################################################################################################################################################################################################################################################
+  button_info:
+    aspect_ratio: 1/1
+    styles:
+      card:
+        - border-radius: 10%
+        - padding: 5%
+        - color: ivory
+        - font-size: 11px
+        - text-shadow: 0px 0px 5px black
+        - text-transform: capitalize
+      grid:
+        - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd" "l l"'
+        - grid-template-columns: 1fr 1fr
+        - grid-template-rows: 3fr 3fr 2fr 2fr 2fr
+      name:
+        - font-weight: bold
+        - font-size: 15px
+        - color: white
+        - align-self: middle
+        - justify-self: start
+        - padding-bottom: 4px
+      img_cell:
+        - justify-content: start
+        - align-items: start
+        - margin: none
+      icon:
+        - width: 70%
+      label:
+        - align-self: middle
+      custom_fields:
+        temp:
+          - align-self: start
+          - justify-self: end
+          - text-align: left
+        cpu:
+          - padding-bottom: 2px
+          - align-self: middle
+          - justify-self: start
+        ram:
+          - padding-bottom: 2px
+          - align-self: middle
+          - justify-self: start
+        sd:
+          - align-self: middle
+          - justify-self: start
+    tap_action:
+      action: more-info  
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON ALARME
+####################################################################################################################################################################################################################################################################################################################################################
+  button_alarme:
+    template: button_body
+    show_last_changed: true
+    show_state: true
+    show_icon: true
+    show_name: true
+    color_type: card
+    tap_action:
+      action: more-info
+    hold_action:
+      action: more-info
+      haptic: success 
+    card_mod:   
+      style: |
+        ha-card {
+          --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+          box-shadow: 2px 2px rgba(0,0,0,0.0);
+          border-radius: 15px;
+        }  
+    styles:
+      name:
+        - color: 'var(--text-color)'        
+      card:
+        - background-color: var(--primary-background-color)      
+        - padding-left: 10px
+        - border-radius: 20px
+      label:
+        - color: 'var(--text-medium-color)'           
+        - font-size: 9px
+        - font-family: Helvetica
+        - justify-self: start 
+      icon:
+        - width: 80%                         
+    state:
+      - value: 'armed_away'
+        icon: mdi:shield-lock
+        styles:
+          state: 
+            - color: red                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: red
+      - value: 'armed_home'
+        icon: mdi:shield-home
+        styles:
+          state:
+            - color: orange                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: orange
+      - value: 'triggered'
+        icon: mdi:shield-alert
+        color: red
+        styles:
+          icon:
+            - animation: blink 2s ease infinite            
+      - value: 'disarmed'
+        icon: mdi:shield-off
+        styles:
+          state:
+            - color: lime                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: lime 
+      - value: 'pending'
+        icon: mdi:shield-half-full
+        color: green
+        styles:
+          icon:
+            - animation: blink 2s ease infinite
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON MOTION
+####################################################################################################################################################################################################################################################################################################################################################
+  button_motion:
+    template: button_body
+    show_last_changed: true
+    show_icon: false
+    tap_action:
+      action: more-info
+    hold_action:
+      action: more-info 
+    card_mod:   
+      style: |
+        ha-card {
+          --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+          box-shadow: 2px 2px rgba(0,0,0,0.0);
+          border-radius: 15px;
+        }  
+
+    custom_fields:
+      icon_switch: >
+        [[[ if (entity.state === 'on') {
+        return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#eyknrhsnqwbp2_to {animation: eyknrhsnqwbp2_to__to 1000ms linear infinite normal forwards}@keyframes eyknrhsnqwbp2_to__to { 0% {transform: translate(1.100000px,1.600000px)} 50% {transform: translate(5.100000px,1.600000px)} 100% {transform: translate(1.100000px,1.600000px)} }#eyknrhsnqwbp5_to {animation: eyknrhsnqwbp5_to__to 1000ms linear infinite normal forwards}@keyframes eyknrhsnqwbp5_to__to { 0% {transform: translate(-2.100000px,-1.600000px)} 50% {transform: translate(-1.100000px,-1.600000px)} 100% {transform: translate(-2.100000px,-1.600000px)} }#eyknrhsnqwbp6_to {animation: eyknrhsnqwbp6_to__to 1000ms linear infinite normal forwards}@keyframes eyknrhsnqwbp6_to__to { 0% {transform: translate(-2.100000px,-1.600000px)} 50% {transform: translate(-3.100000px,-1.600000px)} 100% {transform: translate(-2.100000px,-1.600000px)} }#eyknrhsnqwbp7_to {animation: eyknrhsnqwbp7_to__to 1000ms linear infinite normal forwards}@keyframes eyknrhsnqwbp7_to__to { 0% {transform: translate(-2.100000px,-1.600000px)} 50% {transform: translate(-1.100000px,-1.600000px)} 100% {transform: translate(-2.100000px,-1.600000px)} }]]></style><g id="eyknrhsnqwbp2_to" transform="translate(1.100000,1.600000)"><g id="eyknrhsnqwbp2" transform="translate(0,0)"><path id="eyknrhsnqwbp3" d="M15,19.900000L15,16.900000L14,16C13.400000,15.400000,12.900000,15,12.900000,15C12.900000,15.100000,12.600000,16,12.400000,17.200000C12.100000,18.300000,11.900000,19.300000,11.900000,19.300000C11.800000,19.300000,10.300000,19,8.400000,18.600000L5,18L5.100000,17.500000C5.100000,17.200000,5.200000,16.800000,5.200000,16.500000L5.300000,16L7.700000,16.500000C8.900000,16.800000,10,17,10.100000,17C10.200000,17,10.400000,16.300000,11,13C11.500000,10.800000,11.800000,8.900000,11.800000,8.900000C11.800000,8.900000,11.300000,9,10.800000,9.200000L9.900000,9.600000L9.900000,11.300000L9.900000,13L9,13L8,13L8,10.700000L8,8.300000L10.600000,7.200000C13.400000,6.100000,13.800000,6,14.500000,6.100000C15.100000,6.300000,15.400000,6.600000,16.300000,8C16.900000,8.900000,17.200000,9.400000,17.600000,9.700000C18.400000,10.500000,19.700000,11,20.600000,11L20.900000,11L20.900000,12L20.900000,13L20.500000,12.900000C18.700000,12.700000,17.200000,12.100000,15.900000,10.900000L15.500000,10.400000L15.200000,12L14.800000,13.500000L15.900000,14.500000L17,15.600000L17,19.200000L17,22.900000L16,22.900000L15,22.900000Z" transform="matrix(1 0 0 1 -2.10000000000000 -1.60000000000000)" fill="rgb(255,0,0)" stroke="none" stroke-width="1"/><path id="eyknrhsnqwbp4" d="M14.600000,5.200000C13.200000,4.500000,13.200000,2.500000,14.600000,1.800000C16.600000,0.800000,18.400000,3.400000,16.800000,4.900000C16.200000,5.500000,15.400000,5.600000,14.600000,5.200000Z" transform="matrix(1 0 0 1 -2.10000000000000 -1.60000000000000)" fill="rgb(255,0,0)" stroke="none" stroke-width="1"/><g id="eyknrhsnqwbp5_to" transform="translate(-2.100000,-1.600000)"><path id="eyknrhsnqwbp5" d="M3.500000,4.800000C3,4.500000,2.900000,3.700000,3.400000,3.300000L3.700000,3L6.300000,3L8.900000,3L8.900000,4L8.900000,4.900000L6.300000,4.900000C4,4.900000,3.700000,4.900000,3.500000,4.800000Z" transform="translate(0,0)" fill="rgb(255,0,0)" stroke="none" stroke-width="1"/></g><g id="eyknrhsnqwbp6_to" transform="translate(-2.100000,-1.600000)"><path id="eyknrhsnqwbp6" d="M2.600000,8.800000C2.100000,8.600000,1.900000,8,2.200000,7.600000C2.400000,7.100000,2.500000,7.100000,4.300000,7.100000L6,7.100000L6,8L6,9L4.400000,9C3.200000,9,2.800000,8.900000,2.600000,8.800000Z" transform="translate(0,0)" fill="rgb(255,0,0)" stroke="none" stroke-width="1"/></g><g id="eyknrhsnqwbp7_to" transform="translate(-2.100000,-1.600000)"><path id="eyknrhsnqwbp7" d="M1.700000,12.900000C1.100000,12.600000,0.900000,11.900000,1.200000,11.500000C1.600000,11.100000,1.800000,11,4,11L6,11L6,12L6,13L4,13C2.400000,13,1.900000,13,1.700000,12.900000Z" transform="translate(0,0)" fill="rgb(255,0,0)" stroke="none" stroke-width="1"/></g></g></g></svg>'; }
+        else { return '<svg viewBox="0 0 24 24"><path fill="lime" d="M14.12,10H19V8.2H15.38L13.38,4.87C13.08,4.37 12.54,4.03 11.92,4.03C11.74,4.03 11.58,4.06 11.42,4.11L6,5.8V11H7.8V7.33L9.91,6.67L6,22H7.8L10.67,13.89L13,17V22H14.8V15.59L12.31,11.05L13.04,8.18M14,3.8C15,3.8 15.8,3 15.8,2C15.8,1 15,0.2 14,0.2C13,0.2 12.2,1 12.2,2C12.2,3 13,3.8 14,3.8Z" /></svg>'; } ]]]        
+    styles: 
+      custom_fields:
+        icon_switch:
+          [top: 4%, left: 30%, width: 35%, height: 35%, position: absolute]          
+      name:
+        - color: 'var(--text-color)'        
+      card:
+        - background-color: var(--primary-background-color)      
+        - padding-left: 10px
+        - border-radius: 20px
+      label:
+        - color: 'var(--text-medium-color)'           
+        - font-size: 9px
+        - font-family: Helvetica
+        - justify-self: start        
+      icon:
+        - width: 80%                
+    state:
+      - value: 'on'
+        styles:
+          card:
+            - color: red                   
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: red              
+      - value: 'off'
+        styles:
+          state:
+            - color: lime                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: lime                      
+      - operator: template
+        value: >
+          [[[
+          return entity.attributes.on === true
+          ]]]
+        styles:
+          card:
+            - color: '#555B65'
+          icon:
+            - color: 'lime'
+          state:
+            - color: 'lime'
+        id: off-icon
+      - operator: default
+        styles:
+          card:
+            - color: '#555B65'
+            - opacity: 0.8
+          icon:
+            - color: '#555B65'
+        id: off-icon
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON PORTE
+####################################################################################################################################################################################################################################################################################################################################################
+  button_porte:
+    template: button_body
+    show_last_changed: true
+    show_icon: false
+    tap_action:
+      action: more-info
+    hold_action:
+      action: more-info 
+    card_mod:   
+      style: |
+        ha-card {
+          --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+          box-shadow: 2px 2px rgba(0,0,0,0.0);
+          border-radius: 15px;
+        }   
+    custom_fields:
+      icon_closet: >
+        [[[ const state = entity.state === 'on' ? 'door' : 'door reverse'; const opacity = entity.state === 'on' ? 'room' : 'room reverse';
+        return `<svg viewBox="0 0 50 50"> <style>.door{animation: door 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;}.room{animation: room 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;}.reverse{animation-direction: reverse;}@keyframes door{0%{transform: none; fill: #00ff00;}100%{transform: skewY(10deg) translate(4.5%, -3.9%) scaleX(0.8); fill: #ff0000;}}@keyframes room{0%{opacity: 0;}100%{opacity: 1;}}</style>
+        <path class="${opacity}" d="M11.4,1.4h27.2v43.1H11.4V1.4z" fill="#bcbcbc"/><path class="${state}" d="M11.4 1.4v43.1h27.2V1.4H11.4zm23 23.4c0 1.1-.9 1.9-1.9 1.9h0c-1.1 0-1.9-.9-1.9-1.9V21c0-1.1.9-1.9 1.9-1.9h0c1.1 0 1.9.9 1.9 1.9v3.8z"/></svg>`; ]]]
+    styles:
+      custom_fields:
+        icon_closet:
+          [top: 4%, left: 30%, width: 35%, height: 35%, position: absolute]    
+
+      name:
+        - color: 'var(--text-color)'        
+      card:
+        - background-color: var(--primary-background-color)      
+        - padding-left: 10px
+        - border-radius: 20px
+      label:
+        - color: 'var(--text-medium-color)'           
+        - font-size: 9px
+        - font-family: Helvetica
+        - justify-self: start        
+      icon:
+        - width: 80%                
+    state:
+      - value: 'on'
+        styles:
+          card:
+            - color: red                   
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: red              
+      - value: 'off'
+        styles:
+          state:
+            - color: lime                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: lime                      
+      - operator: template
+        value: >
+          [[[
+          return entity.attributes.on === true
+          ]]]
+        styles:
+          card:
+            - color: '#555B65'
+          icon:
+            - color: 'lime'
+          state:
+            - color: 'lime'
+        id: off-icon
+      - operator: default
+        styles:
+          card:
+            - color: '#555B65'
+            - opacity: 0.8
+          icon:
+            - color: '#555B65'
+        id: off-icon
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON_FUITE
+####################################################################################################################################################################################################################################################################################################################################################
+  button_fuite:
+    template: button_body
+    show_last_changed: true
+    show_icon: false
+    tap_action:
+      action: more-info
+    hold_action:
+      action: more-info 
+    card_mod:  
+      style: |
+        ha-card {
+          --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+          box-shadow: 2px 2px rgba(0,0,0,0.0);
+          border-radius: 15px;
+        }   
+    custom_fields:
+      icon_switch: >
+        [[[ if (entity.state === 'on') {
+        return '<svg viewBox="0 0 24 24"><style>@keyframes a0_t { 0% { transform: translate(11.6px,12.2px) scale(1,1) translate(-10.5px,-10.5px); } 50% { transform: translate(11.6px,12.2px) scale(1.1,1.1) translate(-10.5px,-10.5px); } 100% { transform: translate(11.6px,12.2px) scale(1,1) translate(-10.5px,-10.5px); } }@keyframes a1_t { 0% { transform: translate(-1.1px,-1.7px); } 50% { transform: translate(-1.1px,-1.7px); } 100% { transform: translate(-1.1px,-1.7px); } }@keyframes a2_t { 0% { transform: translate(10.9px,9.9px) scale(1,1) translate(-12px,-11.7px); } 50% { transform: translate(10.9px,9.9px) scale(1.1,1.1) translate(-12px,-11.7px); } 100% { transform: translate(10.9px,9.9px) scale(1,1) translate(-12px,-11.7px); } }</style><g transform="translate(11.6,12.2) translate(-10.5,-10.5)" style="animation: .4s linear infinite both a0_t;"><path d="M20 16v-1h1h1v1v1h-1h-1Zm0-6v-3h1h1v3v3h-1h-1Z" fill="red" transform="translate(19.9,10.3) translate(-21,-12)" style="animation: .4s linear infinite both a1_t;"/><path d="M11.4 20c-1.4-0.2-2.6-0.8-3.5-1.7c-1-0.9-1.5-1.9-1.8-3.2c0-0.3-0.1-0.5-0.1-1.1c.1-0.6 .1-0.7 .2-1.1c.2-0.9 .5-1.7 1.1-2.9c.8-1.5 1.8-3.1 3.3-5c.7-0.9 1.3-1.7 1.4-1.7c.1 0 .7 .8 1.4 1.7c2.1 2.7 3.5 5.1 4.2 7c.1 .2 .2 .6 .2 .9c.1 .4 .1 .5 .2 1.1c0 .6-0.1 .8-0.1 1.1c-0.3 1.3-0.8 2.3-1.8 3.2c-0.8 .8-1.9 1.4-3.1 1.6c-0.5 .1-1.2 .1-1.6 .1Z" fill="red" transform="translate(10.9,9.9) translate(-12,-11.7)" style="animation: .4s linear infinite both a2_t;"/></g></svg>'; }
+        else { return '<svg viewBox="0 0 24 24"><style>@keyframes a0_t { 0% { transform: translate(11.6px,12.2px) scale(1,1) translate(-10.5px,-10.5px); } 42.857% { transform: translate(11.6px,12.2px) scale(1.1,1.1) translate(-10.5px,-10.5px); } 85.714% { transform: translate(11.6px,12.2px) scale(1,1) translate(-10.5px,-10.5px); } 100% { transform: translate(11.6px,12.2px) scale(1,1) translate(-10.5px,-10.5px); } }@keyframes a1_t { 0% { transform: translate(-1.1px,-1.7px); } 100% { transform: translate(-1.1px,-1.7px); } }@keyframes a1_o { 0% { opacity: 1; } 57.143% { opacity: 0; } 100% { opacity: 0; } }@keyframes a1_f { 0% { fill: red; } 100% { fill: #0f0; } }@keyframes a2_t { 0% { transform: translate(10.9px,9.9px) scale(1,1) translate(-12px,-11.7px); } 100% { transform: translate(10.9px,9.9px) scale(1,1) translate(-12px,-11.7px); } }@keyframes a2_o { 0% { opacity: 1; } 57.143% { opacity: 0; } 100% { opacity: 0; } }@keyframes a2_f { 0% { fill: red; } 100% { fill: #0f0; } }@keyframes a3_o { 0% { opacity: 0; } 42.857% { opacity: 0; } 100% { opacity: 1; } }@keyframes a3_f { 0% { fill: red; } 100% { fill: #0f0; } }@keyframes a4_o { 0% { opacity: 0; } 42.857% { opacity: 0; } 100% { opacity: 1; } }@keyframes a4_f { 0% { fill: red; } 100% { fill: #0f0; } }@keyframes a5_o { 0% { opacity: 0; } 42.857% { opacity: 0; } 100% { opacity: 1; } }@keyframes a5_f { 0% { fill: red; } 100% { fill: #0f0; } }</style><g transform="translate(11.6,12.2) translate(-10.5,-10.5)" style="animation: .7s linear both a0_t;"><path d="M20 16v-1h1h1v1v1h-1h-1Zm0-6v-3h1h1v3v3h-1h-1Z" fill="red" transform="translate(19.9,10.3) translate(-21,-12)" style="animation: .7s linear both a1_t, .7s linear both a1_o, .7s linear both a1_f;"/><path d="M11.4 20c-1.4-0.2-2.6-0.8-3.5-1.7c-1-0.9-1.5-1.9-1.8-3.2c0-0.3-0.1-0.5-0.1-1.1c.1-0.6 .1-0.7 .2-1.1c.2-0.9 .5-1.7 1.1-2.9c.8-1.5 1.8-3.1 3.3-5c.7-0.9 1.3-1.7 1.4-1.7c.1 0 .7 .8 1.4 1.7c2.1 2.7 3.5 5.1 4.2 7c.1 .2 .2 .6 .2 .9c.1 .4 .1 .5 .2 1.1c0 .6-0.1 .8-0.1 1.1c-0.3 1.3-0.8 2.3-1.8 3.2c-0.8 .8-1.9 1.4-3.1 1.6c-0.5 .1-1.2 .1-1.6 .1Z" fill="red" transform="translate(10.9,9.9) translate(-12,-11.7)" style="animation: .7s linear both a2_t, .7s linear both a2_o, .7s linear both a2_f;"/><path d="M13.8 10.5l-4.2-4.1l.5-0.7c.5-0.7 1.4-1.8 1.7-2.2l.2-0.2l.1 .2c.4 .4 1.5 1.8 2.2 2.7c1.9 2.6 3 4.6 3.5 6.5c.1 .4 .1 .5 .1 1.2c0 .3 0 .7 0 .7c0 .1-0.7-0.6-4.1-4.1Z" fill="red" opacity="0" transform="translate(-1.1,-1.7)" style="animation: .7s linear both a3_o, .7s linear both a3_f;"/><path d="M11.1 19.9c-1.3-0.3-2.4-0.8-3.3-1.7c-0.8-0.8-1.3-1.7-1.6-2.8c-0.1-0.4-0.1-0.5-0.1-1.3c0-0.9 0-0.9 .1-1.3c.2-0.9 .5-1.5 1-2.6c.4-0.7 1.2-2.1 1.3-2.2c0-0.1 .8 .7 4.4 4.3l4.4 4.4l-0.1 .2c-0.5 .9-1.4 1.8-2.3 2.3c-1.2 .6-2.6 .9-3.8 .7Z" fill="red" opacity="0" transform="translate(-1.1,-1.7)" style="animation: .7s linear both a4_o, .7s linear both a4_f;"/><path d="M1.1 3l1.3-1.3l19.7 19.8l-1.3 1.2Z" fill="red" opacity="0" transform="translate(-1.1,-1.7)" style="animation: .7s linear both a5_o, .7s linear both a5_f;"/></g></svg>'; } ]]]        
+    styles: 
+      custom_fields:
+        icon_switch:
+          [top: 2%, left: 30%, width: 40%, height: 40%, position: absolute]             
+      name:
+        - color: 'var(--text-color)'        
+      card:
+        - background-color: var(--primary-background-color)      
+        - padding-left: 10px
+        - border-radius: 20px
+      label:
+        - color: 'var(--text-medium-color)'           
+        - font-size: 9px
+        - font-family: Helvetica
+        - justify-self: start        
+      icon:
+        - width: 80%                
+    state:
+      - value: 'on'
+        styles:
+          card:
+            - color: red                   
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: red              
+      - value: 'off'
+        styles:
+          state:
+            - color: lime                   
+          card:
+            - color: 'var(--text-medium-color)'
+          name:
+            - color: 'var(--text-medium-color)'
+          icon:
+            - color: lime                      
+      - operator: template
+        value: >
+          [[[
+          return entity.attributes.on === true
+          ]]]
+        styles:
+          card:
+            - color: '#555B65'
+          icon:
+            - color: 'lime'
+          state:
+            - color: 'lime'
+        id: off-icon
+      - operator: default
+        styles:
+          card:
+            - color: '#555B65'
+            - opacity: 0.8
+          icon:
+            - color: '#555B65'
+        id: off-icon
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BUTTON BODY
+#################################################################################################################################################################################################################################################################################################################################################### 
+  button_body:
+    color: auto
+    size: 30%
+    aspect_ratio: 1/1
+    show_state: true
+    show_label: true
+    styles:
+      icon:
+        - color: var(--local-color)
+      lock:
+        - color: red
+      card:
+        - padding-left: 10px
+        - background-color: >
+            [[background-color]]
+        - border-radius: 20px        
+        - color: var(--local-color)
+      name:
+        - text-overflow: unset
+        - white-space: unset
+        - word-break: break-word
+        - color: 'var(--text-medium-color)'   
+        - text-align: start
+        - justify-self: start
+        - font-weight: bold
+        - font-family: Helvetica 
+        - font-size: 13px
+      label:
+        - color: 'white'          
+        - text-align: start
+        - font-size: 11px
+        - font-family: Helvetica
+        - justify-self: start
+      state:      
+        - text-align: start
+        - font-size: 11px
+        - font-family: Helvetica
+        - justify-self: start
+        - text-transform: capitalize
+        - font-weight: bold
+      grid:
+        - grid-template-areas: '"i" "n" "s" "l"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: 1fr min-content min-content
+      img_cell:
+        - justify-content: start
+        - align-items: start   

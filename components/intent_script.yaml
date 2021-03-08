@@ -1,0 +1,31 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                      INTENT SCRIPT                     ##
+   ##                                                        ##
+   ############################################################
+   
+GetTram:
+  speech:
+    text: Les prochains tram arriverons dans {{ states('sensor.tram_06') }} et {{ states('sensor.tram_06_suivant_countdown') }} minutes. 
+GetTempSalon:
+  speech:
+    text: Actuellement il fait {{ states('sensor.netatmo_indoor_temperature') }} degrés dans le salon.
+GetTempChambre:
+  speech:
+    text: Actuellement il fait {{ states('sensor.netatmo_chambre_temperature') }} degrés dans la chambre.
+Bonjour:
+  speech:
+    text: Wesh Youtube. Home assistant à votre service. Avec mon aide vous allez pouvoir domotiser votre habitation et vous simplifier la vie. Je peux interagir avec tous vos appareils, allumer vos lampes, faire sonné votre alarme, réchauffer votre café, éteindre votre pc et vous donnez n'importe quelle information. Avec moi, le futur c'est déjà aujourd'hui. Alors installez vous confortablement, ça part de là!
+AuRevoir:
+  speech:
+    text: Ok Boss.
+Humeur:
+  speech:
+    text: Avec vous je suis toujours au top, merci mon maître.
+System:
+  speech:
+    text: Actuellement le processeur est utilisé à {{ states('sensor.processor_use') }} pourcent, la température relevée est de {{ states('sensor.cpu_temp') }} degrés. La mémoire est utilisée à {{ states('sensor.cpu_temp') }} pourcent.
+GetPower:
+  speech:
+    text: La consommation éléctrique globale est de {{ states('sensor.current_power_usage') }} Watts.

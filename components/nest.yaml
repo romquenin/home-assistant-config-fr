@@ -1,0 +1,14 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                          NEST                          ##
+   ##                                                        ##
+   ############################################################
+
+
+client_id: !secret nest_client_id            
+client_secret: !secret nest_client_secret    
+# "Project ID" in the Device Access Console
+project_id: !secret nest_project_id 
+# Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
+subscriber_id: !secret nest_subscriber_id 

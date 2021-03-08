@@ -1,0 +1,56 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                      FAN DYSON                         ##
+  ##                                                        ##
+  ############################################################    
+
+
+input_boolean:
+  fan:
+    name: Fan
+    initial: off  
+
+script:
+  'ventilateur_rotation_on':
+    alias: '[Dyson] rotation on'
+    sequence:
+    - data:
+        entity_id: fan.dyson_pure_cool_linktm
+        oscillating: 'true'
+      service: fan.oscillate
+  'ventilateur_rotation_off':
+    alias: '[Dyson] rotation off'
+    sequence:
+    - data:
+        entity_id: fan.dyson_pure_cool_linktm
+        oscillating: 'false'
+      service: fan.oscillate
+
+sensor:
+  - platform: template
+    sensors:  
+      vitesse_ventilateur:
+        friendly_name: Vitesse ventilateur
+        value_template: '{{ state_attr(''fan.dyson_pure_cool_linktm'', ''dyson_speed'') }}'
+
+automation:
+  - alias: '[Dyson] Rotation On'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.fan
+        to: 'on'
+    action:
+      - service: script.turn_on
+        entity_id: script.ventilateur_rotation_on       
+  - alias: '[Dyson] Rotation Off'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.fan
+        to: 'off'
+    action:
+      - service: script.turn_on
+        entity_id: script.ventilateur_rotation_off
+
