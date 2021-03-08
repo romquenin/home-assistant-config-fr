@@ -1,0 +1,11 @@
+
+   ############################################################
+   ##                          NOTIFY                        ##
+   ############################################################
+
+telegram_bot:
+  - platform: broadcast
+    api_key: !secret telegram_api
+    allowed_chat_ids: !secret telegram_chat_ids
+
+

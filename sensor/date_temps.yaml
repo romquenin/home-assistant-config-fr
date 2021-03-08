@@ -1,0 +1,71 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       DATE TEMPS                       ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+    date_fr:
+#      entity_id: sensor.date
+      friendly_name: "Date du jour"  
+      icon_template: mdi:calendar-today          
+      value_template: >
+        {% set months = ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"] %}
+        {% set days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]  %}
+        {{ days[now().weekday()] + ' ' + now().day | string + ' ' + months[now().month-1] }}
+
+    date_court:
+#      entity_id: sensor.date
+      friendly_name: "Date court (jour et date)"  
+      icon_template: mdi:calendar-today          
+      value_template: >
+        {% set days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]  %}
+        {{ days[now().weekday()] + ' ' + now().day | string }}
+
+    date_court_fr:
+#      entity_id: sensor.date
+      friendly_name: "Date court (date et mois)"
+      icon_template: mdi:calendar-today            
+      value_template: >
+        {% set months = ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Dec"] %}
+        {{ now().day | string + ' ' + months[now().month-1] }}           
+
+    jours_fr:
+#      entity_id: sensor.date
+      friendly_name: "Jours"      
+      value_template: >
+        {{ ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"][now().weekday()] }}
+
+    time_quarterly:
+      friendly_name: Time
+      icon_template: mdi:clock 
+      value_template: >-
+        {% set hour = states('sensor.time').split(':')[0] | int %}
+        {% set minutes = states('sensor.time').split(':')[1] | int %}
+        {% if minutes >= 45 %}
+          {% set minute = '45' %}
+        {% elif minutes >= 30 %}
+          {% set minute = '30' %}
+        {% elif minutes >= 15 %}
+          {% set minute = '15' %}
+        {% else %}
+          {% set minute = '00' %}
+        {% endif %}
+        {{ hour }}:{{ minute }}    
+
+    time_hour:
+      friendly_name: 'Time hour'
+      icon_template: mdi:clock 
+      value_template: >-
+        {% set hour = states('sensor.time').split(':')[0] | int %}
+        {{ '%0.2d'|format(hour) }}
+
+    time_minute:
+      friendly_name: 'Time minute'
+      value_template: >-
+        {% set minute = states('sensor.time').split(':')[1] | int %}
+        {{ '%0.2d'|format(minute) }}  
+
+ 

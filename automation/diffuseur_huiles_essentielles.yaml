@@ -1,0 +1,22 @@
+
+   ############################################################
+   ##                                                        ##
+   ##           DIFFUSEUR HUILES ESSENTIELLES                ##
+   ##                                                        ##
+   ############################################################
+   
+#Actif 5m toute les 4h (de 8h à minuit)
+- alias: 'Diffuseur Huiles Essentielles'
+  trigger: 
+    platform: time_pattern
+    hours: '/4'
+  condition:
+  - condition: time
+    after: '04:00:00'
+    before: '00:00:00'
+  action:
+  - entity_id: switch.huiles_essentielles
+    service: switch.turn_on
+  - delay: 00:05:00
+  - entity_id: switch.huiles_essentielles
+    service: switch.turn_off    

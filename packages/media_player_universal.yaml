@@ -1,0 +1,17 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                       UNIVERSAL                        ##
+  ##                                                        ##
+  ############################################################   
+
+media_player:  
+  - platform: universal
+    name: Universal
+    children:
+      - media_player.salon
+      - media_player.chambre
+      - media_player.hub
+      - media_player.chromecast_audio
+      - media_player.maison
+      - media_player.ytube_music_player            

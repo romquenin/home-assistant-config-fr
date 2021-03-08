@@ -1,0 +1,24 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                      MEDIA PLAYER                      ##
+   ##                                                        ##
+   ############################################################
+    
+media_player.home_cinema_main:
+  friendly_name: Ampli  
+  icon: mdi:amplifier
+
+media_player.samsung_tv_remote:
+  friendly_name: TV
+
+media_player.apple_tv_4k:
+  friendly_name: Apple TV 4K  
+  icon: mdi:apple  
+
+media_player.ytube_music_player:
+  friendly_name: YT Music  
+ 
+input_boolean.zappiti_power_switch:
+  friendly_name: Zappiti  
+  icon: mdi:filmstrip    

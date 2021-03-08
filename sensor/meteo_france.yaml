@@ -1,0 +1,44 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                     LIGHTS COUNT                       ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:  
+    meteo_france_orage:
+      friendly_name: Orages
+      value_template: '{{ state_attr(''sensor.83_weather_alert'', ''Orages'') }}'
+    meteo_france_inondation:
+      friendly_name: Inondation
+      value_template: '{{ state_attr(''sensor.83_weather_alert'', ''Inondation'') }}'      
+    meteo_france_vague:
+      friendly_name: Vagues-submersion
+      value_template: '{{ state_attr(''sensor.83_weather_alert'', ''Vagues-submersion'') }}'         
+    meteo_france_vent:
+      friendly_name: Vent violent
+      value_template: '{{ state_attr(''sensor.83_weather_alert'', ''Vent violent'') }}'          
+    meteo_france_neige:
+      friendly_name: Neige-verglas
+      value_template: '{{ state_attr(''sensor.83_weather_alert'', ''Neige-verglas'') }}'        
+    saint_tropez_humidity:
+      friendly_name: Humidité
+      value_template: '{{ state_attr(''weather.saint_tropez'', ''humidity'') }}'         
+      unit_of_measurement: '%'      
+
+    saint_tropez_temperature_maximale_pour_demain:
+      friendly_name: Prévision température maximale
+      value_template: >-
+        {% set start = (now().replace(hour=0,minute=0,second=0)) %}
+        {% set end = (start + timedelta(days=2)) %}
+        {{ state_attr('weather.saint_tropez', 'forecast') | selectattr('datetime', '>', start) | selectattr('datetime','<=', end) | map(attribute='temperature') | list | max }}     
+      unit_of_measurement: '°C'      
+
+    saint_tropez_temperature_minimale_pour_demain:
+      friendly_name: Prévision température minimale
+      value_template: >-
+        {% set start = (now().replace(hour=0,minute=0,second=0)) %}
+        {% set end = (start + timedelta(days=2)) %}
+        {{ state_attr('weather.saint_tropez', 'forecast') | selectattr('datetime', '>=', start) | selectattr('datetime','<=', end) | map(attribute='templow') | list | max }} 
+      unit_of_measurement: '°C'      

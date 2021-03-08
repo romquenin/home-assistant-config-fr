@@ -1,0 +1,2311 @@
+####################################################################################################################################################################################################################################################################################################################################################
+####    CAMERA
+####################################################################################################################################################################################################################################################################################################################################################
+  camera:
+    card:  
+      type: picture-entity
+      card_mod:
+        style: |
+          ha-card {
+            --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+            box-shadow: 2px 2px rgba(0,0,0,0.0);
+            border-radius: 10px;
+          }      
+      entity: '[[entity]]'
+      camera_view: live
+      show_state: false
+      show_name: false
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SUMMARY
+####################################################################################################################################################################################################################################################################################################################################################
+  summary:
+    card:  
+      type: markdown
+      card_mod:
+        style: |
+          ha-card {
+            background: none;
+            box-shadow: none;      
+            font-family: Quicksand;
+            margin-bottom: -0.9em;            
+          }
+      content: >
+        <center> {{ states('sensor.date_fr') }}, nous fêtons les {{ states('sensor.fete_du_jour') }} <center>             
+        <center> &nbsp;
+        <center> {{states.sensor.summary.attributes.text}}
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    WEATHER
+####################################################################################################################################################################################################################################################################################################################################################
+  weather:
+    card:   
+      type: custom:weather-card
+      card_mod:
+        style: |
+          ha-card {
+            background: none;
+            box-shadow: none;                                 
+          }
+      entity: weather.saint_tropez
+      icons: "/local/community/weather-card/animated/"
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    GRAPH
+####################################################################################################################################################################################################################################################################################################################################################
+  graph:
+    card:    
+      type: "custom:mini-graph-card"
+      card_mod:
+        style: |
+          ha-card {
+            background: none;
+            box-shadow: none;    
+          }
+      entities:
+        - '[[entities]]'
+      name: '[[name]]'
+      height: 80
+      font_size: 80
+      line_color: '[[line_color]]'
+      line_width: 8
+      hours_to_show: 24
+      graph: line
+      detail: 2
+      show:
+        extrema: true
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA PLAYER
+####################################################################################################################################################################################################################################################################################################################################################
+  media_player:
+    card: 
+      type: custom:mini-media-player     
+      icon: mdi:google-home
+      entity: '[[entity]]'
+      name: '[[name]]'
+      artwork: cover
+      power_color: true
+      hide_volume: false
+      show_progress: true
+      group: true
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA PLAYER CHROMECAST
+####################################################################################################################################################################################################################################################################################################################################################
+  media_player_chromecast:
+    card: 
+      type: custom:mini-media-player
+      icon: mdi:google-home
+      entity: '[[entity]]'
+      name: '[[name]]'
+      artwork: cover
+      power_color: true
+      hide_volume: false
+      show_progress: true
+      group: true
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA PLAYER YT
+####################################################################################################################################################################################################################################################################################################################################################
+  media-player-yt:
+    card: 
+      type: custom:mini-media-player
+      entity: media_player.ytube_music_player
+      artwork: cover
+      hide:
+        shuffle: false
+        icon_state: false
+      shortcuts:
+        columns: 3
+        buttons:
+          - name: Salon
+            type: source
+            id: salon
+          - name: Chambre
+            type: source
+            id: chambre
+          - name: Hub
+            type: source            
+            id: hub
+          - name: Maison
+            type: source            
+            id: maison  
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MEDIA PLAYER YT CHROMECAST
+####################################################################################################################################################################################################################################################################################################################################################
+  media-player-yt-chromecast:
+    card: 
+      type: custom:mini-media-player
+      entity: media_player.ytube_music_player
+      artwork: cover
+      hide:
+        shuffle: false
+        icon_state: false
+      shortcuts:
+        columns: 3
+        buttons:
+          - name: Salon
+            type: source
+            id: salon
+          - name: Chambre
+            type: source
+            id: chambre
+          - name: Hub
+            type: source            
+            id: hub
+          - name: Chromecast
+            type: source            
+            id: chromecast_audio                      
+          - name: Maison
+            type: source            
+            id: maison  
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SCENES
+####################################################################################################################################################################################################################################################################################################################################################
+  scenes:
+    card:   
+      type: custom:button-card
+      card_mod:
+        style: |
+          ha-card {
+            background: none;
+            box-shadow: none;                               
+          }
+      size: 92%
+      template: button_picture
+      name: '[[name]]'
+      entity_picture: '[[entity_picture]]'
+      tap_action:
+        action: call-service
+        service: scene.turn_on
+        service_data:              
+          entity_id: '[[entity_id]]'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    COVER
+####################################################################################################################################################################################################################################################################################################################################################
+  cover:
+    card:  
+      type: 'custom:vertical-stack-in-card' 
+      card_mod:
+        style: |
+          ha-card {
+            border-radius: 15px;                
+            --paper-slider-container-color: white;
+            background: none;
+            box-shadow: none; 
+          } 
+      cards:
+        - type: 'custom:cover-element' 
+          entity: '[[entity]]'
+          label: '[[name]]'
+          position_label:
+            show: true
+            open_text: ouvert
+            closed_text: fermé
+            interim_text: ouvert          
+        - type: custom:slider-entity-row
+          entity: '[[entity]]'
+          position: default
+          full_row: true
+          hide_state: true
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    RGB LIGHT CARD
+####################################################################################################################################################################################################################################################################################################################################################
+  rgb-light-card:
+    card:   
+      type: custom:rgb-light-card
+      entity: '[[entity]]'
+      justify: center 
+      size: 23                               
+      colors:
+        - rgb_color:
+            - 255
+            - 255
+            - 255
+          brightness: 255
+          icon_color: '#FFFFFF'
+        - rgb_color:
+            - 57
+            - 255
+            - 254
+          brightness: 255
+          icon_color: '#33cccc'                    
+        - rgb_color:
+            - 63
+            - 57
+            - 255
+          brightness: 255
+          icon_color: '#3366CC'
+        - rgb_color:
+            - 129
+            - 16
+            - 255
+          brightness: 255
+          icon_color: '#a133cc'
+        - rgb_color:
+            - 255
+            - 0
+            - 255
+          brightness: 255
+          icon_color: '#FF00FF' 
+        - rgb_color:
+            - 255
+            - 43
+            - 0
+          brightness: 255
+          icon_color: '#cc3333'  
+        - rgb_color:
+            - 255
+            - 127
+            - 26
+          brightness: 255
+          icon_color: '#f09629'
+        - rgb_color:
+            - 254
+            - 255
+            - 63
+          brightness: 255
+          icon_color: '#ecf029'                                                    
+        - rgb_color:
+            - 51
+            - 204
+            - 51
+          brightness: 255
+          icon_color: '#33CC33' 
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    LIGHT
+####################################################################################################################################################################################################################################################################################################################################################
+  light:
+    card:    
+      type: custom:button-card
+      entity: '[[entity]]'
+      icon: mdi:lightbulb
+      show_icon: false
+      aspect_ratio: 1/1
+      name: '[[name]]'
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        notification: >
+          [[[ return Math.floor(states['[[sensor]]'].state) ]]]           
+        icon_hue: &icon_hue >
+          [[[ const state = entity.state === 'on' ? 'animate' : null;
+          return `<svg viewBox="0 0 50 50"><style>@keyframes animate{0%{transform: scale(0.85);}20%{transform: scale(1.1);}40%{transform: scale(0.95);}60%{transform: scale(1.03);}80%{transform: scale(0.97);}100%{transform: scale(1);}}.animate{animation: animate 0.8s; transform-origin: center;}</style>
+          <path fill="#9da0a2" d="M27.4 47.3h-4.9s-.7.1-.7.8.4.9.7.9h4.9c.3 0 .7-.1.7-.9s-.7-.8-.7-.8zm3.3-2.9H19.3s-.8 0-.8.8.6.9.8.9h11.5c.2 0 .8-.1.8-.9-.1-.8-.9-.8-.9-.8zm0-3H19.3s-.8 0-.8.8.6.9.8.9h11.5c.2 0 .8-.1.8-.9-.1-.8-.9-.8-.9-.8zm0-2.9H19.3s-.8 0-.8.8.6.9.8.9h11.5c.2 0 .8-.1.8-.9s-.9-.8-.9-.8zm5.2-23.2c-3.3-5.3-7-5.6-10.9-5.6-3.8 0-8.4.4-10.9 5.6-.1.1-.1.3.1.7.4.8 3.3 7.2 3.2 18.8 0 1.1-.1 1.6 0 1.7 0 .1 0 .7 1.1.7h13c1 0 1-.5 1.1-.7v-1.7c-.1-11.6 2.8-18 3.2-18.8.1-.4.1-.5.1-.7"/>
+          <path class="${state}" fill="var(--button-card-light-color-no-temperature)" d="M14.1 15.3c3.4-.3 7-.4 10.9-.4 3.8 0 7.5.2 10.9.4.4-.4.7-.8.9-1.1C39 8.5 38.9 6.5 38.9 6c-.2-4.4-8.4-5-12.1-5h0-3.4c-3.7 0-12 .5-12.1 5 0 .5-.1 2.5 2.1 8.2 0 .3.3.8.7 1.1z"/></svg>`; ]]]
+      template: light  
+      styles: &icon_hue_styles
+        custom_fields:
+          icon_hue:
+            [top: 20%, left: 27%, width: 45%, height: 45%, position: absolute]     
+          notification:
+            - background-color: >
+                [[[
+                  if (states['[[sensor]]'].state == 0)
+                  return "lime";
+                  return "red";
+                ]]]
+            - border-radius: 50%
+            - position: absolute
+            - left: 70%
+            - top: 5%
+            - height: 20px
+            - width: 20px
+            - font-size: 15px
+            - line-height: 20px
+        name:
+          - font-size: 13px
+          - color: var(--text-color)
+          - position: absolute
+          - top: 75%
+          - padding-bottom: -20px                         
+        card:
+          - background-color: var(--primary-background-color)
+          - border-radius: 20px
+        grid:
+          - position: absolute
+      state:
+        - value: "on"
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            icon:
+              - color: "yellow"
+          id: on-icon
+        - value: "off"
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+          id: off-icon
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info            
+      double_tap_action: '[[double_tap_action]]'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    BAR
+####################################################################################################################################################################################################################################################################################################################################################
+  bar:
+    card:   
+      type: "custom:bar-card"
+      entity: '[[entity]]'
+      max: '[[max]]'
+      min: '[[min]]'
+      card_mod:                        
+        style: |-
+          .card-content {
+            padding: 3px;
+            padding-top: 10px;
+            padding-bottom: 0px;
+          }                   
+          ha-card {
+            background: none;
+            box-shadow: none;                                      
+          }                  
+          .contentbar-direction-right {
+           flex-direction: column;
+          }
+          .min-direction-right {
+            margin: 0px;
+            margin-left: 4px;
+            margin-right: auto;
+            margin-bottom: -20px;
+            bottom: 10px;
+            text-shadow: 1px 1px #0005; 
+            color: #FFFFFF;                    
+          }
+          bar-card-value {
+            margin: 0px;
+            text-shadow: 1px 1px #0005; 
+            color: #FFFFFF;                  
+          }
+          bar-card-name {
+            margin: 0px;
+            text-shadow: 1px 1px #0005;                 
+            color: #FFFFFF;                  
+          }
+          bar-card-max {
+            margin: 0px;
+            margin-left: auto;
+            margin-top: -20px;
+            top: 10px;
+            text-shadow: 1px 1px #0005; 
+            color: #FFFFFF;                    
+          }
+          bar-card-divider {
+            display: none;
+          }
+      styles:
+        card:
+          - background-color: var(--primary-background-color)
+      positions:
+        icon: "off"
+        indicator: "off"
+        minmax: inside
+        title: inside
+        value: inside
+      severity:  
+        '[[severity]]'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    DYSON PURE COOL LINK
+####################################################################################################################################################################################################################################################################################################################################################
+  button_dyson_fan:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/ventilateur.yaml      
+      custom_fields:
+        notification: >
+          [[[ return (states['sensor.timer_ventilateur_temps_restant'].state) ]]]
+
+
+        icon_fan: >
+          [[[ 
+          const style = '<svg viewBox="0 0 50 50"> <style>@keyframes rotate{0%{visibility:visible;transform:rotate(0deg)}100%{transform:rotate(1080deg)}}.start{animation:rotate 2.8s ease-in;transform-origin:center;fill:#3498db;visibility:hidden}.on_delay{animation:rotate 1.8s linear infinite;transform-origin:center;fill:#3498db;animation-delay:2.8s;visibility:hidden}.on{animation:rotate 1.8s linear infinite;transform-origin:center;fill:#00ff00;visibility:hidden}.end{animation:rotate 2.8s;transform-origin:center;fill:#bac0c6;animation-timing-function:cubic-bezier(.61,1,.88,1)}</style>';
+          const path = '<circle cx="25" cy="25" r="6.6"/> <path d="M31.9 30.4c-.5.6-1.1 1.1-1.7 1.5-1.4 1.1-3.2 1.7-5.2 1.7-2.3 0-4.5-.9-6-2.4-.9 1.1-1.6 2.3-2.3 3.2l-4.9 5.4c-1.8 2.7.3 5.6 2.5 7 3.9 2.4 9.8 3.1 14.1 1.9 4.6-1.3 7.9-4.7 7.4-9.7-.2-3.4-1.9-6-3.9-8.6zM17 28.3c-.4-1-.6-2.1-.6-3.3a8.7 8.7 0 0 1 6.4-8.4l-1.6-3.5L19 6.2c-1.5-2.8-5-2.5-7.3-1.2-4 2.2-7.5 6.9-8.7 11.3-1.2 4.6.2 9.2 4.7 11.3 3.1 1.3 6.1 1.2 9.3.7zm26.9-17.6c-3.3-3.4-8-4.6-12.1-1.8-2.8 1.8-4.2 4.6-5.5 7.5 4.2.6 7.4 4.2 7.4 8.6 0 .9-.1 1.7-.4 2.5 1.3.2 2.8.3 3.8.4 2.3.4 4.7 1.3 7.1 1.7 3.2.3 4.7-3 4.8-5.6.3-4.6-1.9-10.1-5.1-13.3z"/>';
+          if (entity.state === 'off') { return `${style}<g class="end">${path}</g></svg>`; }
+          if (entity.state === 'on') { return `${style}<g class="start">${path}</g><g class="on_delay">${path}</g></svg>`; }
+          if (entity.state === 'on') { return `${style}<g class="on">${path}</g></svg>`; }
+          else if (entity.state==='off') { return `${style}<g fill="#bac0c6">${path}</g></svg>`; } ]]]
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          } 
+      styles: 
+        custom_fields:
+          icon_fan:
+            [top: 9%, left: 5%, width: 45%, height: 45%, position: absolute]        
+          notification:
+            - background-color: >
+                [[[
+                  if (states['[[timer]]'].state == 'active')
+                  return "#3498db";
+                ]]]            
+            - border-radius: 50%
+            - position: absolute
+            - left: 63%
+            - top: 2%
+            - color: 'white'
+            - font-weight: bold            
+            - height: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "30px";
+                ]]]              
+            - width: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "30px";
+                ]]]              
+            - font-size: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "10.5px";
+                ]]]              
+            - line-height: 30px
+  
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - position: absolute               
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var        
+            state:
+              - color: lime    
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'    
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    TELEVISION
+####################################################################################################################################################################################################################################################################################################################################################
+  button_tv:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: call-service
+        service: browser_mod.more_info
+        data:
+          entity_id: media_player.samsung_tv_remote
+
+      double_tap_action: !include popup_card/television.yaml 
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_tv: &icon_tv >
+          [[[
+          const style = '<style>@keyframes animate_on{from{transform: scaleY(0);}to{transform: scaleY(1);}}.animate_on{animation: animate_on 1s; transform-origin: -100% 46%; animation-fill-mode: forwards;}@keyframes animate_off{from{transform: scaleY(1);}to{transform: scaleY(0);}}.animate_off{animation: animate_off 1s; transform-origin: -100% 46%; animation-fill-mode: forwards;}</style>';
+          const path = '<path d="M46 9.2v27.5H4.1V9.2H46m2.4-2.4H1.6v32.3h46.7c.1 0 .1-32.3.1-32.3zM11.9 43.2h26.3c.6 0 1.1-.4 1.1-1v-.3c0-.6-.4-1.1-1-1.1H11.9c-.6 0-1.1.4-1.1 1v.3a1.11 1.11 0 0 0 1.1 1.1z"/>';
+          const gradient = '<linearGradient id="A" gradientUnits="userSpaceOnUse" x1="5.401" y1="34.714" x2="43.817" y2="11.74"><stop offset="0" stop-color="#64acb7"/><stop offset="1" stop-color="#7fdbe9"/></linearGradient>';
+          if (entity.state === 'off') { return `<svg viewBox="0 0 50 50"> ${style} ${gradient} <path class="animate_off" d="M2.9,8h44.3v29.9H2.9V8z" fill="url(#A)"/> ${path} </svg>`; }
+          if (entity.state === 'on') { return `<svg viewBox="0 0 50 50"> ${style} ${gradient} <path d="M2.9,8h44.3v29.9H2.9V8z" fill="#20262890"/><path class="animate_on" d="M2.9,8h44.3v29.9H2.9V8z" fill="url(#A)"/> ${path} </svg>`; }
+          if (entity.state === 'on') { return `<svg viewBox="0 0 50 50"> ${gradient} <path d="M2.9,8h44.3v29.9H2.9V8z" fill="url(#A)"/> ${path} </svg>`; }
+          else if (entity.state === 'off') { return `<svg viewBox="0 0 50 50"> ${path} </svg>`; } ]]]
+      styles:  &icon_tv_styles
+        custom_fields:
+          icon_tv:
+            [fill: "[[[ return entity.state === 'on' ? '#616161' : '#bac0c6'; ]]]", 
+            top: 7%, left: 10.7%, width: 50%, height: 50%, position: absolute]
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var         
+            state:
+              - color: lime  
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    AMPLIFICATEUR
+####################################################################################################################################################################################################################################################################################################################################################
+  button_amp:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      show_icon: false      
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/amplificateur.yaml        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'idle') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);               
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'idle') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_monitors: >
+          [[[ if (entity.state === 'playing') {
+          return '<svg viewBox="0 0 50 50"><style>@keyframes animate{35%{transform: scale(0.8); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}36%{transform: translateY(0%);}49%{transform: scale(1.25);}63%{transform: scale(0.85); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}77%{transform: scale(1.15); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}95%{transform: scale(1);}}.animate{animation: animate 1.4s; transform-origin: center;}@keyframes rubber{0%{transform: scale(1);}40%{transform: scale(1);}49%{transform: scale(0.95);}63%{transform: scale(1);}77%{transform: scale(0.95);}100%{transform: scale(1);}}.rubber{animation: rubber 1.3s; transform-origin: center;}</style>
+          <g class="rubber"><path fill="#686868" d="M35.8 46.9H14.2c-1.1 0-2-1-2-2.3V6.7c0-1.3.9-2.3 2-2.3h21.5c1.1 0 2 1 2 2.3v37.9c0 1.2-.9 2.3-1.9 2.3z"/><path fill="#2a2a2a" d="M39.2 1H10.8C9.4 1 8.3 2.1 8.2 3.5v42.9a2.65 2.65 0 0 0 2.6 2.6h28.3c1.4 0 2.5-1.2 2.6-2.6V3.5c0-1.4-1.1-2.5-2.5-2.5zM25 7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4C22.5 8 23.6 7 25 7zm10.2 35.5l-.4 1.9s-.2.6-.6.6H15.8c-.4 0-.6-.6-.6-.6s-.1-1.1-.4-1.9.6-.9.6-.9h19.3c0-.1.8-.1.5.9z"/> </g> <path class="animate" fill="#e5dd00" d="M25 15.7c-6.2 0-11.3 5.1-11.3 11.3S18.8 38.3 25 38.3 36.3 33.2 36.3 27c-.1-6.3-5.1-11.3-11.3-11.3zm0 14.5a3.33 3.33 0 0 1-3.3-3.3 3.33 3.33 0 0 1 3.3-3.3 3.33 3.33 0 0 1 3.3 3.3c-.1 1.9-1.5 3.3-3.3 3.3z"/></svg>'; }
+          if (entity.state === 'on') {
+          return '<svg viewBox="0 0 50 50"><style>@keyframes animate{35%{transform: scale(0.8); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}36%{transform: translateY(0%);}49%{transform: scale(1.25);}63%{transform: scale(0.85); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}77%{transform: scale(1.15); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}95%{transform: scale(1);}}.animate{animation: animate 1.4s; transform-origin: center;}@keyframes rubber{0%{transform: scale(1);}40%{transform: scale(1);}49%{transform: scale(0.95);}63%{transform: scale(1);}77%{transform: scale(0.95);}100%{transform: scale(1);}}.rubber{animation: rubber 1.3s; transform-origin: center;}</style>
+          <g class="rubber"><path fill="#686868" d="M35.8 46.9H14.2c-1.1 0-2-1-2-2.3V6.7c0-1.3.9-2.3 2-2.3h21.5c1.1 0 2 1 2 2.3v37.9c0 1.2-.9 2.3-1.9 2.3z"/><path fill="#2a2a2a" d="M39.2 1H10.8C9.4 1 8.3 2.1 8.2 3.5v42.9a2.65 2.65 0 0 0 2.6 2.6h28.3c1.4 0 2.5-1.2 2.6-2.6V3.5c0-1.4-1.1-2.5-2.5-2.5zM25 7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4C22.5 8 23.6 7 25 7zm10.2 35.5l-.4 1.9s-.2.6-.6.6H15.8c-.4 0-.6-.6-.6-.6s-.1-1.1-.4-1.9.6-.9.6-.9h19.3c0-.1.8-.1.5.9z"/> </g> <path class="animate" fill="#e5dd00" d="M25 15.7c-6.2 0-11.3 5.1-11.3 11.3S18.8 38.3 25 38.3 36.3 33.2 36.3 27c-.1-6.3-5.1-11.3-11.3-11.3zm0 14.5a3.33 3.33 0 0 1-3.3-3.3 3.33 3.33 0 0 1 3.3-3.3 3.33 3.33 0 0 1 3.3 3.3c-.1 1.9-1.5 3.3-3.3 3.3z"/></svg>'; }
+          if (entity.state === 'paused') {
+          return '<svg viewBox="0 0 50 50"><style>@keyframes animate{35%{transform: scale(0.8); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}36%{transform: translateY(0%);}49%{transform: scale(1.25);}63%{transform: scale(0.85); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}77%{transform: scale(1.15); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}95%{transform: scale(1);}}.animate{animation: animate 1.4s; transform-origin: center;}@keyframes rubber{0%{transform: scale(1);}40%{transform: scale(1);}49%{transform: scale(0.95);}63%{transform: scale(1);}77%{transform: scale(0.95);}100%{transform: scale(1);}}.rubber{animation: rubber 1.3s; transform-origin: center;}</style>
+          <g class="rubber"><path fill="#686868" d="M35.8 46.9H14.2c-1.1 0-2-1-2-2.3V6.7c0-1.3.9-2.3 2-2.3h21.5c1.1 0 2 1 2 2.3v37.9c0 1.2-.9 2.3-1.9 2.3z"/><path fill="#2a2a2a" d="M39.2 1H10.8C9.4 1 8.3 2.1 8.2 3.5v42.9a2.65 2.65 0 0 0 2.6 2.6h28.3c1.4 0 2.5-1.2 2.6-2.6V3.5c0-1.4-1.1-2.5-2.5-2.5zM25 7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4C22.5 8 23.6 7 25 7zm10.2 35.5l-.4 1.9s-.2.6-.6.6H15.8c-.4 0-.6-.6-.6-.6s-.1-1.1-.4-1.9.6-.9.6-.9h19.3c0-.1.8-.1.5.9z"/> </g> <path class="animate" fill="#686868" d="M25 15.7c-6.2 0-11.3 5.1-11.3 11.3S18.8 38.3 25 38.3 36.3 33.2 36.3 27c-.1-6.3-5.1-11.3-11.3-11.3zm0 14.5a3.33 3.33 0 0 1-3.3-3.3 3.33 3.33 0 0 1 3.3-3.3 3.33 3.33 0 0 1 3.3 3.3c-.1 1.9-1.5 3.3-3.3 3.3z"/></svg>'; }
+          if (entity.state === 'idle') {
+          return '<svg viewBox="0 0 50 50"><style>@keyframes animate{35%{transform: scale(0.8); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}36%{transform: translateY(0%);}49%{transform: scale(1.25);}63%{transform: scale(0.85); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}77%{transform: scale(1.15); animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);}95%{transform: scale(1);}}.animate{animation: animate 1.4s; transform-origin: center;}@keyframes rubber{0%{transform: scale(1);}40%{transform: scale(1);}49%{transform: scale(0.95);}63%{transform: scale(1);}77%{transform: scale(0.95);}100%{transform: scale(1);}}.rubber{animation: rubber 1.3s; transform-origin: center;}</style>
+          <g class="rubber"><path fill="#686868" d="M35.8 46.9H14.2c-1.1 0-2-1-2-2.3V6.7c0-1.3.9-2.3 2-2.3h21.5c1.1 0 2 1 2 2.3v37.9c0 1.2-.9 2.3-1.9 2.3z"/><path fill="#2a2a2a" d="M39.2 1H10.8C9.4 1 8.3 2.1 8.2 3.5v42.9a2.65 2.65 0 0 0 2.6 2.6h28.3c1.4 0 2.5-1.2 2.6-2.6V3.5c0-1.4-1.1-2.5-2.5-2.5zM25 7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4C22.5 8 23.6 7 25 7zm10.2 35.5l-.4 1.9s-.2.6-.6.6H15.8c-.4 0-.6-.6-.6-.6s-.1-1.1-.4-1.9.6-.9.6-.9h19.3c0-.1.8-.1.5.9z"/> </g> <path class="animate" fill="#686868" d="M25 15.7c-6.2 0-11.3 5.1-11.3 11.3S18.8 38.3 25 38.3 36.3 33.2 36.3 27c-.1-6.3-5.1-11.3-11.3-11.3zm0 14.5a3.33 3.33 0 0 1-3.3-3.3 3.33 3.33 0 0 1 3.3-3.3 3.33 3.33 0 0 1 3.3 3.3c-.1 1.9-1.5 3.3-3.3 3.3z"/></svg>'; }
+          else { return '<svg viewBox="0 0 50 50"><path fill="#bac0c6" d="M25 18.6c-4.6 0-8.4 3.8-8.4 8.4s3.8 8.4 8.4 8.4 8.4-3.8 8.4-8.4-3.7-8.4-8.4-8.4zm0 11.7a3.33 3.33 0 0 1-3.3-3.3 3.33 3.33 0 0 1 3.3-3.3 3.33 3.33 0 0 1 3.3 3.3c0 1.8-1.4 3.3-3.3 3.3zM39.2 1H10.9C9.4 1 8.3 2.1 8.3 3.6v42.9a2.65 2.65 0 0 0 2.6 2.6h28.3a2.65 2.65 0 0 0 2.6-2.6v-43C41.7 2 40.5.9 39.2 1zM25 7c1.3 0 2.4 1.1 2.4 2.4s-1.1 2.4-2.4 2.4-2.4-1.1-2.4-2.4S23.7 7 25 7zm10.3 35.5l-.4 1.9s-.2.6-.6.6H15.8c-.4 0-.6-.6-.6-.6l-.4-1.9c-.2-.9.6-.9.6-.9h19.3s.9.1.6.9zM25 38.2c-6.2 0-11.3-5.1-11.3-11.3a11.29 11.29 0 1 1 22.6 0c.1 6.3-5 11.3-11.3 11.3z"/></svg>'; } ]]]
+      styles:
+        custom_fields:
+          icon_monitors:
+            [top: 11%, left: 7%, width: 44%, height: 44%, position: absolute]        
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var         
+            state:
+              - color: lime
+        - value: 'playing'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var         
+            state:
+              - color: lime
+        - value: 'paused'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: 'orange'             
+        - value: 'idle'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: lime          
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####   ZAPPITI
+####################################################################################################################################################################################################################################################################################################################################################
+  button_zappiti:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      show_icon: false
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/zappiti.yaml                                                                 
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_switch: >
+          [[[ if (entity.state === 'on') {
+          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 277.4 277.4"><style>@keyframes a0_t { 0% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 10% { transform: translate(138.7px,138.9px) scale(1,1) translate(-132px,-138.6px); } 20% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 50% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 60% { transform: translate(138.7px,143.9px) scale(.9,.9) translate(-132px,-138.6px); } 70% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 100% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } }@keyframes a1_t { 0% { transform: translate(133.7px,54.2px) rotate(-18deg) scale(1.1,1.1) translate(-94.3px,-13.7px); } 50% { transform: translate(139.1px,91.8px) rotate(0deg) scale(1.1,1.1) translate(-94.3px,-13.7px); } 100% { transform: translate(139.1px,91.8px) rotate(0deg) scale(1.1,1.1) translate(-94.3px,-13.7px); } }@keyframes a1_o { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 1; } }@keyframes a2_t { 0% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } 10% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } 100% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } }@keyframes a2_o { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 1; } }@keyframes a3_f { 0% { fill: #bac0c6; } 30% { fill: #000; } 100% { fill: #000; } }@keyframes a4_t { 0% { transform: translate(125.7px,70.2px) rotate(0deg) translate(-132.4px,-70.5px); } 10% { transform: translate(129.3px,76.3px) rotate(3.7deg) translate(-132.4px,-70.5px); } 20% { transform: translate(130.9px,83.4px) rotate(7.4deg) translate(-132.4px,-70.5px); } 30% { transform: translate(132.6px,90.5px) rotate(11.1deg) translate(-132.4px,-70.5px); } 40% { transform: translate(135.3px,97.1px) rotate(14.8deg) translate(-132.4px,-70.5px); } 50% { transform: translate(136.1px,104.7px) rotate(18.5deg) translate(-132.4px,-70.5px); } 100% { transform: translate(136.1px,104.7px) rotate(18.5deg) translate(-132.4px,-70.5px); } }@keyframes a4_f { 0% { fill: #bac0c6; } 30% { fill: #000; } 100% { fill: #000; } }@keyframes a5_o { 0% { opacity: 1; } 60% { opacity: 1; } 100% { opacity: 0; } }@keyframes a5_f { 0% { fill: #bac0c6; } 30% { fill: #000; } 100% { fill: #000; } }</style><g transform="translate(138.7,138.9) scale(.9,.9) translate(-132,-138.6)" style="animation: 1s linear both a0_t;"><rect x="105.3" y="167.7" width="84.3" height="75" fill="#3498db"/><rect width="193.1" height="27.5" fill="#fff" opacity="0" transform="translate(133.7,54.2) rotate(-18) scale(1.111,1.111) translate(-94.3,-13.7)" style="animation: 1s linear both a1_t, 1s linear both a1_o;"/><rect width="182" height="30" fill="#fff" opacity="0" transform="translate(145.7,137.6) scale(1.111,1.111) translate(-91,-15)" style="animation: 1s linear both a2_t, 1s linear both a2_o;"/><path d="M55.2 104c-0.1 0-0.2 .1-0.3 .2c.2 0 .3-0.1 .5-0.1c-0.1-0.1-0.2-0.1-0.2-0.1Zm.8 .4c-0.2 .1-0.4 .2-0.6 .4c.1 .1 .3 .2 .4 .3c.2-0.1 .6-0.3 .8-0.4c-0.2-0.1-0.4-0.2-0.6-0.3Zm1 .7c-0.3 .1-0.6 .1-1 .1c.1 .1 .2 .1 .3 .2Zm-9.4 4.1c-0.7 .2-1.4 .4-2 .5c0 0 0 0 0 0c.7-0.1 2.6-0.6 2-0.5Zm9.9 .8c-0.8 .1-1.7 .1-2.8 .1c-1.3 0-2.6 0-3.9-0.1c-2.2 .1-4.4 .1-6.5 0c-0.7 .2-1.4 .3-2.2 .4c2.8 2.4 4.6 6 4.6 10c0 7.5-6.1 13.5-13.5 13.5c-7.5 0-13.5-6-13.5-13.5c0-3.9 1.7-7.4 4.3-9.9h-3.2h-12.2c-1.2 3.1-1.9 6.4-1.9 9.9c0 10 5.5 18.6 13.6 23.2v125c0 4.9 3.9 8.8 8.8 8.8h232.8c4.9 0 8.9-3.9 8.9-8.8v-151.3h-211.3c-0.3-2.6-1-5-2-7.3Zm11.1 14.4h28.3l-14.4 22.8h-28.4Zm70 0h28.3l-14.4 22.8h-28.4Zm70 0h28.3l-14.4 22.8h-28.4Zm-77 50l47.8 30l-47.8 30Z" fill="#bac0c6" transform="translate(-6.7,-0.3)" style="animation: 1s linear both a3_f;"/><path d="M239.3 .3c-2 0-224.4 74.2-226.2 75.4c-1.6 1.2-3.5 4.7-3.5 6.6c0 .6 1.4 5.2 3 10l2.9 8.9l-1.6 1.7c-7.7 8-9.1 21.5-3.3 30.9c1.1 1.6 2.4 3.3 3.9 4.8c0-1.3 0-2.6 0-3.9c0 0 .1 0 .2 0c0 0 0 0 0 0c0 0 .2 0 .2 0c0 .1 0 .1 0 .1c.2 .1 .3 .2 .1-0.1h.2c0-0.2 .3 0 .5 0c.4 0 .9 0 1.4 0c1.2 0 2.5 0 3.8 0c1 0 2 0 3 0c.6 0 1.2 0 1.8 0c.3-0.1 .6-0.3 .9-0.3c1.2-0.4 2.1-0.6 2.8-0.8c-0.5-0.1-1-0.2-1.4-0.4c-3-1.1-6.7-4.8-7.7-7.8c-2.2-6.6 .2-13.5 5.9-16.9c1.9-1.1 4.8-1.6 7.5-1.6c1.6 0 3.1 .2 4.4 .7c5.3 2.1 8.5 6.9 8.5 12.9c0 5.4-2.5 9.7-7.3 12.2c.2 0 .4 0 .5 0c.5 .1 .9 .1 1.4 .1c0 0 0 0 0 0c1.6-0.2 3.3-0.4 4.9-0.5c2.9-4.5 7.2-10.4 9.2-12.9c.3-0.5 .8-1.1 1-1.4c.8-0.1 1.7-0.3 2.6-0.4c.1-0.1 .2-0.2 .4-0.3l-0.6-2.6c-0.4-1.6-1.4-4.2-2.2-5.9c-0.8-1.6-1.4-3.1-1.3-3.2c.1-0.1 36.8-12.4 81.6-27.4c44.7-15 90.3-30.2 101.2-33.8l19.8-6.7l-5.4-16c-2.9-8.8-5.8-16.8-6.4-17.7c-1.1-1.9-4.5-3.7-6.7-3.7Zm-23.6 17.4c.1 .1-1.2 6.1-3 13.3l-3.3 13.2l-12.9 4.3c-7.1 2.3-13.2 4.3-13.5 4.5c-0.4 .1-0.6-0.2-0.6-0.6c0-1.6 6-25.2 6.6-25.8c.6-0.6 26.4-9.2 26.7-8.9Zm-66.5 22.3c.2 .2-1.1 6.1-2.9 13.2l-3.2 13l-13.3 4.5c-13.8 4.7-14.1 4.8-14.1 4.3c0-0.1 1.5-6.1 3.3-13.3l3.3-13l13.3-4.5c7.4-2.4 13.5-4.3 13.6-4.2Zm-66.2 22.1c.1 .1-1.3 6.1-3.1 13.3l-3.2 13l-13.2 4.4c-7.2 2.4-13.4 4.4-13.7 4.6c-0.3 .1 .9-5.9 2.7-13.2l3.2-13.3l13.5-4.5c7.5-2.5 13.6-4.4 13.8-4.3Zm-22.4 55.4c-0.5 .2-1 .5-1.4 .7c-0.1 .4-0.2 .9-0.3 1.3c1.5-0.5 3.6-1.2 6-2Zm-5 2.7c-0.3 .2-0.6 .3-0.8 .5c-0.3 .4-0.6 .8-1 1.2c.5-0.5 1.1-1.1 1.8-1.7Zm-1.8 1.8c-0.2 .3-0.5 .7-0.7 1c-0.2 .4-0.3 .9-0.5 1.4c.3-0.6 .5-1.1 .8-1.7c.1-0.2 .2-0.5 .4-0.7Zm4.5 .9c-0.1 .5-0.2 .9-0.3 1.4c.4-0.4 .7-0.8 1-1.2c-0.2 0-0.5-0.1-0.7-0.2Zm6.6 1.8c0 .1 0 .1 0 .2c.1 0 .2-0.1 .3-0.1c-0.1 0-0.2-0.1-0.3-0.1Zm-12.9 2.5c0 .1-0.1 .1-0.1 .2c0 0 0 .1 0 .2c.1-0.2 .1-0.2 .2-0.3Zm-2.1 2.2c-0.1 .1-0.2 .2-0.3 .2c.1 0 .2-0.1 .3-0.1c0-0.1 0-0.1 0-0.1Zm-0.1 2.3c-0.1 .1-0.2 .2-0.3 .3c0 .1 0 .2-0.1 .3c.1 0 .2 0 .2 0c.1-0.2 .2-0.4 .2-0.6Zm3.4 .1c-0.6 .1-1.2 .3-1.7 .4c.5 0 1 0 1.5 0c.1-0.1 .2-0.3 .2-0.4Zm-3.7 1c-0.1 0-0.2 0-0.3 0c-0.1 .3-0.1 .6-0.2 .8c.1 .1 .1 .1 .2 .2c0-0.2 .1-0.4 .1-0.5c.1-0.2 .1-0.4 .2-0.5Zm-8.9 .1c0 0-0.1 0-0.1 0c-0.5 .1-1.8 .5-1.4 .4c.5-0.1 1-0.3 1.5-0.4Zm4.6 .9c-2 .2-3.2 2.2-3.9 5c.3-0.1 .5-0.2 .7-0.3c.2-0.2 .3-0.4 .5-0.6c.2-0.4 .5-0.7 .8-1.1c0 0 0 .1 0 .1c.4-0.6 .3-0.5 .6-0.8c.3-0.6 .7-1.4 1.3-2.3Zm-1.3 2.3c-0.1 .1-0.1 .2-0.2 .3c.1-0.1 .2-0.2 .3-0.3c.5-0.6 .7-1 .8-1.1c-0.1 .2-0.3 .4-0.4 .7c.1-0.1 .1-0.1 .2-0.2c.3-0.4 .5-0.8 .8-1.1c-0.2 .1-0.4 .3-0.5 .4c0 0-0.5 .7-1 1.3Zm-0.6 .7c.2-0.1 .3-0.2 .4-0.4c0 0 0 0 0 0c-0.1 .2-0.2 .3-0.4 .4Zm-12.1-3c-0.3 0-0.6 .1-0.8 .2c-0.2 .1-0.4 .2-0.6 .3c.9-0.1 2-0.2 3.6-0.3c.2-0.1 .2-0.1 .1-0.1c-0.8 0-1.6 0-2.3-0.1Zm-2.6 .5c0 0-0.4 .1-0.4 .1c0 0 .1 0 .2 0c0 0 .2-0.1 .2-0.1Zm.2 .6c0 0 0 0-0.1 0c.9 .1 1.7 .3 2.6 .3c.8 .1-1.6-0.2-2.4-0.3c-0.1 0-0.1 0-0.1 0Zm11.5 4.7c-0.1 0-0.5 .2-1 .6c.1 0 .1 0 .2 0c.1-0.1 .3-0.1 .4-0.2c.1-0.2 .3-0.3 .4-0.4Zm14.7 .1c0 .3-0.1 .6-0.2 1c.6-0.2 1.2-0.3 1.8-0.4c-0.2-0.2-0.3-0.4-0.5-0.5c-0.3 0-0.7-0.1-1.1-0.1Z" fill="#bac0c6" transform="translate(125.7,70.2) translate(-132.4,-70.5)" style="animation: 1s linear both a4_t, 1s linear both a4_f;"/><rect width="97.7" height="75" fill="#bac0c6" transform="translate(91.8,167.7)" style="animation: 1s linear both a5_o, 1s linear both a5_f;"/></g></svg>'; }
+          else { return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 277.4 277.4"><style>@keyframes a_t { 0% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 20% { transform: translate(138.7px,138.9px) scale(1,1) translate(-132px,-138.6px); } 40% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } 100% { transform: translate(138.7px,138.9px) scale(.9,.9) translate(-132px,-138.6px); } }@keyframes b_t { 0% { transform: translate(139.1px,91.8px) rotate(0deg) scale(1.1,1.1) translate(-94.3px,-13.7px); } 100% { transform: translate(133.7px,54.2px) rotate(-18deg) scale(1.1,1.1) translate(-94.3px,-13.7px); } }@keyframes b_o { 0% { opacity: 1; } 60% { opacity: 0; } 100% { opacity: 0; } }@keyframes c_t { 0% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } 20% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } 100% { transform: translate(145.7px,137.6px) scale(1.1,1.1) translate(-91px,-15px); } }@keyframes c_o { 0% { opacity: 1; } 60% { opacity: 0; } 100% { opacity: 0; } }@keyframes d_f { 0% { fill: #000; } 60% { fill: #bac0c6; } 100% { fill: #bac0c6; } }@keyframes e_t { 0% { transform: translate(136.1px,104.7px) rotate(18.5deg) translate(-132.4px,-70.5px); } 20% { transform: translate(135.3px,97.1px) rotate(14.8deg) translate(-132.4px,-70.5px); } 40% { transform: translate(132.6px,90.5px) rotate(11.1deg) translate(-132.4px,-70.5px); } 60% { transform: translate(130.9px,83.4px) rotate(7.4deg) translate(-132.4px,-70.5px); } 80% { transform: translate(129.3px,76.3px) rotate(3.7deg) translate(-132.4px,-70.5px); } 100% { transform: translate(125.7px,70.2px) rotate(0deg) translate(-132.4px,-70.5px); } }@keyframes e_f { 0% { fill: #000; } 60% { fill: #bac0c6; } 100% { fill: #bac0c6; } }@keyframes f_o { 0% { opacity: 0; } 60% { opacity: 1; } 100% { opacity: 1; } }@keyframes f_f { 0% { fill: #000; } 60% { fill: #bac0c6; } 100% { fill: #bac0c6; } }</style><g transform="translate(138.7,138.9) scale(.9,.9) translate(-132,-138.6)" style="animation: .5s linear both a_t;"><rect x="105.3" y="167.7" width="84.3" height="75" fill="#3498db"/><rect width="193.1" height="27.5" fill="#fff" transform="translate(139.1,91.8) scale(1.111,1.111) translate(-94.3,-13.7)" style="animation: .5s linear both b_t, .5s linear both b_o;"/><rect width="182" height="30" fill="#fff" transform="translate(145.7,137.6) scale(1.111,1.111) translate(-91,-15)" style="animation: .5s linear both c_t, .5s linear both c_o;"/><path d="M55.2 104c-0.1 0-0.2 .1-0.3 .2c.2 0 .3-0.1 .5-0.1c-0.1-0.1-0.2-0.1-0.2-0.1Zm.8 .4c-0.2 .1-0.4 .2-0.6 .4c.1 .1 .3 .2 .4 .3c.2-0.1 .6-0.3 .8-0.4c-0.2-0.1-0.4-0.2-0.6-0.3Zm1 .7c-0.3 .1-0.6 .1-1 .1c.1 .1 .2 .1 .3 .2Zm-9.4 4.1c-0.7 .2-1.4 .4-2 .5c0 0 0 0 0 0c.7-0.1 2.6-0.6 2-0.5Zm9.9 .8c-0.8 .1-1.7 .1-2.8 .1c-1.3 0-2.6 0-3.9-0.1c-2.2 .1-4.4 .1-6.5 0c-0.7 .2-1.4 .3-2.2 .4c2.8 2.4 4.6 6 4.6 10c0 7.5-6.1 13.5-13.5 13.5c-7.5 0-13.5-6-13.5-13.5c0-3.9 1.7-7.4 4.3-9.9h-3.2h-12.2c-1.2 3.1-1.9 6.4-1.9 9.9c0 10 5.5 18.6 13.6 23.2v125c0 4.9 3.9 8.8 8.8 8.8h232.8c4.9 0 8.9-3.9 8.9-8.8v-151.3h-211.3c-0.3-2.6-1-5-2-7.3Zm11.1 14.4h28.3l-14.4 22.8h-28.4Zm70 0h28.3l-14.4 22.8h-28.4Zm70 0h28.3l-14.4 22.8h-28.4Zm-77 50l47.8 30l-47.8 30Z" fill="#000" transform="translate(-6.7,-0.3)" style="animation: .5s linear both d_f;"/><path d="M239.3 .3c-2 0-224.4 74.2-226.2 75.4c-1.6 1.2-3.5 4.7-3.5 6.6c0 .6 1.4 5.2 3 10l2.9 8.9l-1.6 1.7c-7.7 8-9.1 21.5-3.3 30.9c1.1 1.6 2.4 3.3 3.9 4.8c0-1.3 0-2.6 0-3.9c0 0 .1 0 .2 0c0 0 0 0 0 0c0 0 .2 0 .2 0c0 .1 0 .1 0 .1c.2 .1 .3 .2 .1-0.1h.2c0-0.2 .3 0 .5 0c.4 0 .9 0 1.4 0c1.2 0 2.5 0 3.8 0c1 0 2 0 3 0c.6 0 1.2 0 1.8 0c.3-0.1 .6-0.3 .9-0.3c1.2-0.4 2.1-0.6 2.8-0.8c-0.5-0.1-1-0.2-1.4-0.4c-3-1.1-6.7-4.8-7.7-7.8c-2.2-6.6 .2-13.5 5.9-16.9c1.9-1.1 4.8-1.6 7.5-1.6c1.6 0 3.1 .2 4.4 .7c5.3 2.1 8.5 6.9 8.5 12.9c0 5.4-2.5 9.7-7.3 12.2c.2 0 .4 0 .5 0c.5 .1 .9 .1 1.4 .1c0 0 0 0 0 0c1.6-0.2 3.3-0.4 4.9-0.5c2.9-4.5 7.2-10.4 9.2-12.9c.3-0.5 .8-1.1 1-1.4c.8-0.1 1.7-0.3 2.6-0.4c.1-0.1 .2-0.2 .4-0.3l-0.6-2.6c-0.4-1.6-1.4-4.2-2.2-5.9c-0.8-1.6-1.4-3.1-1.3-3.2c.1-0.1 36.8-12.4 81.6-27.4c44.7-15 90.3-30.2 101.2-33.8l19.8-6.7l-5.4-16c-2.9-8.8-5.8-16.8-6.4-17.7c-1.1-1.9-4.5-3.7-6.7-3.7Zm-23.6 17.4c.1 .1-1.2 6.1-3 13.3l-3.3 13.2l-12.9 4.3c-7.1 2.3-13.2 4.3-13.5 4.5c-0.4 .1-0.6-0.2-0.6-0.6c0-1.6 6-25.2 6.6-25.8c.6-0.6 26.4-9.2 26.7-8.9Zm-66.5 22.3c.2 .2-1.1 6.1-2.9 13.2l-3.2 13l-13.3 4.5c-13.8 4.7-14.1 4.8-14.1 4.3c0-0.1 1.5-6.1 3.3-13.3l3.3-13l13.3-4.5c7.4-2.4 13.5-4.3 13.6-4.2Zm-66.2 22.1c.1 .1-1.3 6.1-3.1 13.3l-3.2 13l-13.2 4.4c-7.2 2.4-13.4 4.4-13.7 4.6c-0.3 .1 .9-5.9 2.7-13.2l3.2-13.3l13.5-4.5c7.5-2.5 13.6-4.4 13.8-4.3Zm-22.4 55.4c-0.5 .2-1 .5-1.4 .7c-0.1 .4-0.2 .9-0.3 1.3c1.5-0.5 3.6-1.2 6-2Zm-5 2.7c-0.3 .2-0.6 .3-0.8 .5c-0.3 .4-0.6 .8-1 1.2c.5-0.5 1.1-1.1 1.8-1.7Zm-1.8 1.8c-0.2 .3-0.5 .7-0.7 1c-0.2 .4-0.3 .9-0.5 1.4c.3-0.6 .5-1.1 .8-1.7c.1-0.2 .2-0.5 .4-0.7Zm4.5 .9c-0.1 .5-0.2 .9-0.3 1.4c.4-0.4 .7-0.8 1-1.2c-0.2 0-0.5-0.1-0.7-0.2Zm6.6 1.8c0 .1 0 .1 0 .2c.1 0 .2-0.1 .3-0.1c-0.1 0-0.2-0.1-0.3-0.1Zm-12.9 2.5c0 .1-0.1 .1-0.1 .2c0 0 0 .1 0 .2c.1-0.2 .1-0.2 .2-0.3Zm-2.1 2.2c-0.1 .1-0.2 .2-0.3 .2c.1 0 .2-0.1 .3-0.1c0-0.1 0-0.1 0-0.1Zm-0.1 2.3c-0.1 .1-0.2 .2-0.3 .3c0 .1 0 .2-0.1 .3c.1 0 .2 0 .2 0c.1-0.2 .2-0.4 .2-0.6Zm3.4 .1c-0.6 .1-1.2 .3-1.7 .4c.5 0 1 0 1.5 0c.1-0.1 .2-0.3 .2-0.4Zm-3.7 1c-0.1 0-0.2 0-0.3 0c-0.1 .3-0.1 .6-0.2 .8c.1 .1 .1 .1 .2 .2c0-0.2 .1-0.4 .1-0.5c.1-0.2 .1-0.4 .2-0.5Zm-8.9 .1c0 0-0.1 0-0.1 0c-0.5 .1-1.8 .5-1.4 .4c.5-0.1 1-0.3 1.5-0.4Zm4.6 .9c-2 .2-3.2 2.2-3.9 5c.3-0.1 .5-0.2 .7-0.3c.2-0.2 .3-0.4 .5-0.6c.2-0.4 .5-0.7 .8-1.1c0 0 0 .1 0 .1c.4-0.6 .3-0.5 .6-0.8c.3-0.6 .7-1.4 1.3-2.3Zm-1.3 2.3c-0.1 .1-0.1 .2-0.2 .3c.1-0.1 .2-0.2 .3-0.3c.5-0.6 .7-1 .8-1.1c-0.1 .2-0.3 .4-0.4 .7c.1-0.1 .1-0.1 .2-0.2c.3-0.4 .5-0.8 .8-1.1c-0.2 .1-0.4 .3-0.5 .4c0 0-0.5 .7-1 1.3Zm-0.6 .7c.2-0.1 .3-0.2 .4-0.4c0 0 0 0 0 0c-0.1 .2-0.2 .3-0.4 .4Zm-12.1-3c-0.3 0-0.6 .1-0.8 .2c-0.2 .1-0.4 .2-0.6 .3c.9-0.1 2-0.2 3.6-0.3c.2-0.1 .2-0.1 .1-0.1c-0.8 0-1.6 0-2.3-0.1Zm-2.6 .5c0 0-0.4 .1-0.4 .1c0 0 .1 0 .2 0c0 0 .2-0.1 .2-0.1Zm.2 .6c0 0 0 0-0.1 0c.9 .1 1.7 .3 2.6 .3c.8 .1-1.6-0.2-2.4-0.3c-0.1 0-0.1 0-0.1 0Zm11.5 4.7c-0.1 0-0.5 .2-1 .6c.1 0 .1 0 .2 0c.1-0.1 .3-0.1 .4-0.2c.1-0.2 .3-0.3 .4-0.4Zm14.7 .1c0 .3-0.1 .6-0.2 1c.6-0.2 1.2-0.3 1.8-0.4c-0.2-0.2-0.3-0.4-0.5-0.5c-0.3 0-0.7-0.1-1.1-0.1Z" fill="#000" transform="translate(136.1,104.7) rotate(18.5) translate(-132.4,-70.5)" style="animation: .5s linear both e_t, .5s linear both e_f;"/><rect width="97.7" height="75" fill="#000" opacity="0" transform="translate(91.8,167.7)" style="animation: .5s linear both f_o, .5s linear both f_f;"/></g></svg>'; } ]]]        
+      styles: 
+        custom_fields:
+          icon_switch:
+            [top: 1%, left: 10%, width: 55%, height: 55%, position: absolute]     
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: lime       
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    APPLE TV 4K
+####################################################################################################################################################################################################################################################################################################################################################
+  button_apple_tv_4k:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      show_icon: false
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/apple_tv_4k.yaml                                                                                   
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_switch: >
+          [[[ if (entity.state === 'on') {
+          return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#eav4f32zzc792_ts {animation: eav4f32zzc792_ts__ts 3000ms linear 1 normal forwards}@keyframes eav4f32zzc792_ts__ts { 0% {transform: translate(11.999999px,11.963479px) scale(1,1)} 3.333333% {transform: translate(11.999999px,11.963479px) scale(1.100000,1.100000)} 6.666667% {transform: translate(11.999999px,11.963479px) scale(1,1)} 10% {transform: translate(11.999999px,11.963479px) scale(0.900000,0.900000)} 13.333333% {transform: translate(11.999999px,11.963479px) scale(1,1)} 24.333333% {transform: translate(11.999999px,11.963479px) scale(1,1)} 100% {transform: translate(11.999999px,11.963479px) scale(1,1)} }#eav4f32zzc793 {animation: eav4f32zzc793_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc793_c_o { 0% {opacity: 1} 23.333333% {opacity: 1} 26.666667% {opacity: 0} 100% {opacity: 0} }#eav4f32zzc794 {animation: eav4f32zzc794_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc794_c_o { 0% {opacity: 1} 23.333333% {opacity: 1} 26.666667% {opacity: 0} 100% {opacity: 0} }#eav4f32zzc797_to {animation: eav4f32zzc797_to__to 3000ms linear 1 normal forwards}@keyframes eav4f32zzc797_to__to { 0% {transform: translate(599.837540px,142.878654px)} 26.666667% {transform: translate(599.837540px,142.878654px)} 33.333333% {transform: translate(639.493056px,175.037995px)} 40% {transform: translate(599.837540px,142.878654px)} 100% {transform: translate(599.837540px,142.878654px)} }#eav4f32zzc797_tr {animation: eav4f32zzc797_tr__tr 3000ms linear 1 normal forwards}@keyframes eav4f32zzc797_tr__tr { 0% {transform: rotate(0deg)} 26.666667% {transform: rotate(0deg)} 33.333333% {transform: rotate(20deg)} 40% {transform: rotate(0deg)} 100% {transform: rotate(0deg)} }#eav4f32zzc797 {animation: eav4f32zzc797_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc797_c_o { 0% {opacity: 0} 20% {opacity: 0} 26.666667% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc798 {animation: eav4f32zzc798_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc798_c_o { 0% {opacity: 0} 16.666667% {opacity: 0} 23.333333% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc799 {animation: eav4f32zzc799_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc799_c_o { 0% {opacity: 1} 16.666667% {opacity: 1} 20% {opacity: 0} 100% {opacity: 0} }#eav4f32zzc7910 {animation: eav4f32zzc7910_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc7910_c_o { 0% {opacity: 0} 13.333333% {opacity: 0} 20% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc7911 {animation: eav4f32zzc7911_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc7911_c_o { 0% {opacity: 0} 10% {opacity: 0} 16.666667% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc7912 {animation: eav4f32zzc7912_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc7912_c_o { 0% {opacity: 0} 6.666667% {opacity: 0} 13.333333% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc7913 {animation: eav4f32zzc7913_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc7913_c_o { 0% {opacity: 0} 3.333333% {opacity: 0} 10% {opacity: 1} 100% {opacity: 1} }#eav4f32zzc7914 {animation: eav4f32zzc7914_c_o 3000ms linear 1 normal forwards}@keyframes eav4f32zzc7914_c_o { 0% {opacity: 0} 6.666667% {opacity: 1} 100% {opacity: 1} }]]></style><g id="eav4f32zzc792_ts" transform="translate(11.999999,11.963479) scale(1,1)"><g id="eav4f32zzc792" transform="translate(-11.999999,-11.963479)"><g id="eav4f32zzc793"><path id="eav4f32zzc794" d="M11.734361,6.701341C11.688572,6.536110,11.710990,5.887326,11.771999,5.612066C12.170559,3.813850,13.634243,2.363058,15.416588,1.999576C15.797536,1.921888,15.802230,1.927212,15.802230,2.436981C15.802230,3.131101,15.647204,3.757717,15.312631,4.415945C14.619654,5.779285,13.385296,6.679543,12.073163,6.778596L11.762273,6.802065Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.034860"/><path id="eav4f32zzc795" d="M17.768391,16.429676L19.005687,16.429676L19.005687,17.159884L17.768391,17.159884ZM8.586274,21.904649C8.094447,21.794098,7.494285,21.422434,6.986633,20.914036C5.963221,19.889119,4.784914,17.897592,4.282606,16.343799C4.039339,15.591296,3.752264,14.380320,3.786294,14.250188C3.795534,14.214858,3.789914,14.181268,3.773813,14.175558C3.713752,14.154258,3.663899,13.232570,3.679570,12.433191C3.693452,11.725052,3.707608,11.562071,3.789529,11.167238C3.841243,10.917991,3.936696,10.554989,4.001649,10.360567C4.135090,9.961138,4.466576,9.232525,4.514858,9.232525C4.532352,9.232525,4.538786,9.219777,4.529157,9.204197C4.499774,9.156654,5.024555,8.503215,5.377472,8.147904C5.924555,7.597108,6.490153,7.214672,7.161862,6.941368C7.692966,6.725272,7.963579,6.678595,8.708282,6.674630C9.423793,6.670820,9.396378,6.665350,10.608136,7.053536C11.710262,7.406599,11.794840,7.426340,12.287661,7.445546C12.847854,7.467377,13.047257,7.425199,13.972096,7.089254C15.052157,6.696924,15.006729,6.705197,16.081107,6.705197C17.001931,6.705197,17.005782,6.705508,17.283766,6.802364C17.659298,6.933207,18.349807,7.274737,18.615462,7.461030C19.111174,7.808652,19.915408,8.590591,19.863543,8.674512C19.851223,8.694442,19.723004,8.790470,19.578605,8.887910C18.742254,9.452273,18.109429,10.359546,17.839105,11.381806C17.765855,11.658800,17.744955,11.832569,17.730750,12.282747C17.702310,13.183741,17.829560,13.785224,18.209045,14.543578C18.624684,15.374180,19.177611,15.933077,20.060226,16.414747C20.258728,16.523075,20.426183,16.637585,20.432348,16.669214C20.449508,16.757224,19.753415,18.140362,19.380484,18.759276C18.238708,20.654160,17.172092,21.683180,16.118169,21.906600C15.604112,22.015574,15.219382,21.945760,14.372982,21.589923C13.659636,21.290023,13.384059,21.208098,12.898709,21.151643C12.081159,21.056553,11.491209,21.169373,10.359572,21.637218C10.084066,21.751120,9.772375,21.862456,9.666924,21.884632C9.347416,21.951822,8.838117,21.961262,8.586274,21.904652ZM18.686092,16.736777C18.613762,16.729277,18.503958,16.729377,18.442074,16.737056C18.380184,16.744756,18.439374,16.750936,18.573575,16.750776C18.707785,16.750637,18.758417,16.744276,18.686092,16.736776Z" fill="rgb(186,192,198)" stroke="none" stroke-width="1"/></g><g id="eav4f32zzc796" transform="matrix(0.01724144943295 0 0 0.01729907197860 3.44529393500002 1.91175686000001)"><g id="eav4f32zzc797_to" transform="translate(599.837540,142.878654)"><g id="eav4f32zzc797_tr" transform="rotate(0)"><path id="eav4f32zzc797" d="M661.049540,191.615880C698.913660,142.782290,727.714910,73.830320,717.276650,3.332740C655.369490,7.594270,582.961070,47.173120,540.668410,98.695200C502.291930,145.500300,470.609720,214.916150,482.944110,282.345690C550.531310,284.456420,620.447220,243.930810,661.049540,191.615880Z" transform="translate(-599.837540,-142.878654)" opacity="0" clip-rule="evenodd" fill="rgb(97,187,70)" fill-rule="evenodd" stroke="rgb(97,187,70)" stroke-width="6.280890" stroke-miterlimit="2.613100"/></g></g><path id="eav4f32zzc798" d="M54.232461,423.009800C54.581033,422.434140,54.950602,421.866930,55.320172,421.310260C115.054020,328.954690,209.279660,274.900150,297.888260,274.900150C388.115820,274.900150,444.834310,324.568760,519.416040,324.568760C591.782460,324.568760,635.859980,274.828450,740.175290,274.828450C818.990300,274.828450,902.553000,317.926600,962.072660,392.449540C945.616290,401.499750,930.770510,411.775050,917.501670,423.068840L54.232461,423.009940L54.232461,423.009940Z" opacity="0" clip-rule="evenodd" fill="rgb(97,187,70)" fill-rule="evenodd" stroke="rgb(97,187,70)" stroke-width="6.280890" stroke-miterlimit="2.613100"/><path id="eav4f32zzc799" d="M54.232461,423.009800C54.581033,422.434140,54.950602,421.866930,55.320172,421.310260C115.054020,328.954690,209.279660,274.900150,297.888260,274.900150C388.115820,274.900150,444.834310,324.568760,519.416040,324.568760C591.782460,324.568760,635.859980,274.828450,740.175290,274.828450C818.990300,274.828450,902.553000,317.926600,962.072660,392.449540C945.616290,401.499750,930.770510,411.775050,917.501670,423.068840L54.232461,423.009940L54.232461,423.009940Z" transform="matrix(0.96676766421612 0 0 1 16.88709540188989 0)" clip-rule="evenodd" fill="rgb(186,192,198)" fill-rule="evenodd" stroke="rgb(97,187,70)" stroke-width="6.280890" stroke-opacity="0" stroke-miterlimit="2.613100"/><path id="eav4f32zzc7910" d="M51.151054,421.648910C25.426830,462.119470,7.627656,520.125420,2.904234,571.003510L837.454120,570.982010C846.477440,515.319590,876.480790,462.140560,924.036370,421.710440L51.151054,421.648940L51.200304,421.648940Z" opacity="0" clip-rule="evenodd" fill="rgb(253,184,39)" fill-rule="evenodd" stroke="none" stroke-width="1" stroke-miterlimit="2.613100"/><path id="eav4f32zzc7911" d="M10.482518,719.030900C2.372977,667.066010,1.060584,616.967250,6.154770,571.005590L834.203550,570.984290C826.104500,620.827920,832.901660,672.697910,853.387600,719.062310L10.482518,719.030610L10.482518,719.030610Z" opacity="0" clip-rule="evenodd" fill="rgb(245,130,31)" fill-rule="evenodd" stroke="rgb(245,130,31)" stroke-width="6.280890" stroke-miterlimit="2.613100"/><path id="eav4f32zzc7912" d="M50.950428,867.045670C31.396818,817.315910,18.008307,767.368960,10.482518,719.030900L853.387600,719.062600C879.482170,778.141990,927.774040,828.333530,995.772820,854.126210C993.752790,858.636560,991.804140,862.950790,989.928990,867.108990L50.950428,867.045790L50.950428,867.045790Z" opacity="0" clip-rule="evenodd" fill="rgb(224,58,62)" fill-rule="evenodd" stroke="rgb(224,58,62)" stroke-width="6.280890" stroke-miterlimit="2.613100"/><path id="eav4f32zzc7913" d="M989.926900,867.106820C966.580990,918.647880,953.047600,945.397880,920.739630,994.777590C916.392980,1001.409200,911.901440,1008.192700,907.225110,1015.039400L129.181670,1015.111400C126.689170,1011.383300,124.219770,1007.657400,121.788170,1003.961000C92.699233,959.470830,69.149648,913.344710,50.950428,867.043560L989.926900,867.106760L989.926900,867.106760Z" opacity="0" clip-rule="evenodd" fill="rgb(150,61,151)" fill-rule="evenodd" stroke="rgb(150,61,151)" stroke-width="6.280890" stroke-miterlimit="2.613100"/><path id="eav4f32zzc7914" d="M907.225110,1015.039400C859.630380,1085.052000,795.732580,1162.096800,718.198470,1162.828500C642.541630,1163.518000,623.132900,1113.387600,520.489050,1113.952700C417.845190,1114.528400,396.416440,1163.703600,320.759600,1162.993000C239.872070,1162.242300,177.061980,1086.576500,129.181670,1015.111100L907.225110,1015.039100L907.225110,1015.039100Z" opacity="0" clip-rule="evenodd" fill="rgb(0,157,220)" fill-rule="evenodd" stroke="rgb(0,157,220)" stroke-width="6.280890" stroke-miterlimit="2.613100"/></g></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 24 24"><path fill="#bac0c6" d="M11.734361,6.701341C11.688572,6.536110,11.710990,5.887326,11.771999,5.612066C12.170559,3.813850,13.634243,2.363058,15.416588,1.999576C15.797536,1.921888,15.802230,1.927212,15.802230,2.436981C15.802230,3.131101,15.647204,3.757717,15.312631,4.415945C14.619654,5.779285,13.385296,6.679543,12.073163,6.778596L11.762273,6.802065Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.034860"/><path id="ea51wwdm9rv5" d="M17.768391,16.429676L19.005687,16.429676L19.005687,17.159884L17.768391,17.159884ZM8.586274,21.904649C8.094447,21.794098,7.494285,21.422434,6.986633,20.914036C5.963221,19.889119,4.784914,17.897592,4.282606,16.343799C4.039339,15.591296,3.752264,14.380320,3.786294,14.250188C3.795534,14.214858,3.789914,14.181268,3.773813,14.175558C3.713752,14.154258,3.663899,13.232570,3.679570,12.433191C3.693452,11.725052,3.707608,11.562071,3.789529,11.167238C3.841243,10.917991,3.936696,10.554989,4.001649,10.360567C4.135090,9.961138,4.466576,9.232525,4.514858,9.232525C4.532352,9.232525,4.538786,9.219777,4.529157,9.204197C4.499774,9.156654,5.024555,8.503215,5.377472,8.147904C5.924555,7.597108,6.490153,7.214672,7.161862,6.941368C7.692966,6.725272,7.963579,6.678595,8.708282,6.674630C9.423793,6.670820,9.396378,6.665350,10.608136,7.053536C11.710262,7.406599,11.794840,7.426340,12.287661,7.445546C12.847854,7.467377,13.047257,7.425199,13.972096,7.089254C15.052157,6.696924,15.006729,6.705197,16.081107,6.705197C17.001931,6.705197,17.005782,6.705508,17.283766,6.802364C17.659298,6.933207,18.349807,7.274737,18.615462,7.461030C19.111174,7.808652,19.915408,8.590591,19.863543,8.674512C19.851223,8.694442,19.723004,8.790470,19.578605,8.887910C18.742254,9.452273,18.109429,10.359546,17.839105,11.381806C17.765855,11.658800,17.744955,11.832569,17.730750,12.282747C17.702310,13.183741,17.829560,13.785224,18.209045,14.543578C18.624684,15.374180,19.177611,15.933077,20.060226,16.414747C20.258728,16.523075,20.426183,16.637585,20.432348,16.669214C20.449508,16.757224,19.753415,18.140362,19.380484,18.759276C18.238708,20.654160,17.172092,21.683180,16.118169,21.906600C15.604112,22.015574,15.219382,21.945760,14.372982,21.589923C13.659636,21.290023,13.384059,21.208098,12.898709,21.151643C12.081159,21.056553,11.491209,21.169373,10.359572,21.637218C10.084066,21.751120,9.772375,21.862456,9.666924,21.884632C9.347416,21.951822,8.838117,21.961262,8.586274,21.904652ZM18.686092,16.736777C18.613762,16.729277,18.503958,16.729377,18.442074,16.737056C18.380184,16.744756,18.439374,16.750936,18.573575,16.750776C18.707785,16.750637,18.758417,16.744276,18.686092,16.736776Z" fill="rgb(186,192,198)" stroke="none" stroke-width="1"/></g><g id="ea51wwdm9rv6" transform="matrix(0.01724144943295 0 0 0.01729907197860 3.44529393500002 1.91175686000001)"><path id="ea51wwdm9rv7" d="M54.232461,423.009800C54.581033,422.434140,54.950602,421.866930,55.320172,421.310260C115.054020,328.954690,209.279660,274.900150,297.888260,274.900150C388.115820,274.900150,444.834310,324.568760,519.416040,324.568760C591.782460,324.568760,635.859980,274.828450,740.175290,274.828450C818.990300,274.828450,902.553000,317.926600,962.072660,392.449540C945.616290,401.499750,930.770510,411.775050,917.501670,423.068840L54.232461,423.009940L54.232461,423.009940Z" transform="matrix(0.96676766421612 0 0 1 16.88709540188989 0)" clip-rule="evenodd" fill="rgb(186,192,198)" fill-rule="evenodd" stroke="rgb(97,187,70)" stroke-width="6.280890" stroke-opacity="0" stroke-miterlimit="2.613100"/></g></g></svg>'; } ]]]      
+      styles: 
+        custom_fields:
+          icon_switch:
+            [top: 5%, left: 10%, width: 50%, height: 50%, position: absolute]             
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: lime
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'                  
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SWITCH
+####################################################################################################################################################################################################################################################################################################################################################
+  button_switch:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: '[[double_tap_action]]'        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_switch: >
+          [[[ if (entity.state === 'on') {
+          return '<svg viewBox="0 0 50 50" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#evuiecyctfw2_to {animation: evuiecyctfw2_to__to 1500ms linear 1 normal forwards}@keyframes evuiecyctfw2_to__to { 0% {transform: translate(12px,12px)} 80% {transform: translate(12px,12px)} 86.666667% {transform: translate(12px,13px)} 93.333333% {transform: translate(12px,12px)} 100% {transform: translate(12px,12px)} }#evuiecyctfw2_ts {animation: evuiecyctfw2_ts__ts 1500ms linear 1 normal forwards}@keyframes evuiecyctfw2_ts__ts { 0% {transform: scale(1,1)} 40% {transform: scale(0.700000,0.700000)} 80% {transform: scale(1,1)} 100% {transform: scale(1,1)} }#evuiecyctfw3_to {animation: evuiecyctfw3_to__to 1500ms linear 1 normal forwards}@keyframes evuiecyctfw3_to__to { 0% {transform: translate(13.570312px,12px)} 40% {transform: translate(13.570312px,4.857143px)} 80% {transform: translate(13.570312px,12px)} 100% {transform: translate(13.570312px,12px)} }]]></style><g id="evuiecyctfw2_to" transform="translate(12,12)"><g id="evuiecyctfw2_ts" transform="scale(1,1)"><g id="evuiecyctfw2" transform="translate(-12,-12)"><g id="evuiecyctfw3_to" transform="translate(13.570312,12)"><path id="evuiecyctfw3" d="M13.650391,2L13.650391,22L16.880859,22C19.707886,21.999526,21.999526,19.707886,22,16.880859L22,7.119141C22,4.289141,19.710859,2,16.880859,2ZM5.140625,8.308594C5.145025,8.335154,5.146845,8.362504,5.152344,8.388672C5.152150,8.380202,5.150584,8.371750,5.150394,8.363281C5.148894,8.355721,5.147924,8.337174,5.146484,8.330078C5.145014,8.322808,5.142134,8.315852,5.140624,8.308594ZM17.609375,11C18.719375,11,19.619141,11.890000,19.619141,13C19.619141,14.120000,18.719375,15,17.609375,15C16.499375,15,15.580078,14.120000,15.580078,13C15.580078,11.890000,16.499375,11,17.609375,11Z" transform="translate(-13.570312,-12)" fill="rgb(231,0,18)" stroke="none" stroke-width="1"/></g><path id="evuiecyctfw4" d="M6.540596,9.800439C5.115512,9.416647,4.659662,7.659802,5.726272,6.662041C6.312313,6.113829,7.074671,5.994663,7.798054,6.338196C8.513859,6.678130,8.946951,7.488663,8.826018,8.262032C8.742719,8.794730,8.391781,9.321820,7.939109,9.594123C7.540041,9.834181,6.975263,9.917500,6.540596,9.800439ZM7.119141,2C4.292114,2.000474,2.000474,4.292114,2,7.119141L2,16.880859C2,19.710859,4.289141,22,7.119141,22L11.650391,22L11.650391,2ZM7.119141,3.619141L10.039062,3.619141L10.039062,20.400391L7.119141,20.400391C6.189141,20.400391,5.300625,19.999375,4.640625,19.359375C4.000625,18.699375,3.599609,17.810859,3.599609,16.880859L3.599609,7.119141C3.599609,6.189141,4.000625,5.300625,4.640625,4.640625C5.300625,4.000625,6.189141,3.619141,7.119141,3.619141ZM5.140625,8.308594C5.145025,8.335154,5.146845,8.362504,5.152344,8.388672C5.152150,8.380202,5.150584,8.371750,5.150394,8.363281C5.148894,8.355721,5.147924,8.337174,5.146484,8.330078C5.145014,8.322808,5.142134,8.315852,5.140624,8.308594Z" fill="rgb(231,0,18)" stroke="none" stroke-width="0.037621"/></g></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 50 50"><path fill="#bac0c6" d="M10.04,20.4H7.12C6.19,20.4 5.3,20 4.64,19.36C4,18.7 3.6,17.81 3.6,16.88V7.12C3.6,6.19 4,5.3 4.64,4.64C5.3,4 6.19,3.62 7.12,3.62H10.04V20.4M7.12,2A5.12,5.12 0 0,0 2,7.12V16.88C2,19.71 4.29,22 7.12,22H11.65V2H7.12M5.11,8C5.11,9.04 5.95,9.88 7,9.88C8.03,9.88 8.87,9.04 8.87,8C8.87,6.96 8.03,6.12 7,6.12C5.95,6.12 5.11,6.96 5.11,8M17.61,11C18.72,11 19.62,11.89 19.62,13C19.62,14.12 18.72,15 17.61,15C16.5,15 15.58,14.12 15.58,13C15.58,11.89 16.5,11 17.61,11M16.88,22A5.12,5.12 0 0,0 22,16.88V7.12C22,4.29 19.71,2 16.88,2H13.65V22H16.88Z"/></svg>'; } ]]]     
+      styles: 
+        custom_fields:
+          icon_switch:
+            [top: 7%, left: 10%, width: 100%, height: 100%, position: absolute]             
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var     
+            state:
+              - color: lime   
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    MULTI
+####################################################################################################################################################################################################################################################################################################################################################
+  button_multi:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: '[[double_tap_action]]'        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_multi: >
+          [[[ if (entity.state === 'on') {
+          return '<svg id="eq1k8lhtyxrm1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#eq1k8lhtyxrm2_ts {animation: eq1k8lhtyxrm2_ts__ts 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm2_ts__ts { 0% {transform: translate(12px,12px) scale(1,1)} 7.692308% {transform: translate(12px,12px) scale(1.100000,1.100000)} 15.384615% {transform: translate(12px,12px) scale(1,1)} 23.076923% {transform: translate(12px,12px) scale(0.900000,0.900000)} 30.769231% {transform: translate(12px,12px) scale(1,1)} 100% {transform: translate(12px,12px) scale(1,1)} }#eq1k8lhtyxrm3 {animation: eq1k8lhtyxrm3_c_o 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm3_c_o { 0% {opacity: 1} 84.615385% {opacity: 1} 92.307692% {opacity: 0} 100% {opacity: 0} }#eq1k8lhtyxrm9 {animation: eq1k8lhtyxrm9_c_o 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm9_c_o { 0% {opacity: 0} 76.923077% {opacity: 0} 100% {opacity: 1} }#eq1k8lhtyxrm10 {animation: eq1k8lhtyxrm10_c_o 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm10_c_o { 0% {opacity: 0} 53.846154% {opacity: 0} 76.923077% {opacity: 1} 100% {opacity: 1} }#eq1k8lhtyxrm11 {animation: eq1k8lhtyxrm11_c_o 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm11_c_o { 0% {opacity: 0} 30.769231% {opacity: 0} 53.846154% {opacity: 1} 100% {opacity: 1} }#eq1k8lhtyxrm12 {animation: eq1k8lhtyxrm12_c_o 1300ms linear 1 normal forwards}@keyframes eq1k8lhtyxrm12_c_o { 0% {opacity: 0} 7.692308% {opacity: 0} 30.769231% {opacity: 1} 100% {opacity: 1} }]]></style><g id="eq1k8lhtyxrm2_ts" transform="translate(12,12) scale(1,1)"><g id="eq1k8lhtyxrm2" transform="translate(-12,-12)"><g id="eq1k8lhtyxrm3"><path id="eq1k8lhtyxrm4" d="M15.027892,13.483049L13.545272,12L15.027892,10.516951L16.510513,9.033901L19.239950,9.033901L21.969387,9.033901L21.969387,12L21.969387,14.966099L19.239950,14.966099L16.510513,14.966099Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm5" d="M10.506437,8.961597L9.033901,7.488635L9.033901,4.759624L9.033901,2.030613L12,2.030613L14.966099,2.030613L14.966099,4.760050L14.966099,7.489488L13.493137,8.962023C12.683008,9.771918,12.010904,10.434559,11.999574,10.434559C11.988244,10.434559,11.316332,9.771726,10.506437,8.961597Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm6" d="M2.030613,12L2.030613,9.033901L4.760050,9.033901L7.489488,9.033901L8.972108,10.516951L10.454728,12L8.972108,13.483049L7.489488,14.966099L4.760050,14.966099L2.030613,14.966099Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm7" d="M9.033901,19.239950L9.033901,16.510513L10.516951,15.027892L12,13.545272L13.483049,15.027892L14.966099,16.510513L14.966099,19.239950L14.966099,21.969387L12,21.969387L9.033901,21.969387Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041196"/></g><g id="eq1k8lhtyxrm8"><path id="eq1k8lhtyxrm9" d="M9.033901,19.239950L9.033901,16.510513L10.516951,15.027892L12,13.545272L13.483049,15.027892L14.966099,16.510513L14.966099,19.239950L14.966099,21.969387L12,21.969387L9.033901,21.969387Z" opacity="0" fill="rgb(237,56,51)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm10" d="M15.027892,13.483049L13.545272,12L15.027892,10.516951L16.510513,9.033901L19.239950,9.033901L21.969387,9.033901L21.969387,12L21.969387,14.966099L19.239950,14.966099L16.510513,14.966099Z" opacity="0" fill="rgb(254,248,81)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm11" d="M10.506437,8.961597L9.033901,7.488635L9.033901,4.759624L9.033901,2.030613L12,2.030613L14.966099,2.030613L14.966099,4.760050L14.966099,7.489488L13.493137,8.962023C12.683008,9.771918,12.010904,10.434559,11.999574,10.434559C11.988244,10.434559,11.316332,9.771726,10.506437,8.961597Z" opacity="0" fill="rgb(115,244,64)" stroke="none" stroke-width="0.041196"/><path id="eq1k8lhtyxrm12" d="M2.030613,12L2.030613,9.033901L4.760050,9.033901L7.489488,9.033901L8.972108,10.516951L10.454728,12L8.972108,13.483049L7.489488,14.966099L4.760050,14.966099L2.030613,14.966099Z" opacity="0" fill="rgb(32,70,246)" stroke="none" stroke-width="0.041196"/></g></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 50 50"><path fill="#bac0c6" d="M16.5,9L13.5,12L16.5,15H22V9M9,16.5V22H15V16.5L12,13.5M7.5,9H2V15H7.5L10.5,12M15,7.5V2H9V7.5L12,10.5L15,7.5Z""/></svg>'; } ]]]
+      styles:
+        custom_fields:
+          icon_multi:
+            [top: 7%, left: 10%, width: 100%, height: 100%, position: absolute]         
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var        
+            state:
+              - color: lime
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+       
+####################################################################################################################################################################################################################################################################################################################################################
+####    XBOX
+####################################################################################################################################################################################################################################################################################################################################################
+  button_xbox:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          deviceID:
+            - this
+            - dashboard  
+          title: Chromecast Audio
+          hide_header: true
+          card_mod:
+            style:
+                $: |
+                  .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                    box-shadow:none;
+                  }
+                .: |
+                  :host {
+                    --mdc-theme-surface: rgba(0,0,0,0);
+                    --secondary-background-color: rgba(0,0,0,0);
+                    --ha-card-background: rgba(0,0,0,0);
+                    --ha-card-box-shadow: none;                    
+                    --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                  }
+                  mwc-icon-button {
+                    color: #FFF;
+                  }            
+          card: 
+            type: media-control
+            entity: media_player.xbox_series_x
+      double_tap_action: !include popup_card/xbox.yaml        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_ps4: >
+          [[[ if (entity.state === 'on') {
+          return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#eqdac58m7js72_ts {animation: eqdac58m7js72_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js72_ts__ts { 0% {transform: translate(12.000462px,11.968389px) scale(1,1)} 8.333333% {transform: translate(12.000462px,11.968389px) scale(1.100000,1.100000)} 16.666667% {transform: translate(12.000462px,11.968389px) scale(1,1)} 25% {transform: translate(12.000462px,11.968389px) scale(0.900000,0.900000)} 33.333333% {transform: translate(12.000462px,11.968389px) scale(1,1)} 100% {transform: translate(12.000462px,11.968389px) scale(1,1)} }#eqdac58m7js73 {animation: eqdac58m7js73_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js73_c_o { 0% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js75_ts {animation: eqdac58m7js75_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js75_ts__ts { 0% {transform: translate(12.024229px,12.018970px) scale(1,1)} 25% {transform: translate(12.024229px,12.018970px) scale(1,1)} 33.333333% {transform: translate(12.024229px,12.018970px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.024229px,12.018970px) scale(1,1)} 50% {transform: translate(12.024229px,12.018970px) scale(1,1)} 58.333333% {transform: translate(12.024229px,12.018970px) scale(0.900000,0.900000)} 66.666667% {transform: translate(12.024229px,12.018970px) scale(1,1)} 100% {transform: translate(12.024229px,12.018970px) scale(1,1)} }#eqdac58m7js75 {animation: eqdac58m7js75_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js75_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js76_ts {animation: eqdac58m7js76_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js76_ts__ts { 0% {transform: translate(12.128919px,9.253352px) scale(1,1)} 25% {transform: translate(12.128919px,9.253352px) scale(1,1)} 33.333333% {transform: translate(12.128919px,9.253352px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.128919px,9.253352px) scale(1,1)} 50% {transform: translate(12.128919px,9.253352px) scale(1,1)} 58.333333% {transform: translate(12.128919px,9.253352px) scale(0.900000,0.900000)} 66.666667% {transform: translate(12.128919px,9.253352px) scale(1,1)} 100% {transform: translate(12.128919px,9.253352px) scale(1,1)} }#eqdac58m7js76 {animation: eqdac58m7js76_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js76_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js77_ts {animation: eqdac58m7js77_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js77_ts__ts { 0% {transform: translate(12.024216px,7.433047px) scale(1,1)} 25% {transform: translate(12.024216px,7.433047px) scale(1,1)} 33.333333% {transform: translate(12.024216px,7.433047px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.024216px,7.433047px) scale(1,1)} 50% {transform: translate(12.024216px,7.433047px) scale(1,1)} 58.333333% {transform: translate(12.024216px,7.433047px) scale(0.900000,0.900000)} 66.666667% {transform: translate(12.024216px,7.433047px) scale(1,1)} 100% {transform: translate(12.024216px,7.433047px) scale(1,1)} }#eqdac58m7js77 {animation: eqdac58m7js77_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js77_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js78_ts {animation: eqdac58m7js78_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js78_ts__ts { 0% {transform: translate(12.024304px,6.886178px) scale(1,1)} 25% {transform: translate(12.024304px,6.886178px) scale(1,1)} 33.333333% {transform: translate(12.024304px,6.886178px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.024304px,6.886178px) scale(1,1)} 50% {transform: translate(12.024304px,6.886178px) scale(1,1)} 58.333333% {transform: translate(12.024304px,6.886178px) scale(0.900000,0.900000)} 66.666667% {transform: translate(12.024304px,6.886178px) scale(1,1)} 100% {transform: translate(12.024304px,6.886178px) scale(1,1)} }#eqdac58m7js78 {animation: eqdac58m7js78_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js78_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js79_ts {animation: eqdac58m7js79_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js79_ts__ts { 0% {transform: translate(12.047446px,7.082215px) scale(1,1)} 25% {transform: translate(12.047446px,7.082215px) scale(1,1)} 33.333333% {transform: translate(12.047446px,7.082215px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.047446px,7.082215px) scale(1,1)} 50% {transform: translate(12.047446px,7.082215px) scale(1,1)} 100% {transform: translate(12.047446px,7.082215px) scale(1,1)} }#eqdac58m7js79 {animation: eqdac58m7js79_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js79_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js710_ts {animation: eqdac58m7js710_ts__ts 1200ms linear 1 normal forwards}@keyframes eqdac58m7js710_ts__ts { 0% {transform: translate(12.125005px,7.082215px) scale(1,1)} 25% {transform: translate(12.125005px,7.082215px) scale(1,1)} 33.333333% {transform: translate(12.125005px,7.082215px) scale(0.900000,0.900000)} 41.666667% {transform: translate(12.125005px,7.082215px) scale(1,1)} 50% {transform: translate(12.125005px,7.082215px) scale(1,1)} 58.333333% {transform: translate(12.125005px,7.082215px) scale(0.900000,0.900000)} 66.666667% {transform: translate(12.125005px,7.082215px) scale(1,1)} 100% {transform: translate(12.125005px,7.082215px) scale(1,1)} }#eqdac58m7js710 {animation: eqdac58m7js710_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js710_c_o { 0% {opacity: 0} 8.333333% {opacity: 0} 25% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js711 {animation: eqdac58m7js711_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js711_c_o { 0% {opacity: 0} 8.333333% {opacity: 1} 100% {opacity: 1} }#eqdac58m7js716 {animation: eqdac58m7js716_c_o 1200ms linear 1 normal forwards}@keyframes eqdac58m7js716_c_o { 0% {opacity: 1} 33.333333% {opacity: 0} 100% {opacity: 0} }]]></style><g id="eqdac58m7js72_ts" transform="translate(12.000462,11.968389) scale(1,1)"><g id="eqdac58m7js72" transform="translate(-12.000462,-11.968389)"><circle id="eqdac58m7js73" r="9.888548" transform="matrix(1 0 0 1 12.01833215756153 12.00840000000000)" opacity="0" fill="rgb(0,255,0)" stroke="none" stroke-width="1.087720"/><g id="eqdac58m7js74" transform="matrix(1.12255835283328 0 0 1.05251580047389 -1.59119318435040 -0.88263409437701)"><g id="eqdac58m7js75_ts" transform="translate(12.024229,12.018970) scale(1,1)"><circle id="eqdac58m7js75" r="8.510970" transform="translate(0.000031,0.000030)" opacity="0" fill="rgb(122,255,122)" stroke="none" stroke-width="0.929453"/></g><g id="eqdac58m7js76_ts" transform="translate(12.128919,9.253352) scale(1,1)"><circle id="eqdac58m7js76" r="6.268800" transform="translate(0.000030,0.000048)" opacity="0" fill="rgb(143,255,143)" stroke="none" stroke-width="0.684594"/></g><g id="eqdac58m7js77_ts" transform="translate(12.024216,7.433047) scale(1,1)"><circle id="eqdac58m7js77" r="4.053980" transform="translate(0.000043,-0.000047)" opacity="0" fill="rgb(165,255,165)" stroke="none" stroke-width="0.442721"/></g><g id="eqdac58m7js78_ts" transform="translate(12.024304,6.886178) scale(1,1)"><circle id="eqdac58m7js78" r="2.386020" transform="translate(-0.000044,0.000002)" opacity="0" fill="rgb(182,248,182)" stroke="none" stroke-width="0.260569"/></g><g id="eqdac58m7js79_ts" transform="translate(12.047446,7.082215) scale(1,1)"><circle id="eqdac58m7js79" r="1.335354" transform="translate(-0.100746,-0.100699)" opacity="0" fill="rgb(200,255,200)" stroke="none" stroke-width="0.260569"/></g><g id="eqdac58m7js710_ts" transform="translate(12.125005,7.082215) scale(1,1)"><circle id="eqdac58m7js710" r="0.906759" transform="translate(-0.100746,-0.114040)" opacity="0" fill="rgb(200,255,200)" stroke="none" stroke-width="0.260569"/></g></g><g id="eqdac58m7js711" opacity="0"><path id="eqdac58m7js712" d="M4.330837,18.371906C3.345426,17.197211,2.628225,15.746780,2.274570,14.213416C1.854892,12.393798,1.985748,10.309641,2.628285,8.579736C3.087120,7.344415,3.877698,6.065255,4.700166,5.227422C5.134221,4.785259,5.384241,4.665610,5.859888,4.672429C6.833030,4.686380,8.325336,5.539099,9.701443,6.867531L10.123607,7.275070L9.688768,7.721951C8.642095,8.797609,7.160175,10.731060,6.278561,12.171224C5.403554,13.600595,4.842055,15.059334,4.581194,16.580883C4.488242,17.123052,4.467594,18.096082,4.541996,18.428078C4.565995,18.535168,4.580206,18.628212,4.573575,18.634843C4.566945,18.641443,4.457712,18.523152,4.330836,18.371906Z" fill="rgb(50,50,50)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js713" d="M11.165379,21.948297C8.845271,21.739038,6.564544,20.679025,4.980458,19.073732L4.657166,18.746111L4.707228,18.503902C4.958787,17.286829,6.274735,15.219094,8.157136,13.083100C8.576527,12.607210,11.742731,9.364138,11.937608,9.210848C12.029088,9.138893,12.033818,9.143012,13.074512,10.199247C14.205952,11.347589,15.147692,12.343845,15.784995,13.066638C16.316103,13.668990,17.463278,15.047007,17.742800,15.418403C18.341833,16.214331,18.932417,17.316337,19.208609,18.153540L19.385533,18.689838L19.227041,18.867122C19.139871,18.964632,18.928266,19.174289,18.756809,19.333036C17.265891,20.713425,15.393939,21.596037,13.336845,21.888508C12.808376,21.963638,11.680000,21.994712,11.165379,21.948298Z" fill="rgb(50,50,50)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js714" d="M19.468866,18.488268C19.659349,17.367464,19.585163,16.270469,19.244764,15.174434C18.872457,13.975659,17.837787,12.101105,16.742266,10.640553C16.010978,9.665597,15.211497,8.731202,14.367770,7.865354L13.831189,7.314705L14.078361,7.088354C15.144845,6.111711,16.547100,5.185453,17.584992,4.772054C17.991524,4.610129,18.049399,4.597543,18.278013,4.621339C18.660436,4.661144,18.904732,4.804357,19.301592,5.221390C21.756306,7.800874,22.608002,11.678571,21.472541,15.105527C21.094206,16.247385,20.466221,17.397387,19.727639,18.300885C19.439189,18.653744,19.440961,18.652461,19.468866,18.488268Z" fill="rgb(50,50,50)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js715" d="M11.640309,5.384788C10.795512,4.745018,9.473018,3.953557,8.730384,3.643312C8.144166,3.398411,7.855208,3.341581,7.299875,3.361969C6.891764,3.376953,6.841631,3.371758,6.908519,3.321418C7.056232,3.210249,8.142387,2.697433,8.535652,2.553185C10.071223,1.989944,11.982978,1.818931,13.617686,2.098581C14.752908,2.292784,15.914756,2.708158,16.861876,3.258415L17.140000,3.420000L16.671686,3.402074C16.265427,3.386524,16.148760,3.398214,15.791230,3.490320C14.850298,3.732713,13.350721,4.535968,12.230472,5.397655C12.101913,5.496542,11.972147,5.576217,11.942105,5.574711C11.912065,5.573201,11.776254,5.487739,11.640309,5.384788Z" fill="rgb(50,50,50)" stroke="none" stroke-width="0.041195"/></g><g id="eqdac58m7js716"><path id="eqdac58m7js717" d="M4.330837,18.371906C3.345426,17.197211,2.628225,15.746780,2.274570,14.213416C1.854892,12.393798,1.985748,10.309641,2.628285,8.579736C3.087120,7.344415,3.877698,6.065255,4.700166,5.227422C5.134221,4.785259,5.384241,4.665610,5.859888,4.672429C6.833030,4.686380,8.325336,5.539099,9.701443,6.867531L10.123607,7.275070L9.688768,7.721951C8.642095,8.797609,7.160175,10.731060,6.278561,12.171224C5.403554,13.600595,4.842055,15.059334,4.581194,16.580883C4.488242,17.123052,4.467594,18.096082,4.541996,18.428078C4.565995,18.535168,4.580206,18.628212,4.573575,18.634843C4.566945,18.641443,4.457712,18.523152,4.330836,18.371906Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js718" d="M11.165379,21.948297C8.845271,21.739038,6.564544,20.679025,4.980458,19.073732L4.657166,18.746111L4.707228,18.503902C4.958787,17.286829,6.274735,15.219094,8.157136,13.083100C8.576527,12.607210,11.742731,9.364138,11.937608,9.210848C12.029088,9.138893,12.033818,9.143012,13.074512,10.199247C14.205952,11.347589,15.147692,12.343845,15.784995,13.066638C16.316103,13.668990,17.463278,15.047007,17.742800,15.418403C18.341833,16.214331,18.932417,17.316337,19.208609,18.153540L19.385533,18.689838L19.227041,18.867122C19.139871,18.964632,18.928266,19.174289,18.756809,19.333036C17.265891,20.713425,15.393939,21.596037,13.336845,21.888508C12.808376,21.963638,11.680000,21.994712,11.165379,21.948298Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js719" d="M19.468866,18.488268C19.659349,17.367464,19.585163,16.270469,19.244764,15.174434C18.872457,13.975659,17.837787,12.101105,16.742266,10.640553C16.010978,9.665597,15.211497,8.731202,14.367770,7.865354L13.831189,7.314705L14.078361,7.088354C15.144845,6.111711,16.547100,5.185453,17.584992,4.772054C17.991524,4.610129,18.049399,4.597543,18.278013,4.621339C18.660436,4.661144,18.904732,4.804357,19.301592,5.221390C21.756306,7.800874,22.608002,11.678571,21.472541,15.105527C21.094206,16.247385,20.466221,17.397387,19.727639,18.300885C19.439189,18.653744,19.440961,18.652461,19.468866,18.488268Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041195"/><path id="eqdac58m7js720" d="M11.640309,5.384788C10.795512,4.745018,9.473018,3.953557,8.730384,3.643312C8.144166,3.398411,7.855208,3.341581,7.299875,3.361969C6.891764,3.376953,6.841631,3.371758,6.908519,3.321418C7.056232,3.210249,8.142387,2.697433,8.535652,2.553185C10.071223,1.989944,11.982978,1.818931,13.617686,2.098581C14.752908,2.292784,15.914756,2.708158,16.861876,3.258415L17.140000,3.420000L16.671686,3.402074C16.265427,3.386524,16.148760,3.398214,15.791230,3.490320C14.850298,3.732713,13.350721,4.535968,12.230472,5.397655C12.101913,5.496542,11.972147,5.576217,11.942105,5.574711C11.912065,5.573201,11.776254,5.487739,11.640309,5.384788Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041195"/></g></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 24 24"><path fill="#bac0c6" d="M6.43,3.72C6.5,3.66 6.57,3.6 6.62,3.56C8.18,2.55 10,2 12,2C13.88,2 15.64,2.5 17.14,3.42C17.25,3.5 17.54,3.69 17.7,3.88C16.25,2.28 12,5.7 12,5.7C10.5,4.57 9.17,3.8 8.16,3.5C7.31,3.29 6.73,3.5 6.46,3.7M19.34,5.21C19.29,5.16 19.24,5.11 19.2,5.06C18.84,4.66 18.38,4.56 18,4.59C17.61,4.71 15.9,5.32 13.8,7.31C13.8,7.31 16.17,9.61 17.62,11.96C19.07,14.31 19.93,16.16 19.4,18.73C21,16.95 22,14.59 22,12C22,9.38 21,7 19.34,5.21M15.73,12.96C15.08,12.24 14.13,11.21 12.86,9.95C12.59,9.68 12.3,9.4 12,9.1C12,9.1 11.53,9.56 10.93,10.17C10.16,10.94 9.17,11.95 8.61,12.54C7.63,13.59 4.81,16.89 4.65,18.74C4.65,18.74 4,17.28 5.4,13.89C6.3,11.68 9,8.36 10.15,7.28C10.15,7.28 9.12,6.14 7.82,5.35L7.77,5.32C7.14,4.95 6.46,4.66 5.8,4.62C5.13,4.67 4.71,5.16 4.71,5.16C3.03,6.95 2,9.35 2,12A10,10 0 0,0 12,22C14.93,22 17.57,20.74 19.4,18.73C19.4,18.73 19.19,17.4 17.84,15.5C17.53,15.07 16.37,13.69 15.73,12.96Z" /></svg>'; } ]]]         
+      styles:
+        custom_fields:
+          icon_ps4:
+            [top: 7%, left: 10%, width: 50%, height: 50%, position: absolute]        
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var       
+            state:
+              - color: lime
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    PS4
+####################################################################################################################################################################################################################################################################################################################################################
+  button_ps4:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/ps4.yaml      
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_ps4: >
+          [[[ if (entity.state === 'on') { return '<svg viewBox="0 0 50 50"> <style>@keyframes animate{50%{transform: translateY(0);}100%{transform: translateY(-45%);}}.animate{animation: animate 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;}</style>
+          <g style="clip-path: url(#mask);"><g class="animate"><path fill="#00aa9e" d="M49.2 38.9l-75.6-25.1v7.4l75.6 25.2z"/><path fill="#f3c202" d="M49.2 46.4l-75.6-25.2v7.5l75.6 25.1z"/><path fill="#326db3" d="M49.2 53.8l-75.6-25.1V51l75.6 25.1zm0-22.3L-26.4 6.4v7.4l75.6 25.1z"/></g></g>
+          <defs><clipPath id="mask"><path d="M47.5 33.2c-.5-2.2-3.9-3.5-9.1-3.9-3.8-.3-7.5.6-11.1 1.9l-.6.2v-5.7l-5.7.8-4.6 1.6L6 31.9h-.1c-1.9.7-3.8 2.2-3.7 4.2.1 2.1 4.7 2.6 8.2 3.2 3.3.6 6.2.2 8.9-.7l7.3 4.8L33 41l10.7-4h.1c2.8-1 4-2.5 3.7-3.8zm-31.3 2l-3.6 1.3c-2.2.8-4.1-1.1-2.1-1.9l1.7-.6 7.2-2.7v2.8l-3.2 1.1zm22.5-1.1l-1.9.7-10.2 3.7V36l6.5-2.4 3.8-1.3c4-.9 5.6.5 1.8 1.8z"/></clipPath></defs><path fill="#de0029" d="M26.7 14.6v28.7l-7.3-2.5V7.1l9.3 2.6c6 1.7 9.6 5 9.6 10.7-.1 6.7-3 9.4-8.7 7.6V14.9c-.1-1.6-2.9-1.7-2.9-.3h0z"/></svg>'; }
+          else { return '<svg viewBox="0 0 50 50"><path fill="#bac0c6" d="M43.8 37h-.1l-10.6 4-4.2 1.6v-4.9l8-2.9 1.9-.7c3.8-1.3 2.2-2.7-1.8-1.9l-3.8 1.3-4.3 1.6v-4.5c3.1-1 6.3-1.6 9.5-1.4 5.3.4 8.7 1.6 9.1 3.9.3 1.4-.9 2.9-3.7 3.9zm-26.7-2.1l-.9.3-3.6 1.3c-2.2.8-4.1-1.1-2.1-1.9l1.7-.6 5-1.9v-4.2l-.6.2L6 31.9h-.1c-1.9.7-3.8 2.2-3.7 4.2.1 2.1 4.7 2.6 8.2 3.2 2.4.4 4.6.3 6.7-.1v-4.3zm12.4-20V28c5.7 1.7 8.7-.9 8.7-7.6.1-5.7-3.6-9-9.6-10.7l-9.3-2.6v33.8l7.2 2.5.1.1V14.6c.1-1.4 2.9-1.3 2.9.3z"/></svg>'; } ]]]
+      styles:
+        custom_fields:
+          icon_ps4:
+            [top: 7%, left: 10%, width: 50%, height: 50%, position: absolute]        
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: lime      
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    DIFFUSEUR
+####################################################################################################################################################################################################################################################################################################################################################
+  button_purifier:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      show_icon: false
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      show_label: true      
+      name: '[[name]]'
+      triggers_update:
+        ['switch.huiles_essentielles']
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data: 
+          entity_id: switch.huiles_essentielles
+        haptic: light        
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: !include popup_card/diffuseur.yaml           
+      custom_fields:
+        notification: >
+          [[[ return (states['sensor.timer_diffuseur_temps_restant'].state) ]]]               
+        icon_purifier: >
+          [[[ if (entity.state === 'on') {
+          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><style>@keyframes jrscidn67tmg6c3g2r5s9kw5_t { 0% { transform: translate(15.5px,7px) rotate(0deg) scale(1,1) translate(-18.5px,-11px); } 26.667% { transform: translate(15.5px,9px) rotate(0deg) scale(1,-1) translate(-18.5px,-11px); } 53.333% { transform: translate(15.5px,7px) rotate(0deg) scale(1,1) translate(-18.5px,-11px); } 80% { transform: translate(15.5px,9px) rotate(0deg) scale(1,-1) translate(-18.5px,-11px); } 100% { transform: translate(15.5px,7px) rotate(0deg) scale(1,1) translate(-18.5px,-11px); } }@keyframes a2_t { 0% { transform: translate(15.5px,11px); animation-timing-function: cubic-bezier(0,0,1,1); } 26.667% { transform: translate(15.5px,13px); } 53.333% { transform: translate(15.5px,11px); animation-timing-function: cubic-bezier(0,0,1,1); } 80% { transform: translate(15.5px,13px); } 100% { transform: translate(15.5px,11px); } }@keyframes a3_t { 0% { transform: rotate(0deg); } 53.333% { transform: rotate(0deg); } 100% { transform: rotate(0deg); } }@keyframes a4_t { 0% { transform: scale(1,1); animation-timing-function: cubic-bezier(0,0,1,1); } 26.667% { transform: scale(1,-1); } 53.333% { transform: scale(1,1); animation-timing-function: cubic-bezier(0,0,1,1); } 80% { transform: scale(1,-1); } 100% { transform: scale(1,1); } }@keyframes pv5zvzghpx160kgpk1h839ao_t { 0% { transform: translate(-18.5px,-15px); } 53.333% { transform: translate(-18.5px,-15px); } 100% { transform: translate(-18.5px,-15px); } }</style><g transform="translate(3,4)"><path fill="#3498db" d="M16 12v-1h.2c.2 0 .8-0.1 1.1-0.2c.3-0.1 .7-0.4 1.3-0.9c.8-0.6 1.3-0.8 2.1-0.9h.3v1v1h-0.2c-0.3 0-0.9 .1-1.2 .2c-0.3 .2-0.6 .4-1.3 .9c-0.7 .5-1.2 .8-2 .9h-0.3Z" transform="translate(15.5,7) translate(-18.5,-11)" style="animation: 1.5s linear infinite both jrscidn67tmg6c3g2r5s9kw5_t;"/><g style="animation: 1.5s linear infinite both a2_t;"><g style="animation: 1.5s linear infinite both a3_t;"><g style="animation: 1.5s linear infinite both a4_t;"><path fill="#3498db" d="M16 16v-1h.3c.5 0 .9-0.1 1.2-0.3c.3-0.2 .5-0.3 1.4-0.9c.5-0.5 1.1-0.7 1.8-0.8h.3v1v1h-0.2c-0.2 0-0.7 .1-1 .2c-0.4 .1-0.7 .3-1.4 .8c-0.8 .6-1.3 .9-2.1 1h-0.3Z" transform="translate(15.5,11) translate(-18.5,-15)" style="animation: 1.5s linear infinite both pv5zvzghpx160kgpk1h839ao_t;"/></g></g></g><path fill="#3498db" d="M7.3 12.9c-1.6-0.3-2.9-1.5-3.2-3.1c-0.1-0.4-0.1-1.2 0-1.6c.2-0.7 .5-1.4 1.1-2c.3-0.3 .7-0.6 1.2-0.8c.5-0.3 .9-0.3 1.6-0.4c.7 0 1.1 .1 1.7 .4c1.4 .7 2.3 2.1 2.3 3.6c0 1-0.3 1.8-1 2.6c-0.5 .5-1.3 1.1-2 1.3c-0.5 .1-1.3 .1-1.7 0Zm1.4-2c.5-0.2 1-0.6 1.2-1.2c.1-0.2 .1-0.3 .1-0.7c0-0.6-0.1-0.8-0.4-1.2c-0.7-1-2.2-1.1-3-0.2c-0.6 .6-0.8 1.5-0.4 2.3c.2 .5 .7 .9 1.3 1.1c.3 0 .9 0 1.2-0.1Z"/><path fill="#3498db" d="M0 10.7v-7.2l.1-0.4c.2-0.8 .6-1.4 1.1-1.9c.6-0.6 1.3-1 2.1-1.1c.5-0.1 7.9-0.1 8.4 0c1.6 .3 2.9 1.5 3.2 3.1c0 .2 .1 .7 .1 1.1v.7h-1h-1v-0.4c0-0.8 0-1.1-0.2-1.5c-0.3-0.5-0.8-1-1.4-1.1c-0.3 0-7.5 0-7.8 0c-0.8 .2-1.5 .9-1.6 1.7c0 .2 0 2.7 0 6.3v6h5.5h5.5v-1v-1h1h1v2v2h-7.5h-7.5Z"/></g></svg>'; }
+          else { return '<svg viewBox="0 0 24 24"><path fill="#bac0c6" d="M16 12v-1h.2a5.16 5.16 0 0 0 1.1-.2c.3-.1.7-.4 1.3-.9.8-.6 1.3-.8 2.1-.9h.3v2h-.2a5.02 5.02 0 0 0-1.2.2l-1.3.9c-.7.5-1.2.8-2 .9H16zm0 4v-1h.3c.5 0 .9-.1 1.2-.3l1.4-.9c.5-.5 1.1-.7 1.8-.8h.3v2h-.2c-.2 0-.7.1-1 .2-.4.1-.7.3-1.4.8-.8.6-1.3.9-2.1 1H16zm-5.7.9c-1.6-.3-2.9-1.5-3.2-3.1-.1-.4-.1-1.2 0-1.6.2-.7.5-1.4 1.1-2 .3-.3.7-.6 1.2-.8.5-.3.9-.3 1.6-.4.7 0 1.1.1 1.7.4 1.4.7 2.3 2.1 2.3 3.6 0 1-.3 1.8-1 2.6-.5.5-1.3 1.1-2 1.3-.5.1-1.3.1-1.7 0zm1.4-2c.5-.2 1-.6 1.2-1.2.1-.2.1-.3.1-.7 0-.6-.1-.8-.4-1.2-.7-1-2.2-1.1-3-.2-.6.6-.8 1.5-.4 2.3.2.5.7.9 1.3 1.1.3 0 .9 0 1.2-.1zM3 14.7V7.5l.1-.4a3.99 3.99 0 0 1 1.1-1.9c.6-.6 1.3-1 2.1-1.1.5-.1 7.9-.1 8.4 0 1.6.3 2.9 1.5 3.2 3.1 0 .2.1.7.1 1.1V9h-2v-.4c0-.8 0-1.1-.2-1.5-.3-.5-.8-1-1.4-1.1H6.6c-.8.2-1.5.9-1.6 1.7V20h11v-2h2v4H3z"/></svg>'; } ]]]        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          } 
+      styles: 
+        custom_fields:
+          notification:
+            - background-color: >
+                [[[
+                  if (states['[[timer]]'].state == 'active')
+                  return "#3498db";
+                ]]]            
+            - border-radius: 50%
+            - position: absolute
+            - left: 63%
+            - top: 2%
+            - color: 'white'
+            - font-weight: bold            
+            - height: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "30px";
+                ]]]              
+            - width: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "30px";
+                ]]]              
+            - font-size: >
+                [[[
+                  if (states['[[timer]]'].state == 'idle')
+                  return "0px";
+                  return "10.5px";
+                ]]]              
+            - line-height: 30px
+          icon_purifier:
+            [top: 5%, left: 10%, width: 50%, height: 50%, position: absolute]     
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - position: absolute               
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var        
+            state:
+              - color: lime    
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'        
+####################################################################################################################################################################################################################################################################################################################################################
+####    PC
+####################################################################################################################################################################################################################################################################################################################################################
+  button_pc:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      show_icon: false
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: '[[double_tap_action]]'        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+           
+        icon_switch: >
+          [[[ if (entity.state === 'on') {
+          return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#ei8xkwsh90dn2_ts {animation: ei8xkwsh90dn2_ts__ts 3000ms linear 1 normal forwards}@keyframes ei8xkwsh90dn2_ts__ts { 0% {transform: translate(11.515668px,12.495664px) scale(1,1)} 20% {transform: translate(11.515668px,12.495664px) scale(0.700000,0.700000)} 40% {transform: translate(11.515668px,12.495664px) scale(1,1)} 43.333333% {transform: translate(11.515668px,12.495664px) scale(0.900000,0.900000)} 46.666667% {transform: translate(11.515668px,12.495664px) scale(1,1)} 100% {transform: translate(11.515668px,12.495664px) scale(1,1)} }#ei8xkwsh90dn3 {animation: ei8xkwsh90dn3_c_o 3000ms linear 1 normal forwards}@keyframes ei8xkwsh90dn3_c_o { 0% {opacity: 0} 6.666667% {opacity: 1} 100% {opacity: 1} }#ei8xkwsh90dn4 {animation: ei8xkwsh90dn4_c_o 3000ms linear 1 normal forwards}@keyframes ei8xkwsh90dn4_c_o { 0% {opacity: 0} 3.333333% {opacity: 0} 10% {opacity: 1} 100% {opacity: 1} }#ei8xkwsh90dn5 {animation: ei8xkwsh90dn5_c_o 3000ms linear 1 normal forwards}@keyframes ei8xkwsh90dn5_c_o { 0% {opacity: 0} 6.666667% {opacity: 0} 13.333333% {opacity: 1} 100% {opacity: 1} }#ei8xkwsh90dn6 {animation: ei8xkwsh90dn6_c_o 3000ms linear 1 normal forwards}@keyframes ei8xkwsh90dn6_c_o { 0% {opacity: 0} 10% {opacity: 0} 16.666667% {opacity: 1} 100% {opacity: 1} }]]></style><g id="ei8xkwsh90dn2_ts" transform="translate(11.515668,12.495664) scale(1,1)"><g id="ei8xkwsh90dn2" transform="translate(-11.515668,-12.495664)"><path id="ei8xkwsh90dn3" d="M3.031363,9.372881L3.031390,6.763699L3.112107,6.744862C3.549301,6.642832,8.916546,5.470852,8.946610,5.470852C8.975645,5.470852,8.986547,6.346176,8.986547,8.677471L8.986547,11.884091L7.829596,11.908461C7.193273,11.921871,5.853351,11.943911,4.851991,11.957451L3.031336,11.982061Z" opacity="0" fill="rgb(8,113,196)" stroke="none" stroke-width="0.035874"/><path id="ei8xkwsh90dn4" d="M10.026906,8.560019L10.026906,5.227509L10.107626,5.207668C10.199916,5.184982,19.750882,3.073708,19.901348,3.042731L20,3.022422L20,7.385650L20,11.748879L19.408775,11.748879C18.717806,11.748879,12.213670,11.843689,10.914798,11.872700L10.026906,11.892530Z" opacity="0" fill="rgb(8,113,196)" stroke="none" stroke-width="0.035874"/><path id="ei8xkwsh90dn5" d="M6.690583,19.441579C5.536323,19.218000,4.240807,18.967569,3.811659,18.885064L3.031390,18.735057L3.031390,15.866623L3.031390,12.998190L3.452915,13.018750C3.684753,13.030060,4.689686,13.047790,5.686099,13.058160C6.682511,13.068530,7.832735,13.087120,8.242152,13.099470L8.986547,13.121920L8.986547,16.489213L8.986547,19.856505L8.887892,19.852305C8.833632,19.849980,7.844843,19.665157,6.690583,19.441579Z" opacity="0" fill="rgb(8,113,196)" stroke="none" stroke-width="0.035874"/><path id="ei8xkwsh90dn6" d="M14.959641,21.019759C12.256502,20.500085,10.040807,20.074189,10.035874,20.073323C10.030974,20.072457,10.026874,18.504626,10.026874,16.589253L10.026874,13.106757L11.112076,13.129307C12.612629,13.160487,18.943360,13.255492,19.524632,13.255555L20,13.255605L20,17.614350C20,21.743233,19.996700,21.972871,19.937220,21.968857C19.902690,21.966557,17.662780,21.539433,14.959641,21.019759Z" opacity="0" fill="rgb(8,113,196)" stroke="none" stroke-width="0.035874"/></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 24 24"><path fill="#bac0c6" d="M3,12V6.75L9,5.43V11.91L3,12M20,3V11.75L10,11.9V5.21L20,3M3,13L9,13.09V19.9L3,18.75V13M20,13.25V22L10,20.09V13.1L20,13.25Z" /></svg>'; } ]]]        
+      styles: 
+        custom_fields:       
+          icon_switch:
+            [top: 5%, left: 10%, width: 55%, height: 55%, position: absolute]          
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var       
+            state:
+              - color: lime      
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+        
+####################################################################################################################################################################################################################################################################################################################################################
+####    CHROMECAST AUDIO
+####################################################################################################################################################################################################################################################################################################################################################
+  button_chromecast:
+    card: 
+      type: 'custom:button-card'  
+      color: auto
+      size: 50%
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      show_icon: false
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: 
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          deviceID:
+            - this
+            - dashboard  
+          title: Chromecast Audio
+          hide_header: true
+          style:
+            $: |
+              .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                box-shadow:none;
+              }
+            .: |
+              :host {
+                --mdc-theme-surface: rgba(0,0,0,0);
+                --secondary-background-color: rgba(0,0,0,0);
+                --ha-card-background: rgba(0,0,0,0);
+                --ha-card-box-shadow: none;                    
+                --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+              }
+              mwc-icon-button {
+                color: #FFF;
+              }            
+          card: 
+            type: media-control            
+            entity: media_player.chromecast_audio
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      custom_fields:
+        icon_monitors: >
+          [[[ if (entity.state === 'playing') {
+          return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#ekas083utsm2_to {animation: ekas083utsm2_to__to 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_to__to { 0% {transform: translate(12.002080px,12.003087px)} 3.333333% {transform: translate(12.002080px,12.003087px)} 100% {transform: translate(12.002080px,12.003087px)} }#ekas083utsm2_tr {animation: ekas083utsm2_tr__tr 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_tr__tr { 0% {transform: rotate(0deg)} 3.333333% {transform: rotate(0deg)} 13.333333% {transform: rotate(0deg)} 40% {transform: rotate(360deg)} 100% {transform: rotate(360deg)} }#ekas083utsm2_ts {animation: ekas083utsm2_ts__ts 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_ts__ts { 0% {transform: scale(1,1)} 3.333333% {transform: scale(1.100000,1.100000)} 6.666667% {transform: scale(1,1)} 10% {transform: scale(0.900000,0.900000)} 13.333333% {transform: scale(1,1)} 43.333333% {transform: scale(0.900000,0.900000)} 46.666667% {transform: scale(1,1)} 100% {transform: scale(1,1)} }#ekas083utsm3 {animation: ekas083utsm3_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm3_c_o { 0% {opacity: 0} 30% {opacity: 0} 40% {opacity: 1} 100% {opacity: 1} }#ekas083utsm4 {animation: ekas083utsm4_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm4_c_o { 0% {opacity: 0} 23.333333% {opacity: 0} 33.333333% {opacity: 1} 100% {opacity: 1} }#ekas083utsm5 {animation: ekas083utsm5_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm5_c_o { 0% {opacity: 0} 16.666667% {opacity: 0} 26.666667% {opacity: 1} 100% {opacity: 1} }#ekas083utsm6_ts {animation: ekas083utsm6_ts__ts 3000ms linear 1 normal forwards}@keyframes ekas083utsm6_ts__ts { 0% {transform: translate(11.999646px,12.000690px) scale(1,1)} 40% {transform: translate(11.999646px,12.000690px) scale(1,1)} 46.666667% {transform: translate(11.999646px,12.000690px) scale(1,1)} 100% {transform: translate(11.999646px,12.000690px) scale(1,1)} }#ekas083utsm6 {animation: ekas083utsm6_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm6_c_o { 0% {opacity: 0} 10% {opacity: 0} 20% {opacity: 1} 100% {opacity: 1} }#ekas083utsm7 {animation: ekas083utsm7_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm7_c_o { 0% {opacity: 0} 13.333333% {opacity: 1} 100% {opacity: 1} }#ekas083utsm8 {animation: ekas083utsm8_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm8_c_o { 0% {opacity: 1} 13.333333% {opacity: 0} 100% {opacity: 0} }]]></style><g id="ekas083utsm2_to" transform="translate(12.002080,12.003087)"><g id="ekas083utsm2_tr" transform="rotate(0)"><g id="ekas083utsm2_ts" transform="scale(1,1)"><g id="ekas083utsm2" transform="translate(-12.002080,-12.003087)"><path id="ekas083utsm3" d="M6.893152,9.100248C6.263414,8.006358,5.748447,7.098084,5.748782,7.081860C5.749916,7.026952,6.388112,6.335220,6.674968,6.077979C9.847697,3.232804,14.610825,3.359084,17.632808,6.368492C18.002685,6.736830,18.396066,7.222499,18.672990,7.652703L18.872875,7.963224L15.094864,7.984773C11.362080,8.006064,11.312995,8.007411,10.994583,8.097295C9.803582,8.433498,8.868201,9.221373,8.351817,10.323307C8.263881,10.510958,8.169878,10.760037,8.142922,10.876815C8.115966,10.993592,8.081361,11.089138,8.066022,11.089138C8.050682,11.089138,7.522891,10.194137,6.893152,9.100248Z" opacity="0" fill="rgb(221,67,55)" stroke="rgb(221,67,55)" stroke-width="1"/><path id="ekas083utsm4" d="M10.234525,19.764487C9.607878,19.618016,9.101147,19.436064,8.501461,19.142195C6.135889,17.982977,4.522722,15.789555,4.107518,13.167756C4.004330,12.516176,4.014051,11.345112,4.127946,10.706823C4.233548,10.115013,4.379835,9.584985,4.575574,9.084977C4.767152,8.595598,5.047633,8.052760,5.086897,8.095371C5.103856,8.113776,5.876971,9.442340,6.804930,11.047735C8.579143,14.117173,8.702594,14.319894,9.029981,14.701535C9.462846,15.206133,10.277307,15.703486,10.991668,15.899444C11.458071,16.027384,12.506825,16.028442,12.930968,15.901444C13.090041,15.853794,13.222268,15.818184,13.224805,15.822314C13.227305,15.826414,12.704941,16.733427,12.063913,17.837847C10.725013,20.144626,10.931277,19.927391,10.234525,19.764535Z" opacity="0" fill="rgb(16,157,88)" stroke="rgb(16,157,88)" stroke-width="1"/><path id="ekas083utsm5" d="M12.051067,19.965071C13.098824,18.164481,15.418787,14.116804,15.548451,13.863127C16.346433,12.301953,16.102919,10.509909,14.925362,9.277764L14.678059,9.018996L17.039715,9.018996L19.401370,9.018996L19.569476,9.526181C20.065328,11.022197,20.107745,12.531205,19.697201,14.070128C19.058907,16.462773,17.309042,18.443240,15.001705,19.384407C14.218591,19.703841,13.360807,19.897675,12.397911,19.972790C12.188608,19.989120,12.039012,19.985790,12.051067,19.965090Z" opacity="0" fill="rgb(255,206,65)" stroke="rgb(255,206,65)" stroke-width="1"/><g id="ekas083utsm6_ts" transform="translate(11.999646,12.000690) scale(1,1)"><path id="ekas083utsm6" d="M11.402172,14.912674C9.798878,14.569035,8.759147,13.006103,9.084853,11.429258C9.333488,10.225541,10.225541,9.333488,11.429258,9.084853C12.608782,8.841216,13.845499,9.372434,14.507297,10.406991C15.143585,11.401669,15.128430,12.655868,14.468117,13.649116C13.802027,14.651059,12.563346,15.161552,11.402169,14.912674Z" transform="translate(-11.999646,-12.000690)" opacity="0" fill="rgb(67,133,246)" stroke="rgb(67,133,246)" stroke-width="1"/></g><path id="ekas083utsm7" d="M11.006332,21.931508C10.013686,21.831177,8.686375,21.463640,7.776911,21.037272C6.712276,20.538158,5.668559,19.791704,4.856070,18.948323C3.464143,17.503471,2.599712,15.854069,2.212682,13.904530C1.560455,10.619152,2.639556,7.179836,5.051678,4.856070C6.421567,3.536360,7.952466,2.703413,9.805650,2.269481C11.054287,1.977106,12.526092,1.948799,13.821724,2.192239C17.279551,2.841939,20.162843,5.279146,21.359206,8.563565C22.148910,10.731568,22.183693,12.958248,21.461717,15.125914C20.949932,16.662501,20.190260,17.890717,19.040489,19.040489C17.890717,20.190260,16.662501,20.949932,15.125914,21.461717C13.799776,21.903409,12.356600,22.067986,11.006332,21.931508ZM12.636403,19.990119C16.197731,19.695068,19.109256,17.136826,19.843950,13.657129C20.134601,12.280534,20.052297,10.822697,19.608436,9.485498L19.439845,8.977593L17.024112,8.977593C15.695458,8.977593,14.608378,8.985253,14.608378,8.994621C14.608378,9.003991,14.709561,9.115287,14.833230,9.241956C15.302594,9.722708,15.677410,10.377922,15.859508,11.035986C15.933318,11.302716,15.948568,11.468854,15.947998,12C15.947382,12.578282,15.936218,12.678185,15.835160,13.010245C15.773480,13.212921,15.661764,13.511021,15.586911,13.672690C15.512061,13.834359,14.674380,15.312707,13.725406,16.957907C12.776433,18.603107,12,19.967848,12,19.990664C12,20.041154,12.020620,20.041134,12.636403,19.990118ZM12.240271,17.630785C12.828748,16.617450,13.297074,15.782874,13.280996,15.776171C13.264916,15.769471,13.105193,15.803261,12.926052,15.851261C11.311668,16.283846,9.585077,15.568676,8.626007,14.070141C8.531276,13.922126,7.711775,12.515465,6.804893,10.944228C5.898011,9.372991,5.131867,8.061132,5.102350,8.028986C5.057439,7.980076,5.007964,8.053276,4.799110,8.477645C3.707515,10.695649,3.712576,13.326809,4.812694,15.539942C5.258217,16.436211,5.712412,17.056272,6.438178,17.759029C7.651723,18.934101,9.039224,19.618000,10.820019,19.918837C10.883149,19.929497,10.934612,19.878207,11.036568,19.703018C11.110128,19.576624,11.651793,18.644119,12.240271,17.630785ZM12.848758,14.896785C13.867437,14.581984,14.583479,13.861300,14.904160,12.828057C15.042387,12.382684,15.042387,11.617316,14.904160,11.171943C14.581043,10.130849,13.869151,9.418957,12.828057,9.095840C12.572884,9.016644,12.425287,8.999466,12,8.999466C11.574713,8.999466,11.427116,9.016644,11.171943,9.095840C10.130849,9.418957,9.418957,10.130849,9.095840,11.171943C8.957613,11.617316,8.957613,12.382684,9.095840,12.828057C9.451275,13.973281,10.339511,14.771454,11.493370,14.982492C11.818305,15.041922,12.523377,14.997332,12.848758,14.896782ZM8.185864,10.892474C8.603029,9.473284,9.767385,8.408029,11.234048,8.103728C11.581449,8.031650,11.855693,8.026380,15.285378,8.025872L18.964083,8.025328L18.866723,7.860668C18.476858,7.201312,17.679025,6.281624,17.056598,5.774076C14.641800,3.804972,11.252567,3.425824,8.460058,4.812396C7.564770,5.256935,6.924625,5.730053,6.203517,6.480158C5.953401,6.740332,5.732438,6.984828,5.712488,7.023483C5.684901,7.076936,5.959928,7.586721,6.861123,9.152569C7.512822,10.284911,8.056271,11.211817,8.068788,11.212360C8.081305,11.212902,8.133989,11.068954,8.185864,10.892474Z" opacity="0" fill="rgb(0,0,0)" stroke="none" stroke-width="0.041403"/><path id="ekas083utsm8" d="M11.006332,21.931508C10.013686,21.831177,8.686375,21.463640,7.776911,21.037272C6.712276,20.538158,5.668559,19.791704,4.856070,18.948323C3.464143,17.503471,2.599712,15.854069,2.212682,13.904530C1.560455,10.619152,2.639556,7.179836,5.051678,4.856070C6.421567,3.536360,7.952466,2.703413,9.805650,2.269481C11.054287,1.977106,12.526092,1.948799,13.821724,2.192239C17.279551,2.841939,20.162843,5.279146,21.359206,8.563565C22.148910,10.731568,22.183693,12.958248,21.461717,15.125914C20.949932,16.662501,20.190260,17.890717,19.040489,19.040489C17.890717,20.190260,16.662501,20.949932,15.125914,21.461717C13.799776,21.903409,12.356600,22.067986,11.006332,21.931508ZM12.636403,19.990119C16.197731,19.695068,19.109256,17.136826,19.843950,13.657129C20.134601,12.280534,20.052297,10.822697,19.608436,9.485498L19.439845,8.977593L17.024112,8.977593C15.695458,8.977593,14.608378,8.985253,14.608378,8.994621C14.608378,9.003991,14.709561,9.115287,14.833230,9.241956C15.302594,9.722708,15.677410,10.377922,15.859508,11.035986C15.933318,11.302716,15.948568,11.468854,15.947998,12C15.947382,12.578282,15.936218,12.678185,15.835160,13.010245C15.773480,13.212921,15.661764,13.511021,15.586911,13.672690C15.512061,13.834359,14.674380,15.312707,13.725406,16.957907C12.776433,18.603107,12,19.967848,12,19.990664C12,20.041154,12.020620,20.041134,12.636403,19.990118ZM12.240271,17.630785C12.828748,16.617450,13.297074,15.782874,13.280996,15.776171C13.264916,15.769471,13.105193,15.803261,12.926052,15.851261C11.311668,16.283846,9.585077,15.568676,8.626007,14.070141C8.531276,13.922126,7.711775,12.515465,6.804893,10.944228C5.898011,9.372991,5.131867,8.061132,5.102350,8.028986C5.057439,7.980076,5.007964,8.053276,4.799110,8.477645C3.707515,10.695649,3.712576,13.326809,4.812694,15.539942C5.258217,16.436211,5.712412,17.056272,6.438178,17.759029C7.651723,18.934101,9.039224,19.618000,10.820019,19.918837C10.883149,19.929497,10.934612,19.878207,11.036568,19.703018C11.110128,19.576624,11.651793,18.644119,12.240271,17.630785ZM12.848758,14.896785C13.867437,14.581984,14.583479,13.861300,14.904160,12.828057C15.042387,12.382684,15.042387,11.617316,14.904160,11.171943C14.581043,10.130849,13.869151,9.418957,12.828057,9.095840C12.572884,9.016644,12.425287,8.999466,12,8.999466C11.574713,8.999466,11.427116,9.016644,11.171943,9.095840C10.130849,9.418957,9.418957,10.130849,9.095840,11.171943C8.957613,11.617316,8.957613,12.382684,9.095840,12.828057C9.451275,13.973281,10.339511,14.771454,11.493370,14.982492C11.818305,15.041922,12.523377,14.997332,12.848758,14.896782ZM8.185864,10.892474C8.603029,9.473284,9.767385,8.408029,11.234048,8.103728C11.581449,8.031650,11.855693,8.026380,15.285378,8.025872L18.964083,8.025328L18.866723,7.860668C18.476858,7.201312,17.679025,6.281624,17.056598,5.774076C14.641800,3.804972,11.252567,3.425824,8.460058,4.812396C7.564770,5.256935,6.924625,5.730053,6.203517,6.480158C5.953401,6.740332,5.732438,6.984828,5.712488,7.023483C5.684901,7.076936,5.959928,7.586721,6.861123,9.152569C7.512822,10.284911,8.056271,11.211817,8.068788,11.212360C8.081305,11.212902,8.133989,11.068954,8.185864,10.892474Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041403"/></g></g></g></g></svg>'; }
+          if (entity.state === 'on') {
+          return '<svg viewBox="0 0 24 24" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><style><![CDATA[#ekas083utsm2_to {animation: ekas083utsm2_to__to 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_to__to { 0% {transform: translate(12.002080px,12.003087px)} 3.333333% {transform: translate(12.002080px,12.003087px)} 100% {transform: translate(12.002080px,12.003087px)} }#ekas083utsm2_tr {animation: ekas083utsm2_tr__tr 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_tr__tr { 0% {transform: rotate(0deg)} 3.333333% {transform: rotate(0deg)} 13.333333% {transform: rotate(0deg)} 40% {transform: rotate(360deg)} 100% {transform: rotate(360deg)} }#ekas083utsm2_ts {animation: ekas083utsm2_ts__ts 3000ms linear 1 normal forwards}@keyframes ekas083utsm2_ts__ts { 0% {transform: scale(1,1)} 3.333333% {transform: scale(1.100000,1.100000)} 6.666667% {transform: scale(1,1)} 10% {transform: scale(0.900000,0.900000)} 13.333333% {transform: scale(1,1)} 43.333333% {transform: scale(0.900000,0.900000)} 46.666667% {transform: scale(1,1)} 100% {transform: scale(1,1)} }#ekas083utsm3 {animation: ekas083utsm3_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm3_c_o { 0% {opacity: 0} 30% {opacity: 0} 40% {opacity: 1} 100% {opacity: 1} }#ekas083utsm4 {animation: ekas083utsm4_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm4_c_o { 0% {opacity: 0} 23.333333% {opacity: 0} 33.333333% {opacity: 1} 100% {opacity: 1} }#ekas083utsm5 {animation: ekas083utsm5_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm5_c_o { 0% {opacity: 0} 16.666667% {opacity: 0} 26.666667% {opacity: 1} 100% {opacity: 1} }#ekas083utsm6_ts {animation: ekas083utsm6_ts__ts 3000ms linear 1 normal forwards}@keyframes ekas083utsm6_ts__ts { 0% {transform: translate(11.999646px,12.000690px) scale(1,1)} 40% {transform: translate(11.999646px,12.000690px) scale(1,1)} 46.666667% {transform: translate(11.999646px,12.000690px) scale(1,1)} 100% {transform: translate(11.999646px,12.000690px) scale(1,1)} }#ekas083utsm6 {animation: ekas083utsm6_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm6_c_o { 0% {opacity: 0} 10% {opacity: 0} 20% {opacity: 1} 100% {opacity: 1} }#ekas083utsm7 {animation: ekas083utsm7_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm7_c_o { 0% {opacity: 0} 13.333333% {opacity: 1} 100% {opacity: 1} }#ekas083utsm8 {animation: ekas083utsm8_c_o 3000ms linear 1 normal forwards}@keyframes ekas083utsm8_c_o { 0% {opacity: 1} 13.333333% {opacity: 0} 100% {opacity: 0} }]]></style><g id="ekas083utsm2_to" transform="translate(12.002080,12.003087)"><g id="ekas083utsm2_tr" transform="rotate(0)"><g id="ekas083utsm2_ts" transform="scale(1,1)"><g id="ekas083utsm2" transform="translate(-12.002080,-12.003087)"><path id="ekas083utsm3" d="M6.893152,9.100248C6.263414,8.006358,5.748447,7.098084,5.748782,7.081860C5.749916,7.026952,6.388112,6.335220,6.674968,6.077979C9.847697,3.232804,14.610825,3.359084,17.632808,6.368492C18.002685,6.736830,18.396066,7.222499,18.672990,7.652703L18.872875,7.963224L15.094864,7.984773C11.362080,8.006064,11.312995,8.007411,10.994583,8.097295C9.803582,8.433498,8.868201,9.221373,8.351817,10.323307C8.263881,10.510958,8.169878,10.760037,8.142922,10.876815C8.115966,10.993592,8.081361,11.089138,8.066022,11.089138C8.050682,11.089138,7.522891,10.194137,6.893152,9.100248Z" opacity="0" fill="rgb(221,67,55)" stroke="rgb(221,67,55)" stroke-width="1"/><path id="ekas083utsm4" d="M10.234525,19.764487C9.607878,19.618016,9.101147,19.436064,8.501461,19.142195C6.135889,17.982977,4.522722,15.789555,4.107518,13.167756C4.004330,12.516176,4.014051,11.345112,4.127946,10.706823C4.233548,10.115013,4.379835,9.584985,4.575574,9.084977C4.767152,8.595598,5.047633,8.052760,5.086897,8.095371C5.103856,8.113776,5.876971,9.442340,6.804930,11.047735C8.579143,14.117173,8.702594,14.319894,9.029981,14.701535C9.462846,15.206133,10.277307,15.703486,10.991668,15.899444C11.458071,16.027384,12.506825,16.028442,12.930968,15.901444C13.090041,15.853794,13.222268,15.818184,13.224805,15.822314C13.227305,15.826414,12.704941,16.733427,12.063913,17.837847C10.725013,20.144626,10.931277,19.927391,10.234525,19.764535Z" opacity="0" fill="rgb(16,157,88)" stroke="rgb(16,157,88)" stroke-width="1"/><path id="ekas083utsm5" d="M12.051067,19.965071C13.098824,18.164481,15.418787,14.116804,15.548451,13.863127C16.346433,12.301953,16.102919,10.509909,14.925362,9.277764L14.678059,9.018996L17.039715,9.018996L19.401370,9.018996L19.569476,9.526181C20.065328,11.022197,20.107745,12.531205,19.697201,14.070128C19.058907,16.462773,17.309042,18.443240,15.001705,19.384407C14.218591,19.703841,13.360807,19.897675,12.397911,19.972790C12.188608,19.989120,12.039012,19.985790,12.051067,19.965090Z" opacity="0" fill="rgb(255,206,65)" stroke="rgb(255,206,65)" stroke-width="1"/><g id="ekas083utsm6_ts" transform="translate(11.999646,12.000690) scale(1,1)"><path id="ekas083utsm6" d="M11.402172,14.912674C9.798878,14.569035,8.759147,13.006103,9.084853,11.429258C9.333488,10.225541,10.225541,9.333488,11.429258,9.084853C12.608782,8.841216,13.845499,9.372434,14.507297,10.406991C15.143585,11.401669,15.128430,12.655868,14.468117,13.649116C13.802027,14.651059,12.563346,15.161552,11.402169,14.912674Z" transform="translate(-11.999646,-12.000690)" opacity="0" fill="rgb(67,133,246)" stroke="rgb(67,133,246)" stroke-width="1"/></g><path id="ekas083utsm7" d="M11.006332,21.931508C10.013686,21.831177,8.686375,21.463640,7.776911,21.037272C6.712276,20.538158,5.668559,19.791704,4.856070,18.948323C3.464143,17.503471,2.599712,15.854069,2.212682,13.904530C1.560455,10.619152,2.639556,7.179836,5.051678,4.856070C6.421567,3.536360,7.952466,2.703413,9.805650,2.269481C11.054287,1.977106,12.526092,1.948799,13.821724,2.192239C17.279551,2.841939,20.162843,5.279146,21.359206,8.563565C22.148910,10.731568,22.183693,12.958248,21.461717,15.125914C20.949932,16.662501,20.190260,17.890717,19.040489,19.040489C17.890717,20.190260,16.662501,20.949932,15.125914,21.461717C13.799776,21.903409,12.356600,22.067986,11.006332,21.931508ZM12.636403,19.990119C16.197731,19.695068,19.109256,17.136826,19.843950,13.657129C20.134601,12.280534,20.052297,10.822697,19.608436,9.485498L19.439845,8.977593L17.024112,8.977593C15.695458,8.977593,14.608378,8.985253,14.608378,8.994621C14.608378,9.003991,14.709561,9.115287,14.833230,9.241956C15.302594,9.722708,15.677410,10.377922,15.859508,11.035986C15.933318,11.302716,15.948568,11.468854,15.947998,12C15.947382,12.578282,15.936218,12.678185,15.835160,13.010245C15.773480,13.212921,15.661764,13.511021,15.586911,13.672690C15.512061,13.834359,14.674380,15.312707,13.725406,16.957907C12.776433,18.603107,12,19.967848,12,19.990664C12,20.041154,12.020620,20.041134,12.636403,19.990118ZM12.240271,17.630785C12.828748,16.617450,13.297074,15.782874,13.280996,15.776171C13.264916,15.769471,13.105193,15.803261,12.926052,15.851261C11.311668,16.283846,9.585077,15.568676,8.626007,14.070141C8.531276,13.922126,7.711775,12.515465,6.804893,10.944228C5.898011,9.372991,5.131867,8.061132,5.102350,8.028986C5.057439,7.980076,5.007964,8.053276,4.799110,8.477645C3.707515,10.695649,3.712576,13.326809,4.812694,15.539942C5.258217,16.436211,5.712412,17.056272,6.438178,17.759029C7.651723,18.934101,9.039224,19.618000,10.820019,19.918837C10.883149,19.929497,10.934612,19.878207,11.036568,19.703018C11.110128,19.576624,11.651793,18.644119,12.240271,17.630785ZM12.848758,14.896785C13.867437,14.581984,14.583479,13.861300,14.904160,12.828057C15.042387,12.382684,15.042387,11.617316,14.904160,11.171943C14.581043,10.130849,13.869151,9.418957,12.828057,9.095840C12.572884,9.016644,12.425287,8.999466,12,8.999466C11.574713,8.999466,11.427116,9.016644,11.171943,9.095840C10.130849,9.418957,9.418957,10.130849,9.095840,11.171943C8.957613,11.617316,8.957613,12.382684,9.095840,12.828057C9.451275,13.973281,10.339511,14.771454,11.493370,14.982492C11.818305,15.041922,12.523377,14.997332,12.848758,14.896782ZM8.185864,10.892474C8.603029,9.473284,9.767385,8.408029,11.234048,8.103728C11.581449,8.031650,11.855693,8.026380,15.285378,8.025872L18.964083,8.025328L18.866723,7.860668C18.476858,7.201312,17.679025,6.281624,17.056598,5.774076C14.641800,3.804972,11.252567,3.425824,8.460058,4.812396C7.564770,5.256935,6.924625,5.730053,6.203517,6.480158C5.953401,6.740332,5.732438,6.984828,5.712488,7.023483C5.684901,7.076936,5.959928,7.586721,6.861123,9.152569C7.512822,10.284911,8.056271,11.211817,8.068788,11.212360C8.081305,11.212902,8.133989,11.068954,8.185864,10.892474Z" opacity="0" fill="rgb(0,0,0)" stroke="none" stroke-width="0.041403"/><path id="ekas083utsm8" d="M11.006332,21.931508C10.013686,21.831177,8.686375,21.463640,7.776911,21.037272C6.712276,20.538158,5.668559,19.791704,4.856070,18.948323C3.464143,17.503471,2.599712,15.854069,2.212682,13.904530C1.560455,10.619152,2.639556,7.179836,5.051678,4.856070C6.421567,3.536360,7.952466,2.703413,9.805650,2.269481C11.054287,1.977106,12.526092,1.948799,13.821724,2.192239C17.279551,2.841939,20.162843,5.279146,21.359206,8.563565C22.148910,10.731568,22.183693,12.958248,21.461717,15.125914C20.949932,16.662501,20.190260,17.890717,19.040489,19.040489C17.890717,20.190260,16.662501,20.949932,15.125914,21.461717C13.799776,21.903409,12.356600,22.067986,11.006332,21.931508ZM12.636403,19.990119C16.197731,19.695068,19.109256,17.136826,19.843950,13.657129C20.134601,12.280534,20.052297,10.822697,19.608436,9.485498L19.439845,8.977593L17.024112,8.977593C15.695458,8.977593,14.608378,8.985253,14.608378,8.994621C14.608378,9.003991,14.709561,9.115287,14.833230,9.241956C15.302594,9.722708,15.677410,10.377922,15.859508,11.035986C15.933318,11.302716,15.948568,11.468854,15.947998,12C15.947382,12.578282,15.936218,12.678185,15.835160,13.010245C15.773480,13.212921,15.661764,13.511021,15.586911,13.672690C15.512061,13.834359,14.674380,15.312707,13.725406,16.957907C12.776433,18.603107,12,19.967848,12,19.990664C12,20.041154,12.020620,20.041134,12.636403,19.990118ZM12.240271,17.630785C12.828748,16.617450,13.297074,15.782874,13.280996,15.776171C13.264916,15.769471,13.105193,15.803261,12.926052,15.851261C11.311668,16.283846,9.585077,15.568676,8.626007,14.070141C8.531276,13.922126,7.711775,12.515465,6.804893,10.944228C5.898011,9.372991,5.131867,8.061132,5.102350,8.028986C5.057439,7.980076,5.007964,8.053276,4.799110,8.477645C3.707515,10.695649,3.712576,13.326809,4.812694,15.539942C5.258217,16.436211,5.712412,17.056272,6.438178,17.759029C7.651723,18.934101,9.039224,19.618000,10.820019,19.918837C10.883149,19.929497,10.934612,19.878207,11.036568,19.703018C11.110128,19.576624,11.651793,18.644119,12.240271,17.630785ZM12.848758,14.896785C13.867437,14.581984,14.583479,13.861300,14.904160,12.828057C15.042387,12.382684,15.042387,11.617316,14.904160,11.171943C14.581043,10.130849,13.869151,9.418957,12.828057,9.095840C12.572884,9.016644,12.425287,8.999466,12,8.999466C11.574713,8.999466,11.427116,9.016644,11.171943,9.095840C10.130849,9.418957,9.418957,10.130849,9.095840,11.171943C8.957613,11.617316,8.957613,12.382684,9.095840,12.828057C9.451275,13.973281,10.339511,14.771454,11.493370,14.982492C11.818305,15.041922,12.523377,14.997332,12.848758,14.896782ZM8.185864,10.892474C8.603029,9.473284,9.767385,8.408029,11.234048,8.103728C11.581449,8.031650,11.855693,8.026380,15.285378,8.025872L18.964083,8.025328L18.866723,7.860668C18.476858,7.201312,17.679025,6.281624,17.056598,5.774076C14.641800,3.804972,11.252567,3.425824,8.460058,4.812396C7.564770,5.256935,6.924625,5.730053,6.203517,6.480158C5.953401,6.740332,5.732438,6.984828,5.712488,7.023483C5.684901,7.076936,5.959928,7.586721,6.861123,9.152569C7.512822,10.284911,8.056271,11.211817,8.068788,11.212360C8.081305,11.212902,8.133989,11.068954,8.185864,10.892474Z" fill="rgb(186,192,198)" stroke="none" stroke-width="0.041403"/></g></g></g></g></svg>'; }
+          else { return '<svg viewBox="0 0 24 24"><path fill="#bac0c6" d="M12,20L15.46,14H15.45C15.79,13.4 16,12.73 16,12C16,10.8 15.46,9.73 14.62,9H19.41C19.79,9.93 20,10.94 20,12A8,8 0 0,1 12,20M4,12C4,10.54 4.39,9.18 5.07,8L8.54,14H8.55C9.24,15.19 10.5,16 12,16C12.45,16 12.88,15.91 13.29,15.77L10.89,19.91C7,19.37 4,16.04 4,12M15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9A3,3 0 0,1 15,12M12,4C14.96,4 17.54,5.61 18.92,8H12C10.06,8 8.45,9.38 8.08,11.21L5.7,7.08C7.16,5.21 9.44,4 12,4M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>'; } ]]]
+      styles:
+        custom_fields:
+          icon_monitors:
+            [top: 9%, left: 7%, width: 48%, height: 48%, position: absolute]     
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var        
+            state:
+              - color: lime
+        - value: 'playing'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var       
+            state:
+              - color: lime
+        - value: 'paused'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var          
+            state:
+              - color: 'orange'                
+        - value: 'idle'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var      
+            state:
+              - color: lime  
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+            state:
+              - color: 'red'
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    button
+####################################################################################################################################################################################################################################################################################################################################################
+  button:
+    card: 
+      type: 'custom:button-card' 
+      template: button_body
+      color: auto
+      size: 50%
+      icon: '[[icon]]'
+      entity: '[[entity]]'
+      show_last_changed: true
+      aspect_ratio: 1/1
+      show_state: true
+      name: '[[name]]'
+      show_label: true
+      tap_action:
+        action: toggle
+        haptic: light
+      hold_action:
+        action: more-info
+        haptic: success
+      double_tap_action: '[[double_tap_action]]'        
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'playing') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03); 
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'paused') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                            
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }
+      styles:
+        card:
+          - color: 'var(--text-color)'
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+        name:
+          - justify-self: start
+          - padding: 0px 10px          
+          - font-weight: bold
+          - font-size: 13px
+        label:
+          - color: 'var(--text-medium-color)'
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 0px 10px
+          - justify-self: start
+        state:
+          - font-size: 10px
+          - font-family: Helvetica
+          - padding: 1px 10px
+          - justify-self: start
+          - text-transform: capitalize
+          - font-weight: bold
+        grid:
+          - grid-template-areas: '"i" "n" "s" "l"'
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content
+        img_cell:
+          - justify-content: start
+          - align-items: start
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var 
+            icon:
+              - color: 'lime'          
+            state:
+              - color: lime
+          id: on-icon
+        - value: 'playing'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var 
+            icon:
+              - color: 'lime'          
+            state:
+              - color: lime
+          id: on-icon  
+        - value: 'paused'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var 
+            icon:
+              - color: 'orange'          
+            state:
+              - color: 'orange'
+          id: on-icon                    
+        - value: 'idle'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var 
+            icon:
+              - color: 'lime'          
+            state:
+              - color: lime
+          id: on-icon            
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+              # - opacity: 0.3
+            state:
+              - color: 'red'
+            icon:
+              - color: '#bac0c6'               
+          id: off-icon    
+        
+####################################################################################################################################################################################################################################################################################################################################################
+####    02
+####################################################################################################################################################################################################################################################################################################################################################
+  button_2:
+    card:
+      type: custom:button-card
+      template: button_body
+      entity: "[[entity]]"
+      icon: "[[icon]]"
+      name: "[[name]]"
+      "[[show_last_changed1]]": "[[show_last_changed2]]"
+      "[[show_entity_picture1]]": "[[show_entity_picture2]]"
+
+      card_mod:
+        style: |
+          ha-card {
+            --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+            box-shadow: 2px 2px rgba(0,0,0,0.0);
+            border-radius: 15px;
+          }  
+      styles:
+        card:
+          - text-shadow: 0px 0px 0px white
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+          - padding: 10%
+          - font-size: 15px
+          - text-transform: capitalize  
+        grid:
+          - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+          - grid-template-columns: 1fr 1fr
+          - grid-template-rows: 1fr min-content min-content min-content min-content          
+        name:
+          - color: 'var(--text-color)'          
+          - font-weight: bold
+          - font-size: 13px
+          - align-self: middle
+          - justify-self: start
+          - padding-bottom: 4px                      
+        icon:
+          - color: >
+              [[colorstyle]]
+          - width: 70%
+          
+        custom_fields:       
+          cpu:
+            - --text-color-sensor: "[[cpustyle]]"
+          ram:
+            - --text-color-sensor: "[[ramstyle]]"
+          sd:
+            - --text-color-sensor: "[[sdstyle]]"
+      custom_fields:
+        temp: >
+          [[tempfield]]
+        cpu: >
+          [[cpufield]]
+        ram: >
+          [[ramfield]]
+        sd: >
+          [[sdfield]]
+      state:
+        - value: "on"
+          "[[spin1]]": "[[spin2]]"
+          "[[icon1]]": "[[icon2]]"
+          styles:
+            icon:
+              - "[[animation1]]": "[[animation2]]"
+        - value: "off"
+          styles:
+            card:
+              - "[[opacity1]]": "[[opacity2]]"  
+####################################################################################################################################################################################################################################################################################################################################################
+####    RASPBERRY PI 4
+####################################################################################################################################################################################################################################################################################################################################################
+  button_raspberry:
+    card:
+      type: custom:button-card
+      template: button_info
+      entity: "[[entity]]"
+      icon: "[[icon]]"
+      name: "[[name]]"
+      "[[show_last_changed1]]": "[[show_last_changed2]]"
+      "[[show_entity_picture1]]": "[[show_entity_picture2]]"
+      tap_action: !include popup_card/raspberry.yaml                     
+      card_mod:
+        style: |
+          ha-card {
+            --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+            box-shadow: 2px 2px rgba(0,0,0,0.0);
+            border-radius: 15px;
+          }  
+      styles:
+        card:
+          - color: 'var(--text-medium-color)'            
+          - text-shadow: 0px 0px 0px white          
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+          - padding: 10%
+          - font-size: 15px
+          - text-transform: capitalize  
+        grid:
+          - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+          - grid-template-columns: 1fr 1fr
+          - grid-template-rows: 1fr min-content min-content min-content min-content          
+        name:
+          - font-weight: bold
+          - font-size: 13px
+          - align-self: middle
+          - justify-self: start
+          - padding-bottom: 4px 
+          - color: 'var(--text-color)'                               
+        icon:
+          - color: >
+              [[[
+                if (entity.state < 200) return 'lime';
+                if (entity.state >= 200 && entity.state < 400) return 'orange';
+                else return 'red';
+              ]]]
+          - width: 70%          
+        custom_fields:       
+          cpu:
+            - --text-color-sensor: "[[cpustyle]]"
+          ram:
+            - --text-color-sensor: "[[ramstyle]]"
+          sd:
+            - --text-color-sensor: "[[sdstyle]]"
+      custom_fields:
+        temp: >
+          [[tempfield]]
+        cpu: >
+          [[cpufield]]
+        ram: >
+          [[ramfield]]
+        sd: >
+          [[sdfield]]
+      state:
+        - value: "on"
+          "[[spin1]]": "[[spin2]]"
+          "[[icon1]]": "[[icon2]]"
+          styles:
+            icon:
+              - "[[animation1]]": "[[animation2]]"
+        - value: "off"
+          styles:
+            card:
+              - "[[opacity1]]": "[[opacity2]]"  
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    SYNOLOGY
+####################################################################################################################################################################################################################################################################################################################################################
+  button_synology:
+    card:
+      type: custom:button-card
+      template: button_info
+      entity: "[[entity]]"
+      icon: "[[icon]]"
+      name: "[[name]]"
+      "[[show_last_changed1]]": "[[show_last_changed2]]"
+      "[[show_entity_picture1]]": "[[show_entity_picture2]]"
+      tap_action: !include popup_card/synology.yaml                          
+      card_mod:
+        style: |
+          ha-card {
+            --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+            box-shadow: 2px 2px rgba(0,0,0,0.0);
+            border-radius: 15px;
+          }  
+      styles:
+        card:
+          - color: 'var(--text-medium-color)'            
+          - text-shadow: 0px 0px 0px white          
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+          - padding: 10%
+          - font-size: 15px
+          - text-transform: capitalize  
+        grid:
+          - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+          - grid-template-columns: 1fr 1fr
+          - grid-template-rows: 1fr min-content min-content min-content min-content          
+        name:
+          - font-weight: bold
+          - font-size: 13px
+          - align-self: middle
+          - justify-self: start
+          - padding-bottom: 4px 
+          - color: 'var(--text-color)'                               
+        icon:
+          - color: >
+              [[[
+                if (entity.state < 200) return 'lime';
+                if (entity.state >= 200 && entity.state < 400) return 'orange';
+                else return 'red';
+              ]]]
+          - width: 70%
+        custom_fields:       
+          cpu:
+            - --text-color-sensor: "[[cpustyle]]"
+          ram:
+            - --text-color-sensor: "[[ramstyle]]"
+          sd:
+            - --text-color-sensor: "[[sdstyle]]"
+      custom_fields:
+        temp: >
+          [[tempfield]]
+        cpu: >
+          [[cpufield]]
+        ram: >
+          [[ramfield]]
+        sd: >
+          [[sdfield]]
+      state:
+        - value: "on"
+          "[[spin1]]": "[[spin2]]"
+          "[[icon1]]": "[[icon2]]"
+          styles:
+            icon:
+              - "[[animation1]]": "[[animation2]]"
+        - value: "off"
+          styles:
+            card:
+              - "[[opacity1]]": "[[opacity2]]"
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    HASSOS
+####################################################################################################################################################################################################################################################################################################################################################
+  button_hassos:
+    card:
+      type: custom:button-card
+      entity: "binary_sensor.updater"
+      icon: "mdi:home-assistant"
+      aspect_ratio: 1/1
+      name: HassOS
+      tap_action:
+        action: navigate
+        navigation_path: >-
+          /hassio/system
+      double_tap_action:
+        action: call-service
+        service: homeassistant.restart
+      hold_action:
+        action: more-info
+        haptic: success
+      card_mod:
+        style: |
+          ha-card {
+            --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';
+            box-shadow: 2px 2px rgba(0,0,0,0.0);
+            border-radius: 15px;
+          }
+      styles:
+        card:
+          - background-color: var(--primary-background-color)
+          - padding-left: 10px
+          - border-radius: 20px
+          - font-size: 13px
+          - text-shadow: 0px 0px 0px white
+          - text-transform: capitalize
+          - padding: 5%
+          - color: "var(--text-medium-color)"
+        grid:
+          - grid-template-areas: '"i i" "n n" "current current" "local local" "uptime uptime" '
+          - grid-template-columns: 1fr
+          - grid-template-rows: 1fr min-content min-content min-content
+        name:
+          - font-weight: bold
+          - font-size: 15px
+          - color: "var(--text-color)"
+          - align-self: middle
+          - justify-self: start
+          - padding-bottom: 4px
+        img_cell:
+          - justify-content: start
+          - align-items: start
+        icon:
+          - color: >
+              [[[
+                if (entity.state == 'on') return 'orange';
+                return 'lime';
+              ]]]
+          - width: 40%
+          #                - margin-top: +30%
+          - animation: >
+              [[[ if (entity.state == 'on') return 'blink 2s ease infinite'; ]]]
+        custom_fields:
+          current:
+            - align-self: start
+            - justify-self: start
+            - --text-color-sensor: >
+                [[[ if (entity.state == 'on') return 'orange'; return 'lime'; ]]]
+            - --animation: >
+                [[[ if (entity.state == 'on') return 'blink 2s ease infinite'; ]]]
+          local:
+            - align-self: start
+            - justify-self: start
+          uptime:
+            - padding-top: 5px
+            - align-self: start
+            - justify-self: start
+            - font-size: 13px
+      custom_fields:
+        current: >
+          [[[
+            return `<ha-icon
+              icon='mdi:home-assistant'
+              style='width: 15px; height: 15px; color: deepskyblue;'>
+              </ha-icon><span>Actuelle: <span style='color: var(--text-color-sensor);animation: var(--animation)'>${states['sensor.derniere_version'].state}</span></span>`
+          ]]]
+        local: >
+          [[[
+            return `<ha-icon
+              icon='mdi:home-assistant'
+              style='width: 15px; height: 15px; color: deepskyblue;'>
+              </ha-icon><span>Locale: <span style='color: lime;'>${states['sensor.version'].state}</span></span>`
+          ]]]
+        uptime: >
+          [[[
+            return `<ha-icon
+              style='width: 0px; height: 0px; color: yellow;'>
+              </ha-icon><span style='align: left; <span style='color: lime;'>${states['sensor.ha_uptime'].state}</span></span>`              
+          ]]]
+
+####################################################################################################################################################################################################################################################################################################################################################
+####    TP-LINK
+####################################################################################################################################################################################################################################################################################################################################################
+  button_tplink:
+    card:
+      type: custom:button-card
+      template: button_info
+      entity: "[[entity]]"
+      icon: "[[icon]]"
+      name: "[[name]]"
+      "[[show_last_changed1]]": "[[show_last_changed2]]"
+      "[[show_entity_picture1]]": "[[show_entity_picture2]]"
+      double_tap_action: !include popup_card/tplink.yaml                       
+      card_mod:
+        style: |
+          ha-card {
+            box-shadow: 
+              {% if is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'on') %}
+                inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);                          
+              {% elif is_state('sun.sun', 'above_horizon') and is_state('[[entity]]', 'off') %}                      
+                -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'on') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'playing') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'paused') %}                      
+                inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3);                              
+              {% elif is_state('sun.sun', 'below_horizon') and is_state('[[entity]]', 'off') %}   
+                -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+              {% endif %}     
+          }     
+      styles:
+        card:
+          - color: 'var(--text-medium-color)'            
+          - text-shadow: 0px 0px 0px white          
+          - background-color: var(--primary-background-color)      
+          - padding-left: 10px
+          - border-radius: 20px
+          - padding: 10%
+          - font-size: 13px
+          - text-transform: capitalize  
+        grid:
+          - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+          - grid-template-columns: 1fr 1fr
+          - grid-template-rows: 1fr min-content min-content min-content min-content          
+        name:
+          - font-weight: bold
+          - font-size: 13px
+          - align-self: middle
+          - justify-self: start
+          - padding-bottom: 4px 
+          - color: 'var(--text-color)'                               
+        icon:
+          - color: >
+              [[[
+                if (entity.state < 200) return 'lime';
+                if (entity.state >= 200 && entity.state < 400) return 'orange';
+                else return 'red';
+              ]]]
+          - width: 50%        
+        custom_fields:       
+          cpu:
+            - --text-color-sensor: "[[cpustyle]]"
+          ram:
+            - --text-color-sensor: "[[ramstyle]]"
+          sd:
+            - --text-color-sensor: "[[sdstyle]]"
+      custom_fields:
+        temp: >
+          [[tempfield]]
+        cpu: >
+          [[cpufield]]
+        ram: >
+          [[ramfield]]
+        sd: >
+          [[sdfield]]
+      state:
+        - value: 'on'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var 
+            icon:
+              - color: '[[coloron]]'          
+            state:
+              - color: lime
+          id: on-icon                            
+        - value: 'off'
+          styles:
+            card:
+              - box-shadow: 0px 0px 3px 2px var
+              # - opacity: 0.3
+            state:
+              - color: '[[coloroff]]'
+          id: off-icon
+

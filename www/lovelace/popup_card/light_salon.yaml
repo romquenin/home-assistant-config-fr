@@ -1,0 +1,162 @@
+              action: fire-dom-event
+              browser_mod:
+                command: popup
+                deviceID:
+                  - this
+                  - dashboard  
+                title: Salon 
+                style:
+                  $: |
+                    .mdc-dialog .mdc-dialog__container {
+                      width: 100%;                                         
+                    }
+                    .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                      width:100%;
+                      box-shadow:none;               
+                    }
+                  .: |
+                    :host {
+                      --mdc-theme-surface: rgba(0,0,0,0);
+                      --secondary-background-color: rgba(0,0,0,0);
+                      --ha-card-background: none;
+                      --ha-card-box-shadow: none;
+                      --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                      --mdc-dialog-min-height: 100%;
+                      --mdc-dialog-min-width: 100%;
+                      --mdc-dialog-max-width: 100%;
+                    }
+                    mwc-icon-button {
+                      color: #FFF;
+                    }                                     
+                card:
+                  type: custom:light-popup-card               
+                  entity: light.salon
+                  icon: mdi:lightbulb-group 
+                  actionsInARow: 2
+                  brightnessWidth: 150px
+                  brightnessHeight: 400px
+                  switchWidth: 150px
+                  switchHeight: 400px                
+                  actions:
+                    - service: scene.turn_on
+                      service_data:
+                        entity_id: scene.salon_relax
+                      color: "#FDCA64"
+                      name: relax
+                    - service: scene.turn_on
+                      service_data:
+                        entity_id: scene.salon_reading
+                      color: "#FFE7C0"
+                      name: reading
+                    - service: scene.turn_on
+                      service_data:
+                        entity_id: scene.salon_concentrate
+                      color: "#BBEEF3"
+                      name: concentrate
+                    - service: scene.turn_on
+                      service_data:
+                        entity_id: scene.salon_energize
+                      color: "#8BCBDD"
+                      name: energize                               
+                  settings:
+                    openButton: Réglages
+                    closeButton: Fermer
+                  settingsCard:
+                    type: entities
+                    cardOptions:
+                      entities:
+                        - type: divider
+                        - type: divider                    
+                        - type: divider
+                        - type: divider                         
+                        - type: custom:slider-entity-row
+                          entity: light.lamp_1
+                          toggle: true 
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.lamp_1                          
+                        - type: divider   
+                        - type: divider                                                                    
+                        - type: custom:slider-entity-row
+                          entity: light.lamp_2
+                          toggle: true 
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.lamp_2
+                        - type: divider    
+                        - type: divider                            
+                        - type: custom:slider-entity-row
+                          entity: light.spot_1
+                          toggle: true 
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.spot_1                          
+                        - type: divider 
+                        - type: divider                                                            
+                        - type: custom:slider-entity-row
+                          entity: light.spot_2
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.spot_2                          
+                        - type: divider 
+                        - type: divider                                                                                
+                        - type: custom:slider-entity-row
+                          entity: light.play_1
+                          toggle: true 
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.play_1                          
+                        - type: divider
+                        - type: divider                                                             
+                        - type: custom:slider-entity-row
+                          entity: light.play_2
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.play_2                          
+                        - type: divider
+                        - type: divider                                                               
+                        - type: custom:slider-entity-row
+                          entity: light.strip_2
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.strip_2                          
+                        - type: divider
+                        - type: divider                                                           
+                        - type: custom:slider-entity-row
+                          entity: light.strip_3
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.stip_3                          
+                        - type: divider
+                        - type: divider                                                             
+                        - type: custom:slider-entity-row
+                          entity: light.signe_1
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.signe_1                          
+                        - type: divider   
+                        - type: divider                                                                                     
+                        - type: custom:slider-entity-row
+                          entity: light.bloom_1
+                          toggle: true
+                        - type: custom:decluttering-card
+                          template: rgb-light-card
+                          variables:
+                            - entity: light.bloom_1                          
+                    cardStyle: |
+                      background-color:#FFF;        
+

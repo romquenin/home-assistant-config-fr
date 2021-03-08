@@ -1,0 +1,512 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                    REMOTE HARMONY                      ##
+  ##                                                        ##
+  ############################################################ 
+
+
+input_select:
+  harmony_hub:
+    name: Harmony Hub
+    options:
+      - PowerOff
+      - APPLE TV
+      - SMART TV  
+      - MOVIES TV 
+      - ONE TV         
+      - PC TV      
+      - PS4 TV
+      - SWITCH TV    
+      - RETRO TV
+      - 360 TV
+      - MOVIES 
+      - ONE                 
+      - PC      
+      - PS4
+      - SWITCH
+      - RETRO
+      - CHROMECAST
+    initial: PowerOff
+    icon: mdi:monitor
+
+automation:
+#Lancement des activités avec le script de l'input_select  
+
+
+#Mise a jour de l'input_select par le Hub Harmony
+  - alias: '[Input_select] mis a jour par HARMONY'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: template
+      value_template:  "{{ trigger.to_state.attributes.current_activity in state_attr('input_select.harmony_hub', 'options') }}"
+    action:
+      service: input_select.select_option
+      data_template:
+        entity_id: input_select.harmony_hub
+        option: "{{ state_attr('remote.harmony_hub', 'current_activity') }}"  
+
+
+  - alias: '[Input Select] met a jour HARMONY'
+    trigger:
+      platform: state
+      entity_id: input_select.harmony_hub
+    action:
+      service: remote.turn_on
+      entity_id: remote.harmony_hub
+      data_template:
+        activity: >
+          {% if is_state("input_select.harmony_hub", "MOVIES") %}
+              30471246
+          {% elif is_state("input_select.harmony_hub", "PC") %}
+              21826792
+          {% elif is_state("input_select.harmony_hub", "PS4") %}
+              21826901
+          {% elif is_state("input_select.harmony_hub", "RETRO TV") %}
+              20137481
+          {% elif is_state("input_select.harmony_hub", "SMART TV") %}
+              20137433
+          {% elif is_state("input_select.harmony_hub", "APPLE TV") %}
+              36470351
+          {% elif is_state("input_select.harmony_hub", "CHROMECAST") %}
+              27932527
+          {% elif is_state("input_select.harmony_hub", "RETRO") %}
+              25094446
+          {% elif is_state("input_select.harmony_hub", "ONE") %}
+              20492432            
+          {% elif is_state("input_select.harmony_hub", "SWITCH TV") %}
+              28414227
+          {% elif is_state("input_select.harmony_hub", "MOVIES TV") %}
+              30471346
+          {% elif is_state("input_select.harmony_hub", "360 TV") %}
+              36480756
+          {% elif is_state("input_select.harmony_hub", "PS4 TV") %}
+             20137469
+          {% elif is_state("input_select.harmony_hub", "SWITCH") %}
+              29197122           
+          {% elif is_state("input_select.harmony_hub", "PC TV") %}
+              20138144
+          {% elif is_state("input_select.harmony_hub", "ONE TV") %}
+              25310224
+          {% else %}
+            -1              
+          {% endif %} 
+
+   ############################################################
+   ##                    SCENES HARMONY                      ##
+   ############################################################
+  - alias: '[Scenes] MOVIES relax audio'
+    trigger:
+      - platform: state
+        entity_id: input_select.harmony_hub
+        to: 'MOVIES' 
+    action:
+      - service: script.turn_on
+        entity_id: script.audio_movies 
+
+  - alias: '[Scenes] MOVIES relax'
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES" }}'   
+    action:
+      - service: scene.turn_on
+        entity_id: scene.salon_relax
+
+  - alias: '[Scenes] MOVIES TV audio'
+    initial_state: on 
+    trigger:    
+      - platform: state
+        entity_id: input_select.harmony_hub
+        to: 'MOVIES TV' 
+    action:
+      - service: script.turn_on
+        entity_id: script.audio_movies  
+       
+  - alias: '[Scenes] MOVIES TV relax'
+    initial_state: on 
+    trigger:    
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'         
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "MOVIES TV" }}' 
+    action:
+      - service: scene.turn_on
+        entity_id: scene.salon_relax
+       
+  - alias: '[Scenes] PS4 relax'
+    initial_state: on 
+    trigger:      
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'        
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}' 
+    action:
+      service: scene.turn_on
+      entity_id: scene.salon_relax
+       
+  - alias: '[Scenes] ONE relax'
+    initial_state: on 
+    trigger:   
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'                 
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "ONE TV" }}' 
+    action:
+      service: scene.turn_on
+      entity_id: scene.salon_relax
+       
+  - alias: '[Scenes] SWITCH relax'
+    initial_state: on 
+    trigger:     
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'       
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}' 
+    action:
+      service: scene.turn_on
+      entity_id: scene.salon_relax
+       
+  - alias: '[Scenes] PowerOff MOVIES allume la lumière'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'    
+        - condition: state
+          entity_id: input_select.harmony_hub
+          state: 'MOVIES'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:
+      - service: scene.turn_on
+        data:
+          entity_id: scene.salon_normal
+       
+  - alias: '[Scenes] PowerOff PC allume la lumière'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'    
+        - condition: state
+          entity_id: input_select.harmony_hub
+          state: 'MOVIES TV'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:
+      - service: scene.turn_on
+        data:
+          entity_id: scene.salon_normal
+   
+  - alias: '[Scenes] PowerOff PS4 allume la lumière'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'    
+        - condition: state
+          entity_id: input_select.harmony_hub
+          state: 'PS4 TV'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:
+      - service: scene.turn_on
+        data:
+          entity_id: scene.salon_normal
+      
+  - alias: '[Scenes] PowerOff ONE TV allume la lumière'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'    
+        - condition: state
+          entity_id: input_select.harmony_hub
+          state: 'ONE TV'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:  
+      - service: scene.turn_on
+        data:
+          entity_id: scene.salon_normal
+
+  - alias: '[Scenes] PowerOff SWITCH allume la lumière'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: 'below_horizon'    
+        - condition: state
+          entity_id: input_select.harmony_hub
+          state: 'SWITCH TV'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:  
+      - service: scene.turn_on
+        data:
+          entity_id: scene.salon_normal
+
+
+
+script:
+#Lancement des activités depuis l'input_select  
+
+
+#Activités  
+  'activity_pc_tv':
+    alias: '[Harmony] PC TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '20138144'
+      service: remote.turn_on
+  'activity_pc':
+    alias: '[Harmony] PC'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '21826792'
+      service: remote.turn_on
+  'activity_one':
+    alias: '[Harmony] ONE'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '20492432'
+      service: remote.turn_on
+  'activity_one_tv':
+    alias: '[Harmony] ONE TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '25310224'
+      service: remote.turn_on
+  'activity_movies':
+    alias: '[Harmony] MOVIES'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '30471246'
+      service: remote.turn_on    
+  'activity_movies_tv':
+    alias: '[Harmony] MOVIES TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '30471346'
+      service: remote.turn_on
+  'activity_ps4':
+    alias: '[Harmony] PS4'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '21826901'
+      service: remote.turn_on
+  'activity_ps4_tv':
+    alias: '[Harmony] PS4 TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '20137469'
+      service: remote.turn_on
+  'activity_retro_tv':
+    alias: '[Harmony] RETRO TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '20137481'
+      service: remote.turn_on
+  'activity_retro':
+    alias: '[Harmony] RETRO'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '25094446'
+      service: remote.turn_on
+  'activity_360_tv':
+    alias: '[Harmony] 360 TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '36480756'
+      service: remote.turn_on
+  'activity_switch_tv':
+    alias: '[Harmony] SWITCH TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '28414227'
+      service: remote.turn_on
+  'activity_switch':
+    alias: '[Harmony] SWITCH'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '29197122'
+      service: remote.turn_on
+  'activity_apple_tv':
+    alias: '[Harmony] APPLE TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '36470351'
+      service: remote.turn_on
+  'activity_chromecast_audio':
+    alias: '[Harmony] Chromecast Audio'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '27932527'
+      service: remote.turn_on
+  'activity_smart_tv':
+    alias: '[Harmony] SMART TV'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub    
+        activity: '20137433'
+      service: remote.turn_on
+  'activity_off':
+    alias: '[Harmony] Turn Off Activity'
+    sequence:
+    - data:
+        entity_id: remote.harmony_hub
+      service: remote.turn_off    
+
+#Zappiti
+  'zappiti_power_toggle':
+    alias: '[Zappiti] power'
+    sequence:
+    - data:
+        command: PowerToggle
+        device: '50272082'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  'zappiti_power_on':
+    alias: '[Zappiti] on'
+    sequence:
+    - data:
+        command: PowerOn
+        device: '50272082'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  'zappiti_power_off':
+    alias: '[Zappiti] off'
+    sequence:
+    - data:
+        command: PowerOff
+        device: '50272082'
+        entity_id: remote.harmony_hub
+      service: remote.send_command  
+
+#Epson projecteur
+  'projecteur_power_on':
+    alias: '[Epson] on'
+    sequence:
+    - data:
+        command: PowerOn
+        device: '38529218'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  'projecteur_power_off':
+    alias: '[Epson] off'
+    sequence:
+    - data:
+        command: PowerOff
+        device: '38529218'
+        entity_id: remote.harmony_hub
+      service: remote.send_command        
+
+#Toile projection
+  'toile_ouverte':
+    alias: '[Toile] ouverte'
+    sequence:
+    - data:
+        command: DirectionDown
+        device: '69866049'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   
+  'toile_fermee':
+    alias: '[Toile] fermée'
+    sequence:
+    - data:
+        command: DirectionUp
+        device: '69866049'
+        entity_id: remote.harmony_hub
+      service: remote.send_command              
+
+#Xbox 360
+  '360_power_on':
+    alias: '[Xbox 360] on'
+    sequence:
+    - data:
+        command: PowerOn
+        device: '36034951'
+        entity_id: remote.harmony_hub
+      service: remote.send_command
+  '360_power_off':
+    alias: '[Xbox 360] off'
+    sequence:
+    - data:
+        command: PowerOff
+        device: '36034951'
+        entity_id: remote.harmony_hub
+      service: remote.send_command   

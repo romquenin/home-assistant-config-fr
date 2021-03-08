@@ -1,0 +1,358 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                   GOOGLE ASSISTANT                     ##
+   ##                                                        ##
+   ############################################################
+   
+
+project_id: !secret google_assistant_id 
+service_account: !include SERVICE_ACCOUNT.json
+expose_by_default: true
+exposed_domains:
+  - fan
+  - scene
+  - cover
+entity_config:
+
+#SWITCH
+  switch.sonoff1:
+    name: "Apple TV"
+    expose: true
+
+  switch.sonoff2:
+    name: "Chromecast"
+    expose: true
+
+  switch.sonoff3:
+    name: "Nintendo Switch"
+    expose: true
+
+  switch.sonoff4:
+    name: "PS4"
+    expose: true
+
+  switch.wake_on_lan:
+    name: "PC"
+    expose: true
+
+  switch.huiles_essentielles:
+    name: "Huiles essentielles"
+    expose: true
+
+#MEDIA PLAYER
+  media_player.samsung_tv_remote:
+    name: "TV"
+    expose: true
+
+  media_player.samsung_tv_chambre:
+    name: "TV Chambre"
+    expose: true
+
+  media_player.xbox_series_x:
+    name: "Xbox"
+    expose: true
+
+#INPUT BOOLEAN
+  input_boolean.fan:
+    name: "Rotation"
+    expose: true
+
+  media_player.home_cinema_main:
+    name: "Amplificateur"
+    expose: true
+
+  input_boolean.zappiti_power_switch:
+    name: "Zappiti"
+    expose: true
+
+
+
+#AMPLI
+  script.amp_volumeup:
+    name: "Ampli Volume Up"
+    expose: true
+
+  script.amp_volumedown:
+    name: "Ampli Volume Down"
+    expose: true
+
+  script.amp_mute:
+    name: "Ampli Mute"
+    expose: true
+
+  script.amp_pc:
+    name: "Ampli PC"
+    expose: true
+
+  script.amp_xbox_one:
+    name: "Ampli XBOX ONE"
+    expose: true
+
+  script.amp_ps4:
+    name: "Ampli PS4"
+    expose: true
+
+  script.amp_retro:
+    name: "Ampli RETRO"
+    expose: true
+
+  script.amp_360:
+    name: "Ampli 360"
+    expose: true
+
+  script.amp_zappiti:
+    name: "Ampli ZAPPITI"
+    expose: true
+
+  script.amp_switch:
+    name: "Ampli SWITCH"
+    expose: true
+
+  script.amp_tv:
+    name: "Ampli TV"
+    expose: true
+
+  script.amp_chromecast:
+    name: "Ampli CHROMECAST"
+    expose: true
+
+  script.amp_musicast:
+    name: "Ampli MUSICAST"
+    expose: true
+
+#TV
+  script.tvinputtv:
+    name: 'input tv'
+    expose: true
+
+  script.tvhdmi1:
+    name: 'hdmi 1' 
+    expose: true
+      
+  script.tvhdmi2:
+    name: 'hdmi 2' 
+    expose: true 
+
+  script.tvhdmi3:
+    name: 'hdmi 3' 
+    expose: true
+
+  script.tvhdmi4:
+    name: 'hdmi 4' 
+    expose: true
+
+  script.tvvolumeup:
+    name: 'TV volume plus'
+    expose: true
+
+  script.tvvolumedown:
+    name: 'TV volume moins'
+    expose: true
+
+  script.tvmute:
+    name: 'TV muet'
+    expose: true
+
+  script.tvok:
+    name: 'TV ok'
+    expose: true
+
+  script.tvback:
+    name: 'TV retour'
+    expose: true
+
+  script.tvhome:
+    name: 'TV home'
+    expose: true
+         
+  script.tvplay:
+    name: 'TV pause'
+    expose: true
+
+  script.tvstop:
+    name: 'TV stop'
+    expose: true
+
+
+
+
+  script.tvmolotov:
+    name: 'MOLOTOV'
+    expose: true
+
+  script.tvnetflix:
+    name: 'NETFLIX' 
+    expose: true
+      
+  script.tvprime_video:
+    name: 'PRIME VIDEO' 
+    expose: true 
+
+  script.tvdisney:
+    name: 'DISNEY PLUS' 
+    expose: true
+
+  script.tvrmc_sport:
+    name: 'RMC SPORT' 
+    expose: true
+
+  script.tvPlex:
+    name: 'PLEX'
+    expose: true
+
+
+  script.tvtf1:
+    name: 'TF1'
+    expose: true
+
+  script.tvfrance_2:
+    name: 'FRANCE 2'
+    expose: true
+
+  script.tvfrance_3:
+    name: 'FRANCE 3'
+    expose: true
+
+  script.tvfrance_5:
+    name: 'FRANCE 5'
+    expose: true
+
+  script.tvm6:
+    name: 'M6'
+    expose: true
+         
+  script.tvarte:
+    name: 'ARTE'
+    expose: true
+
+  script.tvc8:
+    name: 'C8'
+    expose: true
+
+  script.tvw9:
+    name: 'W9'
+    expose: true
+
+  script.tvtmc:
+    name: 'TMC'
+    expose: true
+
+  script.tvtfx:
+    name: 'TFX'
+    expose: true
+
+  script.tvnrj12:
+    name: 'NRJ12'
+    expose: true
+
+  script.tvlcp:
+    name: 'LCP'
+    expose: true
+         
+  script.tvfrancce_4:
+    name: 'FRANCE 4'
+    expose: true
+
+  script.tvbfm:
+    name: 'BFM TV'
+    expose: true
+
+  script.tvcnews:
+    name: 'C-NEWS'
+    expose: true
+
+  script.tvcstar:
+    name: 'C-STAR'
+    expose: true
+
+  script.tvgulli:
+    name: 'GULLI'
+    expose: true
+
+  script.tvtf1_serie_film:
+    name: 'TF1 Serie Film'
+    expose: true
+
+  script.tvlequipe_tv:
+    name: 'LEQUIPE TV'
+    expose: true
+         
+
+#ACTIVITÉS HARMONY
+  script.activity_off:
+    name: "Éteindre activité"
+    expose: true
+
+  script.activity_pc:
+    name: 'PC'
+    expose: true
+
+  script.activity_pc_tv:
+    name: 'PC TV'
+    expose: true
+
+  script.activity_one:
+    name: 'ONE'
+    expose: true
+
+  script.activity_one_tv:
+    name: 'ONE TV'
+    expose: true
+
+  script.activity_movies:
+    name: 'MOVIES'
+    expose: true
+
+  script.activity_movies_tv:
+    name: 'MOVIES TV'
+    expose: true
+
+  script.activity_ps4:
+    name: 'PS4'
+    expose: true
+
+  script.activity_ps4_tv:
+    name: 'PS4 TV'
+    expose: true    
+
+  script.activity_retro_tv:
+    name: 'RETRO TV'
+    expose: true
+
+  script.activity_retro:
+    name: 'RETRO'
+    expose: true
+
+  script.activity_360_tv:
+    name: '360 TV'
+    expose: true
+
+  script.activity_switch_tv:
+    name: 'SWITCH TV'
+    expose: true
+
+  script.activity_switch:
+    name: 'SWITCH'
+    expose: true
+
+  script.activity_apple_tv:
+    name: 'APPLE TV'
+    expose: true
+
+  script.activity_chromecast_audio:
+    name: 'CHROMECAST AUDIO'
+    expose: true
+
+  script.activity_smart_tv:
+    name: 'SMART TV'
+    expose: true  
+
+#HOME ASSISTANT
+  script.reboot_ha:
+    name: 'Redémarrer Home Assistant'
+    expose: true
+
+  script.reload_ha:
+    name: 'Recharger Home Assistant'
+    expose: true

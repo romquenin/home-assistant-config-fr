@@ -1,0 +1,27 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                        SCRIPTS                         ##
+   ##                                                        ##
+   ############################################################
+    
+script.reboot_ha:
+  friendly_name: Redémarrer Home Assistant
+  icon: mdi:restart
+
+script.play_sel_sound:
+  friendly_name: Boucle  
+  icon: mdi:loop 
+
+script.play_sel_sound_single:
+  friendly_name: Réglage de l'alarme  
+  icon: mdi:bell-ring-outline
+
+script.wakeup:
+  icon: mdi:weather-sunset-up
+  can_cancel: false
+  show_last_changed: true
+   
+
+
+

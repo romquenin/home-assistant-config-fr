@@ -1,0 +1,73 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                 UTILITY METER POWER STATS              ##
+  ##                                                        ##
+  ############################################################    
+
+utility_meter:
+###TPLINK POWER USAGE############
+  daily_power_usage:
+    source: sensor.today_power_usage
+    cycle: daily
+    tariffs:
+      - peak
+      - offpeak
+
+  weekly_power_usage:
+    source: sensor.today_power_usage
+    cycle: weekly
+    tariffs:
+      - peak
+      - offpeak
+
+  monthly_power_usage:
+    source: sensor.today_power_usage
+    cycle: monthly
+    tariffs:
+      - peak
+      - offpeak
+
+automation:
+  - alias: 'utility_meter_peak_offpeak'
+    trigger:
+      - platform: time
+        at: '06:50:00'
+      - platform: time
+        at: '22:50:00'
+    action:
+      - service: utility_meter.next_tariff
+        entity_id: utility_meter.daily_power_usage
+      - service: utility_meter.next_tariff
+        entity_id: utility_meter.weekly_power_usage
+      - service: utility_meter.next_tariff
+        entity_id: utility_meter.monthly_power_usage
+
+sensor:
+  - platform: template
+    sensors:
+      daily_energy:
+        friendly_name: Conso/Jour
+        unit_of_measurement: kWh
+        value_template: "{{ states('sensor.daily_power_usage_offpeak')|float + states('sensor.daily_power_usage_peak')|float }}"
+      weekly_energy:
+        friendly_name: Conso/Semaine
+        unit_of_measurement: kWh
+        value_template: "{{ states('sensor.weekly_power_usage_offpeak')|float + states('sensor.weekly_power_usage_peak')|float }}"
+      monthly_energy:
+        friendly_name: Conso/Mois
+        unit_of_measurement: kWh
+        value_template: "{{ states('sensor.monthly_power_usage_offpeak')|float + states('sensor.monthly_power_usage_peak')|float }}"
+
+      daily_cost:
+        friendly_name: "Coût/Jour"
+        unit_of_measurement: '€'
+        value_template: "{{ (states('sensor.daily_power_usage_peak') | float * 0.1358 + states('sensor.daily_power_usage_offpeak') | float * 0.0949) | round(2) }}"
+      weekly_cost:
+        friendly_name: "Coût/Semaine"
+        unit_of_measurement: '€'
+        value_template: "{{ (states('sensor.weekly_power_usage_peak') | float * 0.1358 + states('sensor.weekly_power_usage_offpeak') | float * 0.0949) | round(2) }}"
+      monthly_cost:
+        friendly_name: "Coût/Mois"
+        unit_of_measurement: '€'
+        value_template: "{{ (states('sensor.monthly_power_usage_peak') | float * 0.1358 + states('sensor.monthly_power_usage_offpeak') | float * 0.0949) | round(2) }}" 

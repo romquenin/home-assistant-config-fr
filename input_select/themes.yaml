@@ -1,0 +1,22 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                       THEMES                           ##
+   ##                                                        ##
+   ############################################################
+
+hass_theme:
+  name: HASS Themes
+  options:
+    - default
+    - Teal
+    - Night
+    - Darkblue
+    - Darkcyan
+    - Darkorange
+    - Solarized
+    - PmxDefault
+    - PmxMonolight
+    - PmxMononight
+  initial: default
+  icon: mdi:account-circle

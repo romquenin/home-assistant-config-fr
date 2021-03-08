@@ -1,0 +1,173 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                         SENSOR                         ##
+   ##                                                        ##
+   ############################################################
+   
+  ###  PYTHON SCRIPT SUMMARY  ###
+sensor.summary:
+  friendly_name: Summary
+  
+  ###  SYSTEME  ###   
+sensor.derniere_version:   
+  icon: mdi:update 
+sensor.version:
+  friendly_name: Version installée
+  icon: mdi:home-assistant  
+sensor.processor_use:
+  friendly_name: CPU Load
+  icon: mdi:chip
+sensor.memory_use_percent:
+  friendly_name: Memory Use
+sensor.disk_free:
+  friendly_name: Disk Free
+sensor.memory_free:
+  friendly_name: Memory Free 
+sensor.cpu_temp:
+  friendly_name: Température CPU
+sensor.since_last_boot_template:
+  friendly_name: Temps d'activité
+  icon: mdi:av-timer
+sensor.disk_use_percent: 
+  friendly_name: Disque 
+  icon: mdi:chart-pie 
+sensor.home_assistant_v2_db:
+  friendly_name: Database
+  icon: mdi:database
+  ###  PRESENCE  ###
+
+
+  ###  TEMPS  ###
+sensor.time:
+  friendly_name: Heure actuelle
+  icon: mdi:clock      
+
+  ###  SABNZBD  ###
+sensor.sabnzbd_status:
+  friendly_name: Statut
+sensor.sabnzbd_speed:
+  friendly_name: Download
+  icon: mdi:download
+sensor.sabnzbd_left:
+  friendly_name: Restant
+  icon: mdi:progress-download
+sensor.sabnzbd_queue:
+  friendly_name: File
+  icon: mdi:chart-pie
+sensor.sabnzbd_disk_free:
+  friendly_name: Libre
+  icon: mdi:harddisk   
+
+  ###  TRANSMISSION  ###
+sensor.transmission_status:
+  friendly_name: Statut
+  icon: mdi:eye   
+sensor.transmission_down_speed:
+  friendly_name: Download
+  icon: mdi:download   
+sensor.transmission_up_speed:
+  friendly_name: Upload
+  icon: mdi:upload
+sensor.transmission_active_torrents:
+  friendly_name: Actif
+  icon: mdi:play   
+sensor.transmission_paused_torrents:  
+  friendly_name: Pause
+  icon: mdi:pause
+
+
+  ###  SYNOLOGY  ###  
+sensor.cpu_load_total:
+  friendly_name: CPU
+sensor.memory_usage_real:
+  friendly_name: Memoire
+sensor.network_down:
+  friendly_name: Download
+sensor.network_up:
+  friendly_name: Upload
+sensor.volume_used_volume_1:
+  friendly_name: Disque
+  icon: mdi:harddisk      
+
+  ###  DYSON  ###
+
+sensor.dyson_pure_cool_linktm_aqi:
+  friendly_name: AQi
+  icon: mdi:air-purifier  
+sensor.dyson_pure_cool_linktm_dust:
+  friendly_name: Poussière
+  icon: mdi:cloud    
+sensor.dyson_pure_cool_linktm_filter_life:
+  friendly_name: Filtre
+  icon: mdi:air-filter  
+
+
+sensor.cc_test_epa_aqi:
+  friendly_name: Outdoor Co2
+  icon: mdi:co2  
+  ###  DARK SKY  ###
+sensor.dark_sky_apparent_temperature:
+  friendly_name: Température   
+sensor.dark_sky_humidity:
+  friendly_name: Humidité   
+sensor.dark_sky_pressure:
+  friendly_name: Pression    
+sensor.uv_friendly:
+  extra_badge:
+    entity_id: sensor.uv
+  templates:
+    theme: >-
+      var e = 'sensor.uv',
+          v = entities[e] !== undefined && parseInt(entities[e].state);
+      return v >= 6 ? 'card-critical'
+      : v >= 3 ? 'card-warning'
+      : null;
+      
+  ###  NETATMO  ###        
+sensor.netatmo_chambre_humidity_2:
+  friendly_name: Chambre Humidité
+sensor.netatmo_chambre_temperature_2:
+  friendly_name: Chambre Température
+sensor.netatmo_indoor_co2_2:
+  friendly_name: Salon Co2
+sensor.netatmo_indoor_humidity_2:
+  friendly_name: Salon Humidité
+sensor.netatmo_indoor_noise_2:
+  friendly_name: Salon Bruit
+sensor.netatmo_indoor_pressure_2:
+  friendly_name: Salon Pression  
+sensor.netatmo_indoor_temperature_2:
+  friendly_name: Salon Température   
+sensor.netatmo_indoor_temperature:
+  friendly_name: Salon
+
+  ###  TPLINK  ###     
+sensor.tplink_2_current_power_w:
+  friendly_name: TP-Link 2  
+sensor.tplink_2_today_energy_kwh:
+  friendly_name: TP-Link 2 jour
+sensor.tplink_2_total_energy_kwh:
+  friendly_name: TP-Link 2 total 
+sensor.tplink_1_current_power_w:
+  friendly_name: TP-Link 1   
+sensor.tplink_1_today_energy_kwh:
+  friendly_name: TP-Link 1 jour
+sensor.tplink_1_total_energy_kwh:  
+  friendly_name: TP-Link 1 total
+sensor.tplink_3_current_power_w:
+  friendly_name: TP-Link 3   
+sensor.tplink_3_today_energy_kwh:
+  friendly_name: TP-Link 3 jour
+sensor.tplink_3_total_energy_kwh:
+  friendly_name: TP-Link 3 total 
+sensor.tplink_4_current_power_w:
+  friendly_name: TP-Link 4    
+sensor.tplink_4_today_energy_kwh:
+  friendly_name: TP-Link 4 jour
+sensor.tplink_4_total_energy_kwh:  
+  friendly_name: TP-Link 4 total
+
+  ###  FIXER  ###
+
+

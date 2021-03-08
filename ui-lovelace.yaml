@@ -1,0 +1,18 @@
+
+title: Paradis Artificiels
+
+decluttering_templates:
+  !include www/custom-lovelace/decluttering_templates.yaml
+
+button_card_templates:
+  !include www/custom-lovelace/button_card_templates.yaml
+
+views: 
+  - !include www/lovelace/00_home_view.yaml
+  - !include www/lovelace/01_meteo_view.yaml                                          
+  - !include www/lovelace/02_energy_view.yaml
+  - !include www/lovelace/03_info_view.yaml      
+  - !include www/lovelace/04_stats_view.yaml
+  - !include www/lovelace/05_floorplan.yaml      
+  - !include www/lovelace/06_settings_view.yaml    
+  - !include www/lovelace/07_test_view.yaml     

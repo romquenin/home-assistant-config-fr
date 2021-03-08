@@ -1,0 +1,22 @@
+
+############################################################
+##                                                        ##
+##                 ALLUMER LUMIÈRES SOIR                  ##
+##                                                        ##
+############################################################
+
+# Allumer lumières 15 minutes avant le coucher du soleil si quelqu'un est à la maison
+- alias: '[light] Allumer lumières soir'
+  initial_state: 'on'         
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:15:00"  
+  condition:
+    condition: state
+    entity_id: group.users_tracker
+    state: home
+  action:
+    service: scene.turn_on
+    entity_id: scene.salon_soir
+    

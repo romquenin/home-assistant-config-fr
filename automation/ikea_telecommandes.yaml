@@ -1,0 +1,103 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                   TELECOMMANDE IKEA                    ##
+   ##                                                        ##
+   ############################################################
+
+- id: 'telecommande_ikea_droite'
+  alias: Télécommande ikea droite
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_ikea_action
+    to: "arrow_right_click"
+  action:
+    - service: input_select.select_next
+      entity_id: input_select.scenes
+
+
+- id: 'telecommande_ikea_gauche'
+  alias: Télécommande ikea gauche
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_ikea_action
+    to: "arrow_left_click"
+  action:
+    - service: input_select.select_previous  
+      entity_id: input_select.scenes
+
+
+
+- id: 'telecommande_ikea_milieu'
+  alias: Télécommande ikea milieu
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_ikea_action
+    to: "toggle"
+  action:
+    - service: light.toggle
+      entity_id: light.chambre
+
+
+- id: 'telecommande_ikea_milieu_long'
+  alias: Télécommande ikea milieu long
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_ikea_action
+    to: "toggle_hold"
+  action:
+    - service: scene.turn_on
+      entity_id: scene.salon_film
+
+
+   
+   ############################################################
+   ##                                                        ##
+   ##               TELECOMMANDES RIDEAUX                    ##
+   ##                                                        ##
+   ############################################################
+#rideau droite
+- id: 'telecommande_rideau_droite_open'
+  alias: Télécommande rideau droite - Open
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_rideau_droite_action
+    to: "open"
+  action:
+    - service: cover.open_cover    
+      entity_id: cover.rideau_droite
+
+
+- id: 'telecommande_rideau_droite_close'
+  alias: Télécommande rideau droite - Close
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_rideau_droite_action
+    to: "close"
+  action:
+    - service: cover.close_cover        
+      entity_id: cover.rideau_droite
+
+
+#rideau gauche
+- id: 'telecommande_rideau_gauche_open'
+  alias: Télécommande rideau gauche - Open
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_rideau_gauche_action
+    to: "open"
+  action:
+    - service: cover.open_cover     
+      entity_id: cover.rideau_gauche
+
+
+- id: 'telecommande_rideau_gauche_close'
+  alias: Télécommande rideau gauche - Close
+  trigger:
+    platform: state
+    entity_id: sensor.telecommande_rideau_gauche_action
+    to: "close"
+  action:
+    - service: cover.close_cover       
+      entity_id: cover.rideau_gauche
+   

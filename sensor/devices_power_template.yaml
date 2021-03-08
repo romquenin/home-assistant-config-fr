@@ -1,0 +1,29 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                       APPAREILS                        ##
+   ##                                                        ##
+   ############################################################
+
+- platform: template
+  sensors:
+
+    harmony_hub_template:
+      friendly_name: 'Harmony Hub'
+      value_template: "{{ 'on' if is_state('device_tracker.000420f6a1b5', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:remote' if is_state('device_tracker.000420f6a1b5', 'home') else 'mdi:power' }}"
+      
+    synology_template:
+      friendly_name: 'Synology'
+      value_template: "{{ 'on' if is_state('device_tracker.00_11_32_b5_b5_9d', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:sever' if is_state('device_tracker.00_11_32_b5_b5_9d', 'home') else 'mdi:power' }}"   
+      
+    zappiti_template:
+      friendly_name: 'Zappiti'
+      value_template: "{{ 'on' if is_state('device_tracker.9cf8dbee2419', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:alpha-z-circle' if is_state('device_tracker.9cf8dbee2419', 'home') else 'mdi:power' }}"   
+
+    serveur_vm_template:
+      friendly_name: 'Serveur VM'
+      value_template: "{{ 'on' if is_state('device_tracker.02_11_32_24_e6_04', 'home') else 'off' }}"
+      icon_template: "{{ 'mdi:ubuntu' if is_state('device_tracker.02_11_32_24_e6_04', 'home') else 'mdi:power' }}"   

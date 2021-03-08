@@ -1,0 +1,438 @@
+######################################################################################################################         
+######################################################################################################################    
+#  CAST                 
+######################################################################################################################    
+######################################################################################################################
+
+title: 04_stats_view   
+icon: mdi:thermometer-lines
+cards:
+  
+
+  - type: custom:stack-in-card
+    card_mod:
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }         
+    mode: vertical
+    cards:                         
+ 
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-left: -5px;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }
+        content: <center> INTERIEUR
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 24h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.netatmo_indoor_temperature
+            color: 'var(--tplink-1-color)' 
+            name: Salon
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.netatmo_chambre_temperature
+            color: 'var(--tplink-2-color)'
+            name: Chambre
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.multisensor_6_air_temperature
+            color: 'var(--tplink-3-color)'
+            name: Entrée
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min                  
+        apex_config:
+          chart:
+            height: 250              
+          yaxis:
+            - title:
+                text: Temperature
+              decimalsInFloat: 0
+      - type: 'custom:apexcharts-card'
+        graph_span: 24h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.netatmo_indoor_humidity
+            color: 'var(--tplink-1-color)'
+            name: Salon
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.netatmo_chambre_humidity
+            color: 'var(--tplink-2-color)'
+            name: Chambre
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.multisensor_6_humidity
+            color: 'var(--tplink-3-color)'
+            name: Entrée
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min                  
+        apex_config:              
+          chart:
+            height: 250                           
+          yaxis:
+            - title:
+                text: Humidity
+              decimalsInFloat: 1
+              opposite: true
+              #min: 29
+      - type: horizontal-stack
+        cards:           
+          - type: custom:mini-graph-card   
+            name: Qualité de l'air du domicile
+            height: 108                                      
+            detail: 2
+            align_header: center                
+            align_state: center
+            align_icon: right
+            hours_to_show: 24
+            line_width: 4
+            animate: true
+            points_per_hour: 2
+            show:
+              fill: false
+              graph: line
+              extrema: true
+              icon: false
+              name: true   
+              labels: true
+            color_thresholds:
+              - value: 400
+                color: "#00FF00"
+              - value: 700
+                color: "#feff71"
+              - value: 1000
+                color: "#c0392b"
+            entities:
+              - sensor.netatmo_indoor_co2   
+
+  - type: custom:stack-in-card
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+
+        }         
+    mode: vertical
+    cards:                        
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-left: -5px;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }
+        content: <center> EXTERIEUR   
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 24h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.saint_tropez_temperature
+            color: orange
+            name: Température
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min             
+        apex_config:
+          chart:
+            height: 250              
+          yaxis:
+
+            - title:
+                text: Température
+              decimalsInFloat: 0
+              #min: 18
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 24h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.saint_tropez_humidity
+            color: '#3498db'
+            name: Humidité
+            curve: smooth
+            show:
+              extremas: true                          
+            group_by:
+              func: avg
+              duration: 30min               
+        apex_config:
+          chart:
+            height: 250              
+          yaxis:
+            - title:
+                text: Humidité
+              decimalsInFloat: 1
+              opposite: true
+              #min: 29
+
+      - type: custom:mini-graph-card   
+        name: Qualité de l'air extérieur
+        height: 108
+        show_icon: false            
+        icon: mdi:molecule-co2 
+        align_header: center                                           
+        detail: 2
+        align_state: center
+        align_icon: right
+        hours_to_show: 24
+        line_width: 4
+        animate: true
+        points_per_hour: 2
+        show:
+          fill: false
+          graph: line
+          extrema: true
+          icon: false
+          name: true   
+          labels: true
+        color_thresholds:
+          - value: 40
+            color: "#00FF00"
+          - value: 90
+            color: "#feff71"
+          - value: 130
+            color: "#c0392b"
+        entities:
+          - sensor.cc_climacell_epa_aqi   
+    
+  - type: custom:stack-in-card
+    card_mod: 
+      style: |
+        ha-card {
+          margin-top: 1em;
+        }      
+    mode: vertical
+    cards:                        
+      - type: markdown
+        card_mod: 
+          style: |
+            ha-card {
+              font-size: 30px;
+              font-family: Quicksand;
+              height: 40px;
+              background: none;
+              margin-top: -0.2em;
+              margin-left: -5px;
+              margin-bottom: 0.5em;
+              box-shadow: none;
+            }
+        content: <center> SEMAINE INT/EXT   
+
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 7d
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.netatmo_indoor_temperature
+            color: 'var(--tplink-1-color)' 
+            name: Salon
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.netatmo_chambre_temperature
+            color: 'var(--tplink-2-color)'
+            name: Chambre
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.multisensor_6_air_temperature
+            color: 'var(--tplink-3-color)'
+            name: Entrée
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min                  
+        apex_config:
+          chart:
+            height: 250 
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: true
+                zoomin: true
+                zoomout: true
+                pan: true
+                reset: true                                
+          yaxis:
+
+            - title:
+                text: Temperature
+              decimalsInFloat: 0
+              #min: 18
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 7d
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.netatmo_indoor_humidity
+            color: 'var(--tplink-1-color)'
+            name: Salon
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.netatmo_chambre_humidity
+            color: 'var(--tplink-2-color)'
+            name: Chambre
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.multisensor_6_humidity
+            color: 'var(--tplink-3-color)'
+            name: Entrée
+            curve: smooth
+            show:
+              extremas: true                    
+            group_by:
+              func: avg
+              duration: 30min                  
+        apex_config:
+          chart:
+            height: 250 
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: true
+                zoomin: true
+                zoomout: true
+                pan: true
+                reset: true                                
+          yaxis:
+            - title:
+                text: Humidity
+              decimalsInFloat: 1
+              opposite: true
+              #min: 29
+
+
+      - type: 'custom:apexcharts-card'
+        graph_span: 7d
+        header:
+          show: true
+          show_states: true
+          colorize_states: true                                             
+        apex_config:
+          chart:
+            height: 250  
+            zoom:
+              enabled: true
+            toolbar:
+              show: true
+              tools:
+                zoom: true
+                zoomin: true
+                zoomout: true
+                pan: true
+                reset: true                             
+          yaxis:
+            - title:
+                text: Température
+              decimalsInFloat: 0
+            - title:
+                text: Humidité
+              decimalsInFloat: 1
+              opposite: true
+        series:                  
+          - entity: sensor.saint_tropez_humidity
+            color: '#3498db'
+            name: Extérieur Humidité
+            curve: smooth
+            show:
+              extremas: true            
+            group_by:
+              func: avg
+              duration: 120min                
+          - entity: sensor.saint_tropez_temperature
+            color: orange
+            name: Extérieur Température
+            curve: smooth  
+            group_by:
+              func: avg
+              duration: 120min  
+            show:
+              extremas: true  
+
+
+

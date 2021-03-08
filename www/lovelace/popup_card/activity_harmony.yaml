@@ -1,0 +1,148 @@
+      action: fire-dom-event
+      browser_mod:
+        command: popup
+        hide_header: true
+        title: Harmony Hub 
+        style:
+          $: |
+            .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+              box-shadow:none;
+            }
+          .: |
+            :host {
+              --mdc-theme-surface: rgba(0,0,0,0);
+              --secondary-background-color: rgba(0,0,0,0);
+              --ha-card-background: rgba(0,0,0,0);
+              --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+              --mdc-dialog-min-height: 90%;
+              --mdc-dialog-min-width: 100%;
+              --mdc-dialog-max-width: 100%;
+            }
+            mwc-icon-button {
+              color: #FFF;
+            }
+        card:
+          type: "custom:radial-menu"       
+          entity_picture: "/local/images/activities/harmony.png"
+          name: "Harmony"
+          default_open: true
+          default_dismiss: false
+          hold_action:
+            action: url
+            url: https://www.logitech.fr/fr-fr/my-account.html
+          double_tap_action:
+            action: call-service
+            service: remote.turn_off
+            service_data:  
+              entity_id: remote.harmony_hub    
+            haptic: true                
+          items:
+            - icon: "mdi:television-box"
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '20137433'
+                haptic: true                    
+            - icon: "mdi:apple"     
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '36470351'
+                haptic: true
+            - icon: "mdi:alpha-z-circle"                
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '30471346'
+                haptic: true 
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '30471246'
+                haptic: true                     
+            - icon: "mdi:microsoft-windows"
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '20138144'
+                haptic: true 
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '21826792'
+                haptic: true                    
+            - icon: "mdi:microsoft-xbox"
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '25310224'
+                haptic: true
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '20492432'
+                haptic: true                     
+            - icon: "mdi:sony-playstation"
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '20137469'
+                haptic: true
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '21826901'
+                haptic: true                     
+            - icon: "mdi:nintendo-switch"     
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '28414227'
+                haptic: true 
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '29197122'
+                haptic: true                    
+            - icon: "mdi:microsoft-xbox-controller"     
+              tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '20137481'
+                haptic: true  
+              double_tap_action:
+                action: call-service
+                service: remote.turn_on
+                service_data:  
+                  entity_id: remote.harmony_hub    
+                  activity: '25094446'
+                haptic: true 
+        deviceID:
+          - this
+          - dashboard

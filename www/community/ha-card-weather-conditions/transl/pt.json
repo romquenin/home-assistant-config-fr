@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N",
+    "NNE": "NNE",
+    "NE": "NE",
+    "ENE": "ENE",
+    "E": "E",
+    "ESE": "ESE",
+    "SE": "SE",
+    "SSE": "SSE",
+    "S": "S",
+    "SSW": "SSW",
+    "SW": "SW",
+    "WSW": "WSW",
+    "W": "W",
+    "WNW": "WNW",
+    "NW": "NW",
+    "NNW": "NNW"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Sentida",
+    "new_moon": "Lua Nova",
+    "new": "Lua nova",
+    "waxing_crescent": "Lua Crescente",
+    "first_quarter": "Quarto Crescente",
+    "waxing_gibbous": "Crescente Gibosa",
+    "full": "Lua Cheia",
+    "full_moon": "Lua Cheia",
+    "waning_gibbous": "Minguante Gibosa",
+    "third_quarter": "Quarto Minguante",
+    "last_quarter": "Quarto Minguante",
+    "waning_crescent": "Lua Minguante"
+  }
+}

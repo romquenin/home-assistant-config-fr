@@ -1,0 +1,150 @@
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          deviceID:
+            - this
+            - dashboard  
+          title: SYNOLOGY NAS
+          card: 
+            type: entities      
+            show_header_toggle: false                         
+            card_mod:                        
+              style: |
+                ha-card {             
+                  box-shadow: 
+                    {% if is_state('sun.sun', 'above_horizon') %}
+                      inset -4px -4px 8px 0 rgba(255,255,255,.5), inset 4px 4px 8px 0 rgba(0,0,0,.03);
+                    {% elif is_state('sun.sun', 'below_horizon') %}                      
+                      inset -4px -4px 10px 0 rgba(50, 50, 50,.5), inset 4px 4px 12px 0 rgba(0,0,0,.3); 
+                    {% endif %}     
+                }                     
+            entities:            
+              - type: custom:vertical-stack-in-card
+                cards:         
+                  - type: 'custom:mini-graph-card'
+                    card_mod:                        
+                      style: |
+                        ha-card {
+                          font-family: var(--primary-font-family);
+                        }
+                        .graph {
+                          padding-top: 0px;
+                          padding-bottom: 0px;
+                        }
+                        .info {
+                          padding-bottom: 0px;
+                        }
+                        .flex {
+                          padding-bottom: 10px;
+                        }
+                    entities: 
+                      - sensor.synology_temperature_sda
+                    name: CPU TEMP
+                    align_state: center
+                    align_icon: right
+                    font_size: 100
+                    font_size_header: 11
+                    hours_to_show: 24
+                    line_color: cyan
+                    line_width: 4
+                    animate: true
+                    points_per_hour: 2
+                    #lower_bound: 0
+                    show:
+                      fill: false
+                      graph: line
+                      extrema: true
+                      icon: true
+                      name: true
+                  - type: entities
+                    card_mod:                        
+                      style:
+                        |
+                        ha-card {
+                          font-family: var(--primary-font-family);
+                        }
+                        .card-content {
+                          padding-top: 0px;
+                          padding-bottom: 0px;
+                        }              
+                    entities:
+                      - type: divider    
+                      - sensor.synology_volume_used_volume_1
+                      - sensor.synology_network_up
+                      - sensor.synology_network_down 
+                      - sensor.synology_status_volume_1               
+                      - type: divider          
+                  - type: horizontal-stack
+                    cards: 
+                      - type: horizontal-stack
+                        cards:                   
+                          - type: 'custom:mini-graph-card'
+                            card_mod:                        
+                              style: |
+                                ha-card {
+                                  font-family: var(--primary-font-family);
+                                }
+                                .graph {
+                                  padding-top: 0px;
+                                  padding-bottom: 0px;
+                                }
+                                .info {
+                                  padding-bottom: 0px;
+                                }
+                                .flex {
+                                  padding-bottom: 10px;
+                                }
+                            entities: 
+                              - sensor.synology_cpu_load_total
+                            name: CPU LOAD
+                            align_state: center
+                            align_icon: right
+                            font_size: 100
+                            font_size_header: 11
+                            hours_to_show: 24
+                            line_color: lime
+                            line_width: 4
+                            animate: true
+                            points_per_hour: 2
+                            #lower_bound: 0
+                            show:
+                              fill: false
+                              graph: line
+                              extrema: true
+                              icon: true
+                              name: true
+                      - type: 'custom:mini-graph-card'
+                        card_mod:                        
+                          style: |
+                            ha-card {
+                              font-family: var(--primary-font-family);
+                            }
+                            .graph {
+                              padding-top: 0px;
+                              padding-bottom: 0px;
+                            }
+                            .info {
+                              padding-bottom: 0px;
+                            }
+                            .flex {
+                              padding-bottom: 10px;
+                            }
+                        entities: 
+                          - sensor.synology_memory_usage_real
+                        name: MEM USE
+                        align_state: center
+                        align_icon: right
+                        font_size: 100
+                        font_size_header: 11
+                        hours_to_show: 24
+                        line_color: var(--accent-color)
+                        line_width: 4
+                        animate: true
+                        points_per_hour: 2
+                        #lower_bound: 0
+                        show:
+                          fill: false
+                          graph: line
+                          extrema: true
+                          icon: true
+                          name: true 

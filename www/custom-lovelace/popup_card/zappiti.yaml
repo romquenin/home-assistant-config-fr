@@ -1,0 +1,467 @@
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          hide_header: true
+          deviceID:
+            - this
+            - dashboard  
+          title: ZAPPITI
+          card:
+            type: custom:vertical-stack-in-card 
+            card_mod:                        
+              style:
+                $: |
+                  .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                    box-shadow:none;
+                  }
+                .: |
+                  :host {
+                    --mdc-theme-surface: rgba(0,0,0,0);
+                    --secondary-background-color: rgba(0,0,0,0);
+                    --ha-card-background: rgba(0,0,0,0);
+                    --ha-card-box-shadow: none;                  
+                    --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                    --mdc-dialog-min-height: 50%;
+                    --mdc-dialog-min-width: 100%;
+                    --mdc-dialog-max-width: 100%;
+                  }
+                  mwc-icon-button {
+                    color: #FFF;
+                  }                                              
+            cards:          
+              - type: entities
+                entities: 
+                  - input_boolean.zappiti_power_switch                                 
+              - type: picture-elements
+                image: /local/images/short-empty.png?v2.2
+                elements:
+                  - type: image
+                    tap_action:                
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: 50272082
+                        command: Zappiti
+                    image: /local/images/remote/alpha-z-circle.svg
+                    style:
+                      width: 2em
+                      height: 2em
+                      padding: 15px
+                      background-color: var(--paper-item-icon-color)
+                      border-radius: 50%
+                      box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)                      
+                      top: 50%
+                      left: 20%
+                  - type: image
+                    tap_action:                
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: 50272082
+                        command: Home
+                    image: /local/images/remote/home.svg?v1
+                    style: 
+                      width: 2em
+                      height: 2em
+                      padding: 15px
+                      background-color: var(--paper-item-icon-color)
+                      border-radius: 50%
+                      box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                      top: 50%
+                      left: 50%    
+                  - type: image
+                    tap_action:            
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: 50272082
+                        command: Explorer
+                    image: /local/images/remote/explorer.svg?v1
+                    style: 
+                      width: 2em
+                      height: 2em
+                      padding: 15px
+                      background-color: var(--paper-item-icon-color)
+                      border-radius: 50%
+                      box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                      top: 50%
+                      left: 80%
+              - type: picture-elements
+                image: /local/images/empty.png?v2.4
+                elements: 
+                - type: image  # Menu
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Menu
+                  image: /local/images/remote/menu.svg?v1
+                  style: 
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 15%
+                    left: 20%
+                - type: image  # Exit
+                  entity: media_player.salon
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Info
+                  image: /local/images/remote/info.svg 
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 15%
+                    left: 50%
+                - type: image  # Back
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Back
+                  image: /local/images/remote/back.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 15%
+                    left: 80%
+                - type: image  # Up
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: DirectionUp
+                  image: /local/images/remote/up.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 44%
+                    left: 50%
+                - type: image  # Left
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: DirectionLeft
+                  image: /local/images/remote/left.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 65%
+                    left: 32%
+                - type: image  # OK
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: OK
+                  image: /local/images/remote/return.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 65%
+                    left: 50%
+                - type: image  # Right
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: DirectionRight
+                  image: /local/images/remote/right.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 65%
+                    left: 68%
+                - type: image  # Down
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: DirectionDown
+                  image: /local/images/remote/down.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 86%
+                    left: 50%
+              - type: picture-elements
+                image: /local/images/short-empty.png?v2.1
+                elements: 
+                - type: image  # Play
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Play
+                  image: /local/images/remote/play.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 20%
+                - type: image  # Pause
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Play
+                  image: /local/images/remote/pause.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 50%
+                - type: image  # Stop
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Back
+                  image: /local/images/remote/stop.svg?v1
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 80% 
+              - type: picture-elements
+                image: /local/images/short-empty.png
+                elements: 
+                - type: image  # Volume Up
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: ChapterPrev
+                  image: /local/images/remote/skip-backward.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 20%
+                - type: image  # Mute
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: 3D
+                  image: /local/images/remote/3d.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 50%
+                - type: image  # Volume Down
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: ChapterNext
+                  image: /local/images/remote/skip-forward.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 80% 
+              - type: picture-elements
+                image: /local/images/short-empty.png
+                elements: 
+                - type: image  # Volume Up
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Audio
+                  image: /local/images/remote/volup.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 20%
+                - type: image  # Mute
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Subtitle
+                  image: /local/images/remote/subtitle.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 50%
+                - type: image  # Volume Down
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Aspect
+                  image: /local/images/remote/aspect.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 80%  
+              - type: picture-elements
+                image: /local/images/short-empty.png
+                elements: 
+                - type: image  # Volume Up
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Green
+                  image: /local/images/remote/settings.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 20%
+                - type: image  # Mute
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Dimmer
+                  image: /local/images/remote/dimmer.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 50%
+                - type: image  # Volume Down
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub
+                      device: 50272082
+                      command: Zoom
+                  image: /local/images/remote/zoom.svg
+                  style:
+                    width: 2em
+                    height: 2em
+                    padding: 15px
+                    background-color: var(--paper-item-icon-color)
+                    border-radius: 50%
+                    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)  
+                    top: 50%
+                    left: 80%    

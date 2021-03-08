@@ -1,0 +1,170 @@
+      - type: conditional
+        conditions:
+          - entity: media_player.maison
+            state_not: "unavailable"
+          - entity: media_player.maison
+            state_not: "off"
+          - entity: media_player.maison
+            state_not: "idle"
+          - entity: media_player.ytube_music_player
+            state_not: "playing"            
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:stack-in-card
+              style: |
+                ha-card {
+                  background: url({{state_attr("media_player.maison", "entity_picture_local")}});
+                  --paper-listbox-background-color: black;
+                  text-shadow: 1px 1px 0 #000;
+                  --primary-text-color: rgb(250,250,250);
+                  border-radius: 15px;                      
+                }
+              mode: vertical
+              cards: !include extra/maison.yaml
+
+      - type: conditional
+        conditions:
+          - entity: media_player.maison
+            state_not: "paused"
+          - entity: media_player.maison
+            state_not: "playing"
+          - entity: media_player.hub
+            state_not: "unavailable"
+          - entity: media_player.hub
+            state_not: "off"
+          - entity: media_player.hub
+            state_not: "idle"
+          - entity: media_player.ytube_music_player
+            state_not: "playing"  
+          - entity: media_player.ytube_music_player
+            state_not: "paused"                              
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media_player
+              variables:
+                - entity: media_player.hub             
+                - name: Hub
+
+      - type: conditional
+        conditions:
+          - entity: media_player.maison
+            state_not: "paused"
+          - entity: media_player.maison
+            state_not: "playing"
+          - entity: media_player.salon
+            state_not: "unavailable"
+          - entity: media_player.salon
+            state_not: "off"
+          - entity: media_player.salon
+            state_not: "idle"
+          - entity: media_player.ytube_music_player
+            state_not: "playing" 
+          - entity: media_player.ytube_music_player
+            state_not: "paused"                               
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media_player
+              variables:
+                - entity: media_player.salon             
+                - name: Salon
+
+      - type: conditional
+        conditions:
+          - entity: media_player.ytube_music_player
+            state_not: "playing" 
+          - entity: media_player.ytube_music_player
+            state_not: "paused"                             
+          - entity: media_player.maison
+            state_not: "paused"
+          - entity: media_player.maison
+            state_not: "playing"
+          - entity: media_player.chambre
+            state_not: "unavailable"
+          - entity: media_player.chambre
+            state_not: "off"
+          - entity: media_player.chambre
+            state_not: "idle"
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media_player
+              variables:
+                - entity: media_player.chambre             
+                - name: Chambre
+
+      - type: conditional
+        conditions:
+          - entity: media_player.ytube_music_player
+            state_not: "playing" 
+          - entity: media_player.ytube_music_player
+            state_not: "paused"                             
+          - entity: media_player.maison
+            state_not: "paused"
+          - entity: media_player.maison
+            state_not: "playing"
+          - entity: media_player.chromecast_audio
+            state_not: "unavailable"
+          - entity: media_player.chromecast_audio
+            state_not: "off"
+          - entity: media_player.chromecast_audio
+            state_not: "idle"
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media_player
+              variables:
+                - entity: media_player.chromecast_audio             
+                - name: Chromecast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.ytube_music_player
+            state_not: "idle"
+          - entity: media_player.ytube_music_player
+            state_not: "off"
+          - entity: media_player.ytube_music_player
+            state_not: "unavailable"
+          - entity: media_player.chromecast_audio
+            state: "unavailable"           
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media-player-yt
+
+      - type: conditional
+        conditions:
+          - entity: media_player.ytube_music_player
+            state_not: "idle"
+          - entity: media_player.ytube_music_player
+            state_not: "off"
+          - entity: media_player.ytube_music_player
+            state_not: "unavailable" 
+          - entity: media_player.chromecast_audio
+            state_not: "unavailable"                                     
+        card:
+          type: custom:state-switch
+          entity: deviceID
+          states:
+            "f75ca247-ed28565a":
+              type: custom:decluttering-card
+              template: media-player-yt-chromecast

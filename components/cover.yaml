@@ -1,0 +1,12 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                          COVER                         ##
+   ##                                                        ##
+   ############################################################
+
+- platform: group
+  name: Rideaux salon
+  entities:
+    - cover.rideau_droite
+    - cover.rideau_gauche

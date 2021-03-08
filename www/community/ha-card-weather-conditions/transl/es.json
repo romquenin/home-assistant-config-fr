@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N", 
+    "NNE": "NNE", 
+    "NE": "NE", 
+    "ENE": "ENE", 
+    "E": "E", 
+    "ESE": "ESE", 
+    "SE": "SE", 
+    "SSE": "SSE", 
+    "S": "S", 
+    "SSW": "SSO",
+    "SW": "SO",
+    "WSW": "OSO", 
+    "W": "O", 
+    "WNW": "ONO", 
+    "NW": "NO", 
+    "NNW": "NNO"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Parece que",
+    "new_moon": "Luna nueva",
+    "new": "Luna nueva",
+    "waxing_crescent": "Media luna de cera",
+    "first_quarter": "Primer trimestre",
+    "waxing_gibbous": "Encerado Gibbous",
+    "full": "Completo",
+    "full_moon": "Completo",
+    "waning_gibbous": "Waning Gibbous",
+    "third_quarter": "Tercer cuarto",
+    "last_quarter": "Último cuarto",
+    "waning_crescent": "Waning Crescent"
+  }
+}

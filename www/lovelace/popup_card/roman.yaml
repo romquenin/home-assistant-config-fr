@@ -1,0 +1,122 @@
+
+      action: fire-dom-event
+      browser_mod:
+        command: popup
+        title: Roman
+        hide_header: true        
+        deviceID:
+          - this
+          - dashboard 
+        style:
+          $: |
+            .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+              box-shadow:none;
+            }
+          .: |
+            :host {
+              --mdc-theme-surface: rgba(0,0,0,0);
+              --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+              --mdc-dialog-min-height: 87%;
+              --mdc-dialog-min-width: 100%;
+              --mdc-dialog-max-width: 100%;
+            }                   
+        card:
+          type: custom:vertical-stack-in-card
+          cards:
+            - type: entities
+              state_color: true
+              show_header_toggle: false
+              entities:
+                - entity: person.roman
+                  secondary_info: last-changed
+                - type: custom:hui-element
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }                  
+                  card_type: history-graph
+                  entities: [entity: person.roman]
+                  hours_to_show: 24
+                  refresh_interval: 0
+                - type: custom:hui-element
+                  card_type: glance
+                  show_state: false
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }
+                    "ha-card>div>div:nth-child(1)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.ea_2b_d7_01_c4_84', 'home') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(2)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.oneplus_6t_2', 'home') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(3)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.roman_gps', 'home') else '#FFFFFF20' }};
+                            }
+                  entities:
+
+                    - entity: device_tracker.ea_2b_d7_01_c4_84
+                      name: Router
+                      icon: mdi:wifi
+
+                    - entity: device_tracker.oneplus_6t_2
+                      name: Bluetooth
+                      icon: mdi:bluetooth
+
+                    - entity: device_tracker.roman_gps
+                      name: Position
+                      icon: mdi:map-marker-radius-outline
+
+                - type: custom:hui-element
+                  card_type: horizontal-stack
+                  style: |
+                    #root {
+                      justify-content: space-evenly;
+                      margin: -1em 0 0 0;
+                    }
+                  cards:
+
+                  - type: custom:button-card
+                    name: >
+                      <ha-icon icon="mdi:volume-high"></ha-icon> Trouver mon Smartphone
+                    tap_action:
+                      action: call-service
+                      service: script.find_my_phone
+                    template: name_action
+                    styles:
+                      card:
+                        [background: none, border-radius: none]
+            - type: map
+              style: |
+                ha-card {
+                  --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';             
+                  box-shadow: 
+                    {% if is_state('sun.sun', 'above_horizon') %}
+                      -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                    {% elif is_state('sun.sun', 'below_horizon') %}                      
+                      -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                    {% endif %}     
+                }        
+              aspect_ratio: 16:9
+              default_zoom: 13
+              entities:
+                - device_tracker.roman_gps
+                - zone.home
+

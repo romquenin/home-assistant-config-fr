@@ -1,0 +1,24 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                          SCENES                        ##
+   ##                                                        ##
+   ############################################################
+
+all_scenes:
+  name: Scènes
+  entities:  
+    - scene.alarme
+    - scene.detente 
+    - scene.dim  
+    - scene.chambre_soir 
+    - scene.salon_film  
+    - scene.salon_normal 
+    - scene.salon_off
+    - scene.salon_relax   
+    - scene.salon_soir       
+    - scene.printemps   
+    - scene.savane 
+    - scene.super_dim  
+    - scene.tropical
+   

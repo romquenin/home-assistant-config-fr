@@ -1,0 +1,43 @@
+   Darkblue:
+     base-hue: '220' #Controls the base (and accent) color hue (0-360) | 0=Red 60=Yellow 120=Green 180=Cyan 240=Blue 300=Magenta 360=Red
+     base-sat: '5%' #Controls the saturation of the theme (0%-100%) | 0%=Grey 100%=Full Saturation
+  # MyVar
+     huesat: 'var(--base-hue), var(--base-sat),'
+  # Primary Color
+     primary-color: 'hsl(var(--huesat) 30%)' #header colors and some text colors
+     dark-primary-color: 'hsl(var(--huesat) 60%)'
+     light-primary-color: 'hsl(var(--huesat) 90%)'
+     accent-color: 'hsl(var(--huesat) 35%)'
+
+
+
+
+     text-primary-color: "#ffffff"
+     primary-background-color: "var(--dark-primary-color)"
+     secondary-background-color: "var(--dark-background-color)"     
+     sidebar-text_-_background: "#3c4348"
+     paper-card-background-color: "var(--accent-color)"
+     paper-card-header-color: "var(--text-primary-color)"
+     primary-text-color: "var(--text-primary-color)"
+     secondary-text-color: "var(--light-primary-color)"
+     paper-listbox-background-color: "var(--sidebar-text_-_background)"
+     paper-toggle-button-checked-ink-color: "var(--light-primary-color)"
+     paper-toggle-button-checked-button-color: "var(--light-primary-color)"
+     paper-toggle-button-checked-bar-color: "var(--light-primary-color)"
+     paper-slider-knob-color: "var(--light-primary-color)"
+     paper-slider-knob-start-color: "var(--light-primary-color)"
+     paper-slider-pin-color: "var(--light-primary-color)"
+     paper-slider-active-color: "var(--light-primary-color)"
+     paper-slider-secondary-color: "var(--dark-background-color)"
+     paper-item-selected_-_background-color: "var(--light-primary-color)"
+     paper-item-icon_-_color: "var(--text-primary-color)"
+     paper-item-icon-color: "var(--text-primary-color)"
+
+     paper-grey-50: "var(--sidebar-text_-_background)"
+     paper-grey-200: "var(--primary-background-color)"
+     label-badge-background-color: "var(--accent-color)"
+     label-badge-text-color: "var(--text-primary-color)"
+     label-badge-red: "var(--primary-color)"
+
+
+     table-row-alternative-background-color: "var(--sidebar-text_-_background)"

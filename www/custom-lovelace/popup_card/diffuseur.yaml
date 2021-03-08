@@ -1,0 +1,147 @@
+
+        action: fire-dom-event
+        browser_mod:
+          command: popup
+          title: Timer diffuseur
+          hide_header: true      
+          deviceID:
+            - this
+            - dashboard
+          style:
+            $: |
+              .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+                box-shadow:none;
+              }
+            .: |
+              :host {
+                --mdc-theme-surface: rgba(0,0,0,0);
+                --secondary-background-color: rgba(0,0,0,0);
+                --ha-card-box-shadow: none; 
+                --div-card-header-justify-content: center;                                       
+                --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+                --mdc-dialog-min-height: 50%;
+                --mdc-dialog-min-width: 100%;
+                --mdc-dialog-max-width: 100%;
+              }
+              mwc-icon-button {
+                color: #FFF;
+              }                       
+          card:
+            type: custom:vertical-stack-in-card
+            cards:   
+              - type: markdown
+                card_mod:
+                  style: |
+                    ha-card {
+                      font-size: 30px;
+                      font-family: Quicksand;
+                      height: 40px;
+                      background: none;
+                      box-shadow: none;
+                    }          
+                content: <center> Minuteur diffuseur <center>  
+              - type: 'custom:time-picker-card'
+                entity: input_datetime.only_time_for_timer
+                minute_step: 1
+                hide:
+                  name: true
+
+              - type: picture-elements 
+                image: /local/images/card/emptybanner.png
+                elements:       
+                  - entity: sensor.timer_diffuseur_temps_restant_int
+                    style:
+                      color: var(--primary-color)
+                      font-size: 175%
+                      font-family: Quicksand
+                      left: 50%
+                      pointer-events: none
+                      top: 15%
+                    tap_action:
+                      action: none
+                    type: state-label
+                  - type: conditional
+                    conditions:
+                      - entity: timer.timer_diffuseur
+                        state: idle
+                    elements:
+                      - entity: timer.timer_diffuseur
+                        icon: 'mdi:play'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 50%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: script.toggle
+                          service_data:
+                            entity_id: script.timer_diffuseur_start_input_datetime
+                        type: state-icon
+                  - type: conditional
+                    conditions:
+                      - entity: timer.timer_diffuseur
+                        state_not: idle
+                    elements:
+                      - entity: timer.timer_diffuseur
+                        icon: 'mdi:pause'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 20%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.pause
+                          service_data:
+                            entity_id: timer.timer_diffuseur
+                        type: state-icon
+                      - entity: timer.timer_diffuseur
+                        icon: 'mdi:close'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': red
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 40%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.cancel
+                          service_data:
+                            entity_id: timer.timer_diffuseur
+                        type: state-icon
+                      - entity: timer.timer_diffuseur
+                        icon: 'mdi:checkbox-marked-circle-outline'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': green
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 60%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.finish
+                          service_data:
+                            entity_id: timer.timer_diffuseur
+                        type: state-icon
+                      - entity: script.timer_diffuseur_start_input_datetime
+                        icon: 'mdi:play'
+                        style:
+                          color: var(--primary-color)
+                          '--paper-item-icon-active-color': var(--primary-color)
+                          font-size: 20px
+                          font-variant: small-caps
+                          left: 80%
+                          bottom: 0%
+                        tap_action:
+                          action: call-service
+                          service: timer.start
+                          service_data:
+                            entity_id: timer.timer_diffuseur
+                        type: state-icon

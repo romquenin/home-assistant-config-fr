@@ -1,0 +1,65 @@
+
+####################################################################################################################################################################################################################################################################################################################################################     
+####    STOP & RESUME MEDIA PLAYER PLAYBACK WHEN RECEIVING CALLS
+####################################################################################################################################################################################################################################################################################################################################################
+
+script:
+  stop_yt_music_when_receiving_call:
+    alias: Stop YT music player when i receive a call
+    sequence:
+      - service: media_player.media_pause
+        entity_id: media_player.universal
+      - service: media_player.volume_mute
+        data:
+          entity_id: media_player.samsung_tv_remote
+          is_volume_muted: true         
+    mode: single  
+
+  resume_yt_music_when_receiving_call:
+    alias: Resume YT music player when i receive a call
+    sequence:
+      - service: media_player.media_play
+        entity_id: media_player.universal
+      - service: media_player.volume_mute
+        data:
+          entity_id: media_player.samsung_tv_remote
+          is_volume_muted: false                
+    mode: single 
+
+
+automation:
+  - alias: Stop YT music player when i receive a call
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.oneplus_a6013_etat_du_telephone
+        from: 'idle'
+        to:
+        - 'ringing'
+        - 'offhook'  
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Mute Players'              
+    action:
+      - service: script.stop_yt_music_when_receiving_call    
+
+  - alias: Resume YT music player when i receive a call
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.oneplus_a6013_etat_du_telephone
+        from: 
+        - 'ringing'
+        - 'offhook'
+        to: 'idle'
+      - platform: event
+        event_type: ios.action_fired
+        event_data:
+          actionName: 'Unmute Players'            
+    action:
+      - service: script.resume_yt_music_when_receiving_call        
+
+
+
+

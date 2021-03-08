@@ -1,0 +1,41 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                    METEO ICON LCD                      ##
+   ##                                                        ##
+   ############################################################
+  
+- platform: template
+  sensors:
+    today_icon:
+      value_template: >-
+        {% if state_attr("weather.saint_tropez","forecast")[0].condition =='clear-night' %}
+          3
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='cloudy' %}
+          5
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='fog' %}
+          16
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='hail' %}
+          6
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='lightning' %}
+          13
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='lightning-rainy' %}
+          17
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='partlycloudy' %}
+          8
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='pouring' %}
+          18
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='rainy' %}
+          9
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='snowy' %}
+          11
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='snowy-rainy' %}
+          7
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='windy' %}
+          14
+        {% elif state_attr("weather.saint_tropez","forecast")[0].condition =='windy-variant' %}
+          14
+        {% else %}
+          12
+        {% endif %}
+      friendly_name: Today weather forecast

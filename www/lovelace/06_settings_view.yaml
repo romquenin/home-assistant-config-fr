@@ -1,0 +1,146 @@
+######################################################################################################################
+######################################################################################################################    
+#  SETTINGS            
+######################################################################################################################   
+######################################################################################################################
+
+title: 06_settings_view
+icon: mdi:cog      
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:scheduler-card
+        time_step: 1
+        include:
+          - light
+          - fan  
+          - switch 
+          - cover                 
+        domains:
+          - light
+          - fan
+          - switch
+          - cover
+        entities:
+          - light
+          - switch
+          - fan
+          - cover              
+#            groups:
+#              - name: "Lighting"
+#                icon: ceiling-light
+#                include:
+#                  - light
+                  
+      - type: entities           
+        show_header_toggle: false
+        entities:                       
+          - entity: input_boolean.alarmclock_wd_enabled
+            type: custom:multiple-entity-row
+            toggle: true
+            entities:
+              - entity: input_number.alarmclock_wd_hour          
+              - entity: input_number.alarmclock_wd_minute 
+
+
+      - type: entities            
+        show_header_toggle: false
+        entities:                   
+          - type: custom:fold-entity-row
+            head: group.all_automations                   
+          - type: custom:fold-entity-row
+            head: group.all_scripts                                
+          - type: custom:fold-entity-row
+            head: group.all_scenes                  
+      - type: custom:bar-card            
+        direction: up
+        entities:
+          - color: MediumTurquoise
+            entity: sensor.canon_ts8300_series_cyan
+          - color: MediumOrchid
+            entity: sensor.canon_ts8300_series_magenta
+          - color: Gold
+            entity: sensor.canon_ts8300_series_yellow
+          - color: Blue
+            entity: sensor.canon_ts8300_series_photo_blue                
+          - color: Black
+            entity: sensor.canon_ts8300_series_black_bk
+          - color: Black
+            entity: sensor.canon_ts8300_series_black_pgbk
+        height: 200px
+        positions:
+          icon: inside
+          title: outside
+        max: 100
+        min: 0
+        padding: 2px
+        target: 20
+        unit_of_measurement: '%'
+        stack: horizontal
+        title: Canon TS8530 
+        card_mod:   
+          style: |
+            bar-card-title {
+              text-shadow: 1px 1px 5px black;
+            }
+            bar-card-value {
+              text-shadow: 1px 1px 5px black;
+            } 
+
+  - type: custom:stack-in-card 
+    mode: vertical
+    cards:    
+      - type: entities       
+        show_header_toggle: false
+        entities:
+          - sensor.date_fr        
+          - sensor.time 
+          - sensor.saint_tropez_original_condition
+      - type: custom:battery-state-card
+        title: false
+        color_gradient:
+          - "#ff0000" # red
+          - "#ffff00" # yellow
+          - "#00ff00" # green
+        entities:
+          - entity: sensor.multisensor_6_battery_level
+            name: "Aeotec Motion Sensor"
+          - entity: sensor.motion_sensor_battery_level
+            name: "Fibaro Motion Sensor"
+          - entity: sensor.capteur_mouvement_aqara_battery
+            name: "Aqara Motion Sensor"            
+          - entity: sensor.porte_entree_battery
+            name: "Aqara Porte/Fenêtre"
+          - entity: sensor.capteur_fuite_d_eau_aqara_battery
+            name: "Aqara Fuite d'Eau"                
+          - entity: sensor.netatmo_chambre_battery_percent
+            name: "Station Netatmo"            
+          - entity: sensor.bouton_aqara_battery
+            name: "Bouton Aqara"              
+          - entity: sensor.cube_aqara_battery
+            name: "Cube Aqara"
+          - entity: sensor.oneplus_a6013_battery_level
+            name: "OnePlus 6T"                
+          - entity: sensor.rideau_droite_battery
+            name: "Rideau Droite"
+          - entity: sensor.rideau_gauche_battery
+            name: "Rideau Gauche"   
+          - entity: sensor.telecommande_ikea_battery
+            name: "Télécommande Ikea"
+          - entity: sensor.telecommande_rideau_droite_battery
+            name: "Télécommande Rideau Droite"                         
+          - entity: sensor.telecommande_rideau_gauche_battery
+            name: "Télécommande Rideau Gauche"
+
+  - type: custom:upcoming-media-card
+    card_mod:   
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;    
+        }          
+    entity: sensor.plex_recently_added
+    image_style: fanart    
+    max: 6
+    box_shadows: false
+

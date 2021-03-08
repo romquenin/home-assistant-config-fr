@@ -1,0 +1,315 @@
+   
+   ############################################################
+   ##                                                        ##
+   ##                          PS4                           ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] PS4 TV allume Sonoff4'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PS4 TV" }}'    
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff4   
+
+- alias: '[Switch] PowerOff PS4 TV et Sonoff4'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "PS4 TV" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "PS4 TV" }}'  
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff4
+
+- alias: '[Switch] PS4 allume Sonoff4'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PS4" }}'    
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff4   
+
+- alias: '[Switch] PowerOff PS4 et Sonoff4'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "PS4" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "PS4" }}'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff4
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                      APPLE TV                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] APPLE TV allume Sonoff1'
+  trigger:
+    - platform: state
+      entity_id: input_select.harmony_hub
+      to: 'APPLE TV' 
+  action:
+    - service: switch.turn_on
+      entity_id: switch.sonoff1
+    - service: script.turn_on
+      entity_id: script.audio_apple
+
+- alias: '[Switch] PowerOff Apple TV et Sonoff1'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "APPLE TV" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "APPLE TV" }}'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff1
+
+
+   ############################################################
+   ##                                                        ##
+   ##                       PC Sonoff0                       ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] PowerOn PC allume Sonoff0 '
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: switch.wake_on_lan
+      to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.sonoff0 
+    - service: light.turn_on
+      entity_id: light.strip_4          
+
+- alias: '[Switch] PowerOff PC éteint Sonoff0'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: switch.wake_on_lan
+      to: 'off'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff0 
+    - service: light.turn_off
+      entity_id: light.strip_4  
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                      CHROMECAST                        ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] Chromecast allume Amplificateur '
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: switch.sonoff2
+      to: 'on'
+  action:
+    - service: media_player.turn_on
+      entity_id: media_player.home_cinema_main  
+    - service: media_player.select_source
+      data:  
+        entity_id: media_player.home_cinema_main 
+        source: audio2    
+
+- alias: '[Switch] Chromecast éteindre Amplificateur '
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: switch.sonoff2
+      to: 'off'
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.home_cinema_main 
+
+
+- alias: '[Switch] Chromecast allume Sonoff2 '
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "CHROMECAST" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff2       
+
+- alias: '[Switch] PowerOff Chromecast et Sonoff2'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "CHROMECAST" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "CHROMECAST" }}'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff2
+      
+   
+   ############################################################
+   ##                                                        ##
+   ##                        SWITCH                          ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] SWITCH allume Sonoff3'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff3   
+
+- alias: '[Switch] PowerOff SWITCH et Sonoff3'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "SWITCH" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "SWITCH" }}'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff3
+  
+
+- alias: '[Switch] SWITCH TV allume Sonoff3'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "SWITCH TV" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.sonoff3   
+
+- alias: '[Switch] PowerOff SWITCH TV et Sonoff3'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "SWITCH TV" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "SWITCH TV" }}'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.sonoff3
+
+   
+   ############################################################
+   ##                                                        ##
+   ##                        RETRO                           ##
+   ##                                                        ##
+   ############################################################
+
+- alias: '[Switch] RETRO allume Multi'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.multi   
+
+- alias: '[Switch] PowerOff RETRO et Multi'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "RETRO" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "RETRO" }}'        
+  action:
+    - service: switch.turn_off
+      entity_id: switch.multi      
+
+- alias: '[Switch] RETRO TV allume Multi'
+  initial_state: on 
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "RETRO TV" }}'   
+  action:
+    service: switch.turn_on
+    entity_id: switch.multi    
+
+- alias: '[Switch] PowerOff RETRO TV et Multi'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: remote.harmony_hub
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ trigger.from_state.attributes.current_activity == "RETRO TV" }}'
+      - condition: template
+        value_template: '{{ trigger.to_state.attributes.current_activity != "RETRO TV" }}'         
+  action:
+    - service: switch.turn_off
+      entity_id: switch.multi
+      

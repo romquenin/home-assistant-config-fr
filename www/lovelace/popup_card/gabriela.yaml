@@ -1,0 +1,107 @@
+
+      action: fire-dom-event
+      browser_mod:
+        command: popup
+        title: Gabriela
+        hide_header: true      
+        deviceID:
+          - this
+          - dashboard
+        style:
+          $: |
+            .mdc-dialog .mdc-dialog__container .mdc-dialog__surface {
+              box-shadow:none;
+            }
+          .: |
+            :host {
+              --mdc-theme-surface: rgba(0,0,0,0);
+              --mdc-dialog-scrim-color: rgba(0,0,0,0.8);
+              --mdc-dialog-min-height: 87%;
+              --mdc-dialog-min-width: 100%;
+              --mdc-dialog-max-width: 100%;
+            }                      
+        card:
+          type: custom:vertical-stack-in-card
+          cards:
+            - type: entities
+              state_color: true
+              show_header_toggle: false
+              entities:
+
+                - entity: person.gabriela
+                  secondary_info: last-changed
+
+                - type: custom:hui-element
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }                  
+                  card_type: history-graph
+                  entities: [entity: person.gabriela]
+                  hours_to_show: 24
+                  refresh_interval: 0
+
+                - type: custom:hui-element
+                  card_type: glance
+                  show_state: false
+                  style:
+                    .: |
+                      ha-card {
+                        background: none;
+                        box-shadow: none;
+                      }
+                    "ha-card>div>div:nth-child(1)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.hostname1', 'home') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(2)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.gabriela_s_iphone', 'home') else '#FFFFFF20' }};
+                            }
+                    "ha-card>div>div:nth-child(3)":
+                      $:
+                        "state-badge":
+                          $: |
+                            ha-icon {
+                              color: {{ '#3182b7' if is_state('device_tracker.roman_gabriela_gps', 'home') else '#FFFFFF20' }};
+                            }
+                  entities:
+
+                    - entity: device_tracker.hostname1
+                      name: Router
+                      icon: mdi:wifi
+
+                    - entity: device_tracker.gabriela_s_iphone
+                      name: Bluetooth
+                      icon: mdi:bluetooth
+
+
+                    - entity: device_tracker.roman_gabriela_gps
+                      name: Position
+                      icon: mdi:map-marker-radius-outline
+
+            - type: map
+              style: |
+                ha-card {
+                  --paper-card-background-color: 'rgba(11, 11, 11, 0.00)';           
+                  box-shadow: 
+                    {% if is_state('sun.sun', 'above_horizon') %}
+                      -5px -5px 8px 0 rgba(255,255,255,.5),5px 5px 8px 0 rgba(0,0,0,.03);
+                    {% elif is_state('sun.sun', 'below_horizon') %}                      
+                      -5px -5px 8px 0 rgba(50, 50, 50,.5),5px 5px 8px 0 rgba(0,0,0,.15);
+                    {% endif %}     
+                }        
+              aspect_ratio: 16:9
+              default_zoom: 13
+              entities:
+                - device_tracker.roman_gabriela_gps
+                - zone.home
+

@@ -1,0 +1,12 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                 NETATMO STATION METEO                  ##
+   ##                                                        ##
+   ############################################################
+      
+
+client_id: !secret api_netatmo
+client_secret: !secret secret_netatmo
+
+   

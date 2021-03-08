@@ -1,0 +1,35 @@
+{
+  "cwcLocWindDirections": {
+    "N": "N",
+    "NNE": "NNE",
+    "NE": "NE",
+    "ENE": "ENE",
+    "E": "E",
+    "ESE": "ESE",
+    "SE": "SE",
+    "SSE": "SSE",
+    "S": "S",
+    "SSW": "SSW",
+    "SW": "SW",
+    "WSW": "WSW",
+    "W": "W",
+    "WNW": "WNW",
+    "NW": "NW",
+    "NNW": "NNW"
+  },
+
+  "cwcTerms": {
+    "Feels Like" : "Feels Like",
+    "new_moon": "New moon",
+    "new": "New moon",
+    "waxing_crescent": "Waxing crescent",
+    "first_quarter": "First quarter",
+    "waxing_gibbous": "Waxing Gibbous",
+    "full": "Full",
+    "full_moon": "Full",
+    "waning_gibbous": "Waning Gibbous",
+    "third_quarter": "Third Quarter",
+    "last_quarter": "Last Quarter",
+    "waning_crescent": "Waning Crescent"
+  }
+}

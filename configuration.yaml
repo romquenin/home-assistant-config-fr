@@ -1,0 +1,86 @@
+############################################################
+##                     HOME ASSISTANT                     ##
+############################################################
+
+homeassistant:
+  name: Home
+  latitude: !secret ha_latitude
+  longitude: !secret ha_longitude
+  elevation: 0
+  unit_system: metric
+  time_zone: Europe/Paris
+  packages: !include_dir_named packages/
+  allowlist_external_dirs: [/config/]
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks: !secret trusted_networks
+    - type: homeassistant
+  external_url: !secret external_url
+  internal_url: !secret internal_url
+  media_dirs:
+    local: /media
+  customize: !include_dir_merge_named customize/
+
+config:
+hassio:
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  server_port: 8123
+  ip_ban_enabled: false
+
+frontend:
+  themes: !include_dir_merge_named themes/
+
+lovelace:
+  mode: yaml
+  resources: !include www/custom-lovelace/resources.yaml
+
+lovelace_gen:
+
+hacs:
+  token: !secret hacs_token
+
+discovery:
+  ignore:
+    - harmony
+    - apple_tv
+
+logger:
+  default: info
+
+sun:
+map:
+cloud:
+stream:
+ffmpeg:
+person:
+updater:
+esphome:
+mobile_app:
+dialogflow:
+wake_on_lan:
+media_source:
+system_health:
+python_script:
+
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automation/
+group: !include_dir_merge_named group/
+input_select: !include_dir_merge_named input_select/
+scene: !include_dir_merge_list scene/
+script: !include_dir_merge_named script/
+zone: !include zone/zones.yaml
+device_tracker: !include device_tracker.yaml
+sensor: !include_dir_merge_list sensor/
+switch: !include_dir_merge_list switch/
+recorder: !include recorder.yaml
+history: !include history.yaml
+sabnzbd: !include components/sabnzbd.yaml
+camera: !include components/camera.yaml
+netatmo: !include components/netatmo.yaml
+google_assistant: !include components/google_assistant.yaml
+intent_script: !include components/intent_script.yaml
+cover: !include components/cover.yaml
+browser_mod: !include components/browser_mod.yaml
+nest: !include components/nest.yaml

@@ -1,0 +1,36 @@
+
+   ############################################################
+   ##                         NMAP                           ##
+   ############################################################
+- platform: nmap_tracker
+  hosts: 
+    - 192.168.2.2
+    - 192.168.2.23
+    - 192.168.2.104    
+    - 192.168.2.7
+    - 192.168.2.9
+  home_interval: 2    
+  new_device_defaults:
+    track_new_devices: true  
+  interval_seconds: 30
+
+   ############################################################
+   ##                  IPHONE TRACKER                        ##
+   ############################################################
+- platform: iphonedetect
+  consider_home: 60
+  scan_interval: 12
+  new_device_defaults:
+    track_new_devices: false
+  hosts:
+    hostname1: 192.168.2.3
+
+   ############################################################
+   ##                   BLUETOOTH TRACKER                    ##
+   ############################################################
+- platform: bluetooth_tracker
+  new_device_defaults:
+    track_new_devices: false 
+  consider_home: 180
+  interval_seconds: 60
+

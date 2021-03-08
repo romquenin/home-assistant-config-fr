@@ -1,0 +1,26 @@
+ 
+   ############################################################
+   ##                                                        ##
+   ##                     BROWSER MOD                        ##
+   ##                                                        ##
+   ############################################################
+
+devices:
+  windows:
+    name: windows
+    disable:
+      - light
+#      - media_player  
+  macbook:
+    name: macbook
+    disable:
+      - light
+#      - media_player
+  f75ca247_ed28565a:
+    name: mobile
+    disable:
+      - light
+#      - media_player
+disable:
+  - all
+

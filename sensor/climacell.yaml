@@ -1,0 +1,77 @@
+
+   ############################################################
+   ##                                                        ##
+   ##                      CLIMACELL                         ##
+   ##                                                        ##
+   ############################################################
+
+- platform: climacell
+  api_key: !secret climacell_api_key
+  name: climacell
+  latitude: !secret ha_latitude
+  longitude: !secret ha_longitude
+  units: metric
+  timelines:
+    - name: "" #Realtime
+      timestep: "1m"
+      forecast_observations: 1
+      fields:
+        - temperature
+        - feels_like
+        - humidity
+        - wind_speed
+        - wind_direction
+        - wind_gust
+        - pressure
+        - precipitationIntensity
+        - precipitation_type
+        - visibility
+        - cloud_cover
+        - weather_condition
+        - pm25
+        - pm10
+        - o3
+        - no2
+        - co
+        - so2
+        - epa_aqi
+        - epa_health_concern
+        - pollen_tree
+        - pollen_weed
+        - pollen_grass
+        - fire_index
+      update: auto
+      scan_interval:
+        # At least one of these must be specified:
+        days: 0
+        hours: 1
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+      exclude_interval:
+        1:
+          - "00:00"
+          - "07:00"
+    - name: "" #Daily
+      timestep: "1d"
+      forecast_observations: 5
+      fields:
+        - temperature
+        - temperatureMin
+        - temperatureMax
+        - precipitationIntensityMin
+        - precipitationIntensityMax
+        - precipitation_probability
+        - weather_condition
+        - moonPhase        
+      scan_interval:
+        # At least one of these must be specified:
+        days: 0
+        hours: 4
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+      exclude_interval:
+        1:
+          - "23:00"
+          - "06:30"

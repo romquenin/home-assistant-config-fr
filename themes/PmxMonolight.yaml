@@ -1,0 +1,73 @@
+PmxMonolight:
+  # MyVar
+  huesat: '0, 0%,'
+  # Primary Color
+  primary-color: 'hsl(var(--huesat) 80%)'
+  dark-primary-color: 'hsl(var(--huesat) 20%)'
+  light-primary-color: 'hsl(var(--huesat) 90%)'
+  accent-color: 'hsl(var(--huesat) 30%)'
+  # Backgrounds
+  primary-background-color: 'var(--primary-color)'
+  secondary-background-color: 'hsl(var(--huesat) 86%)'
+  paper-listbox-background-color: 'var(--primary-color)'
+  paper-card-background-color: 'hsl(var(--huesat) 90%)'
+  paper-dialog-background-color: 'var(--paper-card-background-color)'
+  table-row-background-color: 'hsl(var(--huesat) 88%)'
+  table-row-alternative-background-color: 'hsl(var(--huesat) 90%)'
+  # Devider
+  divider-color: 'hsla(0, 0%, 0%, 0)'
+  dark-divider-opacity: '0'
+  light-divider-opacity: '0'
+  dark-secondary-opacity: '0.4'
+  # Text colors
+  primary-text-color: 'hsl(var(--huesat) 46%)'
+  text-primary-color: 'hsl(var(--huesat) 46%)'
+  secondary-text-color: 'hsl(var(--huesat) 56%)'
+  disabled-text-color: 'hsl(var(--huesat) 30%)'
+  sidebar-text_-_color: 'hsl(var(--huesat) 5%)'
+  sidebar-text-color: 'hsl(var(--huesat) 5%)'
+  paper-card-header-color: 'hsl(hsl(var(--huesat) 50%)'
+  paper-button-ink-color: 'hsl(hsl(var(--huesat) 50%)'
+  # Text Adjustments
+  paper-font-headline_-_letter-spacing: '-0.5px'
+  paper-font-headline_-_font-weight: '500'
+  paper-font-body1_-_font-weight: '500'
+  # Nav Menu
+  paper-listbox-color: 'hsl(var(--huesat) 50%)'
+  paper-grey-50: 'hsl(var(--huesat) 40%)'
+  paper-grey-200: 'hsl(var(--huesat) 72%)'
+  # Paper card
+  paper-item-icon-color: 'hsl(var(--huesat) 70%)'
+  paper-item-icon-active-color: 'var(--paper-item-icon-color)'
+  paper-item-icon_-_color: 'hsl(var(--huesat) 70%)'
+  paper-item-selected_-_background-color: 'hsla(0, 0%, 100%, 0.2)'
+  paper-item-selected_-_color: 'hsl(var(--huesat) 20%)'
+  paper-tabs-selection-bar-color: 'hsl(var(--huesat) 70%)'
+  paper-tab-ink: 'hsl(var(--huesat) 70%)'
+  paper-input-container-color: 'hsl(var(--huesat) 66%)'
+  # Labels
+  label-badge-red: 'hsl(var(--huesat) 80%)'
+  label-badge-border-color: 'var(--label-badge-red)'
+  label-badge-background-color: 'hsl(var(--huesat) 82%)'
+  label-badge-text-color: 'var(--primary-text-color)'
+  # Shadows
+  shadow-elevation-2dp_-_box-shadow: 'inset 0px 0px 0px 3px hsla(var(--huesat) 91%, 0.2)'
+  shadow-elevation-16dp_-_box-shadow: 'inset 0px 0px 0px 3px hsla(var(--huesat) 91%, 0.2)'
+  paper-input-container-shared-input-style_-_background: '#000'
+  # Switches
+  paper-toggle-button-checked-button-color: 'hsl(var(--huesat) 50%)'
+  paper-toggle-button-checked-bar-color: 'hsl(var(--huesat) 66%)'
+  paper-toggle-button-unchecked-button-color: 'hsl(var(--huesat) 85%)'
+  paper-toggle-button-unchecked-bar-color: 'hsl(var(--huesat) 80%)'
+  # Sliders
+  paper-slider-knob-color:  'hsl(var(--huesat) 45%)'
+  paper-slider-knob-start-color: 'hsl(var(--huesat) 60%)'
+  paper-slider-pin-color:  'hsl(var(--huesat) 60%)'
+  paper-slider-active-color:  'hsl(var(--huesat) 60%)'
+  paper-slider-container-color: 'hsl(var(--huesat) 76%)'
+  paper-slider-secondary-color: 'hsl(var(--huesat) 10%)'
+  paper-slider-disabled-active-color: 'hsl(var(--huesat) 75%)'
+  paper-slider-disabled-secondary-color: 'hsl(var(--huesat) 75%)'
+  #Toast
+  paper-toast-color: 'hsl(var(--huesat) 45%)'
+  paper-toast-background-color: 'hsl(var(--huesat) 90%)'

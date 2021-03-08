@@ -1,0 +1,90 @@
+
+  ############################################################
+  ##                                                        ##
+  ##                   SWITCH TPLINK                        ##
+  ##                                                        ##
+  ############################################################    
+
+#Ajout du composant et des prises connectées
+tplink:
+  discovery: false
+  switch:
+    - host: 192.168.2.36
+    - host: 192.168.2.37    
+    - host: 192.168.2.38
+    - host: 192.168.2.39  
+
+
+       
+    #Templates pour integrer les valeurs des prises
+sensor:
+  - platform: template
+    sensors:
+      tplink_1_current_power_w:
+        value_template: '{{ states.switch.tp_link_plug_1.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tplink_1_total_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_1.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_1_today_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_1.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_1_volts:
+        value_template: "{{ state_attr('switch.tp_link_plug_1','voltage') | float }}"
+        unit_of_measurement: 'V'
+
+      tplink_2_current_power_w:
+        value_template: '{{ states.switch.tp_link_plug_2.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tplink_2_total_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_2.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_2_today_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_2.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_2_volts:
+        value_template: "{{ state_attr('switch.tp_link_plug_2','voltage') | float }}"
+        unit_of_measurement: 'V'
+
+      tplink_3_current_power_w:
+        value_template: '{{ states.switch.tp_link_plug_3.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tplink_3_total_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_3.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_3_today_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_3.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_3_volts:
+        value_template: "{{ state_attr('switch.tp_link_plug_3','voltage') | float }}"
+        unit_of_measurement: 'V'
+
+      tplink_4_current_power_w:
+        value_template: '{{ states.switch.tp_link_plug_4.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tplink_4_total_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_4.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_4_today_energy_kwh:
+        value_template: '{{ states.switch.tp_link_plug_4.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tplink_4_volts:
+        value_template: "{{ state_attr('switch.tp_link_plug_4','voltage') | float }}"
+        unit_of_measurement: 'V'
+
+#Templates pour cumuler les valeurs des prises  
+  - platform: template
+    sensors:
+      current_power_usage:
+        value_template: '{%- if not is_state("sensor.tplink_1_current_power_w","unknown") -%}  {{ ((states.sensor.tplink_1_current_power_w.state | float) + (states.sensor.tplink_2_current_power_w.state | float) + (states.sensor.tplink_3_current_power_w.state | float)) | round(2) }} {%- endif -%}' 
+        friendly_name: 'Conso/Actuelle'
+        unit_of_measurement: 'W'
+      total_power_usage:
+        value_template: '{%- if not is_state("sensor.tplink_1_total_energy_kwh","unknown") -%}  {{ ((states.sensor.tplink_1_total_energy_kwh.state | float) + (states.sensor.tplink_2_total_energy_kwh.state | float) + (states.sensor.tplink_3_total_energy_kwh.state | float)) | round(2) }} {%- endif -%}' 
+        friendly_name: 'Conso/Totale'
+        unit_of_measurement: 'kWh'
+      today_power_usage:
+        value_template: '{%- if not is_state("sensor.tplink_1_today_energy_kwh","unknown") -%}  {{ ((states.sensor.tplink_1_today_energy_kwh.state | float) + (states.sensor.tplink_2_today_energy_kwh.state | float) + (states.sensor.tplink_3_today_energy_kwh.state | float)) | round(2) }} {%- endif -%}' 
+        friendly_name: 'Conso/Jour'
+        unit_of_measurement: 'kWh'      
+

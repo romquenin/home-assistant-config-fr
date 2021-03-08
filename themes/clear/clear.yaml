@@ -1,0 +1,78 @@
+clear:
+  card-mod-theme: clear
+  card-mod-root-yaml: |
+    .: |
+      ha-menu-button {
+        display: none !important;
+      }
+      app-header {
+        background: rgba(0,0,0,0.5) !important;
+      }
+      app-toolbar {
+        background: none !important;
+      }
+
+  # Custom
+  radial-icon-size: 40px
+  radial-menu-item-color: '#41aae0'
+
+  tplink-1-color: '#9dcb6f'
+  tplink-2-color: '#6ecbcc' 
+  tplink-3-color: '#9d6ecc'
+       
+  # Colors
+  text-color: '#636B75'                                                           # Grey text
+  text-medium-color: '#8c96a5'                                                    # Medium grey text
+  text-light-color: '#BAC0C6'                                                     # Light grey text
+  accent-color: '#00a1ff'                                                         # Blue
+  background-color: '#F7F8F9'                                                     # Light grey background
+  background-color-2: '#F4F5F6'                                                   # Light grey background
+  background-card-color: 'rgba(255,255,255,1.0)'                                  # White background
+  border-color: '#E8E8E8'                                                         # Light grey border
+
+  # Header
+  primary-color: 'var(--text-color)'                                              # Background
+  text-primary-color: '#BAC0C6'                                                      # Text
+
+  # Left Menu
+  paper-listbox-background-color: 'var(--background-color)'                       # Background
+
+  # UI
+  paper-card-header-color: 'var(--text-color)'                                    # Title in settings
+  primary-background-color: 'var(--background-color)'                             # Background color (also title background in left menu)
+
+  # Card
+  paper-card-background-color: 'var(--background-card-color)'                     # Background
+  dark-primary-color: 'var(--text-color)'
+  primary-text-color: 'var(--text-color)'
+  paper-listbox-color: 'var(--text-color)'
+  light-primary-color: 'var(--text-light-color)'
+  secondary-text-color: 'var(--text-medium-color)'
+  disabled-text-color: 'var(--text-light-color)'
+  paper-dialog-button-color: 'var(--text-color)'
+  secondary-background-color: 'var(--background-color-2)'                         # Background more info title
+
+  # Icons
+  paper-item-icon-color: 'var(--text-light-color)'                                # Off
+  paper-item-icon-active-color: 'var(--accent-color)'                             # On
+
+  # Switches
+  switch-checked-button-color: '#FFF'                                             # Knob On
+  switch-unchecked-button-color: '#FFF'                                           # Knob Off
+  switch-checked-track-color: '#0077FF'                                           # Background On
+  switch-unchecked-track-color: 'var(--disabled-text-color)'                      # Background Off
+
+  # Slider
+  paper-slider-active-color: 'var(--accent-color)'                                # Line On
+  paper-slider-container-color: '#e5e7ea'                                         # Line Off
+  paper-slider-knob-color: 'var(--text-light-color)'                              # Knob On
+  paper-slider-knob-start-color: 'var(--text-light-color)'                        # Knob Off
+
+  # Shadows
+  ha-card-box-shadow: 'inset 0px 0px 0px 1px var(--border-color)'
+
+  # HACS
+  hacs-badge-color: 'var(--accent-color)'                                         # New Badge
+  hacs-status-installed: 'var(--text-color)'                                      # Installed Icon
+  hacs-status-pending-restart: 'var(--text-light-color)'                          # Restart Icon
+  hacs-status-pending-update: 'var(--accent-color)'                               # Update Icon
