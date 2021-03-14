@@ -17,17 +17,17 @@ badges:
           --label-badge-red:
             {% if is_state('remote.harmony_hub', 'on') %}
               rgb(52, 152, 219);
-            {% elif is_state('remote.harmony_hub', 'off') %}                      
+            {% elif is_state('remote.harmony_hub', 'off') %}
               darkgrey; 
-            {% endif %}   
-        }  
+            {% endif %}
+        }
     hold_action:
-      action: more-info   
+      action: more-info
     double_tap_action: 
       action: call-service
       service: remote.turn_off
-      service_data:  
-        entity_id: remote.harmony_hub    
+      service_data:
+        entity_id: remote.harmony_hub
       haptic: true
     tap_action: !include popup_card/activity_harmony.yaml
 
@@ -38,11 +38,11 @@ badges:
           --label-badge-red:
             {% if is_state('sensor.status_badge', '0') %}
               rgb(52, 152, 219);
-            {% elif is_state('sensor.status_badge', '2') %}                      
+            {% elif is_state('sensor.status_badge', '2') %}
               rgba(50, 50, 50, 50); 
-            {% elif is_state('sensor.status_badge', '1') %}                      
-              darkgrey;             
-            {% endif %}   
+            {% elif is_state('sensor.status_badge', '1') %}
+              darkgrey;
+            {% endif %}
         }  
     tap_action: !include popup_card/status_badge.yaml
 
@@ -53,9 +53,9 @@ badges:
           --label-badge-red:
             {% if is_state('media_player.ytube_music_player', 'playing') %}
               rgb(52, 152, 219);
-            {% elif is_state('media_player.ytube_music_player', 'off') %}                      
+            {% elif is_state('media_player.ytube_music_player', 'off') %}
               darkgrey; 
-            {% endif %}   
+            {% endif %}
         }  
     hold_action: 
       action: more-info
@@ -69,9 +69,9 @@ badges:
           --label-badge-red:
             {% if is_state('person.roman', 'home') %}
               rgb(52, 152, 219);
-            {% elif is_state('person.roman', 'not_home') %}                      
+            {% elif is_state('person.roman', 'not_home') %}
               darkgrey; 
-            {% endif %}   
+            {% endif %}
         }
     tap_action: !include popup_card/roman.yaml
 
@@ -82,9 +82,9 @@ badges:
           --label-badge-red:
             {% if is_state('person.gabriela', 'home') %}
               rgb(52, 152, 219);
-            {% elif is_state('person.gabriela', 'not_home') %}                      
+            {% elif is_state('person.gabriela', 'not_home') %}
               darkgrey; 
-            {% endif %}   
+            {% endif %}
         }
     tap_action: !include popup_card/gabriela.yaml
 
@@ -104,7 +104,7 @@ cards:
               style: |
                 ha-card {
                   background: none;
-                  box-shadow: none;                               
+                  box-shadow: none;
                 }
             entity:  weather.saint_tropez
             name: Saint-Tropez
@@ -119,7 +119,7 @@ cards:
               service: browser_mod.popup
               service_data:
                 title: Météo
-                hide_header: true                      
+                hide_header: true
                 card:
                   type: custom:decluttering-card
                   template: weather
@@ -131,7 +131,7 @@ cards:
 ####################################################################################################################################################################################################################################################################################################################################################
       - type: horizontal-stack
         cards:
-          - type: "custom:button-card"           
+          - type: custom:button-card
             entity: alarm_control_panel.home
             template: button_alarme
             name: Alarme
@@ -142,7 +142,7 @@ cards:
           - type: custom:button-card
             template: button_fuite
             name: Fuite
-            entity: binary_sensor.capteur_fuite_d_eau_aqara_water_leak                
+            entity: binary_sensor.capteur_fuite_d_eau_aqara_water_leak
           - type: custom:button-card
             template: button_motion
             name: Entrée
@@ -205,7 +205,7 @@ cards:
               - name: Chambre
               - entity: group.all_lights_chambre
               - sensor: sensor.all_lights_chambre
-              - double_tap_action: !include popup_card/light_chambre.yaml                                                                
+              - double_tap_action: !include popup_card/light_chambre.yaml
 
 ####################################################################################################################################################################################################################################################################################################################################################
 ####    SCENES
@@ -215,43 +215,43 @@ cards:
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_tropical              
+              - entity_id: scene.salon_tropical
               - name: Tropical
               - entity_picture: "/local/images/hue/tropical.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_energize              
+              - entity_id: scene.salon_energize
               - name: Détente
               - entity_picture: "/local/images/hue/energize.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_savane              
+              - entity_id: scene.salon_savane
               - name: Savane
               - entity_picture: "/local/images/hue/savane.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_relax              
+              - entity_id: scene.salon_relax
               - name: Relax
               - entity_picture: "/local/images/hue/relax.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_boreale              
+              - entity_id: scene.salon_boreale
               - name: Boréale
               - entity_picture: "/local/images/hue/boreale.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_concentrate              
+              - entity_id: scene.salon_concentrate
               - name: Concentrate
               - entity_picture: "/local/images/hue/concentrate.png"
           - type: custom:decluttering-card
             template: scenes
             variables:
-              - entity_id: scene.salon_spring              
+              - entity_id: scene.salon_spring
               - name: Printemps
               - entity_picture: "/local/images/hue/spring.png"
 
@@ -269,19 +269,19 @@ cards:
           - type: custom:decluttering-card
             template: graph
             variables:
-              - entities: sensor.netatmo_indoor_temperature             
+              - entities: sensor.netatmo_indoor_temperature
               - name: Température
               - line_color: "#3498db"
           - type: custom:decluttering-card
             template: graph
             variables:
-              - entities: sensor.netatmo_indoor_humidity             
+              - entities: sensor.netatmo_indoor_humidity
               - name: Humidité
               - line_color: "#e74c3c"
           - type: custom:decluttering-card
             template: graph
             variables:
-              - entities: sensor.netatmo_indoor_co2             
+              - entities: sensor.netatmo_indoor_co2
               - name: CO2
               - line_color: "#3498db"
 
@@ -295,7 +295,7 @@ cards:
             variables:
               - entity: sensor.netatmo_indoor_noise 
               - max: 100
-              - min: 0                                       
+              - min: 0
               - severity: 
                   - color: "#40bf40"
                     from: 0
@@ -312,7 +312,7 @@ cards:
             variables:
               - entity: sensor.netatmo_indoor_pressure 
               - max: 2000
-              - min: 0                             
+              - min: 0
               - severity: 
                   - color: "#40bf40"
                     from: 0
@@ -329,10 +329,10 @@ cards:
 ####################################################################################################################################################################################################################################################################################################################################################
       - type: horizontal-stack
         cards:
-          - template: button_raspberry
-            type: "custom:decluttering-card"
+          - type: custom:decluttering-card
+            template: button_raspberry
             variables:
-              - entity: "sensor.cpu_temp"
+              - entity: sensor.cpu_temp
               - icon: "mdi:raspberry-pi"
               - name: RasPi 4
               - colorstyle: "[[[
@@ -378,10 +378,10 @@ cards:
           - type: custom:decluttering-card
             template: button_hassos
 
-          - template: button_synology
-            type: "custom:decluttering-card"
+          - type: custom:decluttering-card 
+            template: button_synology
             variables:
-              - entity: "sensor.synology_cpu_load_total"
+              - entity: sensor.synology_cpu_load_total
               - icon: mdi:nas
               - name: Synology
               - colorstyle: "[[[
@@ -515,7 +515,7 @@ cards:
             variables:
               - name: Ventilo
               - entity: fan.dyson_pure_cool_linktm
-              - timer: timer.timer_ventilateur             
+              - timer: timer.timer_ventilateur
       - type: horizontal-stack
         cards:
           - type: custom:decluttering-card
@@ -536,7 +536,7 @@ cards:
 ####################################################################################################################################################################################################################################################################################################################################################
   - type: vertical-stack
     cards:
-      - type: 'custom:content-card-linky'
+      - type: custom:content-card-linky
         card_mod:
           style: |
             ha-card {
@@ -580,6 +580,3 @@ cards:
               'windows':
                 type: custom:decluttering-card
                 template: weather
-
-
-
