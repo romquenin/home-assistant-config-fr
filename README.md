@@ -18,7 +18,7 @@ Configuration de [Home Assistant](https://home-assistant.io/) sous [Hassos](http
 </div>
 
 
-[![La domotique pour les pros](https://i.imgur.com/aVl8gE1.png)](https://www.youtube.com/watch?v=3WUhMpWf12c&t=1s "La domotique")
+[![La domotique pour les pros](https://i.imgur.com/aVl8gE1.png)](https://www.youtube.com/watch?v=pHLYEFIr0aA&t=27s&ab_channel=ParadisArtificiels "La domotique")
 
 <div align="center">
     <figure>
