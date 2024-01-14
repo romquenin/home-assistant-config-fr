@@ -559,13 +559,13 @@ title="Vues">
 ### Climat 📈
 
 - **Intérieur**
-    - Relevé de la températeure et de l'humidité des dernières 24H sous forme de graphiques **[ApexCharts ](https://www.home-assistant.io/lovelace/markdown/)**.
-    - Relevé du niveau de PPM des dernières 24H avec changement dynamique de la couleur **[Mini Graph Card](https://github.com/kalkih/mini-graph-card)**.
+    - Relevé de la température et de l'humidité des dernières 24 heures sous forme de graphiques **[ApexCharts](https://www.home-assistant.io/lovelace/markdown/)**.
+    - Relevé du niveau de PPM des dernières 24 heures avec changement dynamique de la couleur **[Mini Graph Card](https://github.com/kalkih/mini-graph-card)**.
 - **Extérieur**
-    - Relevé de la températeure et de l'humidité des dernières 24H sous forme de graphiques **[ApexCharts ](https://www.home-assistant.io/lovelace/markdown/)**.
-    - Relevé du niveau de EPA des dernières 24H avec changement dynamique de la couleur **[Mini Graph Card](https://github.com/kalkih/mini-graph-card)**.
+    - Relevé de la température et de l'humidité des dernières 24 heures sous forme de graphiques **[ApexCharts](https://www.home-assistant.io/lovelace/markdown/)**.
+    - Relevé du niveau de EPA des dernières 24 heures avec changement dynamique de la couleur **[Mini Graph Card](https://github.com/kalkih/mini-graph-card)**.
 - **Semaine Int/Ext**
-    - Relevé de la températeure et de l'humidité des 7 dernier jours sous forme de graphiques **[ApexCharts ](https://www.home-assistant.io/lovelace/markdown/)**.
+    - Relevé de la température et de l'humidité des 7 derniers jours sous forme de graphiques **[ApexCharts](https://www.home-assistant.io/lovelace/markdown/)**.
     
 <div align="center">
     <figure>
