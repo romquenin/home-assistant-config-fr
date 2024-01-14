@@ -187,17 +187,17 @@ Vous trouverez sur mon repo une configuration de Home Assistant complète et doc
 ### Alarme et détection 👮
 
 - **Boutons Alarme et détection**
-    - Activation/désactivation de l'alarme, icones dynamiques et affichage du dernier changement d'état.
+    - Activation/désactivation de l'alarme, icônes dynamiques, et affichage du dernier changement d'état.
 - **Alarme**
-    - L'alarme activée, si un malandrain venait à ouvrir la porte d'entrée, la détection de son ouverture déclenchera une serie d'automatisation son et lumières qui lui feront regretter d'être passé.
+    - Lorsque l'alarme est activée, en cas d'ouverture de la porte d'entrée par un malfaiteur, la détection déclenchera une série d'automatisations sonores et lumineuses qui le feront regretter d'être passé.
 - **Détection de porte ouverte**
-    - Savoir si la porte d'entrée vient de s'ouvrir.
-- **Détection de fuit d'eau**
-    - Être capable de réagir rapidement en cas de fuite.
+    - Permet de savoir si la porte d'entrée vient de s'ouvrir.
+- **Détection de fuite d'eau**
+    - Permet de réagir rapidement en cas de fuite.
 - **Détection de présence**
-    - Être alerté d'une présence en cas d'absence ou simplement automatiser l'allumage et l'extenction des lumières de l'entrée, de la cuisine et de la veilleuse du couloir pendant la nuit.
+    - Permet d'être alerté en cas de présence pendant une absence, ou simplement d'automatiser l'allumage et l'extinction des lumières de l'entrée, de la cuisine et de la veilleuse du couloir pendant la nuit.
 - **Détection de fumée**
-    - Destiné à alerter les dormeurs si un incendie se déclenche la nuit.
+    - Destinée à alerter les occupants en cas de déclenchement d'un incendie pendant la nuit.
 
 <div align="center">
     <figure>
